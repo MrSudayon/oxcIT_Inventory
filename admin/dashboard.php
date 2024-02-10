@@ -19,9 +19,21 @@ if(!empty($_SESSION['id'])) {
     <title>Admin Dashboard</title>
 </head>
 <body>
+    <!-- <div class="side-menu side-menu-admin" id="mySidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+     
+    </div> -->
 
-    <h1>Welcome Admin <?php echo $user['username']; ?></h1>
-    <a href="../php/logout.php">Logout</a>
-    
+    <div class="header">
+        <div class="logo"> OXYCHEM </div>
+        <div class="navigators"></div>
+    </div>
+    <div class="content">
+        <h1>Welcome Admin <?php echo $user['username']; ?></h1>
+        <!-- <a href="../php/logout.php">Logout</a> -->
+    </div>
+
+
+    <script src="../js/sidebar_nav.js"></script>
 </body>
 </html>

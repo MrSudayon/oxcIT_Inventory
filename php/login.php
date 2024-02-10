@@ -28,10 +28,8 @@ if(isset($_POST['submit'])) {
     } 
     elseif($result == 100) {
         echo "<script> alert('User doesn't exists'); </script>";
-    }    
-    
+    }       
 }
-
 
 ?>
 <!DOCTYPE html>
@@ -40,6 +38,7 @@ if(isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/fields.css">
     <title>Login</title>
 </head>
 <body>
