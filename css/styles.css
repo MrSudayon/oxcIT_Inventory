@@ -1,0 +1,13 @@
+:root {
+    --bg-color: #1F1F29;
+    --main-color: #5983FC;
+    --sec-color: #3E60C1;
+    --ter-color: #2E4583; /* or 293556 */
+}
+
+body {
+    background-color: var(--bg-color);
+
+    min-height: 100dvh;
+    color: rgb(255, 246, 246);
+}
