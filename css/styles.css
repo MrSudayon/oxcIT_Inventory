@@ -5,8 +5,12 @@
     --ter-color: #2E4583; /* or 293556 */
 }
 
-p {
-    font-family: 'SulphurPoint-Regular';
+label {
+    font-family: DejaVu Sans Mono, monospace;
+}
+
+h1, h2, p {
+    font-family: Helvetica, sans-serif;
 }
 
 body {
@@ -37,6 +41,8 @@ body {
 
     display: flex;
     justify-content: space-evenly;
+    flex-direction: column;
+
     align-items: center;
 } 
 .logo {
@@ -44,9 +50,32 @@ body {
 }
 .login-field {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 
     gap: 10px;
+}
+
+.register-form {
+    position: absolute;
+    width: 600px;
+    height: 550px;
+    background-color: var(--bg-color);
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: center;
+}
+.register-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    padding: 5px;
+    margin: 5px;
 }

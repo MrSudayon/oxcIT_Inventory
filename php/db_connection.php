@@ -14,16 +14,17 @@ class Connection {
 }
 
 class Register extends Connection {
-    public function register($role, $user, $email, $pass, $conf_pass, $status) {
+    public function register($role, $user, $email, $pass, $conf_pass) {
 
-        $duplicate = mysqli_query($this->conn, "SELECT * FROM user_tbl WHERE username='$user' OR email='$email' ");
+        $duplicate = mysqli_query($this->conn, "SELECT * FROM users_tbl WHERE username='$user' OR email='$email' ");
 
         if (mysqli_num_rows($duplicate) > 0) {
             return 10; // Duplicate Record
         } 
         else {
             if($pass == $conf_pass) {
-                $sql = mysqli_query($this->conn, "INSERT INTO user_tbl VALUES('', '$user', '$pass', '$role', 1)");
+                $sql = "INSERT INTO users_tbl VALUES('', '$user', '$email', '$pass', '$role', 1)";
+                mysqli_query($this->conn, $sql);
                 return 1; // Registration Successs
             } 
             else {
@@ -38,14 +39,23 @@ class Register extends Connection {
 class Login extends Connection {
     public $id;
     
-    public function login($username, $email, $password) {
-        $result = mysqli_query($this->conn, "SELECT * FROM user_tbl WHERE username = '$username' OR email = '$email'");
+    public function login($usernameemail, $password) {
+        $result = mysqli_query($this->conn, "SELECT * FROM users_tbl WHERE username = '$usernameemail' OR email = '$usernameemail'");
         $row = mysqli_fetch_assoc($result);
-  
-            if (mysqli_num_rows($result) > 0) {
-                if ($password == $row["password"]){
+        $role = $row['role'];
+            if(mysqli_num_rows($result) > 0) {
+                if($password == $row["password"]) {
                     $this -> id = $row["id"];
-                    return 1; // Login successful
+
+                    if($role == 'admin') {
+                        return 1; // Login as admin
+                    } else {
+                        return 2; // Login as user
+                    }
+                    // } else {
+
+                    // }
+                        
                 }
                 else {
                     return 10; // Wrong password
@@ -63,7 +73,7 @@ class Login extends Connection {
   
 class Select extends Connection {
     public function selectUserById($id) {
-        $result = mysqli_query($this->conn, "SELECT * FROM user_tbl WHERE id = $id");
+        $result = mysqli_query($this->conn, "SELECT * FROM users_tbl WHERE id = $id");
         return mysqli_fetch_assoc($result);
     }
 }
