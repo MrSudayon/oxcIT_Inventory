@@ -12,6 +12,17 @@
     <title>Login</title>
 </head>
 <body>
-    asd
+    <div class="login-form">
+        <div class="logo">
+            <img src="../assets/logo.jpg" style="height: 180px; width: auto;"></img>
+        </div>
+        <div class="login-field">
+            <label for="username"> <p>Username:</p> </label>
+            <input type="text" name="username" id="user">
+            <label for="password"> Password: </label>
+            <input type="password" name="password" id="pass">
+            <button type="submit" class="submit">Login</button>
+        </div>
+    </div>
 </body>
 </html>
