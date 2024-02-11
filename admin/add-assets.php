@@ -1,10 +1,29 @@
 <?php
 require '../php/db_connection.php';
+// require '../classes/functions.php';
 
 $select = new Select();
 
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
+    if($user['role'] == 'admin') {
+        $record = new Operations();
+
+        if(isset($_POST['save'])) {
+
+            $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], $_POST['dateprchs'], $_POST['status'], $_POST['remarks']);
+            
+            if($result == 1) {
+                echo "<script> alert('Data Stored successfully!'); </script>";
+                header("Refresh:0; url=add-assets.php");
+
+            } elseif($result == 100) {
+                echo "<script> alert('Failed'); </script>";
+            }    
+        }
+    } else {
+        header("Location: ../index.php");
+    }
 } else {
     header("Location: ../php/login.php");
 }
@@ -58,7 +77,7 @@ if(!empty($_SESSION['id'])) {
                         </div>
                         <div class="input-box">
                             <span class="details">Date Purchased</span>
-                            <input type="date" name="asset-type" placeholder="Date Purchased" id="" required>
+                            <input type="date" name="dateprchs" placeholder="Date Purchased" id="" required>
                         </div>
                         <div class="input-box">
                             <span class="details">Status</span>
@@ -101,7 +120,21 @@ if(!empty($_SESSION['id'])) {
                         <div class="asset-details">
                             <div class="input-box">
                                 <span class="details">Assigned To</span>
-                                <input type="text" name="assigned" placeholder="Assigned To" id="" required>
+                                <!-- <input type="text" name="assigned" placeholder="Assigned To" id="" required> -->
+                                <select name="assigned" id="assigned" required class="assigned">
+                                    <?php
+                                        $sql = "SELECT * FROM users_tbl WHERE status='1'";
+                                        $res = mysqli_query($this->conn, $sql);
+                                
+                                        foreach ($res as $results) {
+                                    ?>
+                                    <option value="<?php echo $results['username']; ?>">
+                                        <?php echo $results['username']; ?>
+                                    </option>
+                                    <?php
+                                        }
+                                    ?>
+                                </select>
                             </div>
                             <div class="input-box">
                                 <span class="details">Department</span>

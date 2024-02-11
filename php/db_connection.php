@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+require '../classes/functions.php';
+
 class Connection {
     public $host = "localhost";
     public $user = "root";
@@ -10,6 +12,14 @@ class Connection {
 
     public function __construct() {
         $this->conn = mysqli_connect($this->host, $this->user, $this->password, $this->db_name);
+        if(mysqli_connect_error()) {
+            die ("Connection Failed: ".mysqli_error($this->conn));
+        }
+    }
+
+    public function check($a) {
+        $return = mysqli_real_escape_string($this->conn,$a);
+        return $return;
     }
 }
 
