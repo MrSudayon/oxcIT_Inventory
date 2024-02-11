@@ -65,16 +65,73 @@ main {
     background-color:#17171c;
 }
 .content {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     height: calc(100dvh - 100px);
-    padding: 10px 20px;
+
+    width: 100%;
+    padding: 10px 40px;
+}
+.assets-table {
+    width: 100%;
+}
+th, td{
+    padding: 5px 10px;
+    border: 1px solid white;
 }
 .link-btns {
-    background-color: #2E4583;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 30px;
+    padding: 10px 40px;
+    height: 50px;
     width: 100%;
 }
 .link-btn {
     background-color: var(--main-color);
-    padding: 5px 10px;
+    padding: 5px 25px;
     border-radius: 15px;
+    transition: all .3s;
+}
+.link-btn:hover {
+    color: var(--main-color);
+    border: 1px solid white;
+    background-color: var(--bg-color);
+    transition: all .3s;
+}
+
+.add-form {
+    padding: 25px 30px;
+    max-width: 700px;
+    width: 100%;
+    background: #fff;
+    color: black;
+}   
+.add-form .title {
+    font-size: 25px;
+    font-weight: 500;
+    position: relative;
+}
+.add-form .title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    background-color: var(--main-color);
+}
+.add-form form .asset-details {
+    display: flex;
+    flex-wrap: wrap;
+}
+form .asset-details .input-box {
+    width: calc(100% / 2 - 20px);
+    top: 50px;
+}
+.asset-details .input-box input{
+    height: 35px;
+    width: 100%;
 }

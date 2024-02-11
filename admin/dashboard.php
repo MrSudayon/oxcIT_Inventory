@@ -33,13 +33,44 @@ if(!empty($_SESSION['id'])) {
     </header>
     <main>
         <div class="content">
-            <h1>Welcome Admin <?php echo $user['username']; ?></h1>
-        
-            <br>
+            <h2>Welcome Admin <?php echo $user['username']; ?></h2><br>
+            <h1> Assets </h1>
+            <table class="assets-table">
+                <tr>
+                    <th>User</th>
+                    <th>Department</th>
+                    <th>Asset Type</th>
+                    <th>Asset Tag</th>
+                    <th>Model</th>
+                    <th>Socification</th>
+                    <th>Status</th>
+                    <th>Date Deployed</th>
+                    <th>Date Turnover</th>
+                    <th coslpan="2">Action</th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <a href="#">Update</a>
+                        <a href="#">Delete</a>
+                    </td>                    
+                </tr>
+            </table>
+            
+            
             <div class="link-btns">
-                <a href="#" class="link-btn">Add</a>
+                <a href="add-assets.php" class="link-btn">Add</a>
                 <a href="#" class="link-btn">Accountability</a>
             </div>
+            
         </div>
     </main>
 
