@@ -26,7 +26,7 @@ if(!empty($_SESSION['id'])) {
         <nav>
             <ul>
                 <li><a href="#">Home</a></li>
-                <li><a href="#">Assets</a></li>
+                <li><a href="../php/register.php">Users</a></li>
                 <li><a href="../php/logout.php">Logout</a></li>
             </ul>
         </nav>

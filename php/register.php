@@ -1,22 +1,37 @@
 <?php 
 require('db_connection.php');
 
-$register = new Register();
+$select = new Select();
 
-if(isset($_POST['submit'])) {
+if(!empty($_SESSION['id'])) {
+    $user = $select->selectUserById($_SESSION['id']);
 
-    $result = $register->register($_POST['role'], $_POST['username'], $_POST['email'], $_POST['password'], $_POST['cpassword']);
-    
-    if($result == 1) {
-        echo "<script> alert('Registration Successful'); </script>";
+    if ($user['role'] == 'admin') {
+        
+        $register = new Register();
+
+        if(isset($_POST['submit'])) {
+
+            $result = $register->register($_POST['role'], $_POST['username'], $_POST['email'], $_POST['password'], $_POST['cpassword']);
+            
+            if($result == 1) {
+                echo "<script> alert('Registration Successful'); </script>";
+            }
+            elseif($result == 10) {
+                echo "<script> alert('Username or Email Has Already Taken'); </script>";
+            }
+            elseif($result == 100) {
+                echo "<script> alert('Password Does Not Match'); </script>";
+            }    
+        }
+    } else {
+        echo "<script> alert('Please contact Admin for creating new user'); </script>";
+        header("Location: ../index.php");
     }
-    elseif($result == 10) {
-        echo "<script> alert('Username or Email Has Already Taken'); </script>";
-    }
-    elseif($result == 100) {
-        echo "<script> alert('Password Does Not Match'); </script>";
-    }    
+} else {
+    header("Location: ../php/login.php");
 }
+
 
 
 ?>

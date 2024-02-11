@@ -64,6 +64,7 @@ main {
     justify-content: center;
     background-color:#17171c;
 }
+
 .content {
     display: flex;
     flex-direction: column;
@@ -102,6 +103,14 @@ th, td{
     transition: all .3s;
 }
 
+
+.container {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
 .add-form {
     padding: 25px 30px;
     max-width: 700px;
@@ -110,8 +119,9 @@ th, td{
     color: black;
 }   
 .add-form .title {
+    margin: 10px 0 5px;
     font-size: 25px;
-    font-weight: 500;
+    font-weight: 800;
     position: relative;
 }
 .add-form .title::before {
@@ -119,19 +129,66 @@ th, td{
     position: absolute;
     left: 0;
     bottom: 0;
-    height: 3px;
-    width: 30px;
-    background-color: var(--main-color);
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(135deg, var(--main-color), var(--sec-color));
 }
 .add-form form .asset-details {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 15px 0 5px 0;
 }
 form .asset-details .input-box {
+    margin-bottom: 10px;
     width: calc(100% / 2 - 20px);
-    top: 50px;
+}
+.asset-details .input-box .details {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
 }
 .asset-details .input-box input{
-    height: 35px;
+    height: 40px;
     width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+}
+form .button {
+    height: 40px;
+    margin: 20px 0;
+}
+form .button input {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background: linear-gradient(135deg, var(--main-color), var(--sec-color));
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: all .3s;
+    cursor: pointer;
+}
+form .button input:hover {
+    background: linear-gradient(90deg, var(--sec-color), var(--main-color));
+    transition: all .3s;
+}
+
+@media (max-width: 584px) {
+    .container {
+        max-width: 100%;
+    }
+    form .asset-details .input-box {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    .add-form form .asset-details {
+        max-height: 300px;
+        overflow-y: scroll;
+    }
 }

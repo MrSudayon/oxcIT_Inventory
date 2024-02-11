@@ -25,13 +25,13 @@ if(!empty($_SESSION['id'])) {
         </div>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Assets</a></li>
+                <li><a href="dashboard.php">Home</a></li>
+                <li><a href="../php/register.php">Users</a></li>
                 <li><a href="../php/logout.php">Logout</a></li>
             </ul>
         </nav>
     </header>
-    <main>
+    <div class="container">
         <div class="add-form">
             <div class="title">Asset Details</div>
                 <form action="" method="POST">
@@ -112,9 +112,12 @@ if(!empty($_SESSION['id'])) {
                                 <input type="text" name="location" placeholder="Location" id="">
                             </div>
                         </div>
+                    <div class="button">
+                        <input type="submit" value="Save" name="save">
+                    </div>
                 </form>
         </div>
-    </main>
+</div>
     
     
 </body>
