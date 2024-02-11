@@ -42,22 +42,25 @@ if(isset($_POST['submit'])) {
     <title>Login</title>
 </head>
 <body>
-    <div class="login-form">
-        <div class="logo">
-            <img src="../assets/logo.jpg" style="height: 180px; width: auto;"></img>
-        </div>
-        <div class="login-field">
-            <form action="" method="POST" autocomplete="off">
-                
-                <label for="username"> Username: </label>
-                <input type="text" name="username" id="user" required>
+    <main>
+        <div class="login-form">
+            <div class="logo">
+                <img src="../assets/logo.jpg" alt="logo" width="150px">
+            </div>
+            <div class="login-field">
+                <form action="" method="POST" autocomplete="off">
+                    
+                    <label for="username"> Username: </label>
+                    <input type="text" name="username" id="user" required>
 
-                <label for="password"> Password: </label>
-                <input type="password" name="password" id="pass" required>
-
-                <button type="submit" name="submit" class="login">Login</button>
-            </form>
+                    <label for="password"> Password: </label>
+                    <input type="password" name="password" id="pass" required>
+                    <br>
+                    <button type="submit" name="submit" class="login">Login</button>
+                </form>
+            </div>
         </div>
-    </div>
+    </main>
+
 </body>
 </html>

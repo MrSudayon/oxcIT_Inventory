@@ -30,32 +30,36 @@ if(isset($_POST['submit'])) {
     <title>Register User</title>
 </head>
 <body>
-    <div class="register-form">
-        <div class="register-field">
-            <h1> Add User </h1><br>
+    <main>
+        <div class="register-form">
+        <a href="../admin/dashboard.php" class="return">Back</a>
 
-            <form action="" method="POST" autocomplete="off">
-                
-                <label for="role"> User Access: </label>
-                <input type="text" name="role" id="role"/><br>
 
-                <label for="username"> Username: </label>
-                <input type="text" name="username" id="user"/><br>
+            <div class="register-field">
+                <h1> Add User </h1>
 
-                <label for="email"> Email: </label>
-                <input type="email" name="email" id="email"/><br>
+                <form action="" method="POST" autocomplete="off">
+                    
+                    <label for="role"> User Access: </label>
+                    <input type="text" name="role" id="role"/><br>
 
-                <label for="password"> Password: </label>
-                <input type="password" name="password" id="pass"/><br>
+                    <label for="username"> Username: </label>
+                    <input type="text" name="username" id="user"/><br>
 
-                <label for="cpassword"> Confirm Password: </label>
-                <input type="password" name="cpassword" id="cpass"/><br>
+                    <label for="email"> Email: </label>
+                    <input type="email" name="email" id="email"/><br>
 
-                <button type="submit" name="submit" class="login">Create</button>
-            </form>
-            <br><br>
-            <a href="login.php">Login</a>
+                    <label for="password"> Password: </label>
+                    <input type="password" name="password" id="pass"/><br>
+
+                    <label for="cpassword"> Confirm Password: </label>
+                    <input type="password" name="cpassword" id="cpass"/><br>
+                    
+                    <button type="submit" name="submit" class="login">Create</button>
+                </form>
+                <br>
+            </div>
         </div>
-    </div>
+    </main>
 </body>
 </html>

@@ -1,49 +1,73 @@
 
 /* Login Form CSS */
+:root {
+    --bg-color: #1F1F29;
+    --main-color: #5983FC;
+    --sec-color: #3E60C1;
+    --ter-color: #2E4583; /* or 293556 */
+}
+main {
+    height: 100dvh;
+}
 .login-form {
-    position: absolute;
     width: 800px;
     height: 450px;
     background-color: var(--bg-color);
     border-radius: 10px;
-
     display: flex;
-    justify-content: space-evenly;
-    flex-direction: column;
-
+    justify-content: center;
     align-items: center;
 } 
 .logo {
-
+    padding: 20px;
 }   
 .login-field {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    gap: 10px;
+    width: 40%;
 }
 
 .register-form {
-    position: absolute;
-    width: 600px;
-    height: 550px;
+    width: 500px;
+    height: 90dvh;
     background-color: var(--bg-color);
     border-radius: 10px;
-
-    display: flex;
-    justify-content: center;
-}
-.register-field {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
+} 
+.register-field {
+    padding: 5px;
+}
+.return {
+    position: relative;
+    transition: all .3s;
+    top: -20px;
+}
+.return:hover {
+    color: var(--main-color);
+    transition: all .3s;
+}
+.login {
+    position: absolute;
+    background-color: var(--main-color);
+    color: white;
+    padding: 5px 25px;
+    border-radius: 18px;
+    border: none;
+    cursor: pointer;
+    margin-left: 100px;
+    transition: all .3s;
+}
+.login:hover {
+    border: 1px solid white;
+    color: var(--main-color);
+    background-color: var(--bg-color);
+    transition: all .3s;
 }
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+button {
     padding: 5px;
-    margin: 5px;
+    margin: 8px;
 }

@@ -6,7 +6,7 @@ $select = new Select();
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
 } else {
-    header("Location: ./php/login.php");
+    header("Location: ../php/login.php");
 }
 ?>
 
@@ -19,21 +19,29 @@ if(!empty($_SESSION['id'])) {
     <title>Admin Dashboard</title>
 </head>
 <body>
-    <!-- <div class="side-menu side-menu-admin" id="mySidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-     
-    </div> -->
+    <header>
+        <div class="logo">
+            <img src="../assets/logo.jpg" alt="logo" width="70px">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Assets</a></li>
+                <li><a href="../php/logout.php">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="content">
+            <h1>Welcome Admin <?php echo $user['username']; ?></h1>
+        
+            <br>
+            <div class="link-btns">
+                <a href="#" class="link-btn">Add</a>
+                <a href="#" class="link-btn">Accountability</a>
+            </div>
+        </div>
+    </main>
 
-    <div class="header">
-        <div class="logo"> OXYCHEM </div>
-        <div class="navigators"></div>
-    </div>
-    <div class="content">
-        <h1>Welcome Admin <?php echo $user['username']; ?></h1>
-        <!-- <a href="../php/logout.php">Logout</a> -->
-    </div>
-
-
-    <script src="../js/sidebar_nav.js"></script>
 </body>
 </html>
