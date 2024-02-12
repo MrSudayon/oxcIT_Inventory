@@ -81,7 +81,14 @@ if(!empty($_SESSION['id'])) {
                         </div>
                         <div class="input-box">
                             <span class="details">Status</span>
-                            <input type="text" name="status" placeholder="Status" id="" required>
+                            <!-- <input type="text" name="status" placeholder="Status" id="" required> -->
+                            <select name="status" id="stts" required>
+                                <option value="" name="Select">Please Select</option>
+                                <option value="Deployed">Deployed</option>
+                                <option value="To be Deploy">To be Deploy</option>
+                                <option value="Maintenance">For Repaor</option>
+
+                            </select>
                         </div>
                         <div class="input-box">
                             <span class="details">Remarks</span>
@@ -117,36 +124,37 @@ if(!empty($_SESSION['id'])) {
                         </div>
                     </div>
                     <div class="title">User Information</div>
-                        <div class="asset-details">
-                            <div class="input-box">
-                                <span class="details">Assigned To</span>
-                                <!-- <input type="text" name="assigned" placeholder="Assigned To" id="" required> -->
-                                <select name="assigned" id="assigned" required class="assigned">
-                                    <?php
-                                        $sql = "SELECT * FROM users_tbl WHERE status='1'";
-                                        $res = mysqli_query($this->conn, $sql);
-                                
-                                        foreach ($res as $results) {
-                                    ?>
-                                    <option value="<?php echo $results['username']; ?>">
-                                        <?php echo $results['username']; ?>
-                                    </option>
-                                    <?php
-                                        }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="input-box">
-                                <span class="details">Department</span>
-                                <input type="text" name="department" placeholder="Department" id="" required>
-                            </div>
-                            <div class="input-box">
-                                <span class="details">location</span>
-                                <input type="text" name="location" placeholder="Location" id="">
-                            </div>
+                    <div class="asset-details">
+                        <div class="input-box">
+                            <span class="details">Assigned To</span>
+                            <!-- <input type="text" name="assigned" placeholder="Assigned To" id="" required> -->
+                            <select name="assigned" id="assigned" required class="assigned">
+                                <?php
+                                     $results = new get_All_User();
+
+                                     $user = $results->selectAllUser();
+                                     foreach($user as $row) {
+                                ?>
+                                <option value="<?php echo $row['username']; ?>">
+                                    <?php echo $row['username']; ?>
+                                </option>
+                                <?php
+                                    }
+                                    
+                                ?>
+                            </select>
                         </div>
+                        <div class="input-box">
+                            <span class="details">Department</span>
+                            <input type="text" name="department" placeholder="Department" id="" required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">location</span>
+                            <input type="text" name="location" placeholder="Location" id="">
+                        </div>
+                    </div>
                     <div class="button">
-                        <input type="submit" value="Save" name="save">
+                        <input type="submit" value="Save" name="save"/>
                     </div>
                 </form>
         </div>

@@ -65,7 +65,6 @@ if(!empty($_SESSION['id'])) {
                 </tr>
             </table>
             
-            
             <div class="link-btns">
                 <a href="add-assets.php" class="link-btn">Add</a>
                 <a href="#" class="link-btn">Accountability</a>

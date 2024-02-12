@@ -1,7 +1,6 @@
 <?php
 session_start();
-
-require '../classes/functions.php';
+include ('../classes/functions.php');
 
 class Connection {
     public $host = "localhost";
@@ -52,28 +51,23 @@ class Login extends Connection {
     public function login($usernameemail, $password) {
         $result = mysqli_query($this->conn, "SELECT * FROM users_tbl WHERE username = '$usernameemail' OR email = '$usernameemail'");
         $row = mysqli_fetch_assoc($result);
-        $role = $row['role'];
-            if(mysqli_num_rows($result) > 0) {
-                if($password == $row["password"]) {
-                    $this -> id = $row["id"];
 
-                    if($role == 'admin') {
-                        return 1; // Login as admin
-                    } else {
-                        return 2; // Login as user
-                    }
-                    // } else {
-
-                    // }
-                        
-                }
-                else {
-                    return 10; // Wrong password
-                }
+        if(mysqli_num_rows($result) > 0) {
+            if($password == $row["password"]) {
+                $this -> id = $row["id"];
+                $role = $row["role"];
+                
+                if($role == 'admin') {
+                    return 1; // Login as admin
+                } else {
+                    return 2; // Login as user
+                }  
+            } else {
+                return 10; // Wrong password
             }
-            else {
-                return 100; // User not registered
-            }
+        } else {
+            return 100; // User not registered
+        }
     }
     
     public function idUser() {
@@ -85,6 +79,16 @@ class Select extends Connection {
     public function selectUserById($id) {
         $result = mysqli_query($this->conn, "SELECT * FROM users_tbl WHERE id = $id");
         return mysqli_fetch_assoc($result);
+    }
+}
+
+class get_All_User extends Connection {
+    public function selectAllUser() {
+        $sql = mysqli_query($this->conn, "SELECT * FROM users_tbl WHERE status=1");
+        while($res = mysqli_fetch_assoc($sql)) {
+            $users[] = $res;
+        }
+        return $users;
     }
 }
 

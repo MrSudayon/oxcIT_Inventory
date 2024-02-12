@@ -148,7 +148,8 @@ form .asset-details .input-box {
     font-weight: 600;
     margin-bottom: 5px;
 }
-.asset-details .input-box input{
+.asset-details .input-box input,
+.asset-details .input-box select {
     height: 40px;
     width: 100%;
     outline: none;

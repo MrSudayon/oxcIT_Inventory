@@ -1,5 +1,6 @@
 <?php
-require './php/db_connection.php';
+
+require_once './php/db_connection.php';
 
 $select = new Select();
 
