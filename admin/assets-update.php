@@ -29,16 +29,13 @@ if(isset($_POST['update-asset']))
     $asset = new assetsController;
     $result = $asset->update($input, $id);
 
-    if($result)
-    {
-        $_SESSION['message'] = "Updated Successfully";
-        header("Location: student-view.php");
+    if($result) {
+        echo "alert('Updated Successfully')";
+        header("Location: dashboard.php");
         exit(0);
-    }
-    else
-    {
+    } else {
         $_SESSION['message'] = "Update Error";
-        header("Location: student-view.php");
+        header("Location: add-assets.php");
         exit(0);
     }
 }

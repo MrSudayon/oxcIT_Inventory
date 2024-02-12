@@ -51,6 +51,29 @@ if(!empty($_SESSION['id'])) {
             </ul>
         </nav>
     </header>
+    <script>
+    // Function to update the output div with the selected value
+    function removeVowels(str) {
+        // Use a regular expression to replace vowels (both upper and lower case) with an empty string
+        return str.replace(/[aeiouAEIOU]/g, '');
+    }
+
+    function displaySelectedValue() {
+        // Get the select element
+        var selectElement = document.getElementById("Type");
+
+        // Get the selected value
+        var selectedValue = selectElement.options[selectElement.selectedIndex].value;
+        var asset = removeVowels(selectedValue);
+        var assetTag = asset.toUpperCase();
+
+        var incrementalVal = 1;
+        // Display the selected value in the output div
+        for (var i = 1; i <= incrementalVal; i++) {
+            var output = document.getElementById("Tag").innerText = assetTag + "-" + i;
+        }
+    }
+    </script>
     <div class="container">
         <div class="add-form">
             <div class="title">Asset Details</div>
@@ -58,11 +81,22 @@ if(!empty($_SESSION['id'])) {
                     <div class="asset-details">
                         <div class="input-box">
                             <span class="details">Asset Type</span>
-                            <input type="text" name="asset-type" placeholder="Asset Type" id="" required>
+                            <!-- <input type="text" name="asset-type" placeholder="Asset Type" id="" required> -->
+                            <select name="asset-type" id="Type" onchange="displaySelectedValue()" required>
+                                <option value="">Please Select</option>
+                                <option value="Laptop">Laptop</option>
+                                <option value="Monitor">Monitor</option>
+                                <option value="Printer">Printer</option>
+                                <option value="Mobile">Mobile</option>
+                                <option value="UPS">UPS</option>
+                                <option value="AVR">AVR</option>
+                            </select>
                         </div>
+
                         <div class="input-box">
                             <span class="details">Asset Tag</span>
-                            <input type="text" name="asset-tag" placeholder="Asset Tag" id="" required>
+                            <div class="asset-tag" id="Tag"></div>
+                            <!-- <input type="text" name="asset-tag" placeholder="Asset Tag" id="Tag" disabled > -->
                         </div>
                         <div class="input-box">
                             <span class="details">Model</span>
