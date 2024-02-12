@@ -17,6 +17,35 @@ class assetsController {
             return false;
         }
     }
+    public function update($input, $id) {
+        global $db;
+        $assetID = mysqli_real_escape_string($db->conn, $id);
+        $assetType = $input['assettype'];
+        $assetTag = $input['assettag'];
+        $model = $input['model'];
+        $serial = $input['serial'];
+        $supplier = $input['supplier'];
+        $dateprchs = $input['datepurchased'];
+        $status = $input['status'];
+        $remarks = $input['remarks'];
+        $cpu = $input['processor'];
+        $ram = $input['memory'];
+        $storage = $input['storage'];
+        $os = $input['os'];
+        $others = $input['other'];
+        $assigned = $input['assigned'];
+        $department = $input['department'];
+        $location = $input['location'];
+
+        $qry = "UPDATE assets_tbl SET assettype='$assetType', assettag='$assetTag', model='$model', serial='$serial', supplier='$supplier', datepurchased='$dateprchs', status='$status', remarks='$remarks', CPU='$cpu', MEMORY='$ram', STORAGE='$storage', OS='$os', Others='$others', assigned='$assigned', department='$department', location='$location' WHERE id='$assetID' LIMIT 1";
+        $result = $db->conn->query($qry);
+        if($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 ?>
+

@@ -41,7 +41,9 @@ if(!empty($_SESSION['id'])) {
                     <th>Asset Type</th>
                     <th>Asset Tag</th>
                     <th>Model</th>
-                    <th>Specification</th>
+                    <th>CPU</th>
+                    <th>Memory</th>
+                    <th>Storage</th>
                     <th>Status</th>
                     <th>Date Deployed</th>
                     <th>Date Turnover</th>
@@ -63,10 +65,13 @@ if(!empty($_SESSION['id'])) {
                     <td><?php echo $row['assettype']; ?></td>
                     <td><?php echo $row['assettag']; ?></td>
                     <td><?php echo $row['model']; ?></td>
-                    <td><?php echo $row['specification']; ?></td>
+                    <td><?php echo $row['CPU']; ?></td>
+                    <td><?php echo $row['MEMORY']; ?></td>
+                    <td><?php echo $row['STORAGE']; ?></td>
                     <td><?php echo $row['status']; ?></td>
                     <td><?php echo $row['datedeployed']; ?></td>
                     <td><?php echo $row['dateturnover']; ?></td>
+
                     <td>
                     <center>
                         <a href="update.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="32px"></a>&nbsp;

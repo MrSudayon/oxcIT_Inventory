@@ -27,10 +27,11 @@ class Operations {
     }
     function record_Data($type, $tag, $mdl, $srl, $spplr, $dtprchs, $stts, $rmrks, $cpu, $ram, $storage, $os, $others, $datedeployed, $assigned, $dept, $location) {
         global $db;
-        $specification = $cpu . ", " . $ram . ", " . $storage . ", " . $os . ", " . $others;  
-    
-        $query = "INSERT INTO assets_tbl (id, department, assettype, assettag, model, serial, supplier, specification, assigned, status, location, datepurchased, remarks, datedeployed, dateturnover)
-                                VALUES ('','$dept','$type','$tag','$mdl','$srl','$spplr','$specification','$assigned','$stts','$location','$dtprchs','$rmrks','$datedeployed','')";
+        // $specification = $cpu . ", " . $ram . ", " . $storage . ", " . $os . ", " . $others;  
+
+
+        $query = "INSERT INTO assets_tbl (id, department, assettype, assettag, model, serial, supplier, CPU, MEMORY, STORAGE, OS, Others, assigned, status, location, datepurchased, remarks, datedeployed, dateturnover)
+                                VALUES ('','$dept','$type','$tag','$mdl','$srl','$spplr','$cpu','$ram','$storage','$os','$others','$assigned','$stts','$location','$dtprchs','$rmrks','$datedeployed','')";
 
         $result = mysqli_query($db->conn, $query);
 
