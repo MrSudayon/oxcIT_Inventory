@@ -21,7 +21,7 @@ if(!empty($_SESSION['id'])) {
 <body>
     <header>
         <div class="logo">
-            <img src="../assets/logo.jpg" alt="logo" width="70px">
+            <img src="../assets/logo.png" alt="logo" width="200px">
         </div>
         <nav>
             <ul>
@@ -33,8 +33,7 @@ if(!empty($_SESSION['id'])) {
     </header>
     <main>
         <div class="content">
-            <h2>Welcome Admin <?php echo $user['username']; ?></h2><br>
-            <h1> Assets </h1>
+            <h1> Assets </h1><br>
             <table class="assets-table">
                 <tr>
                     <th>User</th>
@@ -42,27 +41,41 @@ if(!empty($_SESSION['id'])) {
                     <th>Asset Type</th>
                     <th>Asset Tag</th>
                     <th>Model</th>
-                    <th>Socification</th>
+                    <th>Specification</th>
                     <th>Status</th>
                     <th>Date Deployed</th>
                     <th>Date Turnover</th>
                     <th coslpan="2">Action</th>
                 </tr>
+                
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                <?php 
+                    $getAllRecord = new Operations();
+
+                    $Records = $getAllRecord->getAllData();
+
+                    // foreach($Records as $data) {
+                    while($row = mysqli_fetch_assoc($Records)) {
+                    
+                ?>
+                    <td><?php echo $row['assigned']; ?></td>
+                    <td><?php echo $row['department']; ?></td>
+                    <td><?php echo $row['assettype']; ?></td>
+                    <td><?php echo $row['assettag']; ?></td>
+                    <td><?php echo $row['model']; ?></td>
+                    <td><?php echo $row['specification']; ?></td>
+                    <td><?php echo $row['status']; ?></td>
+                    <td><?php echo $row['datedeployed']; ?></td>
+                    <td><?php echo $row['dateturnover']; ?></td>
                     <td>
-                        <a href="#">Update</a>
-                        <a href="#">Delete</a>
-                    </td>                    
+                        <a href="#"><img src="../assets/icons/update.png" width="32px"></a>
+                        <a href="#"><img src="../assets/icons/remove.png" width="32px"></a>
+                    </td>    
+                
                 </tr>
+                <?php
+                    }
+                ?>
             </table>
             
             <div class="link-btns">

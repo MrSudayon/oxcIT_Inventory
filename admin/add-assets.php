@@ -10,9 +10,9 @@ if(!empty($_SESSION['id'])) {
         $record = new Operations();
 
         if(isset($_POST['save'])) {
-
-            $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], $_POST['dateprchs'], $_POST['status'], $_POST['remarks']);
-            
+           
+            $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], $_POST['dateprchs'], $_POST['status'], $_POST['remarks'], $_POST['processor'], $_POST['memory'], $_POST['storage'], $_POST['os'], $_POST['other'], $_POST['datedeployed'], $_POST['assigned'], $_POST['department'], $_POST['location']);
+        
             if($result == 1) {
                 echo "<script> alert('Data Stored successfully!'); </script>";
                 header("Refresh:0; url=add-assets.php");
@@ -20,6 +20,7 @@ if(!empty($_SESSION['id'])) {
             } elseif($result == 100) {
                 echo "<script> alert('Failed'); </script>";
             }    
+            
         }
     } else {
         header("Location: ../index.php");
@@ -81,12 +82,10 @@ if(!empty($_SESSION['id'])) {
                         </div>
                         <div class="input-box">
                             <span class="details">Status</span>
-                            <!-- <input type="text" name="status" placeholder="Status" id="" required> -->
-                            <select name="status" id="stts" required>
-                                <option value="" name="Select">Please Select</option>
-                                <option value="Deployed">Deployed</option>
+                            <select name="status">
                                 <option value="To be Deploy">To be Deploy</option>
-                                <option value="Maintenance">For Repaor</option>
+                                <option value="Deployed">Deployed</option>
+                                <option value="Maintenance">For Repair</option>
 
                             </select>
                         </div>

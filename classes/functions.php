@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once ('../php/db_connection.php');
 
@@ -7,7 +7,6 @@ $db = new Connection();
 class Operations {
     
     public function Store_Data() {
-        global $db;
         // if(isset($_POST['save'])) {
         //     //asset details
         //     $assettype = $db->check($_POST['asset-type']);
@@ -26,10 +25,12 @@ class Operations {
         //     }
         // }
     }
-    function record_Data($type, $tag, $mdl, $srl, $spplr, $dtprchs, $stts, $rmrks) {
+    function record_Data($type, $tag, $mdl, $srl, $spplr, $dtprchs, $stts, $rmrks, $cpu, $ram, $storage, $os, $others, $datedeployed, $assigned, $dept, $location) {
         global $db;
-        $query = "INSERT INTO assets_tbl (usersID, department, assettype, assettag, model, serial, supplier, specification, status, datepurchased, remarks, datedeployed, dateturnover)
-                VALUES ('1','','$type','$tag','$mdl','$srl','$spplr','','$stts','$dtprchs','$rmrks','','')";
+        $specification = $cpu . ", " . $ram . ", " . $storage . ", " . $os . ", " . $others;  
+    
+        $query = "INSERT INTO assets_tbl (id, department, assettype, assettag, model, serial, supplier, specification, assigned, status, location, datepurchased, remarks, datedeployed, dateturnover)
+                                VALUES ('','$dept','$type','$tag','$mdl','$srl','$spplr','$specification','$assigned','$stts','$location','$dtprchs','$rmrks','$datedeployed','')";
 
         $result = mysqli_query($db->conn, $query);
 
@@ -38,8 +39,18 @@ class Operations {
         } else {
             return 10; //Store Failed
         }
-
     }
-}
+
+    function getAllData() {
+        global $db;
+
+        $query = "SELECT * FROM assets_tbl";
+        $res = mysqli_query($db->conn, $query);
+
+        return $res;
+    }
+}   
+
+
 
 ?>
