@@ -55,7 +55,30 @@ if(!empty($_SESSION['id'])) {
     // Function to update the output div with the selected value
     function removeVowels(str) {
         // Use a regular expression to replace vowels (both upper and lower case) with an empty string
-        return str.replace(/[aeiouAEIOU]/g, '');
+        return str.replace(/[aeiouEIO]/g, '');
+    }
+
+    const categoryIncrementMap = {
+        "Laptop": 1,
+        "Monitor": 1,
+        "Printer": 1,
+        "Mobile": 1,
+        "UPS": 1,
+        "AVR": 1
+    };
+    let i = 1;
+
+    function handleCategorySelection(category) {
+        // Check if the category exists in the mapping
+        if (category in categoryIncrementMap) {
+            // Increment the counter based on the selected category
+            i += categoryIncrementMap[category];
+        } else {
+            // If category is not found, default to 1
+            i = 1;
+        }
+        // Output the updated value of i
+        console.log("Current value of i:", i);
     }
 
     function displaySelectedValue() {
@@ -67,11 +90,9 @@ if(!empty($_SESSION['id'])) {
         var asset = removeVowels(selectedValue);
         var assetTag = asset.toUpperCase();
 
-        var incrementalVal = 1;
-        // Display the selected value in the output div
-        for (var i = 1; i <= incrementalVal; i++) {
-            var output = document.getElementById("Tag").innerText = assetTag + "-" + i;
-        }
+        // Display the selected value in the output display
+        var output = document.getElementById("Tag").innerText = assetTag + "-" + i++;
+
     }
     </script>
     <div class="container">
