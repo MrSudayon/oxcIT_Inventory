@@ -50,6 +50,14 @@ class Operations {
 
         return $res;
     }
+
+    function getAssets() {
+        global $db;
+        $sql = "SELECT * FROM category_tbl WHERE status='1'";
+        $res = mysqli_query($db->conn, $sql);
+
+        return $res;
+    }
 }   
 
 

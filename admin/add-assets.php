@@ -92,6 +92,8 @@ if(!empty($_SESSION['id'])) {
 
         // Display the selected value in the output display
         var output = document.getElementById("Tag").innerText = assetTag + "-" + i;
+        // document.getElementById("Tag1").innerText = handleCategorySelection(assetTag);
+        // handleCategorySelection(document.getElementById("Tag1").innerText = assetTag);
 
     }
     </script>
@@ -103,20 +105,25 @@ if(!empty($_SESSION['id'])) {
                         <div class="input-box">
                             <span class="details">Asset Type</span>
                             <!-- <input type="text" name="asset-type" placeholder="Asset Type" id="" required> -->
+                            <?php
+                                $category = new Operations;
+                                $assettype = $category->getAssets();
+
+                                foreach($assettype as $assets) {
+                            ?>
                             <select name="asset-type" id="Type" onchange="displaySelectedValue()" required>
                                 <option value="">Please Select</option>
-                                <option value="Laptop">Laptop</option>
-                                <option value="Monitor">Monitor</option>
-                                <option value="Printer">Printer</option>
-                                <option value="Mobile">Mobile</option>
-                                <option value="UPS">UPS</option>
-                                <option value="AVR">AVR</option>
+                                <option value="<?=$assets['assetType']?>"><?php echo $assets['assetType']; ?></option>
                             </select>
+                            <?php
+                                }
+                            ?>
                         </div>
 
                         <div class="input-box">
                             <span class="details">Asset Tag</span>
                             <div class="asset-tag" id="Tag"></div>
+                            <div class="asset-tag" id="Tag1"></div>
                             <!-- <input type="text" name="asset-tag" placeholder="Asset Tag" id="Tag" > -->
                         </div>
                         <div class="input-box">
