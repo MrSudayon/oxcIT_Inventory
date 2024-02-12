@@ -44,7 +44,7 @@ class Operations {
     function getAllData() {
         global $db;
 
-        $query = "SELECT * FROM assets_tbl";
+        $query = "SELECT * FROM assets_tbl WHERE status!='Archive'";
         $res = mysqli_query($db->conn, $query);
 
         return $res;

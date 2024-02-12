@@ -68,8 +68,11 @@ if(!empty($_SESSION['id'])) {
                     <td><?php echo $row['datedeployed']; ?></td>
                     <td><?php echo $row['dateturnover']; ?></td>
                     <td>
-                        <a href="update.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="32px"></a>
+                    <center>
+                        <a href="update.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="32px"></a>&nbsp;
                         <a href="remove.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/remove.png" width="32px"></a>
+                    </center>
+                        
                     </td>    
                 
                 </tr>

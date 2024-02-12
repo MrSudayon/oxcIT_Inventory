@@ -41,7 +41,7 @@ if(!empty($_SESSION['id'])) {
 <body>
     <header>
         <div class="logo">
-            <img src="../assets/logo.jpg" alt="logo" width="70px">
+            <img src="../assets/logo.png" alt="logo" width="200px">
         </div>
         <nav>
             <ul>
@@ -157,8 +157,7 @@ if(!empty($_SESSION['id'])) {
                     </div>
                 </form>
         </div>
-</div>
-    
+    </div>
     
 </body>
 </html>

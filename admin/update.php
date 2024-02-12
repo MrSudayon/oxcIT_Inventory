@@ -16,7 +16,7 @@ if(!empty($_SESSION['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
-    <title>Admin Dashboard</title>
+    <title>Update</title>
 </head>
 <body>
     <header>
@@ -25,16 +25,118 @@ if(!empty($_SESSION['id'])) {
         </div>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
+                <li><a href="dashboard.php">Home</a></li>
                 <li><a href="../php/register.php">Users</a></li>
                 <li><a href="../php/logout.php">Logout</a></li>
             </ul>
         </nav>
     </header>
-    <main>
+    <div class="container">
+        <div class="add-form">
+            <div class="title">Asset Details</div>
+                <form action="" method="POST">
+                    <div class="asset-details">
+                        <div class="input-box">
+                            <span class="details">Asset Type</span>
+                            <input type="text" name="asset-type" placeholder="Asset Type" id="" required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Asset Tag</span>
+                            <input type="text" name="asset-tag" placeholder="Asset Tag" id="" required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Model</span>
+                            <input type="text" name="model" placeholder="Model" id="" required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Serial no.</span>
+                            <input type="text" name="serial" placeholder="Serial Number" id="" required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Supplier</span>
+                            <input type="text" name="supplier" placeholder="Supplier" id="" required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Date Purchased</span>
+                            <input type="date" name="dateprchs" placeholder="Date Purchased" id="" required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Status</span>
+                            <select name="status">
+                                <option value="To be Deploy">To be Deploy</option>
+                                <option value="Deployed">Deployed</option>
+                                <option value="Maintenance">For Repair</option>
 
+                            </select>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Remarks</span>
+                            <input type="text" name="remarks" placeholder="Remarks" id="">
+                        </div>
 
-    </main>
-    
+                    </div>
+                    <div class="title">Specification</div>
+                    <div class="asset-details">
+                        <div class="input-box">
+                            <span class="details">Processor</span>
+                            <input type="text" name="processor" placeholder="Processor" id="" required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Memory</span>
+                            <input type="text" name="memory" placeholder="Memory" id="" required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Storage</span>
+                            <input type="text" name="storage" placeholder="Storage" id="" required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Operating System</span>
+                            <input type="text" name="os" placeholder="Operating System" id="" required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Others</span>
+                            <input type="text" name="other" placeholder="Others" id="">
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Date Deployed</span>
+                            <input type="date" name="datedeployed" placeholder="Date Deployed" id="">
+                        </div>
+                    </div>
+                    <div class="title">User Information</div>
+                    <div class="asset-details">
+                        <div class="input-box">
+                            <span class="details">Assigned To</span>
+                            <!-- <input type="text" name="assigned" placeholder="Assigned To" id="" required> -->
+                            <select name="assigned" id="assigned" required class="assigned">
+                                <?php
+                                     $results = new get_All_User();
+
+                                     $user = $results->selectAllUser();
+                                     foreach($user as $row) {
+                                ?>
+                                <option value="<?php echo $row['username']; ?>">
+                                    <?php echo $row['username']; ?>
+                                </option>
+                                <?php
+                                    }
+                                    
+                                ?>
+                            </select>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Department</span>
+                            <input type="text" name="department" placeholder="Department" id="" required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">location</span>
+                            <input type="text" name="location" placeholder="Location" id="">
+                        </div>
+                    </div>
+                    <div class="button">
+                        <input type="submit" value="Save" name="save"/>
+                    </div>
+                </form>
+        </div>
+    </div>
 </body>
 </html>
