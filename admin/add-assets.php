@@ -91,7 +91,7 @@ if(!empty($_SESSION['id'])) {
         var assetTag = asset.toUpperCase();
 
         // Display the selected value in the output display
-        var output = document.getElementById("Tag").innerText = assetTag + "-" + i++;
+        var output = document.getElementById("Tag").innerText = assetTag + "-" + i;
 
     }
     </script>
@@ -117,7 +117,7 @@ if(!empty($_SESSION['id'])) {
                         <div class="input-box">
                             <span class="details">Asset Tag</span>
                             <div class="asset-tag" id="Tag"></div>
-                            <!-- <input type="text" name="asset-tag" placeholder="Asset Tag" id="Tag" disabled > -->
+                            <!-- <input type="text" name="asset-tag" placeholder="Asset Tag" id="Tag" > -->
                         </div>
                         <div class="input-box">
                             <span class="details">Model</span>

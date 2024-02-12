@@ -154,13 +154,19 @@ form .asset-details .input-box {
     margin-bottom: 5px;
 }
 .asset-details .input-box input,
-.asset-details .input-box select {
+.asset-details .input-box select,
+.asset-details .input-box .asset-tag {
     height: 40px;
     width: 100%;
     outline: none;
     border-radius: 5px;
     border: 1px solid #ccc;
     padding-left: 15px;
+}
+.asset-details .input-box .asset-tag {
+    display: flex;
+    justify-content: start;
+    align-items: center;
 }
 form .button {
     height: 40px;
