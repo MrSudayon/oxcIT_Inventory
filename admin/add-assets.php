@@ -93,8 +93,6 @@ if(!empty($_SESSION['id'])) {
         // Display the selected value in the output display
         var output = document.getElementById("Tag").innerText = assetTag + "-" + i;
         // document.getElementById("Tag1").innerText = handleCategorySelection(assetTag);
-        handleCategorySelection(document.getElementById("Tag1").innerText = assetTag + i);
-
     }
     </script>
     <div class="container">
@@ -122,11 +120,14 @@ if(!empty($_SESSION['id'])) {
                             </select>
                             
                         </div>
-
+                            <?php
+                                $tag = "<script>document.getElementByID('Tag').value</script>"; 
+                            ?>
                         <div class="input-box">
                             <span class="details">Asset Tag</span>
-                            <div class="asset-tag" id="Tag"></div>
-                            <div class="asset-tag" id="Tag1"></div>
+                            <div class="asset-tag" name="asset-tag" id="Tag"></div>
+                            
+                            <input type="text" name="asset-tag" id="Tag" class="asset-tag" value="<?php echo $tag; ?>" readonly>
                             <!-- <input type="text" name="asset-tag" placeholder="Asset Tag" id="Tag" > -->
                         </div>
                         <div class="input-box">
