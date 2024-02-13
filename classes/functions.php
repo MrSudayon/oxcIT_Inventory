@@ -3,7 +3,7 @@
 require_once ('../php/db_connection.php');
 
 $db = new Connection();
-
+$results;
 class Operations {
     
     public function Store_Data() {
@@ -60,12 +60,16 @@ class Operations {
     }
     function searchData() {
         global $db;
+        global $results;
+
         if(isset($_POST['search'])) {
             $search = $_POST['search'];
             $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assigned LIKE '$search' OR department LIKE '%$search%'
             OR assettype LIKE '%$search%' OR status LIKE '%$search%' OR location LIKE '%$search%'
             OR assettag LIKE '%$search%' OR model LIKE '%$search%' OR remarks LIKE '%$search%' OR Others LIKE '%$search%')";
             $res = mysqli_query($db->conn, $sql);
+            
+            $results = $res;
 
             return $res;
         } else {
@@ -75,17 +79,6 @@ class Operations {
             return $res;
         }
         
-    }
-    function getSearched() {
-        global $db;
-        global $search;
-
-        $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assigned LIKE '$search' OR department LIKE '%$search%'
-        OR assettype LIKE '%$search%' OR status LIKE '%$search%' OR location LIKE '%$search%'
-        OR assettag LIKE '%$search%' OR model LIKE '%$search%' OR remarks LIKE '%$search%' OR Others LIKE '%$search%')";
-        $res = mysqli_query($db->conn, $sql);
-
-        return $res;
     }
 }
 

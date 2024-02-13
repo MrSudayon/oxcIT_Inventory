@@ -19,33 +19,28 @@ if(!empty($_SESSION['id'])) {
     <title>Accountability</title>
 </head>
 <body>
-
-<?php 
-    $getAllRecord = new Operations();
-
-    // $Records = $getAllRecord->getAllData();
-    $searchData = $getAllRecord->getSearched();
-    // foreach($Records as $data) {
-    while($row = mysqli_fetch_assoc($searchData)) {
-        $user = $row['assigned'];
-        $cpu = $row['CPU'];
-        $ram = $row['MEMORY'];
-        $storage = $row['STORAGE'];
-        $specs = 'CPU: ' . $cpu . '<br>MEMORY: ' . $ram . '<br>STORAGE: ' . $storage;
-?>
-    Selected: <?php echo $user; ?>
-<?php
-    }
-?>
-
-   
 <div class="content">
+<?php 
+    $selected = $_GET['select'];
+
+                
+    foreach ($selected as $userID){ 
+        $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
+        $res = mysqli_query($db->conn, $sql);
+    
+    while($row = mysqli_fetch_assoc($res)) {
+        $name = $row['assigned'];
+        $dept = $row['department'];
+?>
     <div class="info">
         <h3>Employee Information</h3><br>
         <h4>Date:</h4>
-        <h4>Name:</h4>
-        <h4>Department:</h4>
+        <h4>Name: <?php echo $name; ?></h4>
+        <h4>Department: <?php echo $dept; ?></h4>
     </div>
+<?php
+    }}
+?>
         <table class="assets-table">
             
             <tr>
@@ -57,12 +52,13 @@ if(!empty($_SESSION['id'])) {
                 <th>Remarks</th>
             </tr>
             <?php 
-                $getAllRecord = new Operations();
 
-                // $Records = $getAllRecord->getAllData();
-                $searchData = $getAllRecord->searchData();
-                // foreach($Records as $data) {
-                while($row = mysqli_fetch_assoc($searchData)) {
+                
+                foreach ($selected as $userID){ 
+                    $sql = "SELECT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
+                    $res = mysqli_query($db->conn, $sql);
+                
+                while($row = mysqli_fetch_assoc($res)) {
                     $cpu = $row['CPU'];
                     $ram = $row['MEMORY'];
                     $storage = $row['STORAGE'];
@@ -80,7 +76,7 @@ if(!empty($_SESSION['id'])) {
             
             </tr>
             <?php
-                }
+                }}
             ?>
         </table>
         <div class="info">
@@ -97,7 +93,7 @@ if(!empty($_SESSION['id'])) {
             I understand that I am required to return the asset on the specified date or upon termination of my employment. Failure to return the asset in good condition may result in disciplinary action and/or financial responsibility for repair or replacement costs.
             <br><br>
             <div class="empInfo">
-                <h3>Employee Signature:</h3><h3>Date:</h3>
+                <h3>Employee Signature:</h3><h3>Date:<?php echo date("Y-m-d"); ?></h3>
             </div>
             </p>
         </div>

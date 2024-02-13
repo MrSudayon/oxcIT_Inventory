@@ -40,9 +40,11 @@ if(!empty($_SESSION['id'])) {
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </form>
             </div>
+            <form action="accountability.php" method="get">
             
             <table class="assets-table">
                 <tr>
+                    <th></th>
                     <th>User</th>
                     <th>Department</th>
                     <th>Asset Type</th>
@@ -68,7 +70,8 @@ if(!empty($_SESSION['id'])) {
                     // foreach($Records as $data) {
                     while($row = mysqli_fetch_assoc($searchData)) {
                     
-                ?>
+                ?> 
+                    <td><input type="checkbox" name="select[]" value="<?php echo $row['id']; ?>"></td>
                     <td><?php echo $row['assigned']; ?></td>
                     <td><?php echo $row['department']; ?></td>
                     <td><?php echo $row['assettype']; ?></td>
@@ -97,9 +100,11 @@ if(!empty($_SESSION['id'])) {
             
             <div class="link-btns">
                 <a href="add-assets.php" class="link-btn">Add</a>
-                <a href="accountability.php" class="link-btn">Accountability</a>
+                <button type="submit" class="link-btn" name="accountability" >Accountability</button>
+                <button type="submit" class="link-btn" name="turnover" >Turn Over</button>
                 <!-- <a href="accountability.php" class="link-btn">Accountability</a> -->
             </div>
+            </form>
             
         </div>
 
