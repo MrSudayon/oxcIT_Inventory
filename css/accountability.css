@@ -14,8 +14,11 @@
     --ter-color: #2E4583; /* or 293556 */
 }
 
-h1, h2, p, a, label {
+h1, h2, a, label {
     font-family: 'Roboto', sans-serif;
+}
+p {
+    text-wrap: wrap;
 }
 
 a {
@@ -28,25 +31,24 @@ body {
     color: black;
     font-weight: 600;
     font-family: 'Roboto', sans-serif;
-}
-h2 {
-    float: left;
-}
-main {
-    display: flex;
     height: 100dvh;
-    align-items: center;
-    justify-content: center;
-    background-color:#17171c;
+    background: antiquewhite;
+    padding: 0 30px;
+}
+
+
+.info {
+    margin: 10px 40px;
+    text-align: justify;
+}
+.empInfo {
+    display: flex;
+    justify-content: space-around;
 }
 
 .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100dvh;
-    background: linear-gradient(135deg, var(--ter-color), antiquewhite);
-
+    
+    border: 1px inset black;
     width: 100%;
     padding: 10px 40px;
 }
@@ -59,7 +61,7 @@ th {
 }
 th, td {
     padding: 5px 10px;
-    border: 1px solid white;
+    border: 1px solid black;
 }
 .link-btns {
     display: flex;

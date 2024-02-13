@@ -62,9 +62,9 @@ if(!empty($_SESSION['id'])) {
         "Laptop": 1,
         "Monitor": 1,
         "Printer": 1,
-        "Mobile": 1,
+        "Mobile": 2,
         "UPS": 1,
-        "AVR": 1
+        "AVR": 2
     };
     let i = 1;
 
@@ -93,7 +93,7 @@ if(!empty($_SESSION['id'])) {
         // Display the selected value in the output display
         var output = document.getElementById("Tag").innerText = assetTag + "-" + i;
         // document.getElementById("Tag1").innerText = handleCategorySelection(assetTag);
-        // handleCategorySelection(document.getElementById("Tag1").innerText = assetTag);
+        handleCategorySelection(document.getElementById("Tag1").innerText = assetTag + i);
 
     }
     </script>
@@ -105,19 +105,22 @@ if(!empty($_SESSION['id'])) {
                         <div class="input-box">
                             <span class="details">Asset Type</span>
                             <!-- <input type="text" name="asset-type" placeholder="Asset Type" id="" required> -->
+                            
+                            <select name="asset-type" id="Type" onchange="displaySelectedValue()" required>
+                            <option value="">Please Select</option>
                             <?php
                                 $category = new Operations;
                                 $assettype = $category->getAssets();
 
                                 foreach($assettype as $assets) {
                             ?>
-                            <select name="asset-type" id="Type" onchange="displaySelectedValue()" required>
-                                <option value="">Please Select</option>
+                                
                                 <option value="<?=$assets['assetType']?>"><?php echo $assets['assetType']; ?></option>
-                            </select>
                             <?php
                                 }
                             ?>
+                            </select>
+                            
                         </div>
 
                         <div class="input-box">

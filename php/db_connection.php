@@ -2,7 +2,6 @@
 session_start();
 include ('../classes/functions.php');
 include ('../classes/assetsController.php');
-include ('../fpdf/fpdf.php');
 
 class Connection {
     public $host = "localhost";

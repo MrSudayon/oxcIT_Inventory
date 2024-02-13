@@ -16,6 +16,7 @@ if(!empty($_SESSION['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Admin Dashboard</title>
 </head>
 <body>
@@ -31,9 +32,15 @@ if(!empty($_SESSION['id'])) {
             </ul>
         </nav>
     </header>
-    <main>
+    
         <div class="content">
-            <h1> Assets </h1><br>
+            <div class="search-container">
+                <form action="" method="POST">
+                    <input type="text" placeholder="Search.." name="search">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+            
             <table class="assets-table">
                 <tr>
                     <th>User</th>
@@ -54,10 +61,12 @@ if(!empty($_SESSION['id'])) {
                 <?php 
                     $getAllRecord = new Operations();
 
-                    $Records = $getAllRecord->getAllData();
+                    // $Records = $getAllRecord->getAllData();
+
+                    $searchData = $getAllRecord->searchData();
 
                     // foreach($Records as $data) {
-                    while($row = mysqli_fetch_assoc($Records)) {
+                    while($row = mysqli_fetch_assoc($searchData)) {
                     
                 ?>
                     <td><?php echo $row['assigned']; ?></td>
@@ -93,7 +102,6 @@ if(!empty($_SESSION['id'])) {
             </div>
             
         </div>
-    </main>
 
 </body>
 </html>
