@@ -5,6 +5,7 @@
     padding: 0; 
     box-sizing: border-box;
     scroll-behavior: smooth;
+    font-family: 'Courier New', Courier, monospace;
 }
 :root {
     --bg-color: #1F1F29;
@@ -28,28 +29,9 @@ body {
     font-weight: 600;
     font-family: 'Roboto', sans-serif;
 }
-/* ul {
-    display: flex;
-    list-style-type: none;
+h2 {
+    float: left;
 }
-ul li a {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    padding: 0 20px;
-    color: black;
-    display: inline-block;
-}
-li a::after {
-    content: '';
-    display: block;
-    height: 2px;
-    width: 0;
-    background: black;
-    transition: all .3s;
-}
-li a:hover::after {
-    width: 105%;
-} */
-
 main {
     display: flex;
     height: 100dvh;
@@ -83,7 +65,7 @@ th, td {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 30px;
+    gap: 10px;
     padding: 10px 40px;
     height: 50px;
     width: 100%;
@@ -111,7 +93,10 @@ th, td {
     justify-content: center;
     margin: 20px;
 }
-
+button {
+    cursor: pointer;
+    font-size: 18px;
+}
 
 @media (max-width: 584px) {
     .container {

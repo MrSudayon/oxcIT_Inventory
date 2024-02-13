@@ -89,6 +89,7 @@ if(!empty($_SESSION['id'])) {
             <div class="link-btns">
                 <a href="add-assets.php" class="link-btn">Add</a>
                 <a href="accountability.php" class="link-btn">Accountability</a>
+                <!-- <a href="accountability.php" class="link-btn">Accountability</a> -->
             </div>
             
         </div>

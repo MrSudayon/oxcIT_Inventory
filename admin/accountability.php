@@ -21,9 +21,8 @@ if(!empty($_SESSION['id'])) {
 <body>
     
     <main>
-
         <div class="content">
-            <h1> Assets </h1><br>
+            <h2> Assets </h2><br>
             <table class="assets-table">
                 
                 <tr>
@@ -63,12 +62,12 @@ if(!empty($_SESSION['id'])) {
             </table>
             
             <div class="link-btns">
-                <a href="pdf.php" class="link-btn">Save PDF</a>
-                <a href="dashboard.php" class="link-btn">Back</a>
+                <button id="print" class="link-btn">Save PDF</button><br>
+                <button id="back" class="link-btn">Back</a>
             </div>
             
         </div>
     </main>
-
+<script src="../js/print.js"></script>
 </body>
 </html>
