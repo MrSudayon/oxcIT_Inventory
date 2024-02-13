@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap');
+
+* {
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+:root {
+    --bg-color: #1F1F29;
+    --main-color: #5983FC;
+    --sec-color: #3E60C1;
+    --ter-color: #2E4583; /* or 293556 */
+}
+
+h1, h2, p, a, label {
+    font-family: 'Roboto', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+body {
+    /* background-color: var(--ter-color); */
+    color: black;
+    font-weight: 600;
+    font-family: 'Roboto', sans-serif;
+}
+/* ul {
+    display: flex;
+    list-style-type: none;
+}
+ul li a {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding: 0 20px;
+    color: black;
+    display: inline-block;
+}
+li a::after {
+    content: '';
+    display: block;
+    height: 2px;
+    width: 0;
+    background: black;
+    transition: all .3s;
+}
+li a:hover::after {
+    width: 105%;
+} */
+
+main {
+    display: flex;
+    height: 100dvh;
+    align-items: center;
+    justify-content: center;
+    background-color:#17171c;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100dvh;
+    background: linear-gradient(135deg, var(--ter-color), antiquewhite);
+
+    width: 100%;
+    padding: 10px 40px;
+}
+.assets-table {
+    width: 100%;
+}
+th {
+    background-color: rgb(255, 255, 54);
+    color: black;
+}
+th, td {
+    padding: 5px 10px;
+    border: 1px solid white;
+}
+.link-btns {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 30px;
+    padding: 10px 40px;
+    height: 50px;
+    width: 100%;
+}
+.link-btn {
+    background-color: var(--main-color);
+    padding: 5px 25px;
+    border: 1px solid black;
+    border-radius: 15px;
+    transition: all .3s;
+    color: black;
+}
+.link-btn:hover {
+    color: var(--main-color);
+    border: 1px solid white;
+    background-color: var(--bg-color);
+    transition: all .3s;
+}
+
+
+.container {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+
+@media (max-width: 584px) {
+    .container {
+        max-width: 100%;
+    }
+    form .asset-details .input-box {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    .add-form form .asset-details {
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+}
