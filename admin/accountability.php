@@ -8,6 +8,17 @@ if(!empty($_SESSION['id'])) {
 } else {
     header("Location: ../php/login.php");
 }
+
+if(isset($_GET['select'])) {
+    $selected = $_GET['select'];
+} else {
+    ?>
+        <script>
+            alert('Please select User');
+            window.location.replace('dashboard.php');
+        </script>
+    <?php
+}
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +32,6 @@ if(!empty($_SESSION['id'])) {
 <body>
 <div class="content">
 <?php 
-    $selected = $_GET['select'];
 
                 
     foreach ($selected as $userID){ 
@@ -31,16 +41,22 @@ if(!empty($_SESSION['id'])) {
     while($row = mysqli_fetch_assoc($res)) {
         $name = $row['assigned'];
         $dept = $row['department'];
-?>
-    <div class="info">
-        <h3>Employee Information</h3><br>
-        <h4>Date:</h4>
-        <h4>Name: <?php echo $name; ?></h4>
-        <h4>Department: <?php echo $dept; ?></h4>
+    }
+}
+
+?>  
+    <div class="head">
+        <div class="logo">
+
+        </div>
+
+        <div class="info">
+            <h3>Employee Information</h3><br>
+            <h4>Date:</h4>
+            <h4>Name: <?php echo $name; ?></h4>
+            <h4>Department: <?php echo $dept; ?></h4>
+        </div>
     </div>
-<?php
-    }}
-?>
         <table class="assets-table">
             
             <tr>
@@ -77,6 +93,7 @@ if(!empty($_SESSION['id'])) {
             </tr>
             <?php
                 }}
+            
             ?>
         </table>
         <div class="info">
