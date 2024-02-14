@@ -45,36 +45,40 @@ if(!empty($_SESSION['id'])) {
     <title>Register User</title>
 </head>
 <body>
-    <main>
-        <div class="register-form">
-        <a href="../admin/dashboard.php" class="return">Back</a>
-
-
-            <div class="register-field">
-                <h1> Add User </h1>
-
-                <form action="" method="POST" autocomplete="off">
-                    
-                    <label for="role"> User Access: </label>
-                    <input type="text" name="role" id="role"/><br>
-
-                    <label for="username"> Username: </label>
-                    <input type="text" name="username" id="user"/><br>
-
-                    <label for="email"> Email: </label>
-                    <input type="email" name="email" id="email"/><br>
-
-                    <label for="password"> Password: </label>
-                    <input type="password" name="password" id="pass"/><br>
-
-                    <label for="cpassword"> Confirm Password: </label>
-                    <input type="password" name="cpassword" id="cpass"/><br>
-                    
-                    <button type="submit" name="submit" class="login">Create</button>
-                </form>
-                <br>
-            </div>
+    <div class="container">
+        <div class="add-form">
+            <a href="../admin/dashboard.php" class="return">Back</a>
+            
+            <form action="" method="POST" autocomplete="off">
+                <div class="title">Add User</div>
+                <div class="asset-details">
+                    <div class="input-box">
+                        <span class="details">User Access:</span>
+                        <input type="text" name="role" id="role"/>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Username:</span>
+                        <input type="text" name="username" id="user"/>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Email:</span>
+                        <input type="email" name="email" id="email"/>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Password:</span>
+                        <input type="password" name="password" id="pass"/>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Confirm Password:</span>
+                        <input type="password" name="cpassword" id="cpass"/>
+                    </div>
+                </div>
+                <div class="button">
+                    <input type="submit" value="Save">
+                </div>
+            </form>
         </div>
-    </main>
+    </div>
+    
 </body>
 </html>

@@ -56,3 +56,128 @@ button {
     padding: 5px;
     margin: 5px;
 }
+
+/*  */
+
+.container {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+.add-form {
+    padding: 25px 30px;
+    max-width: 700px;
+    width: 100%;
+    background: #fff;
+    color: black;
+}   
+.add-form .title {
+    margin: 10px 0 5px;
+    font-size: 25px;
+    font-weight: 800;
+    position: relative;
+}
+.add-form .title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(135deg, var(--main-color), var(--sec-color));
+}
+.add-form form .asset-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 15px 0 5px 0;
+}
+form .asset-details .input-box {
+    margin-bottom: 10px;
+    width: calc(100% / 2 - 20px);
+}
+.asset-details .input-box .details {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+.asset-details .input-box input,
+.asset-details .input-box select,
+.asset-details .input-box .asset-tag {
+    height: 40px;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+}
+.search-container {
+    float: right;
+    margin-bottom: 10px;
+}
+
+input[type=text] {
+    padding-left: 15px;
+    border-radius: 5px 0 0 5px;
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 17px;
+    border: none;
+}
+
+.search-container button {
+    border-radius: 0 5px 5px 0;
+
+    float: right;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+
+.asset-details .input-box .asset-tag {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+form .button {
+    height: 40px;
+    margin: 20px 0;
+}
+form .button input {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background: linear-gradient(135deg, var(--main-color), var(--sec-color));
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: all .3s;
+    cursor: pointer;
+}
+form .button input:hover {
+    background: linear-gradient(90deg, var(--sec-color), var(--main-color));
+    transition: all .3s;
+}
+
+@media (max-width: 584px) {
+    .container {
+        max-width: 100%;
+    }
+    form .asset-details .input-box {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    .add-form form .asset-details {
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+}
