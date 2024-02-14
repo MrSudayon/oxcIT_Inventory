@@ -1,13 +1,28 @@
 
-/* Login Form CSS */
+/* Register Form CSS */
+
+* {
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
 :root {
     --bg-color: #1F1F29;
     --main-color: #5983FC;
     --sec-color: #3E60C1;
     --ter-color: #2E4583; /* or 293556 */
 }
+h1, h2, p, a, label {
+    font-family: 'Roboto', sans-serif;
+}
+a {
+    text-decoration: none;
+    color: white;
+}
 body {
-    height: 100dvh;
+    font-family: 'Roboto', sans-serif;
+    min-height: 100dvh;
     width: 100%;
 }
 .return {
@@ -52,7 +67,7 @@ button {
 
 .container {
     background-color: var(--bg-color);
-
+    height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;

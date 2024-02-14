@@ -40,7 +40,7 @@ if(!empty($_SESSION['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/styles.css">
+    <!-- <link rel="stylesheet" href="../css/styles.css"> -->
     <link rel="stylesheet" href="../css/fields.css">
     <title>Register User</title>
 </head>
@@ -54,7 +54,11 @@ if(!empty($_SESSION['id'])) {
                 <div class="asset-details">
                     <div class="input-box">
                         <span class="details">User Access:</span>
-                        <input type="text" name="role" id="role"/>
+                        <!-- <input type="text" name="role" id="role"/> -->
+                        <select name="role">
+                            <option value="Admin">Admin</option>
+                            <option value="User">User</option>
+                        </select>
                     </div>
                     <div class="input-box">
                         <span class="details">Username:</span>
