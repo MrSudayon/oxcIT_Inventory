@@ -45,17 +45,15 @@ if(isset($_GET['select'])) {
 }
 
 ?>  
-    <div class="head">
-        <div class="logo">
-            <img src="../assets/logo.png" width="150px"></img>
-        </div>
-
-        <div class="info">
-            <h4>Date: _________</h4>
-        </div>
+    <div class="logo">
+        <img src="../assets/logo.png" width="150px"></img>
     </div>
+    <br><br><br>
+    <center>
+    <h2>Accountability Form</h2>
+
+    </center>
         <table class="assets-table">
-            
             <tr>
                 <th>Asset Type</th>
                 <th>Specification</th>
@@ -93,36 +91,30 @@ if(isset($_GET['select'])) {
             
             ?>
         </table>
-        <div class="info">
+        <div class="info"><br>
             <h3>Responsibilities</h3>
             <p>
-            I, <?php echo $name; ?>, acknowledge that the above-mentioned asset has been issued to me for the purpose of performing my job responsibilities. I understand and agree to the following responsibilities:
-            <br><br>
+            &nbsp;&nbsp; &nbsp;&nbsp;I, <?php echo $name; ?>, acknowledge that the above-mentioned asset has been issued to me for the purpose of performing my job responsibilities. I understand and agree to the following responsibilities:
+            <br><br></p>
+            <p style="font-weight: 600;">
             1. I am responsible for the proper use and care of the assigned asset.
             <br>2. I will report any damage, loss, or malfunction of the asset to my supervisor immediately.
             <br>3. I will not loan, transfer, or dispose of the asset without prior authorization from the appropriate authority.
             <br>4. I will return the asset in good condition upon termination of my employment or upon request by the company.
+            </p>
+           
             <br><br>
-            Asset Return:<br>
-            I understand that I am required to return the asset on the specified date or upon termination of my employment. Failure to return the asset in good condition may result in disciplinary action and/or financial responsibility for repair or replacement costs.
+            <h3>Asset Return:</h3>
+            <p>
+            &nbsp;&nbsp; &nbsp;&nbsp;I understand that I am required to return the asset on the specified date or upon termination of my employment. Failure to return the asset in good condition may result in disciplinary action and/or financial responsibility for repair or replacement costs.</p>
             <br><br>
-            <div class="empInfo">
+            
                 <h3>Employee Signature: _________________</h3>
                 <h3>Department: <?php echo $dept; ?></h3>
                 <h3>Date: ___________</h3><br>
-            </div>
-                
-               
-                
-            </p>
         </div>
         
     </div>
-    <div class="link-btns">
-        <button id="print" class="link-btn">Save PDF</button><br>
-        <button id="back" class="link-btn">Back</a>
-    </div>
-        
     
 <script src="../js/print.js"></script>
 </body>

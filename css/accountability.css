@@ -14,36 +14,29 @@
     --ter-color: #2E4583; /* or 293556 */
 }
 
-h1, h2, a, label {
-    font-family: 'Roboto', sans-serif;
+h1, h2, h3, p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
 }
 p {
+    font-weight: 400;
+    margin-top: 5px;
     text-wrap: wrap;
-}
-
-a {
-    text-decoration: none;
-    color: white;
 }
 
 body {
     /* background-color: var(--ter-color); */
     color: black;
     font-weight: 600;
-    font-family: 'Roboto', sans-serif;
-    height: 100dvh;
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100dvh;
+    width: 100%;
     background: antiquewhite;
     padding: 0 30px;
 }
 
-.head {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-.info {
-    margin: 10px 40px;
-    text-align: justify;
+.logo {
+    float: left;
 }
 .empInfo {
     display: flex;
@@ -51,9 +44,8 @@ body {
 }
 
 .content {
-    border: 1px inset black;
     width: 100%;
-    padding: 10px 40px;
+    padding: 10px 0;
 }
 .assets-table {
     width: 100%;
