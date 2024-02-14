@@ -52,7 +52,7 @@ if(isset($_GET['select'])) {
 
         <div class="info">
             <h3>Employee Information</h3><br>
-            <h4>Date:</h4>
+            <h4>Date: _________</h4>
             <h4>Name: <?php echo $name; ?></h4>
             <h4>Department: <?php echo $dept; ?></h4>
         </div>
@@ -110,7 +110,7 @@ if(isset($_GET['select'])) {
             I understand that I am required to return the asset on the specified date or upon termination of my employment. Failure to return the asset in good condition may result in disciplinary action and/or financial responsibility for repair or replacement costs.
             <br><br>
             <div class="empInfo">
-                <h3>Employee Signature:</h3><h3>Date:<?php echo date("Y-m-d"); ?></h3>
+                <h3>Employee Signature: _________________</h3><h3>Date: ___________</h3>
             </div>
             </p>
         </div>

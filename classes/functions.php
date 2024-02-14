@@ -80,6 +80,58 @@ class Operations {
         }
         
     }
+
+    
+
+    function checkAssetCount($assettype) {
+        global $db;
+
+        
+      
+        // $sql = "SELECT COUNT(*) FROM assets_tbl WHERE assettype='$assettype'";
+        // $count = mysqli_query($db->conn, $sql);
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Get the selected asset type
+            $selectedAssetType = $_POST['asset-type'];
+        
+            // Check if the asset tag already exists in the database
+            $sql = "SELECT assettag FROM assets_tbl WHERE assettype = '$selectedAssetType'";
+            $result = $db->conn->query($sql);
+        
+            if ($result->num_rows > 0) {
+                // Asset tag exists, find the highest existing asset tag number and increment it
+                $highestNumber = 0;
+                while($row = $result->fetch_assoc()) {
+                    $parts = explode('-', $row['assettag']);
+                    $number = intval(end($parts));
+                    if ($number > $highestNumber) {
+                        $highestNumber = $number;
+                    }
+                }
+                
+                $nextAssetTag = $selectedAssetType . '-' . ($highestNumber + 1);
+            } else {
+                // Asset tag doesn't exist, use the asset tag as is
+                $nextAssetTag = $selectedAssetType . '-1';
+            }
+
+
+            function removeVowelsAndToUpper($str) {
+                // Remove vowels
+                $strWithoutVowels = str_replace(['a', 'e', 'i', 'o', 'u', 'E', 'I', 'O'], '', $str);
+                
+                // Convert to uppercase
+                $strToUpper = strtoupper($strWithoutVowels);
+                
+                return $strToUpper;
+            }
+            
+            // Assign the next asset tag to the submitted form data
+            $finalTag = removeVowelsAndToUpper($nextAssetTag);
+            $_POST['asset-tag'] = $finalTag;
+        }
+
+    }
 }
 
 
