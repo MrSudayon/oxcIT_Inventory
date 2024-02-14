@@ -26,8 +26,9 @@ if(isset($_GET['select'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/logo.jpg">
     <link rel="stylesheet" href="../css/accountability.css">
-    <title>Accountability</title>
+    <title>Accountability Form</title>
 </head>
 <body>
 <div class="content">
@@ -50,8 +51,7 @@ if(isset($_GET['select'])) {
     </div>
     <br><br><br>
     <center>
-    <h2>Accountability Form</h2>
-
+    <h2>Accountability Form</h2><br>
     </center>
         <table class="assets-table">
             <tr>
@@ -94,7 +94,7 @@ if(isset($_GET['select'])) {
         <div class="info"><br>
             <h3>Responsibilities</h3>
             <p>
-            &nbsp;&nbsp; &nbsp;&nbsp;I, <?php echo $name; ?>, acknowledge that the above-mentioned asset has been issued to me for the purpose of performing my job responsibilities. I understand and agree to the following responsibilities:
+            &nbsp;&nbsp; &nbsp;&nbsp;I, <b><?php echo $name; ?></b>, acknowledge that the above-mentioned asset has been issued to me for the purpose of performing my job responsibilities. I understand and agree to the following responsibilities:
             <br><br></p>
             <p style="font-weight: 600;">
             1. I am responsible for the proper use and care of the assigned asset.
@@ -109,9 +109,9 @@ if(isset($_GET['select'])) {
             &nbsp;&nbsp; &nbsp;&nbsp;I understand that I am required to return the asset on the specified date or upon termination of my employment. Failure to return the asset in good condition may result in disciplinary action and/or financial responsibility for repair or replacement costs.</p>
             <br><br>
             
-                <h3>Employee Signature: _________________</h3>
-                <h3>Department: <?php echo $dept; ?></h3>
-                <h3>Date: ___________</h3><br>
+                <h4>Employee Signature: _________________</h4>
+                <h4>Department: <b><?php echo $dept; ?></b></h4>
+                <h4>Date: ___________</h4><br>
         </div>
         
     </div>
