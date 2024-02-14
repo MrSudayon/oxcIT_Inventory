@@ -23,6 +23,25 @@ class Connection {
     }
 }
 
+class AddEmployee extends Connection {
+    public function addEmployee($name, $division, $location) { 
+        $duplicate = mysqli_query($this->conn, "SELECT * FROM employee_tbl WHERE name='$name'");
+        
+        if (mysqli_num_rows($duplicate) > 0) {
+            return 10; // Duplicate Record
+        } else {
+            $query = "INSERT INTO employee_tbl (id, name, division, location)
+                                VALUES ('','$name', '$division', '$location')";
+
+            $result = mysqli_query($this->conn, $query);
+            if($result) { 
+                return 1; //Success
+            } else {
+                return 100; //Store Failed
+            }
+        }
+    }
+}
 class Register extends Connection {
     public function register($role, $user, $email, $pass, $conf_pass) {
 
@@ -30,8 +49,7 @@ class Register extends Connection {
 
         if (mysqli_num_rows($duplicate) > 0) {
             return 10; // Duplicate Record
-        } 
-        else {
+        } else {
             if($pass == $conf_pass) {
                 $sql = "INSERT INTO users_tbl VALUES('', '$user', '$email', '$pass', '$role', 1)";
                 mysqli_query($this->conn, $sql);
