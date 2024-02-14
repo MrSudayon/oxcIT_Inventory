@@ -109,6 +109,13 @@ class get_All_User extends Connection {
         }
         return $users;
     }
+    public function selectAllEmp() {
+        $sql = mysqli_query($this->conn, "SELECT * FROM employee_tbl");
+        while($res = mysqli_fetch_assoc($sql)) {
+            $users[] = $res;
+        }
+        return $users;
+    }
 }
 
 ?>

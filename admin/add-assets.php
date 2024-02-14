@@ -202,11 +202,12 @@ if(!empty($_SESSION['id'])) {
                             <?php
                                     $results = new get_All_User();
 
-                                    $user = $results->selectAllUser();
+                                    // $user = $results->selectAllUser();
+                                    $user = $results->selectAllEmp();
                                     foreach($user as $row) {
                             ?>
-                            <option value="<?php echo $row['username']; ?>">
-                                <?php echo $row['username']; ?>
+                            <option value="<?php echo $row['name']; ?>">
+                                <?php echo $row['name']; ?>
                             </option>
                             <?php
                                 }

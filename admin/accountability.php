@@ -51,10 +51,7 @@ if(isset($_GET['select'])) {
         </div>
 
         <div class="info">
-            <h3>Employee Information</h3><br>
             <h4>Date: _________</h4>
-            <h4>Name: <?php echo $name; ?></h4>
-            <h4>Department: <?php echo $dept; ?></h4>
         </div>
     </div>
         <table class="assets-table">
@@ -99,7 +96,7 @@ if(isset($_GET['select'])) {
         <div class="info">
             <h3>Responsibilities</h3>
             <p>
-            I, [Employee Name], acknowledge that the above-mentioned asset has been issued to me for the purpose of<br> performing my job responsibilities. I understand and agree to the following responsibilities:
+            I, <?php echo $name; ?>, acknowledge that the above-mentioned asset has been issued to me for the purpose of performing my job responsibilities. I understand and agree to the following responsibilities:
             <br><br>
             1. I am responsible for the proper use and care of the assigned asset.
             <br>2. I will report any damage, loss, or malfunction of the asset to my supervisor immediately.
@@ -110,8 +107,13 @@ if(isset($_GET['select'])) {
             I understand that I am required to return the asset on the specified date or upon termination of my employment. Failure to return the asset in good condition may result in disciplinary action and/or financial responsibility for repair or replacement costs.
             <br><br>
             <div class="empInfo">
-                <h3>Employee Signature: _________________</h3><h3>Date: ___________</h3>
+                <h3>Employee Signature: _________________</h3>
+                <h3>Department: <?php echo $dept; ?></h3>
+                <h3>Date: ___________</h3><br>
             </div>
+                
+               
+                
             </p>
         </div>
         
