@@ -6,33 +6,26 @@
     --sec-color: #3E60C1;
     --ter-color: #2E4583; /* or 293556 */
 }
-main {
+body {
     height: 100dvh;
-}
-
-.register-form {
-    width: 500px;
-    height: 90dvh;
-    background-color: var(--bg-color);
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-} 
-.register-field {
-    padding: 5px;
+    width: 100%;
 }
 .return {
-    position: relative;
+
     transition: all .3s;
-    top: -20px;
+    border: 1px solid white;
+    padding: 5px 20px;
+    border-radius: 15px;
+    background-color: var(--sec-color);
+    font-weight: 700;
 }
 .return:hover {
+    background-color: white;
+    border: 1px solid black;
     color: var(--main-color);
     transition: all .3s;
 }
-.login {
+/* .login {
     position: absolute;
     background-color: var(--main-color);
     color: white;
@@ -55,16 +48,14 @@ input[type="password"],
 button {
     padding: 5px;
     margin: 5px;
-}
-
-/*  */
+} */
 
 .container {
+    background-color: var(--bg-color);
+
     display: flex;
-    height: 100%;
     align-items: center;
     justify-content: center;
-    margin: 20px;
 }
 .add-form {
     padding: 25px 30px;
