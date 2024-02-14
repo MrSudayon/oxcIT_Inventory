@@ -91,15 +91,17 @@ if(!empty($_SESSION['id'])) {
         var assetTag = asset.toUpperCase();
 
         // Display the selected value in the output display
-        var output = document.getElementById("asset-tag").innerText = assetTag + "-" + i;
+        var output = document.getElementById("tag").innerText = assetTag + "-" + i;
         // document.getElementById("Tag1").innerText = handleCategorySelection(assetTag);
     }
     function passValue() {
-        var divValue = document.getElementById("asset-tag").innerText;
+        var divValue = document.getElementById("tag").innerText;
     
         // Set the value of the input field
         document.getElementById("asset-tag").value = divValue;
     }
+    
+
     </script>
     <div class="container">
         <div class="add-form">
@@ -122,13 +124,12 @@ if(!empty($_SESSION['id'])) {
                                 }
                             ?>
                             </select>
-                            <!-- asdasdasdasd -->
                         </div>
                             
                         <div class="input-box">
                             <span class="details">Asset Tag</span>
-                            <div class="asset-tag" name="asset-tag" id="asset-tag"></div>
-                            <input type="text" name="asset-tag" id="asset-tag" class="asset-tag" readonly>
+                            <div class="asset-tag" id="tag"></div>
+                            <input type="text" name="asset-tag" id="asset-tag" hidden>
                             <!-- <input type="text" name="asset-tag" placeholder="Asset Tag" id="Tag" > -->
                         </div>
                         <div class="input-box">
@@ -220,7 +221,7 @@ if(!empty($_SESSION['id'])) {
                         </div>
                     </div>
                     <div class="button">
-                        <input type="submit" value="Save" name="save"/>
+                        <input type="submit" onclick="passValue()" value="Save" name="save"/>
                     </div>
                 </form>
         </div>

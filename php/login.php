@@ -37,24 +37,24 @@ if(isset($_POST['submit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/fields.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <!-- <link rel="stylesheet" href="../css/fields.css"> -->
     <title>Login</title>
 </head>
 <body>
     <main>
         <div class="login-form">
             <div class="logo">
-                <img src="../assets/logo.jpg" alt="logo" width="150px">
+                <img src="../assets/logo.jpg" alt="logo" width="220px">
             </div>
             <div class="login-field">
                 <form action="" method="POST" autocomplete="off">
                     
                     <label for="username"> Username: </label>
-                    <input type="text" name="username" id="user" required>
+                    <input type="text" name="username" placeholder="Username" required>
 
                     <label for="password"> Password: </label>
-                    <input type="password" name="password" id="pass" required>
+                    <input type="password" name="password" placeholder="Password" required>
                     <br>
                     <button type="submit" name="submit" class="login">Login</button>
                 </form>

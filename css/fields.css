@@ -9,21 +9,6 @@
 main {
     height: 100dvh;
 }
-.login-form {
-    width: 800px;
-    height: 450px;
-    background-color: var(--bg-color);
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} 
-.logo {
-    padding: 20px;
-}   
-.login-field {
-    width: 40%;
-}
 
 .register-form {
     width: 500px;
@@ -69,5 +54,5 @@ input[type="email"],
 input[type="password"],
 button {
     padding: 5px;
-    margin: 8px;
+    margin: 5px;
 }
