@@ -36,7 +36,11 @@ body {
     padding: 0 30px;
 }
 
-
+.head {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
 .info {
     margin: 10px 40px;
     text-align: justify;
@@ -47,7 +51,6 @@ body {
 }
 
 .content {
-    
     border: 1px inset black;
     width: 100%;
     padding: 10px 40px;
