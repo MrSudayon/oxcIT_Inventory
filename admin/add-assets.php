@@ -55,58 +55,7 @@ if(!empty($_SESSION['id'])) {
             </ul>
         </nav>
     </header>
-    <script>
-    // Function to update the output div with the selected value
-    function removeVowels(str) {
-        // Use a regular expression to replace vowels (both upper and lower case) with an empty string
-        return str.replace(/[aeiouEIO]/g, '');
-    }
 
-    const categoryIncrementMap = {
-        "Laptop": 1,
-        "Monitor": 1,
-        "Printer": 1,
-        "Mobile": 2,
-        "UPS": 1,
-        "AVR": 2
-    };
-    let i = 1;
-
-    function handleCategorySelection(category) {
-        // Check if the category exists in the mapping
-        if (category in categoryIncrementMap) {
-            // Increment the counter based on the selected category
-            i += categoryIncrementMap[category];
-        } else {
-            // If category is not found, default to 1
-            i = 1;
-        }
-        // Output the updated value of i
-        console.log("Current value of i:", i);
-    }
-
-    function displaySelectedValue() {
-        // Get the select element
-        var selectElement = document.getElementById("Type");
-
-        // Get the selected value
-        var selectedValue = selectElement.options[selectElement.selectedIndex].value;
-        var asset = removeVowels(selectedValue);
-        var assetTag = asset.toUpperCase();
-
-        // Display the selected value in the output display
-        var output = document.getElementById("tag").innerText = assetTag;
-    }
-
-    function passValue() {
-        var divValue = document.getElementById("tag").innerText;
-    
-        // Set the value of the input field
-        document.getElementById("asset-tag").value = divValue;
-    }
-    
-
-    </script>
     <div class="container">
         <div class="add-form">
             <form action="" method="POST">
@@ -114,7 +63,7 @@ if(!empty($_SESSION['id'])) {
                 <div class="asset-details">
                     <div class="input-box">
                         <span class="details">Asset Type</span>                            
-                        <select name="asset-type" id="Type" onchange="displaySelectedValue()" required>
+                        <select name="asset-type" id="Type" onChange="displaySelectedValue()" required>
                         <option value="">Please Select</option>
                         <?php
                             $category = new Operations;
@@ -154,7 +103,7 @@ if(!empty($_SESSION['id'])) {
                     </div>
                     <div class="input-box">
                         <span class="details">Status</span>
-                        <select name="status">
+                        <select name="status" id="status" onChange="changetextbox()">
                             <option value="To be Deploy">To be Deploy</option>
                             <option value="Deployed">Deployed</option>
                             <option value="Maintenance">For Repair</option>
@@ -190,14 +139,13 @@ if(!empty($_SESSION['id'])) {
                     </div>
                     <div class="input-box">
                         <span class="details">Date Deployed</span>
-                        <input type="date" name="datedeployed" placeholder="Date Deployed" id="">
+                        <input type="date" name="datedeployed" placeholder="Date Deployed" id="datedeployed">
                     </div>
                 </div>
                 <div class="title">User Information</div>
                 <div class="asset-details">
                     <div class="input-box">
                         <span class="details">Assigned To</span>
-                        <!-- <input type="text" name="assigned" placeholder="Assigned To" id="" required> -->
                         <select name="assigned" id="assigned" required class="assigned">
                             <?php
                                     $results = new get_All_User();
@@ -216,11 +164,11 @@ if(!empty($_SESSION['id'])) {
                         </select>
                     </div>
                     <div class="input-box">
-                        <span class="details">Department</span>
-                        <input type="text" name="department" placeholder="Department" id="" required>
+                        <span class="details">Division</span>
+                        <input type="text" name="department" placeholder="Department" id="department" required>
                     </div>
                     <div class="input-box">
-                        <span class="details">location</span>
+                        <span class="details">Location</span>
                         <input type="text" name="location" placeholder="Location" id="">
                     </div>
                 </div>
@@ -230,6 +178,6 @@ if(!empty($_SESSION['id'])) {
             </form>
         </div>
     </div>
-    
+<script src="../js/addAssets.js"></script>
 </body>
 </html>

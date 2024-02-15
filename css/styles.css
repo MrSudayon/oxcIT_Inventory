@@ -154,7 +154,7 @@ form .asset-details .input-box {
 .asset-details .input-box .details {
     display: block;
     font-weight: 600;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
 }
 .asset-details .input-box input,
 .asset-details .input-box select,
@@ -171,7 +171,9 @@ form .asset-details .input-box {
     margin-bottom: 10px;
 }
 
-input[type=text] {
+input[type=text],
+input[type=select],
+input[type=date] {
     padding-left: 15px;
     border-radius: 5px 0 0 5px;
     padding: 6px;
