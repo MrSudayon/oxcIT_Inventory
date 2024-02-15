@@ -58,7 +58,7 @@ function changetextbox() {
 
 function passValue() {
     var divValue = document.getElementById("tag").innerText;
-
+    
     // Set the value of the input field
     document.getElementById("asset-tag").value = divValue;
 }

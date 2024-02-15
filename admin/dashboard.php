@@ -42,17 +42,6 @@ if(!empty($_SESSION['id'])) {
                 </form>
             </div>
 
-            <script>
-                function toggle(source) {
-                    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-                    for (var i = 0; i < checkboxes.length; i++) {
-                        if (checkboxes[i] != source)
-                            checkboxes[i].checked = source.checked;
-                    }
-                }
-
-            </script>
-
             <form action="accountability.php" method="get">
                 <table class="assets-table">
                     <tr>
@@ -99,7 +88,7 @@ if(!empty($_SESSION['id'])) {
                         <td>
                         <center>
                             <a href="update.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="32px"></a>&nbsp;
-                            <a href="remove.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/remove.png" width="32px"></a>
+                            <a href="remove.php?id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
                         </center>
                             
                         </td>    
@@ -121,5 +110,6 @@ if(!empty($_SESSION['id'])) {
             
         </div>
 
+        <script src="../js/dashboard.js"></script>
 </body>
 </html>
