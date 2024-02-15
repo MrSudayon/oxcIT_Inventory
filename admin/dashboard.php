@@ -41,10 +41,22 @@ if(!empty($_SESSION['id'])) {
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </form>
             </div>
+
+            <script>
+                function toggle(source) {
+                    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                    for (var i = 0; i < checkboxes.length; i++) {
+                        if (checkboxes[i] != source)
+                            checkboxes[i].checked = source.checked;
+                    }
+                }
+
+            </script>
+
             <form action="accountability.php" method="get">
                 <table class="assets-table">
                     <tr>
-                        <th></th>
+                        <th><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
                         <th>User</th>
                         <th>Department</th>
                         <th>Asset Type</th>
@@ -71,7 +83,7 @@ if(!empty($_SESSION['id'])) {
                         while($row = mysqli_fetch_assoc($searchData)) {
                         
                     ?> 
-                        <td><input type="checkbox" name="select[]" value="<?php echo $row['id']; ?>"></td>
+                        <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>
                         <td><?php echo $row['assigned']; ?></td>
                         <td><?php echo $row['department']; ?></td>
                         <td><?php echo $row['assettype']; ?></td>
@@ -102,6 +114,7 @@ if(!empty($_SESSION['id'])) {
                     <a href="add-assets.php" class="link-btn">Add</a>
                     <button type="submit" class="link-btn" name="accountability" >Accountability</button>
                     <button type="submit" formaction="turnover.php" class="link-btn" name="turnover" >Turn Over</button>
+                    <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
                     <!-- <a href="accountability.php" class="link-btn">Accountability</a> -->
                 </div>
             </form>

@@ -45,7 +45,7 @@ if(isset($_GET['select'])) {
 
 ?>  
     <div class="logo">
-        <img src="../assets/logo.png" width="150px"></img>
+        <a href="dashboard.php"><img src="../assets/logo.png" width="150px"></img></a>
     </div>
     <br><br><br>
     <center>
