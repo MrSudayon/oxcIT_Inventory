@@ -104,8 +104,8 @@ if(!empty($_SESSION['id'])) {
                     <div class="input-box">
                         <span class="details">Status</span>
                         <select name="status" id="status" onChange="changetextbox()">
-                            <option value="To be Deploy">To be Deploy</option>
                             <option value="Deployed">Deployed</option>
+                            <option value="To be Deploy">To be Deploy</option>
                             <option value="Maintenance">For Repair</option>
 
                         </select>
@@ -146,7 +146,7 @@ if(!empty($_SESSION['id'])) {
                 <div class="asset-details">
                     <div class="input-box">
                         <span class="details">Assigned To</span>
-                        <select name="assigned" id="assigned" required class="assigned">
+                        <select name="assigned" id="assigned" class="assigned">
                             <?php
                                     $results = new get_All_User();
 
@@ -165,11 +165,11 @@ if(!empty($_SESSION['id'])) {
                     </div>
                     <div class="input-box">
                         <span class="details">Division</span>
-                        <input type="text" name="department" placeholder="Department" id="department" required>
+                        <input type="text" name="department" placeholder="Department" style="background-color: #ccc;" readonly>
                     </div>
                     <div class="input-box">
                         <span class="details">Location</span>
-                        <input type="text" name="location" placeholder="Location" id="">
+                        <input type="text" name="location" placeholder="Location" style="background-color: #ccc;" readonly>
                     </div>
                 </div>
                 <div class="button">

@@ -47,13 +47,12 @@ function changetextbox() {
     var datedeployed = document.getElementById("datedeployed");
     var assigned = document.getElementById("assigned");
     
-    
     if (status.value == "Deployed") {
-        document.getElementById("datedeployed").disabled='';
+        datedeployed.disabled='';
+        assigned.disabled='';
     } else {
-        document.getElementById("datedeployed").disabled='true';
-        document.getElementById("department").disabled='true';
-        
+        datedeployed.disabled='true';
+        assigned.disabled='true';
     }
 }
 
