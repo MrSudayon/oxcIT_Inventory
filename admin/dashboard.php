@@ -104,7 +104,6 @@ if(!empty($_SESSION['id'])) {
                     <button type="submit" class="link-btn" name="accountability" >Accountability</button>
                     <button type="submit" formaction="turnover.php" class="link-btn" name="turnover" >Turn Over</button>
                     <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
-                    <!-- <a href="accountability.php" class="link-btn">Accountability</a> -->
                 </div>
             </form>
             

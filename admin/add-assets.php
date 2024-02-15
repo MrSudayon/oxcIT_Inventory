@@ -71,7 +71,6 @@ if(!empty($_SESSION['id'])) {
 
                             foreach($assettype as $assets) {
                         ?>
-                            
                             <option value="<?=$assets['assetType']?>"><?php echo $assets['assetType']; ?></option>
                         <?php
                             }
@@ -142,11 +141,12 @@ if(!empty($_SESSION['id'])) {
                         <input type="date" name="datedeployed" placeholder="Date Deployed" id="datedeployed">
                     </div>
                 </div>
-                <div class="title">User Information</div>
+                <div class="title">Employee Information</div>
                 <div class="asset-details">
                     <div class="input-box">
                         <span class="details">Assigned To</span>
-                        <select name="assigned" id="assigned" class="assigned">
+                        <select name="assigned" id="assigned" onchange="getEmpDetails()" class="assigned">
+                            <option>Please Select</option>
                             <?php
                                     $results = new get_All_User();
 
@@ -165,11 +165,11 @@ if(!empty($_SESSION['id'])) {
                     </div>
                     <div class="input-box">
                         <span class="details">Division</span>
-                        <input type="text" name="department" placeholder="Department" style="background-color: #ccc;" readonly>
+                        <input type="text" name="department" placeholder="Division" id="dept" style="background-color: #ccc;" readonly>
                     </div>
                     <div class="input-box">
                         <span class="details">Location</span>
-                        <input type="text" name="location" placeholder="Location" style="background-color: #ccc;" readonly>
+                        <input type="text" name="location" placeholder="Location" id="loc" style="background-color: #ccc;" readonly>
                     </div>
                 </div>
                 <div class="button">

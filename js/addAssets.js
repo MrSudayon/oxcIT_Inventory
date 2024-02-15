@@ -37,10 +37,29 @@ function displaySelectedValue() {
 
     // Display the selected value in the output display
     document.getElementById("tag").innerText = assetTag;
-
-
-    var selectEmp = document.getElementById("assigned");
 }
+
+function getEmpDetails () {
+    var assigned = document.getElementById("assigned").value;
+    if (assigned !== "") {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var emp = JSON.parse(this.responseText);
+                document.getElementById("dept").value = emp.division;
+                document.getElementById("loc").value = emp.location;
+            }
+        };
+        xhr.open("POST", "../php/getEmp.php", true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send("assigned=" + assigned);
+    } else {
+        // Clear fields if no item is selected
+        document.getElementById("dept").value = "";
+        document.getElementById("loc").value = "";
+    }
+}
+    
 
 function changetextbox() {
     var status = document.getElementById("status");
@@ -58,7 +77,7 @@ function changetextbox() {
 
 function passValue() {
     var divValue = document.getElementById("tag").innerText;
-    
+
     // Set the value of the input field
     document.getElementById("asset-tag").value = divValue;
 }
