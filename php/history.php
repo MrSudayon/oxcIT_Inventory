@@ -52,70 +52,37 @@ if(!empty($_SESSION['id'])) {
                 </form>
             </div>
 
-            <form action="accountability.php" method="get">
+            <!-- <form action="accountability.php" method="get"> -->
                 <table class="assets-table">
                     <tr>
-                        <th><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
+                        <!-- <th><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th> -->
+                        <th>ID</th>
                         <th>User</th>
-                        <th>Department</th>
-                        <th>Asset Type</th>
-                        <th>Asset Tag</th>
-                        <th>Model</th>
-                        <th>CPU</th>
-                        <th>Memory</th>
-                        <th>Storage</th>
-                        <th>Status</th>
-                        <th>Date Deployed</th>
-                        <th>Date Turnover</th>
-                        <th coslpan="2">Action</th>
+                        <th>Action</th>
+                        <th>Date</th>
                     </tr>
                     
                     <tr>
                     <?php 
                         $getAllRecord = new Operations();
 
-                        // $Records = $getAllRecord->getAllData();
+                        $searchData = $getAllRecord->getHistory();
 
-                        $searchData = $getAllRecord->searchData();
-
-                        // foreach($Records as $data) {
                         while($row = mysqli_fetch_assoc($searchData)) {
                         
                     ?> 
-                        <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>
-                        <td><?php echo $row['assigned']; ?></td>
-                        <td><?php echo $row['department']; ?></td>
-                        <td><?php echo $row['assettype']; ?></td>
-                        <td><?php echo $row['assettag']; ?></td>
-                        <td><?php echo $row['model']; ?></td>
-                        <td><?php echo $row['CPU']; ?></td>
-                        <td><?php echo $row['MEMORY']; ?></td>
-                        <td><?php echo $row['STORAGE']; ?></td>
+                        <!-- <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td> -->
+                     
                         <td><?php echo $row['status']; ?></td>
                         <td><?php echo $row['datedeployed']; ?></td>
                         <td><?php echo $row['dateturnover']; ?></td>
-
-                        <td>
-                        <center>
-                            <a href="update.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="32px"></a>&nbsp;
-                            <a href="remove.php?id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
-                        </center>
-                            
-                        </td>    
-                    
                     </tr>
                     <?php
                         }
                     ?>
                 </table>
-                
-                <div class="link-btns">
-                    <a href="add-assets.php" class="link-btn">Add</a>
-                    <button type="submit" class="link-btn" name="accountability" >Accountability</button>
-                    <button type="submit" formaction="turnover.php" class="link-btn" name="turnover" >Turn Over</button>
-                    <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
-                </div>
-            </form>
+
+            <!-- </form> -->
             
         </div>
 

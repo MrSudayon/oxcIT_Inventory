@@ -141,11 +141,11 @@ if(!empty($_SESSION['id'])) {
                         <input type="date" name="datedeployed" placeholder="Date Deployed" id="datedeployed">
                     </div>
                 </div>
-                <div class="title">Employee Information</div>
+                <div class="title"></div>
                 <div class="asset-details">
                     <div class="input-box">
                         <span class="details">Assigned To</span>
-                        <select name="assigned" id="assigned" onchange="getEmpDetails()" class="assigned">
+                        <select name="assigned" id="assigned" class="assigned">
                             <option>Please Select</option>
                             <?php
                                     $results = new get_All_User();
@@ -163,14 +163,15 @@ if(!empty($_SESSION['id'])) {
                             ?>
                         </select>
                     </div>
-                    <div class="input-box">
+                    <!-- <div class="input-box">
                         <span class="details">Division</span>
-                        <input type="text" name="department" placeholder="Division" id="dept" style="background-color: #ccc;" readonly>
+                        <div class="division" id="division"></div>
+                        <input type="text" name="department" placeholder="Division" id="1" style="background-color: #ccc;" readonly>
                     </div>
                     <div class="input-box">
                         <span class="details">Location</span>
-                        <input type="text" name="location" placeholder="Location" id="loc" style="background-color: #ccc;" readonly>
-                    </div>
+                        <input type="text" name="location" placeholder="Location" id="location" style="background-color: #ccc;" readonly>
+                    </div> -->
                 </div>
                 <div class="button">
                     <input type="submit" onclick="passValue()" value="Save" name="save"/>
@@ -178,6 +179,8 @@ if(!empty($_SESSION['id'])) {
             </form>
         </div>
     </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="../js/addAssets.js"></script>
 </body>
 </html>

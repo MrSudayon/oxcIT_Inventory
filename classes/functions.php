@@ -82,7 +82,14 @@ class Operations {
         
     }
 
-    
+    function getHistory() {
+        global $db;
+
+        $sql = "SELECT * FROM history_tbl";
+        $res = $db->conn->query($sql);
+
+        return $res;
+    }
 
     function checkAssetCount($assettype) {
         global $db;
