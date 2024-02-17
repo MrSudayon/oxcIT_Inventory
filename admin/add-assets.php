@@ -64,17 +64,17 @@ if(!empty($_SESSION['id'])) {
                     <div class="input-box">
                         <span class="details">Asset Type</span>                            
                         <select name="asset-type" id="Type" onChange="displaySelectedValue()" required>
-                        <option value="">Please Select</option>
-                        <?php
-                            $category = new Operations;
-                            $assettype = $category->getAssets();
+                            <option value="">Please Select</option>
+                            <?php
+                                $category = new Operations;
+                                $assettype = $category->getAssets();
 
-                            foreach($assettype as $assets) {
-                        ?>
-                            <option value="<?=$assets['assetType']?>"><?php echo $assets['assetType']; ?></option>
-                        <?php
-                            }
-                        ?>
+                                foreach($assettype as $assets) {
+                            ?>
+                                <option value="<?=$assets['assetType']?>"><?php echo $assets['assetType']; ?></option>
+                            <?php
+                                }
+                            ?>
                         </select>
                     </div>
                         

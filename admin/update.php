@@ -21,7 +21,7 @@ if(!empty($_SESSION['id'])) {
 <body>
     <header>
         <div class="logo">
-            <img src="../assets/logo.png" alt="logo" width="200px">
+            <a href="dashboard.php"><img src="../assets/logo.png" width="150px"></img></a>
         </div>
         <nav>
             <ul>
@@ -50,11 +50,26 @@ if(!empty($_SESSION['id'])) {
 
                         <div class="input-box">
                             <span class="details">Asset Type</span>
-                            <input type="text" name="asset-type" value="<?=$result['assettype']?>" id="" required>
+                            <!-- <input type="text" name="asset-type" value="" id="" required> -->
+                            <select name="asset-type" id="Type" onChange="displaySelectedValue()" required>
+                                <option value="<?=$result['assettype']?>"><?=$result['assettype']?></option>
+                                <?php
+                                    $category = new Operations;
+                                    $assettype = $category->getAssets();
+
+                                    foreach($assettype as $assets) {
+                                ?>
+                                    <option value="<?=$assets['assetType']?>"><?php echo $assets['assetType']; ?></option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
                         </div>
                         <div class="input-box">
                             <span class="details">Asset Tag</span>
-                            <input type="text" name="asset-tag" value="<?=$result['assettag']?>" id="" required>
+                            <!-- <input type="text" name="asset-tag" value="" id="" required> -->
+                            <div class="asset-tag" id="tag" style="background-color: #ccc;"><?=$result['assettag']?></div>
+                            <input type="text" name="asset-tag" value="<?=$result['assettag']?>" id="asset-tag" hidden>
                         </div>
                         <div class="input-box">
                             <span class="details">Model</span>
@@ -117,17 +132,18 @@ if(!empty($_SESSION['id'])) {
                     <div class="title">User Information</div>
                     <div class="asset-details">
                         <div class="input-box">
-                            <span class="details">Assigned To</span>
-                            <!-- <input type="text" name="assigned" placeholder="Assigned To" id="" required> -->
-                            <select name="assigned" id="assigned" required class="assigned">
+                        <span class="details">Assigned To</span>
+                            <select name="assigned" id="assigned" class="assigned">
+                                <option value="<?=$result['assigned']?>"><?=$result['assigned']?></option>
                                 <?php
-                                     $results = new get_All_User();
+                                        $results = new get_All_User();
 
-                                     $user = $results->selectAllUser();
-                                     foreach($user as $row) {
+                                        // $user = $results->selectAllUser();
+                                        $user = $results->selectAllEmp();
+                                        foreach($user as $row) {
                                 ?>
-                                <option value="<?php echo $row['username']; ?>">
-                                    <?php echo $row['username']; ?>
+                                <option value="<?php echo $row['name']; ?>">
+                                    <?php echo $row['name']; ?>
                                 </option>
                                 <?php
                                     }
@@ -135,14 +151,13 @@ if(!empty($_SESSION['id'])) {
                                 ?>
                             </select>
                         </div>
-                        <div class="input-box">
-                            <span class="details">Department</span>
-                            <input type="text" name="department" value="<?=$result['department']?>" id="" required>
-                        </div>
-                        <div class="input-box">
-                            <span class="details">location</span>
-                            <input type="text" name="location" value="<?=$result['remarks']?>" id="">
-                        </div>
+                    </div>
+                    <div class="input-box">
+                        <div class="division" id="division"></div>
+                        <input type="text" name="department" placeholder="Division" value="<?=$result['department']?>" style="background-color: #ccc;" hidden>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" name="location" placeholder="Location" value="<?=$result['location']?>" style="background-color: #ccc;" hidden>
                     </div>
                     <div class="button">
                         <input type="submit" value="Save" name="update-asset"/>
@@ -154,5 +169,6 @@ if(!empty($_SESSION['id'])) {
                 ?>
         </div>
     </div>
+    <script src="../js/addAssets.js"></script>
 </body>
 </html>
