@@ -12,10 +12,9 @@ if(!empty($_SESSION['id'])) {
 if(isset($_GET['select'])) {
     $selected = $_GET['select'];
     // query to update Turnover date.
-    $name = $user['username'];
-    // $
-    $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                            VALUES ('', '$name', 'Turnover ', NOW())");
+    // $name = $user['username'];
+    // $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+    //                         VALUES ('', '$name', 'Turnover Tag: $assettag', NOW())");
 } else {
     ?>
         <script>
@@ -38,7 +37,7 @@ if(isset($_GET['select'])) {
 <body>
 <div class="content">
 <?php           
-    foreach ($selected as $userID){ 
+foreach ($selected as $userID){ 
         $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
         $res = mysqli_query($db->conn, $sql);
     
@@ -46,6 +45,17 @@ if(isset($_GET['select'])) {
         $name = $row['assigned'];
         $dept = $row['department'];
     }
+        
+        $sql1 = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id='$userID'");
+        $username = $user['username'];
+
+        while($row1 = mysqli_fetch_assoc($sql1)) {
+            $assettag = $row1['assettag'];
+            $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                                VALUES ('', '$username', 'Turnover Record Tags: $assettag ', NOW())");
+        }
+
+        
 }
 
 ?>  

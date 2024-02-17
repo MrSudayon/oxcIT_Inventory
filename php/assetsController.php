@@ -50,7 +50,6 @@ class assetsController {
             }
         if($result) {
 
-
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                                 VALUES('', '$name', 'Updated the Tag: $assettag from Assets Record' , NOW())");
             return true;
