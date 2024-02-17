@@ -25,7 +25,7 @@ class Operations {
         $result = mysqli_query($db->conn, $query);
 
         if($result) { 
-            $hist = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+            mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                                 VALUES('', '$name', 'Added a new Asset Data' , NOW())");
             return 1; //Success
         } else {

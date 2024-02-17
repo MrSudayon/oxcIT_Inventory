@@ -1,5 +1,6 @@
 <?php
 // include_once '../php/db_connection.php';
+$select = new Select();
 
 class assetsController {
     public function edit($id) {
@@ -16,6 +17,8 @@ class assetsController {
     }
     public function update($input, $id) {
         global $db;
+        global $select;
+
         $assetID = mysqli_real_escape_string($db->conn, $id);
         $assetType = $input['assettype'];
         $assetTag = $input['assettag'];
@@ -36,7 +39,20 @@ class assetsController {
 
         $qry = "UPDATE assets_tbl SET assettype='$assetType', assettag='$assetTag', model='$model', serial='$serial', supplier='$supplier', datepurchased='$dateprchs', status='$status', remarks='$remarks', CPU='$cpu', MEMORY='$ram', STORAGE='$storage', OS='$os', Others='$others', assigned='$assigned', department='$department', location='$location' WHERE id='$assetID' LIMIT 1";
         $result = $db->conn->query($qry);
+
+
+        $session = $select->selectUserById($_SESSION['id']);
+        $name = $session['username'];
+
+        $tag = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $assetID");
+            while($row = $tag->fetch_assoc()) {
+                $assettag = $row['assettag'];
+            }
         if($result) {
+
+
+            mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                                VALUES('', '$name', 'Updated the Tag: $assettag from Assets Record' , NOW())");
             return true;
         } else {
             return false;
