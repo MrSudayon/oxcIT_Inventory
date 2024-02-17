@@ -2,7 +2,7 @@
 require '../php/db_connection.php';
 
 $select = new Select();
-
+$db = new Connection();
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
 } else {
@@ -12,6 +12,10 @@ if(!empty($_SESSION['id'])) {
 if(isset($_GET['select'])) {
     $selected = $_GET['select'];
     // query to update Turnover date.
+    $name = $user['username'];
+    // $
+    $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                            VALUES ('', '$name', 'Turnover ', NOW())");
 } else {
     ?>
         <script>

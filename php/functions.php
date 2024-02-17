@@ -4,7 +4,6 @@
 
 $db = new Connection();
 $select = new Select();
-$results;
 class Operations {
     function record_Data($type, $tag, $mdl, $srl, $spplr, $dtprchs, $stts, $rmrks, $cpu, $ram, $storage, $os, $others, $datedeployed, $assigned) {
         global $db;
@@ -52,7 +51,6 @@ class Operations {
     }
     function searchData() {
         global $db;
-        global $results;
 
         if(isset($_POST['search'])) {
             $search = $_POST['search'];
@@ -60,9 +58,7 @@ class Operations {
             OR assettype LIKE '%$search%' OR status LIKE '%$search%' OR location LIKE '%$search%'
             OR assettag LIKE '%$search%' OR model LIKE '%$search%' OR remarks LIKE '%$search%' OR Others LIKE '%$search%')";
             $res = mysqli_query($db->conn, $sql);
-            
-            $results = $res;
-
+        
             return $res;
         } else {
             $sql = "SELECT * FROM assets_tbl WHERE status!='Archive'";
@@ -71,6 +67,24 @@ class Operations {
             return $res;
         }
         
+    }
+
+    function searchHistory() {
+        global $db;
+
+        if(isset($_POST['search'])) {
+            $search = $_POST['search'];
+            $sql = "SELECT * FROM history_tbl WHERE name LIKE '%$search%' OR action LIKE '%$search%' OR date LIKE '%$search%' ";
+            $res = mysqli_query($db->conn, $sql);
+        
+            return $res;
+        } else {
+            $sql = "SELECT * FROM history_tbl";
+            $res = mysqli_query($db->conn, $sql);
+
+            return $res;
+        }
+
     }
 
     function getHistory() {

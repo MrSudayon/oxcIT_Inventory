@@ -56,7 +56,7 @@ if(!empty($_SESSION['id'])) {
                 <table class="assets-table">
                     <tr>
                         <!-- <th><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th> -->
-                        <th>ID</th>
+                        <!-- <th>ID</th> -->
                         <th>User</th>
                         <th>Action</th>
                         <th>Date</th>
@@ -66,16 +66,15 @@ if(!empty($_SESSION['id'])) {
                     <?php 
                         $getAllRecord = new Operations();
 
-                        $searchData = $getAllRecord->getHistory();
+                        $searchData = $getAllRecord->searchHistory();
 
                         while($row = mysqli_fetch_assoc($searchData)) {
                         
                     ?> 
                         <!-- <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td> -->
-                     
-                        <td><?php echo $row['status']; ?></td>
-                        <td><?php echo $row['datedeployed']; ?></td>
-                        <td><?php echo $row['dateturnover']; ?></td>
+                        <td><?php echo $row['name']; ?></td>
+                        <td><?php echo $row['action']; ?></td>
+                        <td><?php echo $row['date']; ?></td>
                     </tr>
                     <?php
                         }

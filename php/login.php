@@ -25,16 +25,29 @@ if(isset($_POST['submit'])) {
         if(!$sql) {
             die('error'.$db->conn->connect_error);
         } else { 
-            echo "<script> alert('Login Successful'); </script>";
-            header("Location: ../admin/dashboard.php"); 
+            // echo "<script> alert('Login Successful'); </script>";
+            // header("Location: ../admin/dashboard.php"); 
+
+            ?>
+                <script>
+                    alert('Login Successful');
+                    window.location.replace('../admin/dashboard.php');
+                </script>
+            <?php
         }
         $db->conn->close();
     }
     elseif($result == 2) {
         $_SESSION['login'] = true;
         $_SESSION['id'] = $login->idUser();
-        header("Location: ../index.php");
-        echo "<script> alert('Login Successful'); </script>";
+        // header("Location: ../index.php");
+        // echo "<script> alert('Login Successful'); </script>";
+        ?>
+            <script>
+                alert('Login Successful');
+                window.location.replace('../index.php');
+            </script>
+        <?php
     } 
     elseif($result == 10) {
         echo "<script> alert('Wrong Password'); </script>";
