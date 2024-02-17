@@ -1,7 +1,8 @@
 <?php
 session_start();
-include ('../classes/functions.php');
-include ('../classes/assetsController.php');
+
+include 'functions.php';
+include 'assetsController.php';
 
 class Connection {
     public $host = "localhost";
@@ -17,10 +18,10 @@ class Connection {
         }
     }
 
-    public function check($a) {
-        $return = mysqli_real_escape_string($this->conn,$a);
-        return $return;
-    }
+    // public function check($a) {
+    //     $return = mysqli_real_escape_string($this->conn,$a);
+    //     return $return;
+    // }
 }
 
 class AddEmployee extends Connection {

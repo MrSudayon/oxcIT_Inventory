@@ -1,34 +1,24 @@
 <?php
 
-require_once ('../php/db_connection.php');
+// include_once '../php/db_connection.php';
 
 $db = new Connection();
+$select = new Select();
 $results;
 class Operations {
-    
-    public function Store_Data() {
-        // if(isset($_POST['save'])) {
-        //     //asset details
-        //     $assettype = $db->check($_POST['asset-type']);
-        //     $assettag = $db->check($_POST['asset-tag']);
-        //     $model = $db->check($_POST['model']);
-        //     $serial = $db->check($_POST['serial']);
-        //     $supplier = $db->check($_POST['supplier']);
-        //     $datepurch = $db->check($_POST['asset-type']);
-        //     $status = $db->check($_POST['status']);
-        //     $remarks = $db->check($_POST['remarks']);
-
-        //     if($this->record_Data($assettype, $assettag, $model, $serial, $supplier, $datepurch, $status, $remarks)) {
-        //        
-        //     } else {
-        //         
-        //     }
-        // }
-    }
-    function record_Data($type, $tag, $mdl, $srl, $spplr, $dtprchs, $stts, $rmrks, $cpu, $ram, $storage, $os, $others, $datedeployed, $assigned, $dept, $location) {
+    function record_Data($type, $tag, $mdl, $srl, $spplr, $dtprchs, $stts, $rmrks, $cpu, $ram, $storage, $os, $others, $datedeployed, $assigned) {
         global $db;
+        global $select;
         // $specification = $cpu . ", " . $ram . ", " . $storage . ", " . $os . ", " . $others;  
+        $session = $select->selectUserById($_SESSION['id']);
+        $name = $session['username'];
 
+        $sql = "SELECT * FROM employee_tbl WHERE name = '$assigned'";
+        $res = mysqli_query($db->conn, $sql);
+
+        $row = mysqli_fetch_assoc($res);
+        $dept = $row['division'];
+        $location = $row['location'];
 
         $query = "INSERT INTO assets_tbl (id, department, assettype, assettag, model, serial, supplier, CPU, MEMORY, STORAGE, OS, Others, assigned, status, location, datepurchased, remarks, datedeployed, dateturnover)
                                 VALUES ('','$dept','$type','$tag','$mdl','$srl','$spplr','$cpu','$ram','$storage','$os','$others','$assigned','$stts','$location','$dtprchs','$rmrks','$datedeployed','')";
@@ -36,6 +26,8 @@ class Operations {
         $result = mysqli_query($db->conn, $query);
 
         if($result) { 
+            mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                                VALUES('', '$name', 'Added a new Asset Data' , NOW()");
             return 1; //Success
         } else {
             return 10; //Store Failed

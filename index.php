@@ -1,6 +1,6 @@
 <?php
 
-require_once './php/db_connection.php';
+include 'php/db_connection.php';
 
 $select = new Select();
 
@@ -19,8 +19,9 @@ if(!empty($_SESSION['id'])) {
     <title>Document</title>
 </head>
 <body>
+    <h1>There's Nothing Here</h1><br>
+    <h1>What u doing here <?php echo $user['username']; ?> Log on admin role</h1>
 
-    <h1>Welcome <?php echo $user['username']; ?></h1>
     <a href="./php/logout.php">Logout</a>
     
 </body>

@@ -1,22 +1,35 @@
 <?php 
-require('db_connection.php');
+include 'db_connection.php';
+
 
 if(!empty($_SESSION['id'])) {
     header("Location: ../index.php");
 }
 
 $login = new Login();
-
+$db = new Connection();
 if(isset($_POST['submit'])) {
-
     $result = $login->login($_POST['username'], $_POST['password']);
-
+    global $db;
     if($result == 1) {
+
         $_SESSION['login'] = true;
         $_SESSION['id'] = $login->idUser();
-        header("Location: ../admin/dashboard.php");
-        echo "<script> alert('Login Successful'); </script>";
-    } 
+
+        $user_sess = $select->selectUserById($_SESSION['id']);
+        $id = $user_sess['id'];
+        $name = $user_sess['username'];
+      
+        $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                                    VALUES ('', '$name', 'Logged in', NOW())");   
+        if(!$sql) {
+            die('error'.$db->conn->connect_error);
+        } else { 
+            echo "<script> alert('Login Successful'); </script>";
+            header("Location: ../admin/dashboard.php"); 
+        }
+        $db->conn->close();
+    }
     elseif($result == 2) {
         $_SESSION['login'] = true;
         $_SESSION['id'] = $login->idUser();
@@ -45,7 +58,7 @@ if(isset($_POST['submit'])) {
     <main>
         <div class="login-form">
             <div class="logo">
-                <img src="../assets/logo.jpg" alt="logo" width="220px">
+                <img src="../assets/logo.png" alt="logo" width="300px">
             </div>
             <div class="login-field">
                 <form action="" method="POST" autocomplete="off">

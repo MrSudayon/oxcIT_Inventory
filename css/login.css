@@ -45,9 +45,7 @@ main {
     justify-content: space-evenly;
     align-items: center;
 } 
-.logo {
-    padding: 5px;
-}   
+ 
 .login-field {
     width: 30%;
 }

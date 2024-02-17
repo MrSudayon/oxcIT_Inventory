@@ -1,8 +1,5 @@
 <?php
-
-require_once ('../php/db_connection.php');
-
-$db = new Connection;
+// include_once '../php/db_connection.php';
 
 class assetsController {
     public function edit($id) {

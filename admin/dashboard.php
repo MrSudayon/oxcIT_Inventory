@@ -1,10 +1,13 @@
 <?php
-require '../php/db_connection.php';
+require_once '../php/db_connection.php';
 
 $select = new Select();
 
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
+
+    $id = $user['id'];
+    $username = $user['username'];
 } else {
     header("Location: ../php/login.php");
 }
@@ -30,7 +33,7 @@ if(!empty($_SESSION['id'])) {
             <div class="dropdown-content">
                 <a href="../php/add_emp_info.php">Register Emp</a>
                 <a href="../php/history.php">History</a>
-                <a href="../php/logout.php">Logout</a>
+                <a href="../php/logout.php?id=<?php echo $id; ?>&name=<?php echo $username; ?>">Logout</a>
             </div>
         </div>
         <!-- 2-16-24

@@ -12,7 +12,7 @@ if(!empty($_SESSION['id'])) {
         if(isset($_POST['save'])) {
             $countRes = $record->checkAssetCount($_POST['asset-type']);
            
-            $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], $_POST['dateprchs'], $_POST['status'], $_POST['remarks'], $_POST['processor'], $_POST['memory'], $_POST['storage'], $_POST['os'], $_POST['other'], $_POST['datedeployed'], $_POST['assigned'], $_POST['department'], $_POST['location']);
+            $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], $_POST['dateprchs'], $_POST['status'], $_POST['remarks'], $_POST['processor'], $_POST['memory'], $_POST['storage'], $_POST['os'], $_POST['other'], $_POST['datedeployed'], $_POST['assigned']);
 
             if($result == 1) {
                 echo "<script> alert('Data Stored successfully!'); </script>";
@@ -45,7 +45,7 @@ if(!empty($_SESSION['id'])) {
 <body>
     <header>
         <div class="logo">
-            <img src="../assets/logo.png" alt="logo" width="200px">
+            <a href="dashboard.php"><img src="../assets/logo.png" width="150px"></img></a>
         </div>
         <nav>
             <ul>
@@ -102,7 +102,7 @@ if(!empty($_SESSION['id'])) {
                     </div>
                     <div class="input-box">
                         <span class="details">Status</span>
-                        <select name="status" id="status" onChange="changetextbox()">
+                        <select name="status" id="status">
                             <option value="Deployed">Deployed</option>
                             <option value="To be Deploy">To be Deploy</option>
                             <option value="Maintenance">For Repair</option>
@@ -138,7 +138,7 @@ if(!empty($_SESSION['id'])) {
                     </div>
                     <div class="input-box">
                         <span class="details">Date Deployed</span>
-                        <input type="date" name="datedeployed" placeholder="Date Deployed" id="datedeployed">
+                        <input type="date" name="datedeployed" placeholder="Date Deployed" value="" id="datedeployed">
                     </div>
                 </div>
                 <div class="title"></div>
@@ -146,7 +146,7 @@ if(!empty($_SESSION['id'])) {
                     <div class="input-box">
                         <span class="details">Assigned To</span>
                         <select name="assigned" id="assigned" class="assigned">
-                            <option>Please Select</option>
+                            <option value="">Please Select</option>
                             <?php
                                     $results = new get_All_User();
 
