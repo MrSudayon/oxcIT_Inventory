@@ -40,14 +40,25 @@ if(isset($_POST['submit'])) {
     elseif($result == 2) {
         $_SESSION['login'] = true;
         $_SESSION['id'] = $login->idUser();
-        // header("Location: ../index.php");
-        // echo "<script> alert('Login Successful'); </script>";
-        ?>
-            <script>
-                alert('Login Successful');
-                window.location.replace('../index.php');
-            </script>
-        <?php
+
+        $user_sess = $select->selectUserById($_SESSION['id']);
+        $id = $user_sess['id'];
+        $name = $user_sess['username'];
+      
+        $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                                    VALUES ('', '$name', 'Logged in', NOW())");   
+        if(!$sql) {
+            die('error'.$db->conn->connect_error);
+        } else { 
+            ?>
+                <script>
+                    alert('Login Successful');
+                    window.location.replace('../index.php');
+                </script>
+            <?php
+        }
+        $db->conn->close();
+
     } 
     elseif($result == 10) {
         echo "<script> alert('Wrong Password'); </script>";
