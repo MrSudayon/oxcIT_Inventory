@@ -11,6 +11,7 @@ if(!empty($_SESSION['id'])) {
 
 if(isset($_GET['select'])) {
     $selected = $_GET['select'];
+    // query to update Turnover date.
 } else {
     ?>
         <script>

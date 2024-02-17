@@ -13,21 +13,20 @@ class Operations {
         $session = $select->selectUserById($_SESSION['id']);
         $name = $session['username'];
 
-        $sql = "SELECT * FROM employee_tbl WHERE name = '$assigned'";
-        $res = mysqli_query($db->conn, $sql);
+        $sql = mysqli_query($db->conn,"SELECT * FROM employee_tbl WHERE name = '$assigned'");
 
-        $row = mysqli_fetch_assoc($res);
-        $dept = $row['division'];
-        $location = $row['location'];
-
+        while($row = $sql->fetch_assoc()) {
+            $dept = $row['division'];
+            $location = $row['location'];
+        }
         $query = "INSERT INTO assets_tbl (id, department, assettype, assettag, model, serial, supplier, CPU, MEMORY, STORAGE, OS, Others, assigned, status, location, datepurchased, remarks, datedeployed, dateturnover)
                                 VALUES ('','$dept','$type','$tag','$mdl','$srl','$spplr','$cpu','$ram','$storage','$os','$others','$assigned','$stts','$location','$dtprchs','$rmrks','$datedeployed','')";
 
         $result = mysqli_query($db->conn, $query);
 
         if($result) { 
-            mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                                VALUES('', '$name', 'Added a new Asset Data' , NOW()");
+            $hist = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                                VALUES('', '$name', 'Added a new Asset Data' , NOW())");
             return 1; //Success
         } else {
             return 10; //Store Failed
