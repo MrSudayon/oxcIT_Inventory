@@ -5,7 +5,7 @@
 $db = new Connection();
 $select = new Select();
 class Operations {
-    function record_Data($type, $tag, $mdl, $srl, $spplr, $dtprchs, $stts, $rmrks, $cpu, $ram, $storage, $os, $others, $datedeployed, $assigned) {
+    function record_Data($type, $tag, $mdl, $srl, $spplr, $dtprchs, $stts, $rmrks, $cpu, $ram, $storage, $os, $others, $datedeployed, $assigned, $turnover, $lastused) {
         global $db;
         global $select;
         // $specification = $cpu . ", " . $ram . ", " . $storage . ", " . $os . ", " . $others;  
@@ -18,8 +18,8 @@ class Operations {
             $dept = $row['division'];
             $location = $row['location'];
         }
-        $query = "INSERT INTO assets_tbl (id, department, assettype, assettag, model, serial, supplier, CPU, MEMORY, STORAGE, OS, Others, assigned, status, location, datepurchased, remarks, datedeployed, dateturnover)
-                                VALUES ('','$dept','$type','$tag','$mdl','$srl','$spplr','$cpu','$ram','$storage','$os','$others','$assigned','$stts','$location','$dtprchs','$rmrks','$datedeployed','')";
+        $query = "INSERT INTO assets_tbl (id, department, assettype, assettag, model, serial, supplier, CPU, MEMORY, STORAGE, OS, Others, assigned, lastused, status, location, datepurchased, remarks, datedeployed, dateturnover)
+                                VALUES ('','$dept','$type','$tag','$mdl','$srl','$spplr','$cpu','$ram','$storage','$os','$others','$assigned','$lastused','$stts','$location','$dtprchs','$rmrks','$datedeployed','$turnover')";
 
         $result = mysqli_query($db->conn, $query);
 

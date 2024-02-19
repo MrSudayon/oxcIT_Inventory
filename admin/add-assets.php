@@ -12,7 +12,7 @@ if(!empty($_SESSION['id'])) {
         if(isset($_POST['save'])) {
             $countRes = $record->checkAssetCount($_POST['asset-type']);
            
-            $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], $_POST['dateprchs'], $_POST['status'], $_POST['remarks'], $_POST['processor'], $_POST['memory'], $_POST['storage'], $_POST['os'], $_POST['other'], $_POST['datedeployed'], $_POST['assigned']);
+            $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], $_POST['dateprchs'], $_POST['status'], $_POST['remarks'], $_POST['processor'], $_POST['memory'], $_POST['storage'], $_POST['os'], $_POST['other'], $_POST['datedeployed'], $_POST['assigned'], $_POST['turnover'], $_POST['lastused']);
 
             if($result == 1) {
                 echo "<script> alert('Data Stored successfully!'); </script>";
@@ -22,7 +22,7 @@ if(!empty($_SESSION['id'])) {
                 echo "<script> alert('Failed'); </script>";
             }                
         }
-        
+
     } else {
         header("Location: ../index.php");
     }
@@ -159,6 +159,14 @@ if(!empty($_SESSION['id'])) {
                                 
                             ?>
                         </select>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Turnover Date</span>
+                        <input type="date" name="turnover">
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Last Used by:</span>
+                        <input type="text" name="lastused" style="background-color: #ccc;" readonly>
                     </div>
                     <!-- <div class="input-box">
                         <span class="details">Division</span>

@@ -60,9 +60,12 @@ foreach ($selected as $userID){
                 <th>Others</th>
                 <th>Serial no.</th>
                 <th>Remarks</th>
+                <th>Date Deployed</th>
+                <th>Turnover Date</th>
+                <th>Last Used</th>
             </tr>
             <?php 
-                foreach ($selected as $userID){ 
+                foreach ($selected as $userID) { 
                     $sql = "SELECT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
                     $res = mysqli_query($db->conn, $sql);
                 
@@ -71,7 +74,6 @@ foreach ($selected as $userID){
                     $ram = $row['MEMORY'];
                     $storage = $row['STORAGE'];
                     $specs = 'CPU: ' . $cpu . '<br>MEMORY: ' . $ram . '<br>STORAGE: ' . $storage;
-                
             ?>
             <tr>
                 <td><?php echo $row['assigned']; ?></td>
@@ -80,11 +82,13 @@ foreach ($selected as $userID){
                 <td><?php echo $row['Others']; ?></td>
                 <td><?php echo $row['serial']; ?></td>
                 <td><?php echo $row['remarks']; ?></td>    
-            
+                <td><?php echo $row['datedeployed']; ?></td>    
+                <td><?php echo $row['dateturnover']; ?></td>    
+                <td><?php echo $row['lastused']; ?></td>    
             </tr>
             <?php
-                }}
-            
+                }
+            }
             ?>
         </table>
     </div>

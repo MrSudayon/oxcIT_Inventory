@@ -151,14 +151,16 @@ if(!empty($_SESSION['id'])) {
                                 ?>
                             </select>
                         </div>
+                        <div class="input-box">
+                            <span class="details">Turnover Date</span>
+                            <input type="date" name="turnover" value="<?=$result['dateturnover']?>">
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Last Used by:</span>
+                            <input type="text" name="lastused" style="background-color: #ccc;" value="<?=$result['lastused']?>" readonly>
+                        </div>
                     </div>
-                    <div class="input-box">
-                        <div class="division" id="division"></div>
-                        <input type="text" name="department" placeholder="Division" value="<?=$result['department']?>" style="background-color: #ccc;" hidden>
-                    </div>
-                    <div class="input-box">
-                        <input type="text" name="location" placeholder="Location" value="<?=$result['location']?>" style="background-color: #ccc;" hidden>
-                    </div>
+                    
                     <div class="button">
                         <input type="submit" value="Save" name="update-asset"/>
                     </div>
