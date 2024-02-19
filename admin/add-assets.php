@@ -20,12 +20,9 @@ if(!empty($_SESSION['id'])) {
 
             } elseif($result == 100) {
                 echo "<script> alert('Failed'); </script>";
-            }    
-
-
-            // Query to check if the asset type exists in the database and get its count
-            
+            }                
         }
+        
     } else {
         header("Location: ../index.php");
     }
