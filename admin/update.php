@@ -87,11 +87,11 @@ if(!empty($_SESSION['id'])) {
                         </div>
                         <div class="input-box">
                             <span class="details">Serial no.</span>
-                            <input type="text" name="serial" value="<?=$result['serial']?>" id="" required>
+                            <input type="text" name="serial" value="<?=$result['serial']?>" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Supplier</span>
-                            <input type="text" name="supplier" value="<?=$result['supplier']?>" id="" required>
+                            <input type="text" name="supplier" value="<?=$result['supplier']?>" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Date Purchased</span>
@@ -116,19 +116,19 @@ if(!empty($_SESSION['id'])) {
                     <div class="asset-details">
                         <div class="input-box">
                             <span class="details">Processor</span>
-                            <input type="text" name="processor" value="<?=$result['CPU']?>" id="" required>
+                            <input type="text" name="processor" value="<?=$result['CPU']?>" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Memory</span>
-                            <input type="text" name="memory" value="<?=$result['MEMORY']?>" id="" required>
+                            <input type="text" name="memory" value="<?=$result['MEMORY']?>" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Storage</span>
-                            <input type="text" name="storage" value="<?=$result['STORAGE']?>" id="" required>
+                            <input type="text" name="storage" value="<?=$result['STORAGE']?>" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Operating System</span>
-                            <input type="text" name="os" value="<?=$result['OS']?>" id="" required>
+                            <input type="text" name="os" value="<?=$result['OS']?>" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Others</span>
@@ -136,10 +136,10 @@ if(!empty($_SESSION['id'])) {
                         </div>
                         <div class="input-box">
                             <span class="details">Date Deployed</span>
-                            <input type="date" name="datedeployed" placeholder="Date Deployed" id="">
+                            <input type="date" name="datedeployed" placeholder="Date Deployed" value="<?=$result['datedeployed']?>" id="">
                         </div>
                     </div>
-                    <div class="title">User Information</div>
+                    <div class="title"></div>
                     <div class="asset-details">
                         <div class="input-box">
                         <span class="details">Assigned To</span>

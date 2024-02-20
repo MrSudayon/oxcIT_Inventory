@@ -87,11 +87,11 @@ if(!empty($_SESSION['id'])) {
                     </div>
                     <div class="input-box">
                         <span class="details">Serial no.</span>
-                        <input type="text" name="serial" placeholder="Serial Number" id="" required>
+                        <input type="text" name="serial" placeholder="Serial Number" id="">
                     </div>
                     <div class="input-box">
                         <span class="details">Supplier</span>
-                        <input type="text" name="supplier" placeholder="Supplier" id="" required>
+                        <input type="text" name="supplier" placeholder="Supplier" id="">
                     </div>
                     <div class="input-box">
                         <span class="details">Date Purchased</span>
