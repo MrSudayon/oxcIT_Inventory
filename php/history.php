@@ -59,7 +59,6 @@ if(!empty($_SESSION['id'])) {
                         <!-- <th>ID</th> -->
                         <th>User</th>
                         <th>Action</th>
-                        <th>Assigned to:</th>
                         <th>Date</th>
                     </tr>
                     
@@ -75,7 +74,6 @@ if(!empty($_SESSION['id'])) {
                         <!-- <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td> -->
                         <td><?php echo $row['name']; ?></td>
                         <td><?php echo $row['action']; ?></td>
-                        <td><?php echo $row['assigned']; ?></td>
                         <td><?php echo $row['date']; ?></td>
                     </tr>
                     <?php
