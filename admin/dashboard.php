@@ -62,6 +62,12 @@ if(!empty($_SESSION['id'])) {
             </div>
 
             <form action="accountability.php" method="get">
+                <div class="link-btns">
+                    <a href="add-assets.php" class="link-btn">Add</a>
+                    <button type="submit" class="link-btn" name="accountability" >Accountability</button>
+                    <button type="submit" formaction="turnover.php" class="link-btn" name="turnover" >Turn Over</button>
+                    <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
+                </div>
                 <table class="assets-table">
                     <tr>
                         <th><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
@@ -118,12 +124,7 @@ if(!empty($_SESSION['id'])) {
                     ?>
                 </table>
                 
-                <div class="link-btns">
-                    <a href="add-assets.php" class="link-btn">Add</a>
-                    <button type="submit" class="link-btn" name="accountability" >Accountability</button>
-                    <button type="submit" formaction="turnover.php" class="link-btn" name="turnover" >Turn Over</button>
-                    <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
-                </div>
+                
             </form>
             
         </div>
