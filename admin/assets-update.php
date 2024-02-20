@@ -23,8 +23,8 @@ if(isset($_POST['update-asset']))
         'datedeployed' => mysqli_real_escape_string($db->conn,$_POST['datetdeployed']),
 
         'assigned' => mysqli_real_escape_string($db->conn,$_POST['assigned']),
-        'location' => mysqli_real_escape_string($db->conn,$_POST['location']),
-        'department' => mysqli_real_escape_string($db->conn,$_POST['department']),
+        'turnover' => mysqli_real_escape_string($db->conn,$_POST['turnover']),
+        'lastused' => mysqli_real_escape_string($db->conn,$_POST['lastused']),
     ];
     $asset = new assetsController;
     $result = $asset->update($input, $id);

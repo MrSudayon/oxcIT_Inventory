@@ -21,15 +21,25 @@ if(!empty($_SESSION['id'])) {
 <body>
     <header>
         <div class="logo">
-            <a href="dashboard.php"><img src="../assets/logo.png" width="150px"></img></a>
+            <a href="#"><img src="../assets/logo.png" width="150px"></img></a>
         </div>
+        <div class="dropdown">
+            <button class="dropbtn">Menu</button>
+            <div class="dropdown-content">
+                <a href="../php/add_emp_info.php">Register</a>
+                <a href="../php/history.php">History</a>
+                <a href="../php/logout.php?id=<?php echo $id; ?>&name=<?php echo $username; ?>">Logout</a>
+            </div>
+        </div>
+        <!-- 2-16-24
         <nav>
             <ul>
-                <li><a href="dashboard.php">Home</a></li>
-                <li><a href="../php/register.php">Users</a></li>
+                <li><a href="#">Home</a></li>
+                <li><a href="../php/add_emp_info.php">Register Emp</a></li>
+                <li><a href="../php/add_emp_info.php">Register Emp</a></li>
                 <li><a href="../php/logout.php">Logout</a></li>
             </ul>
-        </nav>
+        </nav> -->
     </header>
     <div class="container">
         <div class="add-form">
