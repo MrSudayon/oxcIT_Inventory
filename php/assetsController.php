@@ -37,6 +37,12 @@ class assetsController {
         $turnover = $input['turnover'];
         $lastused = $input['lastused'];
         
+        if($lastused == '') {
+            $lastused = $assigned;
+        } else {
+            $lastused = $input['lastused'];
+        }
+
         // $lastused = $input['lastused'];
 
         $qry = "UPDATE assets_tbl SET assettype='$assetType', assettag='$assetTag', model='$model', serial='$serial', supplier='$supplier', datepurchased='$dateprchs', status='$status', remarks='$remarks', CPU='$cpu', MEMORY='$ram', STORAGE='$storage', OS='$os', Others='$others', assigned='$assigned', lastused='$lastused', dateturnover='$turnover' WHERE id='$assetID' LIMIT 1";

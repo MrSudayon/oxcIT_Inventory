@@ -160,10 +160,10 @@ if(!empty($_SESSION['id'])) {
                             ?>
                         </select>
                     </div>
-                    <div class="input-box">
+                    <!-- <div class="input-box">
                         <span class="details">Turnover Date</span>
                         <input type="date" name="turnover">
-                    </div>
+                    </div> -->
                     <div class="input-box">
                         <span class="details">Last Used by:</span>
                         <input type="text" name="lastused" style="background-color: #ccc;" readonly>

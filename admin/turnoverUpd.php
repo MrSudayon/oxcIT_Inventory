@@ -16,7 +16,7 @@ if(!empty($_SESSION['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
-    <title>Update</title>
+    <title>Turnover</title>
 </head>
 <body>
     <header>
@@ -53,25 +53,16 @@ if(!empty($_SESSION['id'])) {
 
                 if($result) {
             ?>
-                <form action="assets-update.php" method="POST">
+                <form action="asset-turnover.php" method="POST">
                     <div class="asset-details">
                         <input type="hidden" name="assetID" value="<?=$result['id']?>">
 
                         <div class="input-box">
                             <span class="details">Asset Type</span>
                             <!-- <input type="text" name="asset-type" value="" id="" required> -->
-                            <select name="asset-type" id="Type" onChange="displaySelectedValue()" required>
+                            <select name="asset-type" id="Type" style="background-color: #ccc;" readonly onChange="displaySelectedValue()" required>
                                 <option value="<?=$result['assettype']?>"><?=$result['assettype']?></option>
-                                <?php
-                                    $category = new Operations;
-                                    $assettype = $category->getAssets();
-
-                                    foreach($assettype as $assets) {
-                                ?>
-                                    <option value="<?=$assets['assetType']?>"><?php echo $assets['assetType']; ?></option>
-                                <?php
-                                    }
-                                ?>
+                                
                             </select>
                         </div>
                         <div class="input-box">
@@ -82,32 +73,30 @@ if(!empty($_SESSION['id'])) {
                         </div>
                         <div class="input-box">
                             <span class="details">Model</span>
-                            <input type="text" name="model" value="<?=$result['model']?>" id="" required>
+                            <input type="text" name="model" style="background-color: #ccc;" readonly value="<?=$result['model']?>" id="" required>
                         </div>
                         <div class="input-box">
                             <span class="details">Serial no.</span>
-                            <input type="text" name="serial" value="<?=$result['serial']?>" id="">
+                            <input type="text" name="serial" style="background-color: #ccc;" readonly value="<?=$result['serial']?>" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Supplier</span>
-                            <input type="text" name="supplier" value="<?=$result['supplier']?>" id="">
+                            <input type="text" name="supplier" style="background-color: #ccc;" readonly value="<?=$result['supplier']?>" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Date Purchased</span>
-                            <input type="date" name="dateprchs" value="<?=$result['datepurchased']?>" id="" required>
+                            <input type="date" name="dateprchs" style="background-color: #ccc;" readonly value="<?=$result['datepurchased']?>" id="" required>
                         </div>
                         <div class="input-box">
                             <span class="details">Status</span>
-                            <select name="status">
-                                <option value="<?=$result['status']?>"><?=$result['status']?></option>
-                                <option value="Maintenance">For Repair</option>
+                            <select name="status" style="background-color: #ccc;">
                                 <option value="To be Deploy">To be Deploy</option>
-                                <option value="Deployed">Deployed</option>
+                            
                             </select>
                         </div>
                         <div class="input-box">
                             <span class="details">Remarks</span>
-                            <input type="text" name="remarks" value="<?=$result['remarks']?>" id="">
+                            <input type="text" name="remarks" style="background-color: #ccc;" readonly value="<?=$result['remarks']?>" id="">
                         </div>
 
                     </div>
@@ -115,63 +104,43 @@ if(!empty($_SESSION['id'])) {
                     <div class="asset-details">
                         <div class="input-box">
                             <span class="details">Processor</span>
-                            <input type="text" name="processor" value="<?=$result['CPU']?>" id="">
+                            <input type="text" name="processor" style="background-color: #ccc;" readonly value="<?=$result['CPU']?>" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Memory</span>
-                            <input type="text" name="memory" value="<?=$result['MEMORY']?>" id="">
+                            <input type="text" name="memory" style="background-color: #ccc;" readonly value="<?=$result['MEMORY']?>" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Storage</span>
-                            <input type="text" name="storage" value="<?=$result['STORAGE']?>" id="">
+                            <input type="text" name="storage" style="background-color: #ccc;" readonly value="<?=$result['STORAGE']?>" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Operating System</span>
-                            <input type="text" name="os" value="<?=$result['OS']?>" id="">
+                            <input type="text" name="os" style="background-color: #ccc;" readonly value="<?=$result['OS']?>" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Others</span>
-                            <input type="text" name="other" value="<?=$result['Others']?>" id="">
+                            <input type="text" name="other" style="background-color: #ccc;" readonly value="<?=$result['Others']?>" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Date Deployed</span>
-                            <input type="date" name="datedeployed" placeholder="Date Deployed" value="<?=$result['datedeployed']?>" id="">
+                            <input type="date" name="datedeployed" style="background-color: #ccc;" readonly value="<?=$result['datedeployed']?>" id="">
                         </div>
-                    </div>
-                    <div class="title"></div>
-                    <div class="asset-details">
-                        <div class="input-box">
-                        <span class="details">Assigned To</span>
-                            <select name="assigned" id="assigned" class="assigned">
-                                <option value="<?=$result['assigned']?>"><?=$result['assigned']?></option>
-                                <?php
-                                        $results = new get_All_User();
-
-                                        // $user = $results->selectAllUser();
-                                        $user = $results->selectAllEmp();
-                                        foreach($user as $row) {
-                                ?>
-                                <option value="<?php echo $row['name']; ?>">
-                                    <?php echo $row['name']; ?>
-                                </option>
-                                <?php
-                                    }
-                                    
-                                ?>
-                            </select>
-                        </div>
+                    <!-- </div>
+                    <div class="asset-details"> -->
+                       
                         <div class="input-box">
                             <span class="details">Turnover Date</span>
-                            <input type="date" name="turnover" value="<?=$result['dateturnover']?>">
+                            <input type="date" name="turnover" value="<?php echo date('Y-m-d'); ?>">
                         </div>
                         <div class="input-box">
                             <span class="details">Last Used by:</span>
-                            <input type="text" name="lastused" value="<?=$result['lastused']?>">
+                            <input type="text" name="lastused" value="<?=$result['assigned']?>">
                         </div>
                     </div>
                     
                     <div class="button">
-                        <input type="submit" value="Save" name="update-asset"/>
+                        <input type="submit" value="Turnover" name="turnover-asset"/>
                     </div>
                 </form>
                 <?php
