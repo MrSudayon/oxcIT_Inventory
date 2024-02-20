@@ -34,10 +34,12 @@ class assetsController {
         $os = $input['os'];
         $others = $input['others'];
         $assigned = $input['assigned'];
-        $department = $input['department'];
-        $location = $input['location'];
+        $turnover = $input['turnover'];
+        $lastused = $input['lastused'];
+        
+        // $lastused = $input['lastused'];
 
-        $qry = "UPDATE assets_tbl SET assettype='$assetType', assettag='$assetTag', model='$model', serial='$serial', supplier='$supplier', datepurchased='$dateprchs', status='$status', remarks='$remarks', CPU='$cpu', MEMORY='$ram', STORAGE='$storage', OS='$os', Others='$others', assigned='$assigned', department='$department', location='$location' WHERE id='$assetID' LIMIT 1";
+        $qry = "UPDATE assets_tbl SET assettype='$assetType', assettag='$assetTag', model='$model', serial='$serial', supplier='$supplier', datepurchased='$dateprchs', status='$status', remarks='$remarks', CPU='$cpu', MEMORY='$ram', STORAGE='$storage', OS='$os', Others='$others', assigned='$assigned', lastused='$lastused', dateturnover='$turnover' WHERE id='$assetID' LIMIT 1";
         $result = $db->conn->query($qry);
 
 
