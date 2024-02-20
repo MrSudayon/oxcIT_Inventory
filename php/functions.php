@@ -18,6 +18,7 @@ class Operations {
             $dept = $row['division'];
             $location = $row['location'];
         }
+
         $query = "INSERT INTO assets_tbl (id, department, assettype, assettag, model, serial, supplier, CPU, MEMORY, STORAGE, OS, Others, assigned, lastused, status, location, datepurchased, remarks, datedeployed, dateturnover)
                                 VALUES ('','$dept','$type','$tag','$mdl','$srl','$spplr','$cpu','$ram','$storage','$os','$others','$assigned','$lastused','$stts','$location','$dtprchs','$rmrks','$datedeployed','$turnover')";
 
