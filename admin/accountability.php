@@ -49,6 +49,7 @@ if(isset($_GET['select'])) {
     while($row = mysqli_fetch_assoc($res)) {
         $name = $row['assigned'];
         $dept = $row['department'];
+        $acc_ref = $row['accountability_ref'];
     }
 }
 
@@ -60,6 +61,37 @@ if(isset($_GET['select'])) {
     <center>
     <h2>Accountability Form</h2><br>
     </center>
+    <div class="reference-code">
+        <?php 
+        $n=1;
+        // function getCode($n) {
+        //     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        //     $randomString = '';
+         
+        //     for ($i = 0; $i < $n; $i++) {
+        //         $index = rand(0, strlen($characters) - 1);
+        //         $randomString .= $characters[$index];
+        //     }
+            
+        //     return "REF# " .$randomString;
+        // }
+        
+        // query to fetch code in assets_tbl
+        // $sql = mysqli_query($db->conn, "");
+        // If reference code exists, Display existing Ref Code
+        // else generate new
+        // echo "asd".$acc_ref;
+        function getCode($n) {
+            for ($i = 0; $i < $n; $i++) {
+                $code = str_pad($i,4,"0",STR_PAD_LEFT). "-" .date("Y");
+            }
+            
+            return "REF# " .$code;
+        }
+        
+        echo getCode($n);
+        ?>
+    </div>
         <table class="assets-table">
             <tr>
                 <th>Asset Type</th>

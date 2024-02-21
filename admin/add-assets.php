@@ -90,9 +90,9 @@ if(!empty($_SESSION['id'])) {
                         <span class="details">Status</span>
                         <select name="status" id="status">
                             <option value="Deployed">Deployed</option>
-                            <option value="To be Deploy">To be Deploy</option>
-                            <option value="Maintenance">For Repair</option>
-
+                            <option value="To be Deploy">To be deploy</option>
+                            <option value="For repair">For repair</option>
+                            <option value="Deffective">Deffective</option>
                         </select>
                     </div>
                     <div class="input-box">

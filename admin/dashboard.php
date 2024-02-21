@@ -60,9 +60,9 @@ if(!empty($_SESSION['id'])) {
                         <th>Memory</th>
                         <th>Storage</th>
                         <th>Status</th>
-                        <th>Date Deployed</th>
-                        <th>Date Turnover</th>
-                        <th coslpan="2">Action</th>
+                        <!-- <th>Date Deployed</th>
+                        <th>Date Turnover</th> -->
+                        <th coslpan="3">Action</th>
                     </tr>
                     
                     <tr>
@@ -87,8 +87,7 @@ if(!empty($_SESSION['id'])) {
                         <td><?php echo $row['MEMORY']; ?></td>
                         <td><?php echo $row['STORAGE']; ?></td>
                         <td><?php echo $row['status']; ?></td>
-                        <td><?php echo $row['datedeployed']; ?></td>
-                        <td><?php echo $row['dateturnover']; ?></td>
+                        
 
                         <td>
                         <center>
