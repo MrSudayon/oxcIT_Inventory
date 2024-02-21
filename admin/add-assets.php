@@ -40,18 +40,7 @@ if(!empty($_SESSION['id'])) {
     <title>Add Assets</title>
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <a href="dashboard.php"><img src="../assets/logo.png" width="150px"></img></a>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="dashboard.php">Home</a></li>
-                <li><a href="../php/register.php">Users</a></li>
-                <li><a href="../php/logout.php">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
+<?php include '../inc/header.php'; ?>
 
     <div class="container">
         <div class="add-form">
