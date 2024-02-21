@@ -1,6 +1,6 @@
 function removeVowels(str) {
     // Use a regular expression to replace vowels (both upper and lower case) with an empty string
-    return str.replace(/[aeiouEIO]/g, '');
+    return str.replace(/[aeiouEI]/g, '');
 }
 
 const categoryIncrementMap = {

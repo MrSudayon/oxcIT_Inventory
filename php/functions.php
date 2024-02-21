@@ -117,7 +117,7 @@ class Operations {
             $selectedAssetType = $_POST['asset-type'];
         
             // Check if the asset tag already exists in the database
-            $sql = "SELECT assettag FROM assets_tbl WHERE assettype = '$selectedAssetType'";
+            $sql = "SELECT assettag FROM assets_tbl WHERE assettype = '$selectedAssetType' AND status != 'Archive'";
             $result = $db->conn->query($sql);
         
             if ($result->num_rows > 0) {
@@ -140,7 +140,7 @@ class Operations {
 
             function removeVowelsAndToUpper($str) {
                 // Remove vowels
-                $strWithoutVowels = str_replace(['a', 'e', 'i', 'o', 'u', 'E', 'I', 'O'], '', $str);
+                $strWithoutVowels = str_replace(['a', 'e', 'i', 'o', 'u', 'E', 'I'], '', $str);
                 
                 // Convert to uppercase
                 $strToUpper = strtoupper($strWithoutVowels);
