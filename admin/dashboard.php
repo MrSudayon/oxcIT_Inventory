@@ -32,7 +32,7 @@ if(!empty($_SESSION['id'])) {
 <body>
     <header>
         <div class="logo">
-            <a href="#"><img src="../assets/logo.png" width="150px"></img></a>
+            <a href="dashboard.php"><img src="../assets/logo.png" width="150px"></img></a>
         </div>
         <div class="dropdown">
             <button class="dropbtn">Menu</button>
@@ -60,8 +60,9 @@ if(!empty($_SESSION['id'])) {
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </form>
             </div>
-
             <form action="accountability.php" method="get">
+
+            
                 <div class="link-btns">
                     <a href="add-assets.php" class="link-btn">Add</a>
                     <button type="submit" class="link-btn" name="accountability" >Accountability</button>

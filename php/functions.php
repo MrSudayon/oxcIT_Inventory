@@ -41,6 +41,10 @@ class Operations {
         $res = mysqli_query($db->conn, $query);
 
         return $res;
+
+        mysqli_free_result($res);
+        $db->conn->close();
+
     }
 
     function getAssets() {
@@ -52,6 +56,7 @@ class Operations {
     }
     function searchData() {
         global $db;
+        global $res;
 
         if(isset($_POST['search'])) {
             $search = $_POST['search'];
@@ -68,7 +73,9 @@ class Operations {
 
             return $res;
         }
-        
+        mysqli_free_result($res);
+
+        $db->conn->close();
     }
 
     function searchHistory() {
