@@ -37,24 +37,41 @@ if(isset($_GET['select'])) {
 <body>
 <div class="content">
 <?php           
-    foreach ($selected as $userID){ 
-            $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
-            $res = mysqli_query($db->conn, $sql);
-        
-        while($row = mysqli_fetch_assoc($res)) {
-            $name = $row['assigned'];
-            $dept = $row['department'];
-        }
-            
-        $sql1 = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id='$userID'");
-        $username = $user['username'];
-
-        while($row1 = mysqli_fetch_assoc($sql1)) {
-            $assettag = $row1['assettag'];
-            $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                                VALUES ('', '$username', 'Turnover Record Tags: $assettag ', NOW())");
-        }
+foreach ($selected as $userID){ 
+        $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
+        $res = mysqli_query($db->conn, $sql);
+    
+    while($row = mysqli_fetch_assoc($res)) {
+        $name = $row['assigned'];
+        $dept = $row['department'];
+        $turnover_ref = $row['turnover_ref'];
+        $arrayName[] = $name;
     }
+        
+    $sql1 = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id='$userID'");
+    $username = $user['username'];
+
+    while($row1 = mysqli_fetch_assoc($sql1)) {
+        $assettag = $row1['assettag'];
+        $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                            VALUES ('', '$username', 'Turnover Record Tags: $assettag ', NOW())");
+    }
+}
+if(count(array_unique($arrayName))>1) {
+    ?>
+        <script> 
+        alert ('Multiple User is not Allowed!')
+        window.location.href = 'dashboard.php';
+        </script> 
+    <?php
+} elseif($name == '') {
+    ?>
+        <script> 
+        alert ('There is no Assigned User')
+        window.location.href = 'dashboard.php';
+        </script> 
+    <?php
+}
 ?>  
     <div class="logo">
         <a href="dashboard.php"><img src="../assets/logo.png" width="150px"></img></a>
@@ -63,6 +80,39 @@ if(isset($_GET['select'])) {
     <center>
     <h2>Turnover Form</h2><br>
     </center>
+    <div class="reference-code" align="right">
+    <?php 
+        // Generating Reference Code
+        $n=4;
+        function getCode($n) {
+            $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $randomString = '';
+         
+            for ($i = 0; $i < $n; $i++) {
+                $index = rand(0, strlen($characters) - 1);
+                $randomString .= $characters[$index];
+                $refCode = $randomString. "-" .date("Y");
+            }
+            
+            return $refCode;
+        }
+        $newCode = getCode($n);
+        
+        // If reference code exists, Display existing Ref Code
+        // else generate new
+        if ($turnover_ref == '') {
+            echo "Ref#: " .$newCode;
+            // query to fetch code in assets_tbl
+            foreach ($selected as $userID) { 
+                $sql = mysqli_query($db->conn, "UPDATE assets_tbl SET turnover_ref = '$newCode' WHERE id='$userID' AND status!='Archive'");
+            }
+        } else {
+            echo "Ref#: " . $turnover_ref;
+        }
+    
+       
+    ?>
+    </div>
         <table class="assets-table">
             
             <tr>
