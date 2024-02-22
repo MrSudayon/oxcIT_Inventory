@@ -55,21 +55,7 @@ foreach ($selected as $userID) {
         
     }
 }
-if(count(array_unique($arrayName))>1) {
-    ?>
-        <script> 
-        alert ('Multiple User is not Allowed!')
-        window.location.href = 'dashboard.php';
-        </script> 
-    <?php
-} elseif($name == '') {
-    ?>
-        <script> 
-        alert ('There is no Assigned User')
-        window.location.href = 'dashboard.php';
-        </script> 
-    <?php
-}
+
 
 ?>  
     <div class="logo">
@@ -93,20 +79,36 @@ if(count(array_unique($arrayName))>1) {
                 $refCode = $randomString. "-" .date("Y");
             }
             
-            return $refCode;
+            return "ACCT-".$refCode;
         }
         $newCode = getCode($n);
         
         // If reference code exists, Display existing Ref Code
         // else generate new
-        if ($acc_ref == '') {
-            echo "Ref#: " .$newCode;
-            // query to fetch code in assets_tbl
-            foreach ($selected as $userID) { 
-                $sql = mysqli_query($db->conn, "UPDATE assets_tbl SET accountability_ref = '$newCode' WHERE id='$userID' AND status!='Archive'");
-            }
+        if(count(array_unique($arrayName))>1) {
+            ?>
+                <script> 
+                alert ('Multiple User is not Allowed!')
+                window.location.href = 'dashboard.php';
+                </script> 
+            <?php
+        } elseif($name == '') {
+            ?>
+                <script> 
+                alert ('There is no Assigned User')
+                window.location.href = 'dashboard.php';
+                </script> 
+            <?php
         } else {
-            echo "Ref#: " . $acc_ref;
+            if ($acc_ref == '') {
+                echo "Ref#: " .$newCode;
+                // query to fetch code in assets_tbl
+                foreach ($selected as $userID) { 
+                    $sql = mysqli_query($db->conn, "UPDATE assets_tbl SET accountability_ref = '$newCode' WHERE id='$userID' AND status!='Archive'");
+                }
+            } else {
+                echo "Ref#: " . $acc_ref;
+            }
         }
     ?>
     </div>

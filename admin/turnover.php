@@ -57,14 +57,7 @@ foreach ($selected as $userID){
                             VALUES ('', '$username', 'Turnover Record Tags: $assettag ', NOW())");
     }
 }
-if(count(array_unique($arrayName))>1) {
-    ?>
-        <script> 
-        alert ('Multiple User is not Allowed!')
-        window.location.href = 'dashboard.php';
-        </script> 
-    <?php
-} 
+
 ?>  
     <div class="logo">
         <a href="dashboard.php"><img src="../assets/logo.png" width="150px"></img></a>
@@ -87,21 +80,31 @@ if(count(array_unique($arrayName))>1) {
                 $refCode = $randomString. "-" .date("Y");
             }
             
-            return $refCode;
+            return "TRNO-".$refCode;
         }
         $newCode = getCode($n);
         
         // If reference code exists, Display existing Ref Code
         // else generate new
-        if ($turnover_ref == '') {
-            echo "Ref#: " .$newCode;
-            // query to fetch code in assets_tbl
-            foreach ($selected as $userID) { 
-                $sql = mysqli_query($db->conn, "UPDATE assets_tbl SET turnover_ref = '$newCode' WHERE id='$userID' AND status!='Archive'");
-            }
+        if(count(array_unique($arrayName))>1) {
+            ?>
+                <script> 
+                alert ('Multiple User is not Allowed!')
+                window.location.href = 'dashboard.php';
+                </script> 
+            <?php
         } else {
-            echo "Ref#: " . $turnover_ref;
+            if ($turnover_ref == '') {
+                echo "Ref#: " .$newCode;
+                // query to fetch code in assets_tbl
+                foreach ($selected as $userID) { 
+                    $sql = mysqli_query($db->conn, "UPDATE assets_tbl SET turnover_ref = '$newCode' WHERE id='$userID' AND status!='Archive'");
+                }
+            } else {
+                echo "Ref#: " . $turnover_ref;
+            }
         }
+        
     
        
     ?>
