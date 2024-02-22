@@ -42,7 +42,7 @@ if(isset($_GET['select'])) {
 <?php 
 
                 
-    foreach ($selected as $userID){ 
+foreach ($selected as $userID) { 
         $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
         $res = mysqli_query($db->conn, $sql);
     
@@ -50,7 +50,25 @@ if(isset($_GET['select'])) {
         $name = $row['assigned'];
         $dept = $row['department'];
         $acc_ref = $row['accountability_ref'];
+        $arrayName[] = $name;
+        // Logic to Ignore or dismiss if selected a multiple username/assigned user
+        
     }
+}
+if(count(array_unique($arrayName))>1) {
+    ?>
+        <script> 
+        alert ('Multiple User is not Allowed!')
+        window.location.href = 'dashboard.php';
+        </script> 
+    <?php
+} elseif($name == '') {
+    ?>
+        <script> 
+        alert ('There is no Assigned User')
+        window.location.href = 'dashboard.php';
+        </script> 
+    <?php
 }
 
 ?>  
@@ -61,36 +79,36 @@ if(isset($_GET['select'])) {
     <center>
     <h2>Accountability Form</h2><br>
     </center>
-    <div class="reference-code">
-        <?php 
-        $n=1;
-        // function getCode($n) {
-        //     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        //     $randomString = '';
-         
-        //     for ($i = 0; $i < $n; $i++) {
-        //         $index = rand(0, strlen($characters) - 1);
-        //         $randomString .= $characters[$index];
-        //     }
-            
-        //     return "REF# " .$randomString;
-        // }
-        
-        // query to fetch code in assets_tbl
-        // $sql = mysqli_query($db->conn, "");
-        // If reference code exists, Display existing Ref Code
-        // else generate new
-        // echo "asd".$acc_ref;
+    <div class="reference-code" align="right">
+    <?php 
+        // Generating Reference Code
+        $n=4;
         function getCode($n) {
+            $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $randomString = '';
+         
             for ($i = 0; $i < $n; $i++) {
-                $code = str_pad($i,4,"0",STR_PAD_LEFT). "-" .date("Y");
+                $index = rand(0, strlen($characters) - 1);
+                $randomString .= $characters[$index];
+                $refCode = $randomString. "-" .date("Y");
             }
             
-            return "REF# " .$code;
+            return $refCode;
         }
+        $newCode = getCode($n);
         
-        echo getCode($n);
-        ?>
+        // If reference code exists, Display existing Ref Code
+        // else generate new
+        if ($acc_ref == '') {
+            echo "Ref#: " .$newCode;
+            // query to fetch code in assets_tbl
+            foreach ($selected as $userID) { 
+                $sql = mysqli_query($db->conn, "UPDATE assets_tbl SET accountability_ref = '$newCode' WHERE id='$userID' AND status!='Archive'");
+            }
+        } else {
+            echo "Ref#: " . $acc_ref;
+        }
+    ?>
     </div>
         <table class="assets-table">
             <tr>

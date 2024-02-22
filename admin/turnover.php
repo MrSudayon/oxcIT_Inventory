@@ -37,15 +37,15 @@ if(isset($_GET['select'])) {
 <body>
 <div class="content">
 <?php           
-foreach ($selected as $userID){ 
-        $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
-        $res = mysqli_query($db->conn, $sql);
-    
-    while($row = mysqli_fetch_assoc($res)) {
-        $name = $row['assigned'];
-        $dept = $row['department'];
-    }
+    foreach ($selected as $userID){ 
+            $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
+            $res = mysqli_query($db->conn, $sql);
         
+        while($row = mysqli_fetch_assoc($res)) {
+            $name = $row['assigned'];
+            $dept = $row['department'];
+        }
+            
         $sql1 = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id='$userID'");
         $username = $user['username'];
 
@@ -54,10 +54,7 @@ foreach ($selected as $userID){
             $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                                 VALUES ('', '$username', 'Turnover Record Tags: $assettag ', NOW())");
         }
-
-        
-}
-
+    }
 ?>  
     <div class="logo">
         <a href="dashboard.php"><img src="../assets/logo.png" width="150px"></img></a>

@@ -46,6 +46,7 @@ if(!empty($_SESSION['id'])) {
                     <a href="add-assets.php" class="link-btn">Add</a>
                     <button type="submit" class="link-btn" name="accountability" >Accountability</button>
                     <button type="submit" formaction="turnover.php" class="link-btn" name="turnover" >Turn Over</button>
+                    <button type="submit" formaction="#" class="link-btn" name="references" >References</button>
                     <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
                 </div>
                 <table class="assets-table">
@@ -60,8 +61,6 @@ if(!empty($_SESSION['id'])) {
                         <th>Memory</th>
                         <th>Storage</th>
                         <th>Status</th>
-                        <!-- <th>Date Deployed</th>
-                        <th>Date Turnover</th> -->
                         <th coslpan="3">Action</th>
                     </tr>
                     
@@ -87,7 +86,6 @@ if(!empty($_SESSION['id'])) {
                         <td><?php echo $row['MEMORY']; ?></td>
                         <td><?php echo $row['STORAGE']; ?></td>
                         <td><?php echo $row['status']; ?></td>
-                        
 
                         <td>
                         <center>
