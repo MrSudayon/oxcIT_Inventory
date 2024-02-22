@@ -68,7 +68,7 @@ if(!empty($_SESSION['id'])) {
                             <input type="date" name="dateprchs" style="background-color: #ccc;" readonly value="<?=$result['datepurchased']?>" id="" required>
                         </div>
                         <div class="input-box">
-                            <span class="details">Status</span>
+                            <span class="details" style="margin-bottom: 10px;">Status</span>
                             <select name="status" style="background-color: #ccc;">
                                 <option value="To be Deploy">To be Deploy</option>
                             
@@ -106,16 +106,28 @@ if(!empty($_SESSION['id'])) {
                             <span class="details">Date Deployed</span>
                             <input type="date" name="datedeployed" style="background-color: #ccc;" readonly value="<?=$result['datedeployed']?>" id="">
                         </div>
-                    <!-- </div>
-                    <div class="asset-details"> -->
-                       
+                    </div>
+                    <div class="title"></div>
+                    <div class="asset-details">
                         <div class="input-box">
                             <span class="details">Turnover Date</span>
-                            <input type="date" name="turnover" value="<?php echo date('Y-m-d'); ?>">
+                            <input type="date" name="turnover" value="<?php echo date('Y-m-d'); ?>" style="background-color: #ccc;">
                         </div>
                         <div class="input-box">
                             <span class="details">Last Used by:</span>
                             <input type="text" name="lastused" value="<?=$result['assigned']?>">
+                        </div>
+                        <div class="input-box">
+                            <span class="details" style="margin-bottom: 10px;">Reason: </span>
+                            <select name="reason">
+                                <option value="Replacement">Replacement</option>
+                                <option value="Defective">Defective</option>
+                                <option value="Resign">Resign</option>
+                            </select>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Reference Code</span>
+                            <input type="text" name="ref_code" id="ref_code" required>
                         </div>
                     </div>
                     

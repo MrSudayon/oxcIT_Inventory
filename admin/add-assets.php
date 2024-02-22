@@ -12,11 +12,11 @@ if(!empty($_SESSION['id'])) {
         if(isset($_POST['save'])) {
             $countRes = $record->checkAssetCount($_POST['asset-type']);
            
-            $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], $_POST['dateprchs'], $_POST['status'], $_POST['remarks'], $_POST['processor'], $_POST['memory'], $_POST['storage'], $_POST['os'], $_POST['other'], $_POST['datedeployed'], $_POST['assigned'], $_POST['turnover'], $_POST['lastused']);
+            $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], $_POST['cost'], $_POST['repair_cost'], $_POST['dateprchs'], $_POST['status'], $_POST['remarks'], $_POST['processor'], $_POST['memory'], $_POST['storage'], $_POST['os'], $_POST['other'], $_POST['datedeployed'], $_POST['assigned'], $_POST['lastused']);
 
             if($result == 1) {
                 echo "<script> alert('Data Stored successfully!'); </script>";
-                header("Refresh:0; url=add-assets.php");
+                // header("Refresh:0; url=add-assets.php");
 
             } elseif($result == 100) {
                 echo "<script> alert('Failed'); </script>";
@@ -83,11 +83,16 @@ if(!empty($_SESSION['id'])) {
                         <input type="text" name="supplier" placeholder="Supplier" id="">
                     </div>
                     <div class="input-box">
+                        <span class="details">Cost</span>
+                        <input type="text" name="cost" placeholder="Item cost.." id="">
+                    </div>
+                    
+                    <div class="input-box">
                         <span class="details">Date Purchased</span>
                         <input type="date" name="dateprchs" placeholder="Date Purchased" id="" required>
                     </div>
                     <div class="input-box">
-                        <span class="details">Status</span>
+                        <span class="details" style="margin-bottom: 10px;">Status</span>
                         <select name="status" id="status">
                             <option value="Deployed">Deployed</option>
                             <option value="To be Deploy">To be deploy</option>
@@ -96,9 +101,14 @@ if(!empty($_SESSION['id'])) {
                         </select>
                     </div>
                     <div class="input-box">
+                        <span class="details">Repair Cost</span>
+                        <input type="text" name="repair-cost" placeholder="Repair Cost..." id="">
+                    </div>
+                    <div class="input-box">
                         <span class="details">Remarks</span>
                         <input type="text" name="remarks" placeholder="Remarks" id="">
                     </div>
+                   
                 </div>
                 <div class="title">Specification</div>
                 <div class="asset-details">
@@ -130,7 +140,7 @@ if(!empty($_SESSION['id'])) {
                 <div class="title"></div>
                 <div class="asset-details">
                     <div class="input-box">
-                        <span class="details">Assigned To</span>
+                        <span class="details" style="margin-bottom: 10px;">Assigned To</span>
                         <select name="assigned" id="assigned" class="assigned">
                             <option value="">Please Select</option>
                             <?php

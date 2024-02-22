@@ -33,12 +33,16 @@ if(!empty($_SESSION['id'])) {
     <?php include '../inc/header.php'; ?>
     
         <div class="content">
-            <div class="search-container">
+            <div class="title">
+                <h1> Asset Dashboard </h1>
+                <div class="search-container">
                 <form action="" method="POST">
                     <input type="text" placeholder="Search.." name="search">
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </form>
+                </div>
             </div>
+            
             <form action="accountability.php" method="get">
 
             

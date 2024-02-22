@@ -64,14 +64,7 @@ if(count(array_unique($arrayName))>1) {
         window.location.href = 'dashboard.php';
         </script> 
     <?php
-} elseif($name == '') {
-    ?>
-        <script> 
-        alert ('There is no Assigned User')
-        window.location.href = 'dashboard.php';
-        </script> 
-    <?php
-}
+} 
 ?>  
     <div class="logo">
         <a href="dashboard.php"><img src="../assets/logo.png" width="150px"></img></a>
