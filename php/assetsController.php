@@ -36,6 +36,7 @@ class assetsController {
         $assigned = $input['assigned'];
         $turnover = $input['turnover'];
         $lastused = $input['lastused'];
+        $reason = $input['reason'];
         
         if($lastused == '') {
             $lastused = $assigned;
@@ -43,12 +44,11 @@ class assetsController {
             $lastused = $input['lastused'];
         }
 
-        // $lastused = $input['lastused'];
-
-        $qry = "UPDATE assets_tbl SET assettype='$assetType', assettag='$assetTag', model='$model', serial='$serial', supplier='$supplier', datepurchased='$dateprchs', status='$status', remarks='$remarks', CPU='$cpu', MEMORY='$ram', STORAGE='$storage', OS='$os', Others='$others', assigned='$assigned', lastused='$lastused', dateturnover='$turnover' WHERE id='$assetID' LIMIT 1";
+        $qry = "UPDATE assets_tbl SET assettype='$assetType', assettag='$assetTag', model='$model', serial='$serial', supplier='$supplier', datepurchased='$dateprchs', status='$status', remarks='$remarks', CPU='$cpu', MEMORY='$ram', STORAGE='$storage', OS='$os', Others='$others', assigned='$assigned', lastused='$lastused', dateturnover='$turnover', reason='$reason' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
         $result = $db->conn->query($qry);
 
 
+        // Get current user for History record....
         $session = $select->selectUserById($_SESSION['id']);
         $name = $session['username'];
 
@@ -64,6 +64,44 @@ class assetsController {
         } else {
             return false;
         }
+    }
+
+    public function assetTurnover($input, $id) {
+        global $db;
+
+        $assetID = mysqli_real_escape_string($db->conn, $id);
+        $turnover = $input['turnover'];
+        $lastused = $input['lastused'];
+        $reason = $input['reason'];
+        $ref_Code = $input['ref_code'];
+        
+
+        // get id of selected asset ($assetID)
+        $sql = "SELECT * FROM assets_tbl WHERE id = $assetID AND status != 'Archive'";
+        $res = mysqli_query($db->conn,$sql);
+        while($row = $res->fetch_assoc()) {
+            $turnover_ref = $row['turnover_ref'];
+        }
+        
+        // validation of Turnover reference code
+        if($ref_Code == $turnover_ref) {
+            $qry = "UPDATE assets_tbl SET lastused='$lastused', dateturnover='$turnover', reason='$reason' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
+            $result = $db->conn->query($qry);
+
+            if($result) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            ?>
+                <script>
+                    alert('Wrong Reference Code, Please try again!');
+                    window.location.href = '../admin/turnoverUpd.php';
+                </script>
+            <?php
+        }
+            
     }
 }
 

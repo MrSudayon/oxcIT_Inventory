@@ -34,6 +34,7 @@ if(isset($_POST['update-asset']))
         header("Location: dashboard.php");
         exit(0);
     } else {
+        echo "alert('Update Error')";
         $_SESSION['message'] = "Update Error";
         header("Location: add-assets.php");
         exit(0);

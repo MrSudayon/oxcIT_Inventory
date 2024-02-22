@@ -166,6 +166,9 @@ foreach ($selected as $userID) {
             <h3>Asset Return:</h3>
             <p>
             &nbsp;&nbsp; &nbsp;&nbsp;I understand that I am required to return the asset on the specified date or upon termination of my employment. Failure to return the asset in good condition may result in disciplinary action and/or financial responsibility for repair or replacement costs.</p>
+            <br>[For Asset Administrator Use Only]<br><br>
+                <p>Deployed by: ____________<br>
+                Signature: ______________</p>
             <br><br>
             
                 <h4>Employee Signature: _________________</h4>

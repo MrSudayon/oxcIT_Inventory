@@ -127,7 +127,7 @@ if(!empty($_SESSION['id'])) {
                         </div>
                         <div class="input-box">
                             <span class="details">Reference Code</span>
-                            <input type="text" name="ref_code" id="ref_code" required>
+                            <input type="text" name="ref_code" id="ref_code" placeholder="XXXX-XXXX-XXXX" required>
                         </div>
                     </div>
                     
