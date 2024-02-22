@@ -31,12 +31,12 @@ if(isset($_POST['update-asset']))
 
     if($result) {
         echo "alert('Updated Successfully')";
-        header("Location: dashboard.php");
+        header("Location: ../admin/dashboard.php");
         exit(0);
     } else {
         echo "alert('Update Error')";
         $_SESSION['message'] = "Update Error";
-        header("Location: add-assets.php");
+        header("Location: ../admin/dashboard.php");
         exit(0);
     }
 }

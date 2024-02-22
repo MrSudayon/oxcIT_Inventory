@@ -10,16 +10,6 @@ if(!empty($_SESSION['id'])) {
     $id = $user['id'];
     $username = $user['username'];
 
-    // $sql = mysqli_query($db->conn, "SELECT * FROM users_tbl WHERE id='$id'");
-
-    // while($row = $sql->fetch_assoc()) {
-    //     $role = $row['role'];
-    // }
-    // if ($role == 'Admin') {
-    //     header("Location: ./admin/dashboard.php");
-    // } else {
-    //     header("Location: ./php/login.php");
-    // }
 } else {
     header("Location: ./php/login.php");
 }

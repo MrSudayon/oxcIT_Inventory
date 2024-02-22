@@ -11,12 +11,13 @@ if(!empty($_SESSION['id'])) {
 
         if(isset($_POST['save'])) {
             $countRes = $record->checkAssetCount($_POST['asset-type']);
-           
-            $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], $_POST['cost'], $_POST['repair_cost'], $_POST['dateprchs'], $_POST['status'], $_POST['remarks'], $_POST['processor'], $_POST['memory'], $_POST['storage'], $_POST['os'], $_POST['other'], $_POST['datedeployed'], $_POST['assigned'], $_POST['lastused']);
+            
+            $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], $_POST['cost'], $_POST['repair-cost'], $_POST['dateprchs'], $_POST['status'], $_POST['remarks'], $_POST['processor'], $_POST['memory'], $_POST['storage'], $_POST['os'], $_POST['other'], $_POST['datedeployed'], $_POST['assigned'], $_POST['lastused']);
+            
 
             if($result == 1) {
                 echo "<script> alert('Data Stored successfully!'); </script>";
-                // header("Refresh:0; url=add-assets.php");
+                header("Refresh:0; url=dashboard.php");
 
             } elseif($result == 100) {
                 echo "<script> alert('Failed'); </script>";
@@ -93,16 +94,17 @@ if(!empty($_SESSION['id'])) {
                     </div>
                     <div class="input-box">
                         <span class="details" style="margin-bottom: 10px;">Status</span>
-                        <select name="status" id="status">
+                        <select name="status" id="status" onChange="changetextbox()">
+                            <option>Please select</option>
+                            <option value="For repair">For repair</option>
                             <option value="Deployed">Deployed</option>
                             <option value="To be Deploy">To be deploy</option>
-                            <option value="For repair">For repair</option>
                             <option value="Deffective">Deffective</option>
                         </select>
                     </div>
-                    <div class="input-box">
+                    <div class="input-box" id="repair-cost">
                         <span class="details">Repair Cost</span>
-                        <input type="text" name="repair-cost" placeholder="Repair Cost..." id="">
+                        <input type="text" name="repair-cost" value="" placeholder="Repair Cost...">
                     </div>
                     <div class="input-box">
                         <span class="details">Remarks</span>

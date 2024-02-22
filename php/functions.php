@@ -8,20 +8,28 @@ class Operations {
     function record_Data($type, $tag, $mdl, $srl, $spplr, $cost, $repair_cost, $dtprchs, $stts, $rmrks, $cpu, $ram, $storage, $os, $others, $datedeployed, $assigned, $lastused) {
         global $db;
         global $select;
+        $dept = "";
+        $location = "";
         // $specification = $cpu . ", " . $ram . ", " . $storage . ", " . $os . ", " . $others;  
         $session = $select->selectUserById($_SESSION['id']);
         $name = $session['username'];
 
-        $sql = mysqli_query($db->conn,"SELECT * FROM employee_tbl WHERE name = '$assigned'");
+        if(!isset($assigned)) {
+            $dept = "";
+            $location = "";
+        } else {
+            $sql = mysqli_query($db->conn,"SELECT * FROM employee_tbl WHERE name = '$assigned'");
 
-        while($row = $sql->fetch_assoc()) {
-            $dept = $row['division'];
-            $location = $row['location'];
+            while($row = $sql->fetch_assoc()) {
+                $dept = $row['division'];
+                $location = $row['location'];
+            } 
         }
+            
         $lastused = $assigned;
+        
         $query = "INSERT INTO assets_tbl (id, department, assettype, assettag, model, serial, supplier, CPU, MEMORY, STORAGE, OS, Others, assigned, lastused, status, location, datepurchased, cost, repair_cost, remarks, datedeployed)
                                 VALUES ('','$dept','$type','$tag','$mdl','$srl','$spplr','$cpu','$ram','$storage','$os','$others','$assigned','$lastused','$stts','$location','$dtprchs', '$cost', '$repair_cost','$rmrks','$datedeployed')";
-
         $result = mysqli_query($db->conn, $query);
 
         if($result) { 

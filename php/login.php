@@ -20,13 +20,11 @@ if(isset($_POST['submit'])) {
         $id = $user_sess['id'];
         $name = $user_sess['username'];
       
-        $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                                    VALUES ('', '$name', 'Logged in', NOW())");   
+        // $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+        //                             VALUES ('', '$name', 'Logged in', NOW())");   
         if(!$sql) {
             die('error'.$db->conn->connect_error);
         } else { 
-            // echo "<script> alert('Login Successful'); </script>";
-            // header("Location: ../admin/dashboard.php"); 
 
             ?>
                 <script>

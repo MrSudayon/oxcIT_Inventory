@@ -55,15 +55,12 @@ function displaySelectedValue() {
 
 function changetextbox() {
     var status = document.getElementById("status");
-    var datedeployed = document.getElementById("datedeployed");
-    var assigned = document.getElementById("assigned");
+    var repair = document.getElementById("repair-cost");
     
-    if (status.value == "Deployed") {
-        datedeployed.disabled='';
-        assigned.disabled='';
+    if (status.value == "For repair") {
+        repair.style.display = "block";
     } else {
-        datedeployed.disabled='true';
-        assigned.disabled='true';
+        repair.style.display = "none";
     }
 }
 
