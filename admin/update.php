@@ -80,9 +80,10 @@ if(!empty($_SESSION['id'])) {
                             <span class="details">Status</span>
                             <select name="status">
                                 <option value="<?=$result['status']?>"><?=$result['status']?></option>
-                                <option value="Maintenance">For Repair</option>
-                                <option value="To be Deploy">To be Deploy</option>
+                                <option value="For repair">For repair</option>
                                 <option value="Deployed">Deployed</option>
+                                <option value="To be Deploy">To be deploy</option>
+                                <option value="Deffective">Defective</option>
                             </select>
                         </div>
                         <div class="input-box">
@@ -121,7 +122,7 @@ if(!empty($_SESSION['id'])) {
                     <div class="title"></div>
                     <div class="asset-details">
                         <div class="input-box">
-                        <span class="details">Assigned To</span>
+                        <span class="details">Assign To</span>
                             <select name="assigned" id="assigned" class="assigned">
                                 <option value="<?=$result['assigned']?>"><?=$result['assigned']?></option>
                                 <?php

@@ -2,6 +2,7 @@
 require_once '../php/db_connection.php';
 
 $select = new Select();
+$getAllRecord = new Operations();
 
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
@@ -30,6 +31,12 @@ if(!empty($_SESSION['id'])) {
     <title>Admin Dashboard</title>
     <script src="../js/dashboard.js"></script>
 </head>
+<style>
+    .table-nav {
+        display: flex;
+        justify-content: space-around;
+    }
+</style>
 <body>
     <?php include '../inc/header.php'; ?>
     
@@ -44,16 +51,25 @@ if(!empty($_SESSION['id'])) {
                 </div>
             </div>
             
-            <form action="accountability.php" method="get">
-
-            
-                <div class="link-btns">
-                    <a href="add-assets.php" class="link-btn">Add</a>
-                    <button type="submit" class="link-btn" name="accountability" >Accountability</button>
-                    <button type="submit" formaction="turnover.php" class="link-btn" name="turnover" >Turnover</button>
-                    <button type="submit" formaction="references.php" class="link-btn" name="references" >Reference</button>
-                    <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
+            <form action="" method="get">
+                <div class="table-nav">
+                    <div class="link-btns">
+                        <a href="add-assets.php" class="link-btn">Add</a>
+                        <!--  -->
+                        <button type="submit" formaction="accountability.php" class="link-btn" name="accountability" >Accountability</button>
+                        <button type="submit" formaction="turnover.php" class="link-btn" name="turnover" >Turnover</button>
+                        <button type="submit" formaction="references.php" class="link-btn" name="references" >Reference</button>
+                        <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
+                    </div>
+                    <?php
+                        // $searchData = $getAllRecord->searchData();
+                        // $rowCount = $searchData->num_rows;
+                    ?>
+                    <div class="count">
+                        <p>Asset count: 123123<?php ?></p>
+                    </div>
                 </div>
+                
                 <table class="assets-table" id="myTable">
                     <thead>
                     <tr>
@@ -69,19 +85,16 @@ if(!empty($_SESSION['id'])) {
                         <th>Status</th>
                         <th coslpan="3">Action</th>
                     </tr>
-</thead>
-<tbody>
+                    </thead>
+                    <tbody>
                     <tr>
                     <?php 
-                        $getAllRecord = new Operations();
-
                         // $Records = $getAllRecord->getAllData();
 
                         $searchData = $getAllRecord->searchData();
 
                         // foreach($Records as $data) {
                         while($row = mysqli_fetch_assoc($searchData)) {
-                        
                     ?> 
                         <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>
                         <td><?php echo $row['assigned']; ?></td>
@@ -104,72 +117,16 @@ if(!empty($_SESSION['id'])) {
                         </td>    
                     
                     </tr>
-</tbody>
+                    </tbody>
                     
                     <?php
                         }
                     ?>
                 </table>
-                <ul class="pagination" id="pagination"></ul>
                 
                 
             </form>
             
         </div>
-
-        
-<script>
-const table = document.getElementById('myTable');
-const rowsPerPage = 2;
-let currentPage = 1;
-
-function displayTablePage(page) {
-    const start = (page - 1) * rowsPerPage + 1;
-    const end = start + rowsPerPage - 1;
-    const rows = table.rows;
-
-    for (let i = 1; i < rows.length; i++) {
-        if (i >= start && i <= end) {
-            rows[i].style.display = '';
-        } else {
-            rows[i].style.display = 'none';
-        }
-    }
-}
-
-function setupPagination() {
-    const totalPages = Math.ceil((table.rows.length - 1) / rowsPerPage);
-    const paginationElement = document.getElementById('pagination');
-    paginationElement.innerHTML = '';
-
-    for (let i = 1; i <= totalPages; i++) {
-        const li = document.createElement('li');
-        li.textContent = i;
-        li.addEventListener('click', () => {
-            currentPage = i;
-            displayTablePage(currentPage);
-            updatePaginationUI();
-        });
-        paginationElement.appendChild(li);
-    }
-
-    updatePaginationUI();
-}
-
-function updatePaginationUI() {
-    const paginationItems = document.querySelectorAll('.pagination li');
-    paginationItems.forEach((item, index) => {
-        if (index + 1 === currentPage) {
-            item.classList.add('active');
-        } else {
-            item.classList.remove('active');
-        }
-    });
-}
-
-displayTablePage(currentPage);
-setupPagination();
-</script>
-        
 </body>
 </html>

@@ -138,18 +138,6 @@ th {
     background-color: rgb(255, 255, 54);
     color: black;
 }
-.pagination {
-    display: flex;
-    list-style-type: none;
-    padding: 0;
-}
-.pagination li {
-    margin-right: 5px;
-    cursor: pointer;
-}
-.pagination li.active {
-    font-weight: bold;
-}
 /* th {
     background-color: rgb(255, 255, 54);
     color: black;
@@ -159,10 +147,18 @@ th, td {
     border: 1px solid white;
 }
   */
+.count {
+    display: flex;
+    align-items: center;
+    text-wrap: nowrap;
+    padding: 5px 40px;
+    height: 40px;
+    font-size: 16px;
+}
+
 .link-btns {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
     gap: 20px;
     padding: 5px 40px;
     height: 40px;

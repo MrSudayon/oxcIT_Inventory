@@ -142,7 +142,7 @@ if(!empty($_SESSION['id'])) {
                 <div class="title"></div>
                 <div class="asset-details">
                     <div class="input-box">
-                        <span class="details" style="margin-bottom: 10px;">Assigned To</span>
+                        <span class="details" style="margin-bottom: 10px;">Assign To</span>
                         <select name="assigned" id="assigned" class="assigned">
                             <option value="">Please Select</option>
                             <?php
