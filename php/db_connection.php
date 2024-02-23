@@ -26,7 +26,7 @@ class Connection {
 
 class AddEmployee extends Connection {
     public function addEmployee($name, $division, $location) { 
-        $duplicate = mysqli_query($this->conn, "SELECT * FROM employee_tbl WHERE name='$name'");
+        $duplicate = mysqli_query($this->conn, "SELECT * FROM employee_tbl WHERE name LIKE '%$name%'");
         
         if (mysqli_num_rows($duplicate) > 0) {
             return 10; // Duplicate Record

@@ -11,6 +11,20 @@ if(!empty($_SESSION['id'])) {
 
 if(isset($_GET['select'])) {
     $selected = $_GET['select'];
+
+foreach ($selected as $userID) { 
+    $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
+    $res = mysqli_query($db->conn, $sql);
+
+    while($row = mysqli_fetch_assoc($res)) {
+        $name = $row['assigned'];
+        $dept = $row['department'];
+        $acc_ref = $row['accountability_ref'];
+        $arrayName[] = $name;
+        // Logic to Ignore or dismiss if selected a multiple username/assigned user
+        
+    }
+}
 } elseif(isset($_GET['selectAll'])) {
     ?>
         <script>
@@ -18,6 +32,19 @@ if(isset($_GET['select'])) {
             window.location.replace('dashboard.php');
         </script>
     <?php
+} elseif(isset($_GET['id'])) {
+    $userID = $_GET['id'];
+
+    $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
+    $res = mysqli_query($db->conn, $sql);
+    
+    while($row = mysqli_fetch_assoc($res)) {
+        $name = $row['assigned'];
+        $dept = $row['department'];
+        $acc_ref = $row['accountability_ref'];
+        // Logic to Ignore or dismiss if selected a multiple username/assigned user
+    }
+
 } else {
     ?>
         <script>
@@ -42,19 +69,19 @@ if(isset($_GET['select'])) {
 <?php 
 
                 
-foreach ($selected as $userID) { 
-        $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
-        $res = mysqli_query($db->conn, $sql);
+// foreach ($selected as $userID) { 
+//         $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
+//         $res = mysqli_query($db->conn, $sql);
     
-    while($row = mysqli_fetch_assoc($res)) {
-        $name = $row['assigned'];
-        $dept = $row['department'];
-        $acc_ref = $row['accountability_ref'];
-        $arrayName[] = $name;
-        // Logic to Ignore or dismiss if selected a multiple username/assigned user
+//     while($row = mysqli_fetch_assoc($res)) {
+//         $name = $row['assigned'];
+//         $dept = $row['department'];
+//         $acc_ref = $row['accountability_ref'];
+//         $arrayName[] = $name;
+//         // Logic to Ignore or dismiss if selected a multiple username/assigned user
         
-    }
-}
+//     }
+// }
 
 
 ?>  
@@ -85,6 +112,7 @@ foreach ($selected as $userID) {
         
         // If reference code exists, Display existing Ref Code
         // else generate new
+    if(isset($arrayName)) {
         if(count(array_unique($arrayName))>1) {
             ?>
                 <script> 
@@ -110,6 +138,10 @@ foreach ($selected as $userID) {
                 echo "Ref#: " . $acc_ref;
             }
         }
+    } else {
+        echo "Ref#: " . $acc_ref;
+    }
+        
     ?>
     </div>
         <table class="assets-table">
@@ -123,31 +155,60 @@ foreach ($selected as $userID) {
             </tr>
             <?php 
 
-                
-                foreach ($selected as $userID){ 
+            if(isset($_GET['select'])) {
+                $selected = $_GET['select'];
+
+                foreach ($selected as $userID) {
                     $sql = "SELECT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
                     $res = mysqli_query($db->conn, $sql);
-                
+    
                 while($row = mysqli_fetch_assoc($res)) {
                     $cpu = $row['CPU'];
                     $ram = $row['MEMORY'];
                     $storage = $row['STORAGE'];
                     $specs = 'CPU: ' . $cpu . '<br>MEMORY: ' . $ram . '<br>STORAGE: ' . $storage;
+                    
+                    
+                ?>
+                <tr>
                 
-            ?>
-            <tr>
-            
-                <td><?php echo $row['assettype']; ?></td>
-                <td><?php echo $specs; ?></td>
-                <td><?php echo $row['Others']; ?></td>
-                <td><?php echo $row['serial']; ?></td>
-                <td><?php echo $row['datedeployed']; ?></td>
-                <td><?php echo $row['remarks']; ?></td>    
-            
-            </tr>
+                    <td><?php echo $row['assettype']; ?></td>
+                    <td><?php echo $specs; ?></td>
+                    <td><?php echo $row['Others']; ?></td>
+                    <td><?php echo $row['serial']; ?></td>
+                    <td><?php echo $row['datedeployed']; ?></td>
+                    <td><?php echo $row['remarks']; ?></td>    
+                
+                </tr>
+                <?php
+                    }
+                }
+            } elseif(isset($_GET['id'])) {
+                $userID = $_GET['id'];
+
+                $sql = "SELECT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
+                    $res = mysqli_query($db->conn, $sql);
+    
+                while($row = mysqli_fetch_assoc($res)) {
+                    $cpu = $row['CPU'];
+                    $ram = $row['MEMORY'];
+                    $storage = $row['STORAGE'];
+                    $specs = 'CPU: ' . $cpu . '<br>MEMORY: ' . $ram . '<br>STORAGE: ' . $storage;
+    
+                ?>
+                <tr>
+                
+                    <td><?php echo $row['assettype']; ?></td>
+                    <td><?php echo $specs; ?></td>
+                    <td><?php echo $row['Others']; ?></td>
+                    <td><?php echo $row['serial']; ?></td>
+                    <td><?php echo $row['datedeployed']; ?></td>
+                    <td><?php echo $row['remarks']; ?></td>    
+                
+                </tr>
             <?php
-                }}
-            
+                }
+            }
             ?>
         </table>
         <div class="info"><br>

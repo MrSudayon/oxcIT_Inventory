@@ -57,6 +57,8 @@ if(!empty($_SESSION['id'])) {
                         <span class="details">Name:</span>
                         <input type="text" name="name"/>
                     </div>
+
+                    <!-- Link to dbase dept table -->
                     <div class="input-box">
                         <span class="details">Department:</span>
                         <select name="division" required>
@@ -68,6 +70,8 @@ if(!empty($_SESSION['id'])) {
                             <option value="Sauber">Sauber</option>
                         </select>
                     </div>
+
+                    <!-- Link to dbase location table -->
                     <div class="input-box">
                         <span class="details">Location:</span>
                         <select name="location" required>
@@ -75,6 +79,9 @@ if(!empty($_SESSION['id'])) {
                             <option value="Pasig">Pasig HO</option>
                             <option value="Mandaluyong">Mandaluyong</option>
                             <option value="Laguna">Laguna</option>
+                            <option value="Cebu">Cebu</option>
+                            <option value="Boracay">Boracay</option>
+                            <option value="Davao">Davao</option>
                         </select>
                     </div>
                 </div>

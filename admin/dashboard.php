@@ -51,7 +51,7 @@ if(!empty($_SESSION['id'])) {
                     <a href="add-assets.php" class="link-btn">Add</a>
                     <button type="submit" class="link-btn" name="accountability" >Accountability</button>
                     <button type="submit" formaction="turnover.php" class="link-btn" name="turnover" >Turnover</button>
-                    <button type="submit" formaction="references.php" class="link-btn" name="references" >References</button>
+                    <button type="submit" formaction="references.php" class="link-btn" name="references" >Reference</button>
                     <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
                 </div>
                 <table class="assets-table" id="myTable">

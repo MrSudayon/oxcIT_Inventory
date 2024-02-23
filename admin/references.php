@@ -24,12 +24,24 @@ if(!empty($_SESSION['id'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Admin Dashboard</title>
 </head>
+<style>
+.link {
+    color: black;
+    font-weight: 600;
+}
+.link:hover {
+    color: blue;
+    transition: ease-in-out .2s;
+    text-decoration: underline;
+}
+
+</style>
 <body>
     <?php include '../inc/header.php'; ?>
     
         <div class="content">
             <div class="title">
-                <h1> References </h1>
+                <h1> Reference </h1>
                 <div class="search-container">
                 <form action="" method="POST">
                     <input type="text" placeholder="Search.." name="search">
@@ -38,15 +50,15 @@ if(!empty($_SESSION['id'])) {
                 </div>
             </div>
             
-            <form action="accountability.php" method="get">
+            <form action="" method="get">
 
                 <table class="assets-table">
                     <tr>
-                        <th><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
+                        <!-- <th><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th> -->
                         <th>User</th>
                         <th>Accountability Ref</th>
                         <th>Turnover Ref</th>
-                        <th coslpan="2" width="10%;">Action</th>
+                        <th width="5%;">Action</th>
                     </tr>
                     
                     <tr>
@@ -55,19 +67,19 @@ if(!empty($_SESSION['id'])) {
 
                         // $Records = $getAllRecord->getAllData();
 
-                        $searchData = $getAllRecord->searchData();
+                        $refData = $getAllRecord->referencesData();
 
                         // foreach($Records as $data) {
-                        while($row = mysqli_fetch_assoc($searchData)) {
+                        while($row = mysqli_fetch_assoc($refData)) {
                         
                     ?> 
-                        <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>
+                        <!-- <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td> -->
                         <td><?php echo $row['assigned']; ?></td>
-                        <td><?php echo $row['accountability_ref']; ?></td>
-                        <td><?php echo $row['turnover_ref']; ?></td>
+                        <td><a class="link" href="accountability.php?id=<?php echo $row['id']; ?>"><?php echo $row['accountability_ref']; ?></a></td>
+                        <td><a class="link" href="turnover.php?id=<?php echo $row['id']; ?>"><?php echo $row['turnover_ref']; ?></a></td>
                         <td>
                         <center>
-                            <a href="update.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="32px"></a>&nbsp;
+                            <!-- <a href="update.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="32px"></a>&nbsp; -->
                             <a href="remove.php?id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
                         </center>
                             

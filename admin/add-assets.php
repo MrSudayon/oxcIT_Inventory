@@ -99,7 +99,7 @@ if(!empty($_SESSION['id'])) {
                             <option value="For repair">For repair</option>
                             <option value="Deployed">Deployed</option>
                             <option value="To be Deploy">To be deploy</option>
-                            <option value="Deffective">Deffective</option>
+                            <option value="Deffective">Defective</option>
                         </select>
                     </div>
                     <div class="input-box" id="repair-cost">

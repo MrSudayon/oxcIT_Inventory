@@ -160,6 +160,27 @@ class Operations {
         }
 
     }
+    function referencesData() {
+        global $db;
+        global $res;
+
+        if(isset($_POST['search'])) {
+            $search = $_POST['search'];
+            $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assigned LIKE '%$search%' OR accountability_ref LIKE '$search' 
+            OR turnover_ref LIKE '%$search%')";
+            $res = mysqli_query($db->conn, $sql);
+        
+            return $res;
+        } else {
+            $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (turnover_ref !='' OR accountability_ref !='')";
+            $res = mysqli_query($db->conn, $sql);
+
+            return $res;
+        }
+        mysqli_free_result($res);
+
+        $db->conn->close();
+    }
 }
 
 
