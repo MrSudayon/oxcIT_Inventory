@@ -115,8 +115,6 @@ class Operations {
 
     function checkAssetCount($assettype) {
         global $db;
-
-        
       
         // $sql = "SELECT COUNT(*) FROM assets_tbl WHERE assettype='$assettype'";
         // $count = mysqli_query($db->conn, $sql);

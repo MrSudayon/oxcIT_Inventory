@@ -9,11 +9,6 @@ if(!empty($_SESSION['id'])) {
     $id = $user['id'];
     $username = $user['username'];
 
-    $sql = mysqli_query($db->conn, "SELECT * FROM users_tbl WHERE id='$id'");
-
-    $row = $sql->fetch_assoc();
-    $role = $row['role'];
-
 } else {
     header("Location: ../php/login.php");
 }
@@ -34,7 +29,7 @@ if(!empty($_SESSION['id'])) {
     
         <div class="content">
             <div class="title">
-                <h1> Asset Dashboard </h1>
+                <h1> References </h1>
                 <div class="search-container">
                 <form action="" method="POST">
                     <input type="text" placeholder="Search.." name="search">
@@ -45,27 +40,13 @@ if(!empty($_SESSION['id'])) {
             
             <form action="accountability.php" method="get">
 
-            
-                <div class="link-btns">
-                    <a href="add-assets.php" class="link-btn">Add</a>
-                    <button type="submit" class="link-btn" name="accountability" >Accountability</button>
-                    <button type="submit" formaction="turnover.php" class="link-btn" name="turnover" >Turnover</button>
-                    <button type="submit" formaction="references.php" class="link-btn" name="references" >References</button>
-                    <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
-                </div>
                 <table class="assets-table">
                     <tr>
                         <th><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
                         <th>User</th>
-                        <th>Department</th>
-                        <th>Asset Type</th>
-                        <th>Asset Tag</th>
-                        <th>Model</th>
-                        <th>CPU</th>
-                        <th>Memory</th>
-                        <th>Storage</th>
-                        <th>Status</th>
-                        <th coslpan="3">Action</th>
+                        <th>Accountability Ref</th>
+                        <th>Turnover Ref</th>
+                        <th coslpan="2">Action</th>
                     </tr>
                     
                     <tr>
@@ -82,19 +63,11 @@ if(!empty($_SESSION['id'])) {
                     ?> 
                         <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>
                         <td><?php echo $row['assigned']; ?></td>
-                        <td><?php echo $row['department']; ?></td>
-                        <td><?php echo $row['assettype']; ?></td>
-                        <td><?php echo $row['assettag']; ?></td>
-                        <td><?php echo $row['model']; ?></td>
-                        <td><?php echo $row['CPU']; ?></td>
-                        <td><?php echo $row['MEMORY']; ?></td>
-                        <td><?php echo $row['STORAGE']; ?></td>
-                        <td><?php echo $row['status']; ?></td>
-
+                        <td><?php echo $row['accountability_ref']; ?></td>
+                        <td><?php echo $row['turnover_ref']; ?></td>
                         <td>
                         <center>
                             <a href="update.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="32px"></a>&nbsp;
-                            <a href="turnoverUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/turnover.png" width="32px"></a>&nbsp;
                             <a href="remove.php?id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
                         </center>
                             

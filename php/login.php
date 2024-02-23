@@ -22,9 +22,9 @@ if(isset($_POST['submit'])) {
       
         // $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
         //                             VALUES ('', '$name', 'Logged in', NOW())");   
-        if(!$sql) {
-            die('error'.$db->conn->connect_error);
-        } else { 
+        // if(!$sql) {
+        //     die('error'.$db->conn->connect_error);
+        // } else { 
 
             ?>
                 <script>
@@ -32,7 +32,7 @@ if(isset($_POST['submit'])) {
                     window.location.replace('../admin/dashboard.php');
                 </script>
             <?php
-        }
+        
         $db->conn->close();
     }
     elseif($result == 2) {
@@ -43,18 +43,18 @@ if(isset($_POST['submit'])) {
         $id = $user_sess['id'];
         $name = $user_sess['username'];
       
-        $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                                    VALUES ('', '$name', 'Logged in', NOW())");   
-        if(!$sql) {
-            die('error'.$db->conn->connect_error);
-        } else { 
+        // $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+        //                             VALUES ('', '$name', 'Logged in', NOW())");   
+        // if(!$sql) {
+        //     die('error'.$db->conn->connect_error);
+        // } else { 
             ?>
                 <script>
                     alert('Login Successful');
                     window.location.replace('../index.php');
                 </script>
             <?php
-        }
+        
         $db->conn->close();
 
     } 

@@ -33,8 +33,10 @@ header {
     position: relative;
     background-color: white;
     height: 100px;
+    width: 100%;
+    padding: 0 50px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
 }
 
