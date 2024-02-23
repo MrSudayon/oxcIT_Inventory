@@ -50,26 +50,29 @@ if(isset($_GET['select'])) {
 <body>
 <div class="content">
 <?php           
-// foreach ($selected as $userID){ 
-//         $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
-//         $res = mysqli_query($db->conn, $sql);
-    
-//     while($row = mysqli_fetch_assoc($res)) {
-//         $name = $row['assigned'];
-//         $dept = $row['department'];
-//         $turnover_ref = $row['turnover_ref'];
-//         $arrayName[] = $name;
-//     }
+
+if(isset($selected)) {
+    foreach ($selected as $userID){ 
+            $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
+            $res = mysqli_query($db->conn, $sql);
         
-    $sql1 = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id='$userID'");
-    $username = $user['username'];
+        while($row = mysqli_fetch_assoc($res)) {
+            $name = $row['assigned'];
+            $dept = $row['department'];
+            $turnover_ref = $row['turnover_ref'];
+            $arrayName[] = $name;
+        }
+            
+        $sql1 = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id='$userID'");
+        $username = $user['username'];
 
-    while($row1 = mysqli_fetch_assoc($sql1)) {
-        $assettag = $row1['assettag'];
-        $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                            VALUES ('', '$username', 'Turnover Record Tags: $assettag ', NOW())");
+        while($row1 = mysqli_fetch_assoc($sql1)) {
+            $assettag = $row1['assettag'];
+            $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                                VALUES ('', '$username', 'Turnover Record Tags: $assettag ', NOW())");
+        }
     }
-
+}
 
 ?>  
     <div class="logo">
