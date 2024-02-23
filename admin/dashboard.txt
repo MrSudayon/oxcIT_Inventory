@@ -28,7 +28,6 @@ if(!empty($_SESSION['id'])) {
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Admin Dashboard</title>
-    <script src="../js/dashboard.js"></script>
 </head>
 <body>
     <?php include '../inc/header.php'; ?>
@@ -54,8 +53,7 @@ if(!empty($_SESSION['id'])) {
                     <button type="submit" formaction="references.php" class="link-btn" name="references" >References</button>
                     <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
                 </div>
-                <table class="assets-table" id="myTable">
-                    <thead>
+                <table class="assets-table">
                     <tr>
                         <th><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
                         <th>User</th>
@@ -69,8 +67,7 @@ if(!empty($_SESSION['id'])) {
                         <th>Status</th>
                         <th coslpan="3">Action</th>
                     </tr>
-</thead>
-<tbody>
+                    
                     <tr>
                     <?php 
                         $getAllRecord = new Operations();
@@ -104,72 +101,17 @@ if(!empty($_SESSION['id'])) {
                         </td>    
                     
                     </tr>
-</tbody>
                     
                     <?php
                         }
                     ?>
                 </table>
-                <ul class="pagination" id="pagination"></ul>
                 
                 
             </form>
             
         </div>
 
-        
-<script>
-const table = document.getElementById('myTable');
-const rowsPerPage = 2;
-let currentPage = 1;
-
-function displayTablePage(page) {
-    const start = (page - 1) * rowsPerPage + 1;
-    const end = start + rowsPerPage - 1;
-    const rows = table.rows;
-
-    for (let i = 1; i < rows.length; i++) {
-        if (i >= start && i <= end) {
-            rows[i].style.display = '';
-        } else {
-            rows[i].style.display = 'none';
-        }
-    }
-}
-
-function setupPagination() {
-    const totalPages = Math.ceil((table.rows.length - 1) / rowsPerPage);
-    const paginationElement = document.getElementById('pagination');
-    paginationElement.innerHTML = '';
-
-    for (let i = 1; i <= totalPages; i++) {
-        const li = document.createElement('li');
-        li.textContent = i;
-        li.addEventListener('click', () => {
-            currentPage = i;
-            displayTablePage(currentPage);
-            updatePaginationUI();
-        });
-        paginationElement.appendChild(li);
-    }
-
-    updatePaginationUI();
-}
-
-function updatePaginationUI() {
-    const paginationItems = document.querySelectorAll('.pagination li');
-    paginationItems.forEach((item, index) => {
-        if (index + 1 === currentPage) {
-            item.classList.add('active');
-        } else {
-            item.classList.remove('active');
-        }
-    });
-}
-
-displayTablePage(currentPage);
-setupPagination();
-</script>
-        
+        <script src="../js/dashboard.js"></script>
 </body>
 </html>
