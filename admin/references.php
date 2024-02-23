@@ -46,7 +46,7 @@ if(!empty($_SESSION['id'])) {
                         <th>User</th>
                         <th>Accountability Ref</th>
                         <th>Turnover Ref</th>
-                        <th coslpan="2">Action</th>
+                        <th coslpan="2" width="10%;">Action</th>
                     </tr>
                     
                     <tr>

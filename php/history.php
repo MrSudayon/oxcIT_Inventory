@@ -21,7 +21,8 @@ if(!empty($_SESSION['id'])) {
     <title>Admin Dashboard</title>
 </head>
 <body>
-    <header>
+    <?php include '../inc/header.php'; ?>
+    <!-- <header>
         <div class="logo">
             <a href="../admin/dashboard.php"><img src="../assets/logo.png" width="150px"></img></a>
         </div>
@@ -33,24 +34,25 @@ if(!empty($_SESSION['id'])) {
                 <a href="../php/logout.php">Logout</a>
             </div>
         </div>
-        <!-- 2-16-24
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="../php/add_emp_info.php">Register Emp</a></li>
-                <li><a href="../php/add_emp_info.php">Register Emp</a></li>
-                <li><a href="../php/logout.php">Logout</a></li>
-            </ul>
-        </nav> -->
-    </header>
+       
+    </header> -->
     
         <div class="content">
-            <div class="search-container">
+            <div class="title">
+                <h1> History </h1>
+                <div class="search-container">
                 <form action="" method="POST">
                     <input type="text" placeholder="Search.." name="search">
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </form>
+                </div>
             </div>
+            <!-- <div class="search-container">
+                <form action="" method="POST">
+                    <input type="text" placeholder="Search.." name="search">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+            </div> -->
 
             <!-- <form action="accountability.php" method="get"> -->
                 <table class="assets-table">
