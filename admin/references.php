@@ -78,19 +78,35 @@ if(!empty($_SESSION['id'])) {
                         <td><?php echo $row['assigned']; ?></td>
                         <td><a class="link" href="accountability.php?id=<?php echo $row['id']; ?>"><?php echo $row['accountability_ref']; ?></a></td>
                         <?php 
-                            
+                            $acctRef = $row['accountability_ref'];
+                            $turnoverRef = $row['turnover_ref'];
+
+                            if($acctRef == '') {
+                                echo "<td></td>";
+                            } else {                       
                         ?>
                         <td>
                         <center>
                             <a href="removeRef.php?Acct_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                         </center>
                         </td>   
+                        <?php
+                            }
+                        ?>
                         <td><a class="link" href="Turnover.php?id=<?php echo $row['id']; ?>"><?php echo $row['turnover_ref']; ?></a></td>
+                        <?php
+                            if ($turnoverRef == '') {
+                                echo "<td></td>";
+                            } else {
+                        ?>
                         <td>
                         <center>
                             <a href="removeRef.php?Turnover_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                         </center>
                         </td>    
+                        <?php
+                            }
+                        ?>
                     
                     </tr>
                     <?php
