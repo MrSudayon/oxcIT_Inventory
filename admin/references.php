@@ -22,7 +22,7 @@ if(!empty($_SESSION['id'])) {
     <link rel="icon" href="../assets/logo.jpg">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Admin Dashboard</title>
+    <title>Reference</title>
 </head>
 <style>
 .link {
@@ -57,8 +57,9 @@ if(!empty($_SESSION['id'])) {
                         <!-- <th><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th> -->
                         <th>User</th>
                         <th>Accountability Ref</th>
+                        <th width="3%;"></th>
                         <th>Turnover Ref</th>
-                        <th width="5%;">Action</th>
+                        <th width="3%;"></th>
                     </tr>
                     
                     <tr>
@@ -76,13 +77,19 @@ if(!empty($_SESSION['id'])) {
                         <!-- <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td> -->
                         <td><?php echo $row['assigned']; ?></td>
                         <td><a class="link" href="accountability.php?id=<?php echo $row['id']; ?>"><?php echo $row['accountability_ref']; ?></a></td>
-                        <td><a class="link" href="turnover.php?id=<?php echo $row['id']; ?>"><?php echo $row['turnover_ref']; ?></a></td>
+                        <?php 
+                            
+                        ?>
                         <td>
                         <center>
-                            <!-- <a href="update.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="32px"></a>&nbsp; -->
-                            <a href="remove.php?id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
+                            <a href="removeRef.php?Acct_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                         </center>
-                            
+                        </td>   
+                        <td><a class="link" href="Turnover.php?id=<?php echo $row['id']; ?>"><?php echo $row['turnover_ref']; ?></a></td>
+                        <td>
+                        <center>
+                            <a href="removeRef.php?Turnover_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                        </center>
                         </td>    
                     
                     </tr>
