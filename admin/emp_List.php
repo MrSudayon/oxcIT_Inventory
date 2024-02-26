@@ -71,9 +71,9 @@ if(!empty($_SESSION['id'])) {
                         <td><?php echo $row['location']; ?></td>
                         <td>
                         <center>
-                            <a href="#?Turnover_id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>
+                            <a href="update-selected.php?empID=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>
 
-                            <a href="#?Turnover_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                            <a href="remove?empID=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                         </center>
                         </td>    
                     </tr>

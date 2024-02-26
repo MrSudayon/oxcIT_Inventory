@@ -62,11 +62,11 @@ if(!empty($_SESSION['id'])) {
                         <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
                     </div>
                     <?php
-                        // $searchData = $getAllRecord->searchData();
-                        // $rowCount = $searchData->num_rows;
+                        $searchData = $getAllRecord->searchData();
+                        $rowCount = $searchData->num_rows;
                     ?>
                     <div class="count">
-                        <p>Asset count: 123123<?php ?></p>
+                        <p>Asset count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCount; ?></b></p>
                     </div>
                 </div>
                 
@@ -89,8 +89,6 @@ if(!empty($_SESSION['id'])) {
                     <tbody>
                     <tr>
                     <?php 
-                        // $Records = $getAllRecord->getAllData();
-
                         $searchData = $getAllRecord->searchData();
 
                         // foreach($Records as $data) {
@@ -111,7 +109,7 @@ if(!empty($_SESSION['id'])) {
                         <center>
                             <a href="assetUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="32px"></a>&nbsp;
                             <a href="turnoverUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/turnover.png" width="32px"></a>&nbsp;
-                            <a href="remove.php?id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
+                            <a href="remove.php?assetID=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
                         </center>
                             
                         </td>    
