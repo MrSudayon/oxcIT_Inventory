@@ -26,12 +26,12 @@ if(isset($_POST['submit'])) {
         //     die('error'.$db->conn->connect_error);
         // } else { 
 
-            ?>
-                <script>
-                    alert('Login Successful');
-                    window.location.replace('../admin/dashboard.php');
-                </script>
-            <?php
+        ?>
+            <script>
+                alert('Login Successful');
+                window.location.replace('../admin/dashboard.php');
+            </script>
+        <?php
         
         $db->conn->close();
     }
