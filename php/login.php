@@ -54,15 +54,25 @@ if(isset($_POST['submit'])) {
                     window.location.replace('../index.php');
                 </script>
             <?php
-        
         $db->conn->close();
-
     } 
     elseif($result == 10) {
-        echo "<script> alert('Wrong Password'); </script>";
+        ?>
+            <script>
+                alert('Wrong Password');
+                window.location.replace('../index.php');
+            </script>
+        <?php
+        $db->conn->close();
     } 
     elseif($result == 100) {
-        echo "<script> alert('User doesn't exists'); </script>";
+        ?>
+            <script>
+                alert('User does not exists');
+                window.location.replace('../index.php');
+            </script>
+        <?php
+        $db->conn->close();
     }       
 }
 
