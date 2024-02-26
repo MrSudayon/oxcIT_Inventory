@@ -2,6 +2,7 @@
 require_once '../php/db_connection.php';
 
 $select = new Select();
+$getEmp = new get_All_User();
 
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
@@ -56,62 +57,31 @@ if(!empty($_SESSION['id'])) {
                     <tr>
                         <!-- <th><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th> -->
                         <th>User</th>
-                        <th>Accountability Ref</th>
-                        <th width="3%;"></th>
-                        <th>Turnover Ref</th>
+                        <th>Division</th>
+                        <th>Location</th>
                         <th width="3%;"></th>
                     </tr>
                     
                     <tr>
                     <?php 
-                        $getAllRecord = new Operations();
+                        $empList = $getEmp->selectAllEmp();
 
-                        // $Records = $getAllRecord->getAllData();
-
-                        $refData = $getAllRecord->referencesData();
-
-                        // foreach($Records as $data) {
-                        while($row = mysqli_fetch_assoc($refData)) {
-                        
+                        while($row = mysqli_fetch_assoc($empList)) {
                     ?> 
-                        <!-- <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td> -->
-                        <td><?php echo $row['assigned']; ?></td>
-                        <td><a class="link" href="accountability.php?id=<?php echo $row['id']; ?>"><?php echo $row['accountability_ref']; ?></a></td>
-                        <?php 
-                            $acctRef = $row['accountability_ref'];
-                            $turnoverRef = $row['turnover_ref'];
-
-                            if($acctRef == '') {
-                                echo "<td></td>";
-                            } else {                       
-                        ?>
-                        <td>
-                        <center>
-                            <a href="removeRef.php?Acct_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
-                        </center>
-                        </td>   
-                        <?php
-                            }
-                        ?>
-                        <td><a class="link" href="Turnover.php?id=<?php echo $row['id']; ?>"><?php echo $row['turnover_ref']; ?></a></td>
-                        <?php
-                            if ($turnoverRef == '') {
-                                echo "<td></td>";
-                            } else {
-                        ?>
+                        <!-- <td><input type="checkbox" id="select" name="select[]" value=""></td> -->
+                        <td><?php echo $row['name']; ?></td>
+                        <td><?php echo $row['division']; ?></td>
+                        <td><?php echo $row['location']; ?></td>
+                       
                         <td>
                         <center>
                             <a href="removeRef.php?Turnover_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                         </center>
                         </td>    
-                        <?php
-                            }
-                        ?>
-                    
-                    </tr>
                     <?php
                         }
                     ?>
+                    </tr>
                 </table>
                 
                 
