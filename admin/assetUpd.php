@@ -33,7 +33,7 @@ if(!empty($_SESSION['id'])) {
 
                 if($result) {
             ?>
-                <form action="assets-update.php" method="POST">
+                <form action="update-selected.php" method="POST">
                     <div class="asset-details">
                         <input type="hidden" name="assetID" value="<?=$result['id']?>">
 

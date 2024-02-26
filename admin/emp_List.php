@@ -55,33 +55,31 @@ if(!empty($_SESSION['id'])) {
 
                 <table class="assets-table">
                     <tr>
-                        <!-- <th><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th> -->
                         <th>User</th>
                         <th>Division</th>
                         <th>Location</th>
-                        <th width="3%;"></th>
+                        <th colspan="2" width="6%">Action</th>
                     </tr>
-                    
-                    <tr>
                     <?php 
                         $empList = $getEmp->selectAllEmp();
 
-                        while($row = mysqli_fetch_assoc($empList)) {
+                        foreach($empList as $row) {
                     ?> 
-                        <!-- <td><input type="checkbox" id="select" name="select[]" value=""></td> -->
+                    <tr>
                         <td><?php echo $row['name']; ?></td>
                         <td><?php echo $row['division']; ?></td>
                         <td><?php echo $row['location']; ?></td>
-                       
                         <td>
                         <center>
-                            <a href="removeRef.php?Turnover_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                            <a href="#?Turnover_id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>
+
+                            <a href="#?Turnover_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                         </center>
                         </td>    
+                    </tr>
                     <?php
                         }
                     ?>
-                    </tr>
                 </table>
                 
                 
