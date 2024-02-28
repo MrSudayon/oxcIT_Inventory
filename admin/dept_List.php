@@ -23,7 +23,7 @@ if(!empty($_SESSION['id'])) {
     <link rel="icon" href="../assets/logo.jpg">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Employee List</title>
+    <title>Division List</title>
 </head>
 <style>
 
@@ -63,7 +63,6 @@ if(!empty($_SESSION['id'])) {
                 
                 <table class="assets-table">
                     <tr>
-                        <th>ID</th>
                         <th>Name</th>
                         <th colspan="2" width="8%">Action</th>
                     </tr>
@@ -77,7 +76,6 @@ if(!empty($_SESSION['id'])) {
                                 echo "<tr>";
                             }
                     ?> 
-                        <td><?php echo $row['id']; ?></td>
                         <td><?php echo $row['name']; ?></td>
                         <td>
                         <center>

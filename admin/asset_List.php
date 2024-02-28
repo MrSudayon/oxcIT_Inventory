@@ -62,10 +62,8 @@ if(!empty($_SESSION['id'])) {
                 
                 <table class="assets-table">
                     <tr>
-                        <th>ID</th>
                         <th>Asset Type</th>
-                        <th>Status</th>
-                        <th colspan="2" width="3%">Action</th>
+                        <th colspan="2" width="8%">Action</th>
                     </tr>
                     <?php                         
                         
@@ -79,9 +77,7 @@ if(!empty($_SESSION['id'])) {
                                 echo "<tr>";
                             }
                     ?> 
-                        <td><?php echo $row['id']; ?></td>
                         <td><?php echo $row['assetType']; ?></td>
-                        <td><?php echo $row['status']; ?></td>
                         <td>
                         <center>
                             <a href="../update/assetItemUpd.php?assetItemID=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>
