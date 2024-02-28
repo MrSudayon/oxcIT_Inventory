@@ -26,14 +26,19 @@ if(!empty($_SESSION['id'])) {
     <title>Employee List</title>
 </head>
 <style>
-.link {
-    color: black;
-    font-weight: 600;
+.return {
+    transition: all .3s;
+    border: 1px solid white;
+    padding: 5px 20px;
+    border-radius: 15px;
+    background-color: var(--sec-color);
+    font-weight: 700;
 }
-.link:hover {
-    color: blue;
-    transition: ease-in-out .2s;
-    text-decoration: underline;
+.return:hover {
+    background-color: white;
+    border: 1px solid black;
+    color: var(--main-color);
+    transition: all .3s;
 }
 
 </style>
@@ -42,6 +47,8 @@ if(!empty($_SESSION['id'])) {
 
 <div class="container">
     <div class="add-form">
+        <a href="../admin/emp_List.php" class="return">Back</a>
+
         <div class="title">Employee Update</div>
         <?php
         if(isset($_GET['empID'])) {
@@ -51,7 +58,7 @@ if(!empty($_SESSION['id'])) {
 
             if($result) {
         ?>
-            <form action="update-selected.php" method="POST">
+            <form action="../admin/update-selected.php" method="POST">
                 <div class="asset-details">
                     <input type="hidden" name="empID" value="<?=$result['id']?>">
 

@@ -1,5 +1,5 @@
 <?php 
-require('db_connection.php');
+require('../php/db_connection.php');
 
 $select = new Select();
 
@@ -48,7 +48,7 @@ if(!empty($_SESSION['id'])) {
 <body>
     <div class="container">
         <div class="add-form">
-            <a href="../admin/dashboard.php" class="return">Back</a>
+            <a href="../admin/emp_List.php" class="return">Back</a>
             
             <form action="" method="POST" autocomplete="off">
                 <div class="title">Add Employee</div>

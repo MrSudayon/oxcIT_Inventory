@@ -73,16 +73,15 @@ class Operations {
             OR assettag LIKE '%$search%' OR model LIKE '%$search%' OR CPU LIKE '%$search%' OR MEMORY LIKE '%$search%' OR STORAGE LIKE '%$search%'
              OR remarks LIKE '%$search%' OR Others LIKE '%$search%')";
             $res = mysqli_query($db->conn, $sql);
-            
-
+        
             return $res;
         } else {
             $sql = "SELECT * FROM assets_tbl WHERE status!='Archive'";
             $res = mysqli_query($db->conn, $sql);
 
-
             return $res;
         }
+
         mysqli_free_result($res);
 
         $db->conn->close();
@@ -186,7 +185,7 @@ class Operations {
     }
 
 
-    //Emp
+    //Emp List
     function getEmpDiv() {
         global $db;
         $sql = "SELECT * FROM dept_tbl WHERE status='1'";
@@ -201,5 +200,96 @@ class Operations {
 
         return $res;
     }
+
+    function searchEmp() {
+        global $db;
+        global $res;
+
+        if(isset($_POST['searchEmp'])) {
+            $search = $_POST['searchEmp'];
+            $sql = "SELECT * FROM employee_tbl WHERE name LIKE '$search%' OR division LIKE '%$search%' OR location LIKE '%$search%' ORDER BY status DESC";
+            $res = mysqli_query($db->conn, $sql);
+        
+            return $res;
+        } else {
+            $sql = "SELECT * FROM employee_tbl ORDER BY status DESC";
+            $res = mysqli_query($db->conn, $sql);
+
+            return $res;
+        }
+
+        mysqli_free_result($res);
+
+        $db->conn->close();
+    }
+
+    // Asset List
+    function searchAsset() {
+        global $db;
+        global $res;
+
+        if(isset($_POST['searchAsset'])) {
+            $search = $_POST['searchAsset'];
+            $sql = "SELECT * FROM assets_tbl WHERE assettype LIKE '%$search%' OR assettag LIKE '%$search%' OR status LIKE '%$search%' ORDER BY status DESC";
+            $res = mysqli_query($db->conn, $sql);
+        
+            return $res;
+        } else {
+            $sql = "SELECT * FROM assets_tbl ORDER BY status DESC";
+            $res = mysqli_query($db->conn, $sql);
+
+            return $res;
+        }
+
+        mysqli_free_result($res);
+
+        $db->conn->close();
+    }
+    
+    // // Dept List
+    // function searchEmp() {
+    //     global $db;
+    //     global $res;
+
+    //     if(isset($_POST['searchEmp'])) {
+    //         $search = $_POST['searchEmp'];
+    //         $sql = "SELECT * FROM employee_tbl WHERE name LIKE '$search%' OR division LIKE '%$search%' OR location LIKE '%$search%' ORDER BY status DESC";
+    //         $res = mysqli_query($db->conn, $sql);
+        
+    //         return $res;
+    //     } else {
+    //         $sql = "SELECT * FROM employee_tbl ORDER BY status DESC";
+    //         $res = mysqli_query($db->conn, $sql);
+
+    //         return $res;
+    //     }
+
+    //     mysqli_free_result($res);
+
+    //     $db->conn->close();
+    // }
+
+    // // Loc List
+    // function searchEmp() {
+    //     global $db;
+    //     global $res;
+
+    //     if(isset($_POST['searchEmp'])) {
+    //         $search = $_POST['searchEmp'];
+    //         $sql = "SELECT * FROM employee_tbl WHERE name LIKE '$search%' OR division LIKE '%$search%' OR location LIKE '%$search%' ORDER BY status DESC";
+    //         $res = mysqli_query($db->conn, $sql);
+        
+    //         return $res;
+    //     } else {
+    //         $sql = "SELECT * FROM employee_tbl ORDER BY status DESC";
+    //         $res = mysqli_query($db->conn, $sql);
+
+    //         return $res;
+    //     }
+
+    //     mysqli_free_result($res);
+
+    //     $db->conn->close();
+    // }
 }
 ?>

@@ -120,6 +120,12 @@ main {
     padding: 10px 40px;
 }
  
+/* Table Nav */
+.table-nav {
+    display: flex;
+    justify-content: space-around;
+}
+
 .assets-table, table {
     background-color: #b1b1b1;
     color: black;
@@ -138,15 +144,7 @@ th {
     background-color: rgb(255, 255, 54);
     color: black;
 }
-/* th {
-    background-color: rgb(255, 255, 54);
-    color: black;
-}
-th, td {
-    padding: 5px 10px;
-    border: 1px solid white;
-}
-  */
+
 .count {
     display: flex;
     align-items: center;

@@ -23,11 +23,8 @@ if(!empty($_SESSION['id'])) {
     <link rel="icon" href="../assets/logo.jpg">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Employee List</title>
+    <title>Asset List</title>
 </head>
-<style>
-
-</style>
 <body>
     <?php include '../inc/header.php'; ?>
     
@@ -36,51 +33,55 @@ if(!empty($_SESSION['id'])) {
                 <h1> Configuration </h1>
                 <div class="search-container">
                 <form action="" method="POST">
-                    <input type="text" placeholder="Search.." name="searchEmp">
+                    <input type="text" placeholder="Search.." name="searchAsset">
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </form>
                 </div>
             </div>
+
             <div class="table-nav">
                 <?php include '../inc/table-nav.php'; ?>
 
                 <?php
-                    $empList = $getAllRecord->searchEmp();
-                    $rowCount = $empList->num_rows;
+                    $assetList = $getAllRecord->searchAsset();
+                    // $assetData = $getEmp->assetCount();
+                    $rowCount = $assetList->num_rows;
                 ?>
                 <div class="count">
                     <p>Emp count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCount; ?></b></p>
                 </div>
             </div>
+
             <form action="" method="get">
                 
                 <table class="assets-table">
                     <tr>
-                        <th>User</th>
-                        <th>Division</th>
-                        <th>Location</th>
+                        <th>ID</th>
+                        <th>Asset Type</th>
+                        <th>Asset Tag</th>
                         <th colspan="2" width="8%">Action</th>
                     </tr>
-                    <?php 
+                    <?php                         
+                        
                             
-                        while($row = mysqli_fetch_assoc($empList)) {
+                        while($row = mysqli_fetch_assoc($assetList)) {
                                  
                             $status = $row['status'];
-                            if($status==0) {
+                            if($status=='Archive') {
                                 echo "<tr style='background-color: pink'>";
                             } else {
                                 echo "<tr>";
                             }
                     ?> 
                     
-                        <td><?php echo $row['name']; ?></td>
-                        <td><?php echo $row['division']; ?></td>
-                        <td><?php echo $row['location']; ?></td>
+                        <td><?php echo $row['assettype']; ?></td>
+                        <td><?php echo $row['assettag']; ?></td>
+                        <td><?php echo $row['status']; ?></td>
                         <td>
                         <center>
-                            <a href="../update/empUpd.php?empID=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>
+                            <a href="assetUpd.php?empID=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>
 
-                            <a href="remove?empID=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                            <a href="remove.php?empID=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                         </center>
                         </td>    
                     </tr>
