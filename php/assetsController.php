@@ -104,6 +104,7 @@ class assetsController {
             
     }
 
+    // Emp
     public function empEdit($id) {
         global $db;
         $empID = mysqli_real_escape_string($db->conn, $id);
@@ -145,6 +146,52 @@ class assetsController {
 
         mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
         VALUES('', '$name', 'Updated Employee ID: $empID' , NOW())");
+
+        } else {
+            return false;
+        } 
+    }
+
+    // Asset Item
+    public function assetItemEdit($id) {
+        global $db;
+        $assetItemID = mysqli_real_escape_string($db->conn, $id);
+        $assetQuery = "SELECT * FROM category_tbl WHERE id='$assetItemID'";
+        $res = mysqli_query($db->conn, $assetQuery);
+        if($res->num_rows == 1){
+            $data = $res->fetch_assoc();
+            return $data;
+        }else{
+            return false;
+        }
+    }
+    public function assetItemUpdate($input, $id) {
+        global $db;
+        global $select;
+
+        $assetItemID = mysqli_real_escape_string($db->conn, $id);
+        $assetname = $input['name'];
+        $status = $input['status'];
+        
+        // Get current user for History record....
+        $session = $select->selectUserById($_SESSION['id']);
+        $name = $session['username'];
+
+        // validation of Turnover reference code
+        $qry = "UPDATE category_tbl SET assetType='$assetname', status='$status' WHERE id='$assetItemID' LIMIT 1";
+        $result = $db->conn->query($qry);
+
+        if($result) {
+            return true;
+            ?>
+                <script>
+                    alert('Update Successfully');
+                    window.location.href = '../admin/asset_List.php';
+                </script>
+            <?php
+
+        mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+        VALUES('', '$name', 'Updated Asset Item ID: $assetItemID' , NOW())");
 
         } else {
             return false;

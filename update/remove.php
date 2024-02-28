@@ -21,7 +21,7 @@ if(isset($_GET['assetID'])) {
     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                             VALUES ('', '$name', 'Deleted Tag: $assettag from Assets Record', NOW())");
     
-    header("Location: dashboard.php");
+    header("Location: ../admin/dashboard.php");
 }
 
 // Accountability Ref Deletion
@@ -37,7 +37,7 @@ if(isset($_GET['Acct_id'])) {
     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                             VALUES ('', '$name', 'Deleted Accountability Ref for Asset ID: $Asset_id', NOW())");
 
-    header("Location: references.php");
+    header("Location: ../admin/references.php");
 } 
 
 // Turnover Ref Deletion
@@ -53,7 +53,7 @@ if(isset($_GET['Turnover_id'])) {
     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                             VALUES ('', '$name', 'Deleted Turnover Ref for Asset ID: $Asset_id', NOW())");
 
-    header("Location: references.php");
+    header("Location: ../admin/references.php");
 }
 
 if(isset($_GET['empID'])) {
@@ -68,24 +68,24 @@ if(isset($_GET['empID'])) {
     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                             VALUES ('', '$name', 'Removed employee: $Asset_id', NOW())");
 
-    header("Location: emp_List.php");
+    header("Location: ../admin/emp_List.php");
 }
 
 // Remove from Employee tbl
-if(isset($_GET['empID1'])) {
-    $id = $_GET['empID1'];
+// if(isset($_GET['empID1'])) {
+//     $id = $_GET['empID1'];
 
-    $query = mysqli_query($db->conn, "UPDATE employee_tbl SET status=0 WHERE id='$id'");
+//     $query = mysqli_query($db->conn, "UPDATE employee_tbl SET status=0 WHERE id='$id'");
 
-    $sql_All = mysqli_query($db->conn, "SELECT * FROM employee_tbl WHERE id = $id");
-    while($row = $sql_All->fetch_assoc()) {
-        $empName = $row['name'];
-    }
-    $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                            VALUES ('', '$name', 'Removed employee: $empName from the List', NOW())");
+//     $sql_All = mysqli_query($db->conn, "SELECT * FROM employee_tbl WHERE id = $id");
+//     while($row = $sql_All->fetch_assoc()) {
+//         $empName = $row['name'];
+//     }
+//     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+//                             VALUES ('', '$name', 'Removed employee: $empName from the List', NOW())");
 
-    header("Location: emp_List.php");
-}
+//     header("Location: emp_List.php");
+// }
 
 // Remove from Asset tbl
 if(isset($_GET['assetItemID'])) {
@@ -100,7 +100,7 @@ if(isset($_GET['assetItemID'])) {
     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                             VALUES ('', '$name', 'Removed Asset item: $assetType from the List', NOW())");
 
-    header("Location: emp_List.php");
+    header("Location: ../admin/asset_List.php");
 }
 
 // Remove from Dept tbl
@@ -116,7 +116,7 @@ if(isset($_GET['deptID'])) {
     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                             VALUES ('', '$name', 'Removed Division: $deptName from the List', NOW())");
 
-    header("Location: emp_List.php");
+    header("Location: ../admin/dept_List.php");
 }
 
 // Remove from Loc tbl
@@ -132,6 +132,6 @@ if(isset($_GET['locID'])) {
     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                             VALUES ('', '$name', 'Removed Location: $locName from the List', NOW())");
 
-    header("Location: loc_List.php");
+    header("Location: ../admin/loc_List.php");
 }
 ?>

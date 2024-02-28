@@ -43,11 +43,11 @@ if(!empty($_SESSION['id'])) {
             </div>
             <div class="table-nav">
                 <div class="link-btns">
-                    <a href="../php/add_location.php" class="link-btn">Add Location</a>
+                    <a href="../php/add_division.php" class="link-btn">Add Division</a>
                     <!--  -->
                     <a href="../admin/emp_List.php" class="link-btn">Employee</a>
                     <a href="../admin/asset_List.php" class="link-btn">Asset</a>
-                    <a href="../admin/dept_List.php" class="link-btn">Department</a>
+                    <a href="../admin/dept_List.php" class="link-btn">Division</a>
                     <a href="../admin/location_List.php" class="link-btn">Location</a>
                 </div>
 
@@ -75,9 +75,8 @@ if(!empty($_SESSION['id'])) {
                         <td><?php echo $row['name']; ?></td>
                         <td>
                         <center>
-                            <a href="../update/deptUpd.php?empID=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>
-
-                            <a href="remove?deptID=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                            <a href="../update/deptUpd.php?deptID=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>
+                            <!-- <a href="remove?deptID=" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a> -->
                         </center>
                         </td>    
                     </tr>

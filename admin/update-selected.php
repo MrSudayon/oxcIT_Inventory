@@ -34,7 +34,7 @@ if(isset($_POST['update-asset'])) {
     } else {
         echo "alert('Update Error')";
         $_SESSION['message'] = "Update Error";
-        header("Location: ../admin/dashboard.php");
+        header("Location: ../update/assetUpd.php");
         exit(0);
     }
 }
@@ -55,13 +55,13 @@ if(isset($_POST['turnover-asset'])) {
         exit(0);
     } else {
         echo "alert('Update Error')";
-        // $_SESSION['message'] = "Update Error";
+        $_SESSION['message'] = "Update Error";
         header("Location: turnoverUpd.php");
         exit(0);
     }
 }
 
-//update employee func
+// Update employee func
 if(isset($_POST['updateEmp'])) {
     $id = mysqli_real_escape_string($db->conn,$_POST['empID']);
     $input = [
@@ -78,30 +78,29 @@ if(isset($_POST['updateEmp'])) {
         exit(0);
     } else {
         echo "alert('Update Error')";
-        // $_SESSION['message'] = "Update Error";
-        header("Location: dashboard.php");
+        $_SESSION['message'] = "Update Error";
+        header("Location: emp_List.php");
         exit(0);
     }
 }
 
-if(isset($_POST['updateEmp'])) {
-    $id = mysqli_real_escape_string($db->conn,$_POST['empID']);
+// Update Asset item
+if(isset($_POST['updateAssetItem'])) {
+    $id = mysqli_real_escape_string($db->conn,$_POST['assetItemID']);
     $input = [
         'name' => mysqli_real_escape_string($db->conn,$_POST['name']),
-        'division' => mysqli_real_escape_string($db->conn,$_POST['division']),
-        'location' => mysqli_real_escape_string($db->conn,$_POST['location']),
         'status' => mysqli_real_escape_string($db->conn,$_POST['status']),
     ];
-    $result = $asset->empUpdate($input, $id);
+    $result = $asset->assetItemUpdate($input, $id);
 
     if($result) {
         echo "alert('Updated Successfully')";
-        header("Location: emp_List.php");
+        header("Location: asset_List.php");
         exit(0);
     } else {
         echo "alert('Update Error')";
-        // $_SESSION['message'] = "Update Error";
-        header("Location: dashboard.php");
+        $_SESSION['message'] = "Update Error";
+        header("Location: asset_List.php");
         exit(0);
     }
 }

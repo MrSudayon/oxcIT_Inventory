@@ -253,12 +253,12 @@ class Operations {
 
         if(isset($_POST['search'])) {
             $search = $_POST['search'];
-            $sql = "SELECT * FROM dept_tbl WHERE name LIKE '$search%' AND status=1 ORDER BY id DESC";
+            $sql = "SELECT * FROM dept_tbl WHERE name LIKE '$search%' AND status=1 ORDER BY id ASC";
             $res = mysqli_query($db->conn, $sql);
         
             return $res;
         } else {
-            $sql = "SELECT * FROM dept_tbl WHERE status=1 ORDER BY id DESC";
+            $sql = "SELECT * FROM dept_tbl WHERE status=1 ORDER BY id ASC";
             $res = mysqli_query($db->conn, $sql);
 
             return $res;

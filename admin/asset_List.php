@@ -45,13 +45,12 @@ if(!empty($_SESSION['id'])) {
                     <!--  -->
                     <a href="../admin/emp_List.php" class="link-btn">Employee</a>
                     <a href="../admin/asset_List.php" class="link-btn">Asset</a>
-                    <a href="../admin/dept_List.php" class="link-btn">Department</a>
+                    <a href="../admin/dept_List.php" class="link-btn">Division</a>
                     <a href="../admin/location_List.php" class="link-btn">Location</a>
                 </div>
 
                 <?php
                     $List = $getAllRecord->searchAsset();
-                    // $assetData = $getEmp->assetCount();
                     $rowCount = $List->num_rows;
                 ?>
                 <div class="count">
@@ -74,7 +73,7 @@ if(!empty($_SESSION['id'])) {
                         while($row = mysqli_fetch_assoc($List)) {
                                  
                             $status = $row['status'];
-                            if($status=='Archive') {
+                            if($status==0) {
                                 echo "<tr style='background-color: pink'>";
                             } else {
                                 echo "<tr>";
@@ -85,7 +84,8 @@ if(!empty($_SESSION['id'])) {
                         <td><?php echo $row['status']; ?></td>
                         <td>
                         <center>
-                            <a href="remove.php?assetItemID=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                            <a href="../update/assetItemUpd.php?assetItemID=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>
+                            <!-- <a href="remove.php?assetItemID=" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a> -->
                         </center>
                         </td>    
                     </tr>
