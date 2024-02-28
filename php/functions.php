@@ -230,12 +230,12 @@ class Operations {
 
         if(isset($_POST['searchAsset'])) {
             $search = $_POST['searchAsset'];
-            $sql = "SELECT * FROM assets_tbl WHERE assettype LIKE '%$search%' OR assettag LIKE '%$search%' OR status LIKE '%$search%' ORDER BY status DESC";
+            $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assettype LIKE '%$search%' OR assettag LIKE '%$search%' OR status LIKE '%$search%') ORDER BY assettag ASC";
             $res = mysqli_query($db->conn, $sql);
         
             return $res;
         } else {
-            $sql = "SELECT * FROM assets_tbl ORDER BY status DESC";
+            $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' ORDER BY assettag ASC";
             $res = mysqli_query($db->conn, $sql);
 
             return $res;

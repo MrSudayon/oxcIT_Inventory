@@ -73,7 +73,7 @@ if(!empty($_SESSION['id'])) {
                                 echo "<tr>";
                             }
                     ?> 
-                    
+                        <td><?php echo $row['id']; ?></td>
                         <td><?php echo $row['assettype']; ?></td>
                         <td><?php echo $row['assettag']; ?></td>
                         <td><?php echo $row['status']; ?></td>

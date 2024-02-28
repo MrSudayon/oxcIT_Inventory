@@ -59,7 +59,7 @@ if(!empty($_SESSION['id'])) {
                         <th>User</th>
                         <th>Division</th>
                         <th>Location</th>
-                        <th colspan="2" width="8%">Action</th>
+                        <th colspan="2" width="5%">Action</th>
                     </tr>
                     <?php 
                             
