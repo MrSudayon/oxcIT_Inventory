@@ -62,13 +62,14 @@ class AddItems extends Connection {
         }
     }
 
-    public function addLocation($name) {
-        $duplicate = mysqli_query($this->conn, "SELECT * FROM loc_tbl WHERE assetType LIKE '%$name%'");
+    // Add Division
+    public function addDivision($name) {
+        $duplicate = mysqli_query($this->conn, "SELECT * FROM dept_tbl WHERE name LIKE '%$name%'");
         
         if (mysqli_num_rows($duplicate) > 0) {
             return 10; // Duplicate Record
         } else {
-            $query = "INSERT INTO loc_tbl (id, name, status)
+            $query = "INSERT INTO dept_tbl (id, name, status)
                                 VALUES ('','$name', 1)";
 
             $result = mysqli_query($this->conn, $query);
@@ -80,14 +81,14 @@ class AddItems extends Connection {
         }
     }
 
-    // Add Division
-    public function addDivision($name) {
-        $duplicate = mysqli_query($this->conn, "SELECT * FROM dept_tbl WHERE name LIKE '%$name%'");
+    // Add Location
+    public function addLocation($name) {
+        $duplicate = mysqli_query($this->conn, "SELECT * FROM loc_tbl WHERE name LIKE '%$name%'");
         
         if (mysqli_num_rows($duplicate) > 0) {
             return 10; // Duplicate Record
         } else {
-            $query = "INSERT INTO dept_tbl (id, name, status)
+            $query = "INSERT INTO loc_tbl (id, name, status)
                                 VALUES ('','$name', 1)";
 
             $result = mysqli_query($this->conn, $query);

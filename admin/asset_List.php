@@ -55,7 +55,7 @@ if(!empty($_SESSION['id'])) {
                     $rowCount = $List->num_rows;
                 ?>
                 <div class="count">
-                    <p>Emp count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCount; ?></b></p>
+                    <p>Asset count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCount; ?></b></p>
                 </div>
             </div>
 

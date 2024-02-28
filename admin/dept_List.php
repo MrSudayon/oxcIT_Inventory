@@ -43,7 +43,7 @@ if(!empty($_SESSION['id'])) {
             </div>
             <div class="table-nav">
                 <div class="link-btns">
-                    <a href="../php/add_division.php" class="link-btn">Add Division</a>
+                    <a href="../php/add_location.php" class="link-btn">Add Location</a>
                     <!--  -->
                     <a href="../admin/emp_List.php" class="link-btn">Employee</a>
                     <a href="../admin/asset_List.php" class="link-btn">Asset</a>
@@ -56,7 +56,7 @@ if(!empty($_SESSION['id'])) {
                     $rowCount = $List->num_rows;
                 ?>
                 <div class="count">
-                    <p>Emp count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCount; ?></b></p>
+                    <p>Division count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCount; ?></b></p>
                 </div>
             </div>
             <form action="" method="get">

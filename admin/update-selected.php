@@ -84,4 +84,26 @@ if(isset($_POST['updateEmp'])) {
     }
 }
 
+if(isset($_POST['updateEmp'])) {
+    $id = mysqli_real_escape_string($db->conn,$_POST['empID']);
+    $input = [
+        'name' => mysqli_real_escape_string($db->conn,$_POST['name']),
+        'division' => mysqli_real_escape_string($db->conn,$_POST['division']),
+        'location' => mysqli_real_escape_string($db->conn,$_POST['location']),
+        'status' => mysqli_real_escape_string($db->conn,$_POST['status']),
+    ];
+    $result = $asset->empUpdate($input, $id);
+
+    if($result) {
+        echo "alert('Updated Successfully')";
+        header("Location: emp_List.php");
+        exit(0);
+    } else {
+        echo "alert('Update Error')";
+        // $_SESSION['message'] = "Update Error";
+        header("Location: dashboard.php");
+        exit(0);
+    }
+}
+
 ?>
