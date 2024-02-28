@@ -67,10 +67,16 @@ if(!empty($_SESSION['id'])) {
                         <th>Name</th>
                         <th colspan="2" width="8%">Action</th>
                     </tr>
-                    <?php    
+                    <?php 
                         while($row = mysqli_fetch_assoc($List)) {
+                                 
+                            $status = $row['status'];
+                            if($status==0) {
+                                echo "<tr style='background-color: pink'>";
+                            } else {
+                                echo "<tr>";
+                            }
                     ?> 
-                    <tr>
                         <td><?php echo $row['id']; ?></td>
                         <td><?php echo $row['name']; ?></td>
                         <td>

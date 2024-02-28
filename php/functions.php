@@ -68,7 +68,7 @@ class Operations {
 
         if(isset($_POST['search'])) {
             $search = $_POST['search'];
-            $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assigned LIKE '$search' OR department LIKE '%$search%'
+            $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assigned LIKE '$search%' OR department LIKE '%$search%'
             OR assettype LIKE '%$search%' OR status LIKE '%$search%' OR location LIKE '%$search%'
             OR assettag LIKE '%$search%' OR model LIKE '%$search%' OR CPU LIKE '%$search%' OR MEMORY LIKE '%$search%' OR STORAGE LIKE '%$search%'
              OR remarks LIKE '%$search%' OR Others LIKE '%$search%')";
@@ -230,12 +230,12 @@ class Operations {
 
         if(isset($_POST['search'])) {
             $search = $_POST['search'];
-            $sql = "SELECT * FROM category_tbl WHERE status=1 AND assetType LIKE '$search%' ORDER BY id ASC";
+            $sql = "SELECT * FROM category_tbl WHERE assetType LIKE '$search%' ORDER BY status DESC";
             $res = mysqli_query($db->conn, $sql);
         
             return $res;
         } else {
-            $sql = "SELECT * FROM category_tbl WHERE status=1 ORDER BY id ASC";
+            $sql = "SELECT * FROM category_tbl ORDER BY status DESC";
             $res = mysqli_query($db->conn, $sql);
 
             return $res;
@@ -253,12 +253,12 @@ class Operations {
 
         if(isset($_POST['search'])) {
             $search = $_POST['search'];
-            $sql = "SELECT * FROM dept_tbl WHERE name LIKE '$search%' AND status=1 ORDER BY id ASC";
+            $sql = "SELECT * FROM dept_tbl WHERE name LIKE '$search%' ORDER BY status DESC";
             $res = mysqli_query($db->conn, $sql);
         
             return $res;
         } else {
-            $sql = "SELECT * FROM dept_tbl WHERE status=1 ORDER BY id ASC";
+            $sql = "SELECT * FROM dept_tbl ORDER BY status DESC";
             $res = mysqli_query($db->conn, $sql);
 
             return $res;
@@ -276,12 +276,12 @@ class Operations {
 
         if(isset($_POST['search'])) {
             $search = $_POST['search'];
-            $sql = "SELECT * FROM loc_tbl name LIKE '$search%' ORDER BY id ASC";
+            $sql = "SELECT * FROM loc_tbl name LIKE '$search%' ORDER BY status DESC";
             $res = mysqli_query($db->conn, $sql);
         
             return $res;
         } else {
-            $sql = "SELECT * FROM loc_tbl ORDER BY id ASC";
+            $sql = "SELECT * FROM loc_tbl ORDER BY status DESC";
             $res = mysqli_query($db->conn, $sql);
 
             return $res;

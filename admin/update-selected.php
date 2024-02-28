@@ -105,4 +105,46 @@ if(isset($_POST['updateAssetItem'])) {
     }
 }
 
+// Update Division item
+if(isset($_POST['updateDivision'])) {
+    $id = mysqli_real_escape_string($db->conn,$_POST['divisionID']);
+    $input = [
+        'name' => mysqli_real_escape_string($db->conn,$_POST['name']),
+        'status' => mysqli_real_escape_string($db->conn,$_POST['status']),
+    ];
+    $result = $asset->divisionUpdate($input, $id);
+
+    if($result) {
+        echo "alert('Updated Successfully')";
+        header("Location: dept_List.php");
+        exit(0);
+    } else {
+        echo "alert('Update Error')";
+        $_SESSION['message'] = "Update Error";
+        header("Location: dept_List.php");
+        exit(0);
+    }
+}
+
+// Update Division item
+if(isset($_POST['locationID'])) {
+    $id = mysqli_real_escape_string($db->conn,$_POST['locationID']);
+    $input = [
+        'name' => mysqli_real_escape_string($db->conn,$_POST['name']),
+        'status' => mysqli_real_escape_string($db->conn,$_POST['status']),
+    ];
+    $result = $asset->divisionUpdate($input, $id);
+
+    if($result) {
+        echo "alert('Updated Successfully')";
+        header("Location: location_List.php");
+        exit(0);
+    } else {
+        echo "alert('Update Error')";
+        $_SESSION['message'] = "Update Error";
+        header("Location: location_List.php");
+        exit(0);
+    }
+}
+
 ?>

@@ -47,20 +47,20 @@ if(!empty($_SESSION['id'])) {
 
 <div class="container">
     <div class="add-form">
-        <a href="../admin/dept_List.php" class="return">Back</a>
+        <a href="../admin/location_List.php" class="return">Back</a>
 
         <div class="title">Division Update</div>
         <?php
-        if(isset($_GET['deptID'])) {
-            $deptID = mysqli_real_escape_string($db->conn, $_GET['deptID']);
+        if(isset($_GET['locID'])) {
+            $locID = mysqli_real_escape_string($db->conn, $_GET['locID']);
             $asset = new assetsController;
-            $result = $asset->divisionEdit($deptID);
+            $result = $asset->divisionEdit($locID);
 
             if($result) {
         ?>
             <form action="../admin/update-selected.php" method="POST">
                 <div class="asset-details">
-                    <input type="hidden" name="divisionID" value="<?=$result['id']?>">
+                    <input type="hidden" name="locationID" value="<?=$result['id']?>">
 
                     <div class="input-box">
                         <span class="details">Name</span>
@@ -90,7 +90,7 @@ if(!empty($_SESSION['id'])) {
                     
                 </div>
                 <div class="button">
-                    <input type="submit" value="Update" name="updateDivision"/>
+                    <input type="submit" value="Update" name="updateLocation"/>
                 </div>
             </form>
             <?php

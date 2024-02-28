@@ -89,9 +89,6 @@ if(!empty($_SESSION['id'])) {
                     <tbody>
                     <tr>
                     <?php 
-                        $searchData = $getAllRecord->searchData();
-
-                        // foreach($Records as $data) {
                         while($row = mysqli_fetch_assoc($searchData)) {
                     ?> 
                         <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>

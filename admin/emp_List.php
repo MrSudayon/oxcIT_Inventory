@@ -69,7 +69,6 @@ if(!empty($_SESSION['id'])) {
                         <th colspan="2" width="8%">Action</th>
                     </tr>
                     <?php 
-                            
                         while($row = mysqli_fetch_assoc($List)) {
                                  
                             $status = $row['status'];

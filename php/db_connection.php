@@ -50,7 +50,7 @@ class AddItems extends Connection {
         if (mysqli_num_rows($duplicate) > 0) {
             return 10; // Duplicate Record
         } else {
-            $query = "INSERT INTO category_tbl (id, name, status)
+            $query = "INSERT INTO category_tbl (id, assetType, status)
                                 VALUES ('','$name', 1)";
 
             $result = mysqli_query($this->conn, $query);
