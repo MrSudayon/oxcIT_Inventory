@@ -43,7 +43,7 @@ if(!empty($_SESSION['id'])) {
             </div>
             <div class="table-nav">
                 <div class="link-btns">
-                    <a href="../admin/add_emp_info.php" class="link-btn">Add Emp</a>
+                    <a href="../admin/add_division.php" class="link-btn">Add Division</a>
                     <!--  -->
                     <a href="../admin/emp_List.php" class="link-btn">Employee</a>
                     <a href="../admin/asset_List.php" class="link-btn">Asset</a>
@@ -52,7 +52,7 @@ if(!empty($_SESSION['id'])) {
                 </div>
 
                 <?php
-                    $List = $getAllRecord->searchEmp();
+                    $List = $getAllRecord->searchDept();
                     $rowCount = $List->num_rows;
                 ?>
                 <div class="count">
@@ -64,26 +64,15 @@ if(!empty($_SESSION['id'])) {
                 <table class="assets-table">
                     <tr>
                         <th>ID</th>
-                        <th>User</th>
-                        <th>Division</th>
-                        <th>Location</th>
+                        <th>Name</th>
                         <th colspan="2" width="8%">Action</th>
                     </tr>
-                    <?php 
-                            
+                    <?php    
                         while($row = mysqli_fetch_assoc($List)) {
-                                 
-                            $status = $row['status'];
-                            if($status==0) {
-                                echo "<tr style='background-color: pink'>";
-                            } else {
-                                echo "<tr>";
-                            }
                     ?> 
+                    <tr>
                         <td><?php echo $row['id']; ?></td>
                         <td><?php echo $row['name']; ?></td>
-                        <td><?php echo $row['division']; ?></td>
-                        <td><?php echo $row['location']; ?></td>
                         <td>
                         <center>
                             <a href="../update/empUpd.php?empID=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>

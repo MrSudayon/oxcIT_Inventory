@@ -230,12 +230,12 @@ class Operations {
 
         if(isset($_POST['searchAsset'])) {
             $search = $_POST['searchAsset'];
-            $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assettype LIKE '%$search%' OR assettag LIKE '%$search%' OR status LIKE '%$search%') ORDER BY assettag ASC";
+            $sql = "SELECT * FROM category_tbl WHERE status=1 AND assetType LIKE '$search%' ORDER BY id ASC";
             $res = mysqli_query($db->conn, $sql);
         
             return $res;
         } else {
-            $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' ORDER BY assettag ASC";
+            $sql = "SELECT * FROM category_tbl WHERE status=1 ORDER BY id ASC";
             $res = mysqli_query($db->conn, $sql);
 
             return $res;
@@ -246,28 +246,28 @@ class Operations {
         $db->conn->close();
     }
     
-    // // Dept List
-    // function searchEmp() {
-    //     global $db;
-    //     global $res;
+    // Dept List
+    function searchDept() {
+        global $db;
+        global $res;
 
-    //     if(isset($_POST['searchEmp'])) {
-    //         $search = $_POST['searchEmp'];
-    //         $sql = "SELECT * FROM employee_tbl WHERE name LIKE '$search%' OR division LIKE '%$search%' OR location LIKE '%$search%' ORDER BY status DESC";
-    //         $res = mysqli_query($db->conn, $sql);
+        if(isset($_POST['searchDept'])) {
+            $search = $_POST['searchEmp'];
+            $sql = "SELECT * FROM dept_tbl WHERE name LIKE '$search%' AND status=1 ORDER BY id DESC";
+            $res = mysqli_query($db->conn, $sql);
         
-    //         return $res;
-    //     } else {
-    //         $sql = "SELECT * FROM employee_tbl ORDER BY status DESC";
-    //         $res = mysqli_query($db->conn, $sql);
+            return $res;
+        } else {
+            $sql = "SELECT * FROM dept_tbl WHERE status=1 ORDER BY id DESC";
+            $res = mysqli_query($db->conn, $sql);
 
-    //         return $res;
-    //     }
+            return $res;
+        }
 
-    //     mysqli_free_result($res);
+        mysqli_free_result($res);
 
-    //     $db->conn->close();
-    // }
+        $db->conn->close();
+    }
 
     // // Loc List
     // function searchEmp() {

@@ -40,12 +40,19 @@ if(!empty($_SESSION['id'])) {
             </div>
 
             <div class="table-nav">
-                <?php include '../inc/table-nav.php'; ?>
+                <div class="link-btns">
+                    <a href="../php/add_assetItem.php" class="link-btn">Add Asset</a>
+                    <!--  -->
+                    <a href="../admin/emp_List.php" class="link-btn">Employee</a>
+                    <a href="../admin/asset_List.php" class="link-btn">Asset</a>
+                    <a href="../admin/dept_List.php" class="link-btn">Department</a>
+                    <a href="../admin/location_List.php" class="link-btn">Location</a>
+                </div>
 
                 <?php
-                    $assetList = $getAllRecord->searchAsset();
+                    $List = $getAllRecord->searchAsset();
                     // $assetData = $getEmp->assetCount();
-                    $rowCount = $assetList->num_rows;
+                    $rowCount = $List->num_rows;
                 ?>
                 <div class="count">
                     <p>Emp count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCount; ?></b></p>
@@ -58,13 +65,13 @@ if(!empty($_SESSION['id'])) {
                     <tr>
                         <th>ID</th>
                         <th>Asset Type</th>
-                        <th>Asset Tag</th>
-                        <th colspan="2" width="8%">Action</th>
+                        <th>Status</th>
+                        <th colspan="2" width="3%">Action</th>
                     </tr>
                     <?php                         
                         
                             
-                        while($row = mysqli_fetch_assoc($assetList)) {
+                        while($row = mysqli_fetch_assoc($List)) {
                                  
                             $status = $row['status'];
                             if($status=='Archive') {
@@ -74,13 +81,10 @@ if(!empty($_SESSION['id'])) {
                             }
                     ?> 
                         <td><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['assettype']; ?></td>
-                        <td><?php echo $row['assettag']; ?></td>
+                        <td><?php echo $row['assetType']; ?></td>
                         <td><?php echo $row['status']; ?></td>
                         <td>
                         <center>
-                            <a href="assetUpd.php?empID=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>
-
                             <a href="remove.php?empID=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                         </center>
                         </td>    
