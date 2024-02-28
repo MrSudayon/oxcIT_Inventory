@@ -186,6 +186,23 @@ class Operations {
 
         $db->conn->close();
     }
+
+
+    //Emp
+    function getEmpDiv() {
+        global $db;
+        $sql = "SELECT * FROM dept_tbl WHERE status='1'";
+        $res = mysqli_query($db->conn, $sql);
+
+        return $res;
+    }
+    function getEmpLoc() {
+        global $db;
+        $sql = "SELECT * FROM loc_tbl WHERE status='1'";
+        $res = mysqli_query($db->conn, $sql);
+
+        return $res;
+    }
 }
 
 

@@ -103,6 +103,53 @@ class assetsController {
         }
             
     }
+
+    public function empEdit($id) {
+        global $db;
+        $empID = mysqli_real_escape_string($db->conn, $id);
+        $empQuery = "SELECT * FROM employee_tbl WHERE id='$empID'";
+        $res = mysqli_query($db->conn, $empQuery);
+        if($res->num_rows == 1){
+            $data = $res->fetch_assoc();
+            return $data;
+        }else{
+            return false;
+        }
+    }
+    public function empUpdate($input, $id) {
+        global $db;
+        global $select;
+
+        $empID = mysqli_real_escape_string($db->conn, $id);
+        $empname = $input['name'];
+        $division = $input['division'];
+        $location = $input['location'];
+        $status = $input['status'];
+        
+        // Get current user for History record....
+        $session = $select->selectUserById($_SESSION['id']);
+        $name = $session['username'];
+
+        // validation of Turnover reference code
+        $qry = "UPDATE employee_tbl SET name='$empname', division='$division', location='$location', status='$status' WHERE id='$empID' LIMIT 1";
+        $result = $db->conn->query($qry);
+
+        if($result) {
+            return true;
+            ?>
+                <script>
+                    alert('Update Successfully');
+                    window.location.href = '../admin/emp_List.php';
+                </script>
+            <?php
+
+        mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+        VALUES('', '$name', 'Updated Employee ID: $empID' , NOW())");
+
+        } else {
+            return false;
+        } 
+    }
 }
 
 ?>

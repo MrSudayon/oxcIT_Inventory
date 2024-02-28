@@ -1,6 +1,6 @@
 <?php
 require '../php/db_connection.php';
-
+$asset = new assetsController;
 
 if(isset($_POST['update-asset'])) {
     $id = mysqli_real_escape_string($db->conn,$_POST['assetID']);
@@ -25,7 +25,6 @@ if(isset($_POST['update-asset'])) {
         'turnover' => mysqli_real_escape_string($db->conn,$_POST['turnover']),
         'lastused' => mysqli_real_escape_string($db->conn,$_POST['lastused']),
     ];
-    $asset = new assetsController;
     $result = $asset->update($input, $id);
 
     if($result) {
@@ -48,7 +47,6 @@ if(isset($_POST['turnover-asset'])) {
         'reason' => mysqli_real_escape_string($db->conn,$_POST['reason']),
         'ref_code' => mysqli_real_escape_string($db->conn,$_POST['ref_code']),
     ];
-    $asset = new assetsController;
     $result = $asset->assetTurnover($input, $id);
 
     if($result) {
@@ -63,5 +61,27 @@ if(isset($_POST['turnover-asset'])) {
     }
 }
 
-//remove employee func
+//update employee func
+if(isset($_POST['updateEmp'])) {
+    $id = mysqli_real_escape_string($db->conn,$_POST['empID']);
+    $input = [
+        'name' => mysqli_real_escape_string($db->conn,$_POST['name']),
+        'division' => mysqli_real_escape_string($db->conn,$_POST['division']),
+        'location' => mysqli_real_escape_string($db->conn,$_POST['location']),
+        'status' => mysqli_real_escape_string($db->conn,$_POST['status']),
+    ];
+    $result = $asset->empUpdate($input, $id);
+
+    if($result) {
+        echo "alert('Updated Successfully')";
+        header("Location: emp_List.php");
+        exit(0);
+    } else {
+        echo "alert('Update Error')";
+        // $_SESSION['message'] = "Update Error";
+        header("Location: dashboard.php");
+        exit(0);
+    }
+}
+
 ?>

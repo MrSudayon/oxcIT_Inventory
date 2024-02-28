@@ -23,7 +23,7 @@ if(!empty($_SESSION['id'])) {
     <link rel="icon" href="../assets/logo.jpg">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Reference</title>
+    <title>Employee List</title>
 </head>
 <style>
 .link {
@@ -58,20 +58,27 @@ if(!empty($_SESSION['id'])) {
                         <th>User</th>
                         <th>Division</th>
                         <th>Location</th>
-                        <th colspan="2" width="6%">Action</th>
+                        <th colspan="2" width="8%">Action</th>
                     </tr>
                     <?php 
                         $empList = $getEmp->selectAllEmp();
 
                         foreach($empList as $row) {
+
+                            $status = $row['status'];
+                            if($status==0) {
+                                echo "<tr style='background-color: pink'>";
+                            } else {
+                                echo "<tr>";
+                            }
                     ?> 
-                    <tr>
+                    
                         <td><?php echo $row['name']; ?></td>
                         <td><?php echo $row['division']; ?></td>
                         <td><?php echo $row['location']; ?></td>
                         <td>
                         <center>
-                            <a href="update-selected.php?empID=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>
+                            <a href="empUpd.php?empID=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>
 
                             <a href="remove?empID=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                         </center>
