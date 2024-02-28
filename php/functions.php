@@ -205,8 +205,8 @@ class Operations {
         global $db;
         global $res;
 
-        if(isset($_POST['searchEmp'])) {
-            $search = $_POST['searchEmp'];
+        if(isset($_POST['search'])) {
+            $search = $_POST['search'];
             $sql = "SELECT * FROM employee_tbl WHERE name LIKE '$search%' OR division LIKE '%$search%' OR location LIKE '%$search%' ORDER BY status DESC";
             $res = mysqli_query($db->conn, $sql);
         
@@ -228,8 +228,8 @@ class Operations {
         global $db;
         global $res;
 
-        if(isset($_POST['searchAsset'])) {
-            $search = $_POST['searchAsset'];
+        if(isset($_POST['search'])) {
+            $search = $_POST['search'];
             $sql = "SELECT * FROM category_tbl WHERE status=1 AND assetType LIKE '$search%' ORDER BY id ASC";
             $res = mysqli_query($db->conn, $sql);
         
@@ -251,8 +251,8 @@ class Operations {
         global $db;
         global $res;
 
-        if(isset($_POST['searchDept'])) {
-            $search = $_POST['searchEmp'];
+        if(isset($_POST['search'])) {
+            $search = $_POST['search'];
             $sql = "SELECT * FROM dept_tbl WHERE name LIKE '$search%' AND status=1 ORDER BY id DESC";
             $res = mysqli_query($db->conn, $sql);
         
@@ -269,27 +269,27 @@ class Operations {
         $db->conn->close();
     }
 
-    // // Loc List
-    // function searchEmp() {
-    //     global $db;
-    //     global $res;
+    // Loc List
+    function searchLoc() {
+        global $db;
+        global $res;
 
-    //     if(isset($_POST['searchEmp'])) {
-    //         $search = $_POST['searchEmp'];
-    //         $sql = "SELECT * FROM employee_tbl WHERE name LIKE '$search%' OR division LIKE '%$search%' OR location LIKE '%$search%' ORDER BY status DESC";
-    //         $res = mysqli_query($db->conn, $sql);
+        if(isset($_POST['search'])) {
+            $search = $_POST['search'];
+            $sql = "SELECT * FROM loc_tbl name LIKE '$search%' ORDER BY id ASC";
+            $res = mysqli_query($db->conn, $sql);
         
-    //         return $res;
-    //     } else {
-    //         $sql = "SELECT * FROM employee_tbl ORDER BY status DESC";
-    //         $res = mysqli_query($db->conn, $sql);
+            return $res;
+        } else {
+            $sql = "SELECT * FROM loc_tbl ORDER BY id ASC";
+            $res = mysqli_query($db->conn, $sql);
 
-    //         return $res;
-    //     }
+            return $res;
+        }
 
-    //     mysqli_free_result($res);
+        mysqli_free_result($res);
 
-    //     $db->conn->close();
-    // }
+        $db->conn->close();
+    }
 }
 ?>

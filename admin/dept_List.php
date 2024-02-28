@@ -36,14 +36,14 @@ if(!empty($_SESSION['id'])) {
                 <h1> Configuration </h1>
                 <div class="search-container">
                 <form action="" method="POST">
-                    <input type="text" placeholder="Search.." name="searchEmp">
+                    <input type="text" placeholder="Search.." name="search">
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </form>
                 </div>
             </div>
             <div class="table-nav">
                 <div class="link-btns">
-                    <a href="../admin/add_division.php" class="link-btn">Add Division</a>
+                    <a href="../php/add_division.php" class="link-btn">Add Division</a>
                     <!--  -->
                     <a href="../admin/emp_List.php" class="link-btn">Employee</a>
                     <a href="../admin/asset_List.php" class="link-btn">Asset</a>
@@ -75,9 +75,9 @@ if(!empty($_SESSION['id'])) {
                         <td><?php echo $row['name']; ?></td>
                         <td>
                         <center>
-                            <a href="../update/empUpd.php?empID=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>
+                            <a href="../update/deptUpd.php?empID=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>
 
-                            <a href="remove?empID=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                            <a href="remove?deptID=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                         </center>
                         </td>    
                     </tr>

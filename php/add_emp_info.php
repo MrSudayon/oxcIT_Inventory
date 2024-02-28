@@ -8,7 +8,7 @@ if(!empty($_SESSION['id'])) {
 
     if ($user['role'] == 'admin') {
         
-        $register = new AddEmployee();
+        $register = new AddItems();
 
         if(isset($_POST['submit'])) {
 
@@ -18,7 +18,7 @@ if(!empty($_SESSION['id'])) {
                 echo "<script> alert('Registration Successful'); </script>";
             }
             elseif($result == 10) {
-                echo "<script> alert('This user already exists'); </script>";
+                echo "<script> alert('This Name already exists'); </script>";
             }
             elseif($result == 100) {
                 echo "<script> alert('Something went wrong'); </script>";

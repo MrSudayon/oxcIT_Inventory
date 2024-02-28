@@ -8,17 +8,17 @@ if(!empty($_SESSION['id'])) {
 
     if ($user['role'] == 'admin') {
         
-        $register = new AddEmployee();
+        $register = new AddItems();
 
         if(isset($_POST['submit'])) {
 
-            $result = $register->addEmployee($_POST['name'], $_POST['division'], $_POST['location']);
+            $result = $register->addAssetItem($_POST['name']);
             
             if($result == 1) {
                 echo "<script> alert('Registration Successful'); </script>";
             }
             elseif($result == 10) {
-                echo "<script> alert('This user already exists'); </script>";
+                echo "<script> alert('This Asset already exists'); </script>";
             }
             elseif($result == 100) {
                 echo "<script> alert('Something went wrong'); </script>";
@@ -43,46 +43,19 @@ if(!empty($_SESSION['id'])) {
     <!-- <link rel="stylesheet" href="../css/styles.css"> -->
     <link rel="icon" href="../assets/logo.jpg">
     <link rel="stylesheet" href="../css/fields.css">
-    <title>Add Employee</title>
+    <title>Add Asset Item</title>
 </head>
 <body>
     <div class="container">
         <div class="add-form">
-            <a href="../admin/emp_List.php" class="return">Back</a>
+            <a href="../admin/asset_List.php" class="return">Back</a>
             
             <form action="" method="POST" autocomplete="off">
-                <div class="title">Add Employee</div>
+                <div class="title">Add Asset Item</div>
                 <div class="asset-details">
                     <div class="input-box">
-                        <span class="details">Name:</span>
-                        <input type="text" name="name"/>
-                    </div>
-
-                    <!-- Link to dbase dept table -->
-                    <div class="input-box">
-                        <span class="details">Department:</span>
-                        <select name="division" required>
-                            <option>Please Select</option>
-                            <option value="Finance">Finance</option>
-                            <option value="Sales/Marketing">Sales/Marketing</option>
-                            <option value="IT">IT</option>
-                            <option value="Operations">Operations</option>
-                            <option value="Sauber">Sauber</option>
-                        </select>
-                    </div>
-
-                    <!-- Link to dbase location table -->
-                    <div class="input-box">
-                        <span class="details">Location:</span>
-                        <select name="location" required>
-                            <option>Please Select</option>
-                            <option value="Pasig">Pasig HO</option>
-                            <option value="Mandaluyong">Mandaluyong</option>
-                            <option value="Laguna">Laguna</option>
-                            <option value="Cebu">Cebu</option>
-                            <option value="Boracay">Boracay</option>
-                            <option value="Davao">Davao</option>
-                        </select>
+                        <span class="details">Asset Type:</span>
+                        <input type="text" name="name" style="width: 150%;"/>
                     </div>
                 </div>
                 <div class="button">
