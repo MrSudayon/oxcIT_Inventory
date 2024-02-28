@@ -42,7 +42,7 @@ if(!empty($_SESSION['id'])) {
     
         <div class="content">
             <div class="title">
-                <h1> Reference </h1>
+                <h1> Configuration </h1>
                 <div class="search-container">
                 <form action="" method="POST">
                     <input type="text" placeholder="Search.." name="search">
@@ -50,9 +50,25 @@ if(!empty($_SESSION['id'])) {
                 </form>
                 </div>
             </div>
-            
-            <form action="" method="get">
 
+                <div class="table-nav">
+                    <div class="link-btns">
+                        <a href="add-assets.php" class="link-btn">Add Emp</a>
+                        <!--  -->
+                        <button type="submit" formaction="accountability.php" class="link-btn" name="accountability" >Asset</button>
+                        <button type="submit" formaction="turnover.php" class="link-btn" name="turnover" >Department</button>
+                        <button type="submit" formaction="references.php" class="link-btn" name="references" >Location</button>
+                    </div>
+                    <?php
+                        $empData = $getEmp->empCount();
+                        $rowCount = $empData->num_rows;
+                    ?>
+                    <div class="count">
+                        <p>Emp count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCount; ?></b></p>
+                    </div>
+                </div>
+            <form action="" method="get">
+                
                 <table class="assets-table">
                     <tr>
                         <th>User</th>

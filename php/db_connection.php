@@ -117,6 +117,12 @@ class get_All_User extends Connection {
         }
         return $users;
     }
+    public function empCount() {
+        $sql = "SELECT * FROM employee_tbl ORDER BY status DESC";
+        $res = mysqli_query($this->conn, $sql);
+        
+        return $res;
+    }
 }
 
 ?>

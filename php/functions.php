@@ -87,9 +87,7 @@ class Operations {
 
         $db->conn->close();
     }
-    function rowCount() {
-
-    }
+    
 
     function searchHistory() {
         global $db;
@@ -204,7 +202,4 @@ class Operations {
         return $res;
     }
 }
-
-
-
 ?>

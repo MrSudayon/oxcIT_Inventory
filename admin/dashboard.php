@@ -54,7 +54,7 @@ if(!empty($_SESSION['id'])) {
             <form action="" method="get">
                 <div class="table-nav">
                     <div class="link-btns">
-                        <a href="add-assets.php" class="link-btn">Add</a>
+                        <a href="add-assets.php" class="link-btn">New Item</a>
                         <!--  -->
                         <button type="submit" formaction="accountability.php" class="link-btn" name="accountability" >Accountability</button>
                         <button type="submit" formaction="turnover.php" class="link-btn" name="turnover" >Turnover</button>
