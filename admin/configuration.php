@@ -30,7 +30,7 @@ if(!empty($_SESSION['id'])) {
     
         <div class="content">
             <div class="title">
-                <h1> Configuration Dashboard </h1>
+                <h1> CONFIGURATION</h1>
             </div>
             <div class="config-buttons">
                 <div class="config-btn"><a href="../admin/emp_List.php"><img src="../assets/icons/config/employee.png"></a></div>

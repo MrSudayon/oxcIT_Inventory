@@ -33,7 +33,7 @@ if(!empty($_SESSION['id'])) {
     
         <div class="content">
             <div class="title">
-                <h1> Configuration </h1>
+                <h1> CONFIGURATION </h1>
                 <div class="search-container">
                 <form action="" method="POST">
                     <input type="text" placeholder="Search.." name="search">
@@ -43,12 +43,8 @@ if(!empty($_SESSION['id'])) {
             </div>
             <div class="table-nav">
                 <div class="link-btns">
+                    <a href="../admin/configuration.php" class="link-btn" >Back</a>
                     <a href="../php/add_location.php" class="link-btn">Add Location</a>
-                    <!--  -->
-                    <a href="../admin/emp_List.php" class="link-btn">Employee</a>
-                    <a href="../admin/asset_List.php" class="link-btn">Asset</a>
-                    <a href="../admin/dept_List.php" class="link-btn">Division</a>
-                    <a href="../admin/location_List.php" class="link-btn">Location</a>
                 </div>
 
                 <?php
