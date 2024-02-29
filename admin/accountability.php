@@ -129,17 +129,17 @@ foreach ($selected as $userID) {
             <?php
         } else {
             if ($acc_ref == '') {
-                echo "Ref#: " .$newCode;
+                echo "<b>Ref#: " .$newCode. "</b>";
                 // query to fetch code in assets_tbl
                 foreach ($selected as $userID) { 
                     $sql = mysqli_query($db->conn, "UPDATE assets_tbl SET accountability_ref = '$newCode' WHERE id='$userID' AND status!='Archive'");
                 }
             } else {
-                echo "Ref#: " . $acc_ref;
+                echo "<b>Ref#: " . $acc_ref . "</b>";
             }
         }
     } else {
-        echo "Ref#: " . $acc_ref;
+        echo "<b>Ref#: " . $acc_ref . "</b>";
     }
         
     ?>

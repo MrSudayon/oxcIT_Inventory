@@ -112,17 +112,17 @@ if(isset($selected)) {
             <?php
         } else {
             if ($turnover_ref == '') {
-                echo "Ref#: " .$newCode;
+                echo "<b>Ref#: " .$newCode. "</b>";
                 // query to fetch code in assets_tbl
                 foreach ($selected as $userID) { 
                     $sql = mysqli_query($db->conn, "UPDATE assets_tbl SET turnover_ref = '$newCode' WHERE id='$userID' AND status!='Archive'");
                 }
             } else {
-                echo "Ref#: " . $turnover_ref;
+                echo "<b>Ref#: " . $turnover_ref . "</b>";
             }
         }
     } else {
-        echo "Ref#: " . $turnover_ref;
+        echo "<b>Ref#: " . $turnover_ref . "</b>";
     } 
     ?>
     </div>
