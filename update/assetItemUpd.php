@@ -72,7 +72,7 @@ if(!empty($_SESSION['id'])) {
                         <select name="status">
                         <?php
                             $status = $result['status'];
-                            if($status = 1) {
+                            if($status == 1) {
                         ?>
                             <option value="<?=$result['status']?>">Active</option>
                             <option value="0">Inactive</option>
