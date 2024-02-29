@@ -14,18 +14,20 @@
 }
 
 h1, h2, p, a, label {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Rubik", sans-serif;
+    font-weight: 500;
 }
 
 a {
     text-decoration: none;
+    font-family: "Rubik", sans-serif;
     color: white;
 }
 
 body {
     background-color: var(--ter-color);
     color: rgb(255, 246, 246);
-    font-family: 'Roboto', sans-serif;
+    font-family: "Rubik", sans-serif;
     min-height: 100dvh;
 }
 

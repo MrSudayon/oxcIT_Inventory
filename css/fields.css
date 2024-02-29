@@ -14,14 +14,16 @@
     --ter-color: #2E4583; /* or 293556 */
 }
 h1, h2, p, a, label {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Rubik", sans-serif;
+    font-weight: 500;
 }
 a {
     text-decoration: none;
     color: white;
+    font-family: "Rubik", sans-serif;
 }
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Rubik", sans-serif;
     min-height: 100dvh;
     width: 100%;
 }
