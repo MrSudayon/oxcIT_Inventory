@@ -2,6 +2,7 @@
 require('../php/db_connection.php');
 
 $select = new Select();
+$getInfo = new Operations();
 
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
@@ -60,14 +61,20 @@ if(!empty($_SESSION['id'])) {
 
                     <!-- Link to dbase dept table -->
                     <div class="input-box">
-                        <span class="details">Department:</span>
+                        <span class="details">Division:</span>
                         <select name="division" required>
-                            <option>Please Select</option>
-                            <option value="Finance">Finance</option>
-                            <option value="Sales/Marketing">Sales/Marketing</option>
-                            <option value="IT">IT</option>
-                            <option value="Operations">Operations</option>
-                            <option value="Sauber">Sauber</option>
+                        <option>Please Select</option>
+
+                        <?php
+                            $getDept = $getInfo->getEmpDiv();
+                            foreach($getDept as $row) {
+                        ?>
+                            <option value="<?php echo $row['name']; ?>">
+                                <?php echo $row['name']; ?>
+                            </option>
+                        <?php
+                            }
+                        ?>
                         </select>
                     </div>
 
@@ -75,13 +82,23 @@ if(!empty($_SESSION['id'])) {
                     <div class="input-box">
                         <span class="details">Location:</span>
                         <select name="location" required>
-                            <option>Please Select</option>
-                            <option value="Pasig">Pasig HO</option>
+                        <option>Please Select</option>
+                        <?php
+                            $getLoc = $getInfo->getEmpLoc();
+                            foreach($getLoc as $row) {
+                        ?>
+                            <option value="<?php echo $row['name']; ?>">
+                                <?php echo $row['name']; ?>
+                            </option>
+                            <!-- <option value="Pasig">Pasig HO</option>
                             <option value="Mandaluyong">Mandaluyong</option>
                             <option value="Laguna">Laguna</option>
                             <option value="Cebu">Cebu</option>
                             <option value="Boracay">Boracay</option>
-                            <option value="Davao">Davao</option>
+                            <option value="Davao">Davao</option> -->
+                        <?php
+                            }
+                        ?>
                         </select>
                     </div>
                 </div>
