@@ -11,5 +11,5 @@ function checkDelete(){
 }
 
 function checkPrompt(){
-    return confirm('Are you sure you want to proceed?');
+    return confirm('<iframe src="../assets/process-error.svg">"Confirm?');
 }

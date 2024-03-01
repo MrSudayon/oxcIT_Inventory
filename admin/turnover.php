@@ -68,8 +68,9 @@ if(isset($selected)) {
 
         while($row1 = mysqli_fetch_assoc($sql1)) {
             $assettag = $row1['assettag'];
+            $assigned = $row1['assigned'];
             $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                                VALUES ('', '$username', 'Turnover Record Tags: $assettag ', NOW())");
+                                VALUES ('', '$username', 'Turnover Record Tags: $assettag, assigned to: $assigned', NOW())");
         }
     }
 }

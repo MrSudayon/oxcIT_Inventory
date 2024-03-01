@@ -87,7 +87,7 @@ if(!empty($_SESSION['id'])) {
                         ?>
                         <td>
                         <center>
-                            <a href="remove.php?Acct_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                            <a href="../update/remove.php?Acct_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                         </center>
                         </td>   
                         <?php
@@ -101,7 +101,7 @@ if(!empty($_SESSION['id'])) {
                         ?>
                         <td>
                         <center>
-                            <a href="remove.php?Turnover_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                            <a href="../update/remove.php?Turnover_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                         </center>
                         </td>    
                         <?php

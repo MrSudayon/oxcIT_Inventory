@@ -56,8 +56,8 @@ if(!empty($_SESSION['id'])) {
                     <div class="link-btns">
                         <a href="add-assets.php" class="link-btn">New Item</a>
                         <!--  -->
-                        <button type="submit" formaction="accountability.php" class="link-btn" name="accountability" onclick="return checkPrompt()">Accountability</button>
-                        <button type="submit" formaction="turnover.php" class="link-btn" name="turnover" onclick="return checkPrompt()">Turnover</button>
+                        <button type="submit" formaction="accountability.php" class="link-btn" name="accountability">Accountability</button>
+                        <button type="submit" formaction="turnover.php" class="link-btn" name="turnover">Turnover</button>
                         <button type="submit" formaction="references.php" class="link-btn" name="references">Reference</button>
                         <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
                     </div>

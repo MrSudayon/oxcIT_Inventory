@@ -29,7 +29,8 @@ if(isset($_POST['submit'])) {
         ?>
             <script>
                 alert('Login Successful');
-                window.location.replace('../admin/dashboard.php');
+                // window.location.replace('../admin/dashboard.php');
+                window.location.replace('../index.php');
             </script>
         <?php
         

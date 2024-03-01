@@ -28,14 +28,17 @@ if(isset($_POST['update-asset'])) {
     $result = $asset->update($input, $id);
 
     if($result) {
-        echo "alert('Updated Successfully')";
-        header("Location: ../admin/dashboard.php");
-        exit(0);
+        echo "<script>
+        alert('⚠️Update Successful');
+        window.location.href='../admin/dashboard.php';
+        </script>";
+        die();
     } else {
-        echo "alert('Update Error')";
-        $_SESSION['message'] = "Update Error";
-        header("Location: ../update/assetUpd.php");
-        exit(0);
+        echo "<script>
+        alert('⚠️Update Error');
+        window.location.href='../admin/dashboard.php';
+        </script>";
+        die();
     }
 }
 
@@ -51,17 +54,19 @@ if(isset($_POST['turnover-asset'])) {
     ];
     $result = $asset->assetTurnover($input, $id);
 
-    if($result) {
-        echo "alert('Turnover Successfully')";
-        header("Location: dashboard.php");
-        exit(0);
-    } else {
-        ?>
-        <script>alert("Welcome to Geeks for Geeks");
-        </script>
-        <?php
-        header("Location: dashboard.php");
-    }
+    if ($result == 1) {
+        echo "<script>
+                alert('⚠️Turnover Successful');
+                window.location.href='../admin/dashboard.php';
+                </script>";
+        die();
+    } elseif($result == 100) {
+        echo "<script>
+                alert('⚠️Wrong reference code');
+                window.location.href='../admin/dashboard.php';
+                </script>";
+        die();
+    } 
 }
 
 // Update employee func
@@ -76,14 +81,17 @@ if(isset($_POST['updateEmp'])) {
     $result = $asset->empUpdate($input, $id);
 
     if($result) {
-        echo "alert('Updated Successfully')";
-        header("Location: emp_List.php");
-        exit(0);
+        echo "<script>
+        alert('⚠️Update Successful');
+        window.location.href='../admin/emp_List.php';
+        </script>";
+        die();
     } else {
-        echo "alert('Update Error')";
-        $_SESSION['message'] = "Update Error";
-        header("Location: emp_List.php");
-        exit(0);
+        echo "<script>
+        alert('⚠️Update Error');
+        window.location.href='../admin/emp_List.php';
+        </script>";
+        die();
     }
 }
 
@@ -97,14 +105,17 @@ if(isset($_POST['updateAssetItem'])) {
     $result = $asset->assetItemUpdate($input, $id);
 
     if($result) {
-        echo "alert('Updated Successfully')";
-        header("Location: asset_List.php");
-        exit(0);
+        echo "<script>
+        alert('⚠️Update Successful');
+        window.location.href='../admin/asset_List.php';
+        </script>";
+        die();
     } else {
-        echo "alert('Update Error')";
-        $_SESSION['message'] = "Update Error";
-        header("Location: asset_List.php");
-        exit(0);
+        echo "<script>
+        alert('⚠️Update Error');
+        window.location.href='../admin/asset_List.php';
+        </script>";
+        die();
     }
 }
 
@@ -118,14 +129,17 @@ if(isset($_POST['updateDivision'])) {
     $result = $asset->divisionUpdate($input, $id);
 
     if($result) {
-        echo "alert('Updated Successfully')";
-        header("Location: dept_List.php");
-        exit(0);
+        echo "<script>
+        alert('⚠️Update Successful');
+        window.location.href='../admin/dept_List.php';
+        </script>";
+        die();
     } else {
-        echo "alert('Update Error')";
-        $_SESSION['message'] = "Update Error";
-        header("Location: dept_List.php");
-        exit(0);
+        echo "<script>
+        alert('⚠️Update Error');
+        window.location.href='../admin/dept_List.php';
+        </script>";
+        die();
     }
 }
 
@@ -139,14 +153,17 @@ if(isset($_POST['locationID'])) {
     $result = $asset->divisionUpdate($input, $id);
 
     if($result) {
-        echo "alert('Updated Successfully')";
-        header("Location: location_List.php");
-        exit(0);
+        echo "<script>
+        alert('⚠️Update Successful');
+        window.location.href='../admin/location_List.php';
+        </script>";
+        die();
     } else {
-        echo "alert('Update Error')";
-        $_SESSION['message'] = "Update Error";
-        header("Location: location_List.php");
-        exit(0);
+        echo "<script>
+        alert('⚠️Update Error');
+        window.location.href='../admin/location_List.php';
+        </script>";
+        die();
     }
 }
 

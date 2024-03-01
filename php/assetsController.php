@@ -95,22 +95,14 @@ class assetsController {
                 $newStatus = 'Outdated';
             }
 
-                $qry = "UPDATE assets_tbl SET lastused='$lastused', dateturnover='$turnover', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
-                $result = $db->conn->query($qry);
-
-                if($result) {
-                    return true;
-                } else {
-                    return false;
-                }
+            $db->conn->query("UPDATE assets_tbl SET lastused='$lastused', dateturnover='$turnover', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1");
+            return 1; // Turnover success
+           
         } else {
-            ?>
-                <script>
-                    alert('Wrong Reference Code, Please try again!');
-                    window.location.href = '../admin/turnoverUpd.php';
-                </script>
-            <?php
-        }
+            return 100;
+            
+        }    
+        
             
     }
 
@@ -146,17 +138,9 @@ class assetsController {
         $result = $db->conn->query($qry);
 
         if($result) {
+            mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+            VALUES('', '$name', 'Updated Employee ID: $empID' , NOW())");
             return true;
-            ?>
-                <script>
-                    alert('Update Successfully');
-                    window.location.href = '../admin/emp_List.php';
-                </script>
-            <?php
-
-        mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-        VALUES('', '$name', 'Updated Employee ID: $empID' , NOW())");
-
         } else {
             return false;
         } 

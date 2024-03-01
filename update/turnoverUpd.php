@@ -45,6 +45,7 @@ if(!empty($_SESSION['id'])) {
                 $result = $asset->edit($assetID);
 
                 if($result) {
+                    
             ?>
                 <form action="../admin/update-selected.php" method="POST">
                     <div class="asset-details">
