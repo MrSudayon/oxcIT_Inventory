@@ -26,7 +26,9 @@ if(!empty($_SESSION['id'])) {
     <title>Employee List</title>
 </head>
 <style>
-
+th {
+  cursor: pointer;
+}
 </style>
 <body>
     <?php include '../inc/header.php'; ?>
@@ -57,9 +59,9 @@ if(!empty($_SESSION['id'])) {
             </div>
             <form action="" method="get">
                 
-                <table class="assets-table">
+                <table class="assets-table" id="myTable">
                     <tr>
-                        <th>User</th>
+                        <th onclick="sortTable(0)">User</th>
                         <th>Division</th>
                         <th>Location</th>
                         <th colspan="2" width="8%">Action</th>
@@ -81,7 +83,7 @@ if(!empty($_SESSION['id'])) {
                         <center>
                             <a href="../update/empUpd.php?empID=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>
 
-                            <a href="../update/remove?empID=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                            <a href="../update/remove.php?empID=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                         </center>
                         </td>    
                     </tr>
@@ -96,5 +98,6 @@ if(!empty($_SESSION['id'])) {
         </div>
 
         <script src="../js/dashboard.js"></script>
+        <script src="../js/sort.js"></script>
 </body>
 </html>

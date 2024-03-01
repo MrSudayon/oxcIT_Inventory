@@ -59,7 +59,7 @@ if(isset($_GET['Turnover_id'])) {
 if(isset($_GET['empID'])) {
     $id = $_GET['empID'];
 
-    $query = mysqli_query($db->conn, "UPDATE employee_tbl SET status='' WHERE id='$id'");
+    $query = mysqli_query($db->conn, "UPDATE employee_tbl SET status=0 WHERE id='$id'");
 
     $sql_All = mysqli_query($db->conn, "SELECT * FROM employee_tbl WHERE id = $id");
     while($row = $sql_All->fetch_assoc()) {

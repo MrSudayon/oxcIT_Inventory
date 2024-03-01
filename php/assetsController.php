@@ -85,14 +85,24 @@ class assetsController {
         
         // validation of Turnover reference code
         if($ref_Code == $turnover_ref) {
-            $qry = "UPDATE assets_tbl SET lastused='$lastused', dateturnover='$turnover', reason='$reason' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
-            $result = $db->conn->query($qry);
 
-            if($result) {
-                return true;
+            // Change Asset data based on Reason of Turnover
+            if ($reason == 'Resign') {
+                $newStatus = 'To be deploy';
+            } elseif ($reason == 'Defective') {
+                $newStatus = 'Defective';
             } else {
-                return false;
+                $newStatus = 'Outdated';
             }
+
+                $qry = "UPDATE assets_tbl SET lastused='$lastused', dateturnover='$turnover', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
+                $result = $db->conn->query($qry);
+
+                if($result) {
+                    return true;
+                } else {
+                    return false;
+                }
         } else {
             ?>
                 <script>

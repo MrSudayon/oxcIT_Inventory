@@ -19,7 +19,20 @@ if(!empty($_SESSION['id'])) {
     <title>Turnover</title>
 </head>
 <body>
-<?php include '../inc/header.php'; ?>
+<header>
+    <div class="logo">
+        <a href="../admin/dashboard.php"><img src="../assets/logo.png" width="150px"></img></a>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Menu</button>
+        <div class="dropdown-content">
+            <!-- <a href="../php/add_emp_info.php">Register</a> -->
+            <a href="../admin/configuration.php">Configuration</a>
+            <a href="../php/history.php">History</a>
+            <a href="../php/logout.php?id=<?php echo $id; ?>&name=<?php echo $username; ?>">Logout</a>
+        </div>
+    </div>
+</header>
 
     <div class="container">
         <div class="add-form">
@@ -33,7 +46,7 @@ if(!empty($_SESSION['id'])) {
 
                 if($result) {
             ?>
-                <form action="update-selected.php" method="POST">
+                <form action="../admin/update-selected.php" method="POST">
                     <div class="asset-details">
                         <input type="hidden" name="assetID" value="<?=$result['id']?>">
 
@@ -69,8 +82,8 @@ if(!empty($_SESSION['id'])) {
                         </div>
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Status</span>
-                            <select name="status" style="background-color: #ccc;">
-                                <option value="To be Deploy">To be Deploy</option>
+                            <select style="background-color: #ccc;">
+                                <option value=<?=$result['status']?>><?=$result['status']?></option>
                             
                             </select>
                         </div>

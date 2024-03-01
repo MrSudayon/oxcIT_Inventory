@@ -39,6 +39,8 @@ if(isset($_POST['update-asset'])) {
     }
 }
 
+
+// Turnover Item
 if(isset($_POST['turnover-asset'])) {
     $id = mysqli_real_escape_string($db->conn,$_POST['assetID']);
     $input = [
@@ -50,14 +52,15 @@ if(isset($_POST['turnover-asset'])) {
     $result = $asset->assetTurnover($input, $id);
 
     if($result) {
-        echo "alert('Updated Successfully')";
+        echo "alert('Turnover Successfully')";
         header("Location: dashboard.php");
         exit(0);
     } else {
-        echo "alert('Update Error')";
-        $_SESSION['message'] = "Update Error";
-        header("Location: turnoverUpd.php");
-        exit(0);
+        ?>
+        <script>alert("Welcome to Geeks for Geeks");
+        </script>
+        <?php
+        header("Location: dashboard.php");
     }
 }
 
