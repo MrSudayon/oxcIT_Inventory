@@ -26,13 +26,13 @@ class Connection {
 
 class AddItems extends Connection {
     public function addEmployee($name, $division, $location) { 
-        $duplicate = mysqli_query($this->conn, "SELECT * FROM employee_tbl WHERE name LIKE '%$name%'");
+        $duplicate = mysqli_query($this->conn, "SELECT * FROM employee_tbl WHERE name LIKE '%$name' AND name LIKE '$name%' AND name LIKE '%$name%'");
         
         if (mysqli_num_rows($duplicate) > 0) {
             return 10; // Duplicate Record
         } else {
-            $query = "INSERT INTO employee_tbl (id, name, division, location)
-                                VALUES ('','$name', '$division', '$location')";
+            $query = "INSERT INTO employee_tbl (id, name, division, location, status)
+                                VALUES ('','$name', '$division', '$location', 1)";
 
             $result = mysqli_query($this->conn, $query);
             if($result) { 

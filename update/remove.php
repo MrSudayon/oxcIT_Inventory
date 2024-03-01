@@ -32,10 +32,10 @@ if(isset($_GET['Acct_id'])) {
 
     $sql_All = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $id");
     while($row = $sql_All->fetch_assoc()) {
-        $Asset_id = $row['id'];
+        $assetTag = $row['assettag'];
     }
     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                            VALUES ('', '$name', 'Deleted Accountability Ref for Asset ID: $Asset_id', NOW())");
+                            VALUES ('', '$name', 'Deleted turnover reference code for Asset Tag: $assetTag', NOW())");
 
     header("Location: ../admin/references.php");
 } 
@@ -48,10 +48,10 @@ if(isset($_GET['Turnover_id'])) {
 
     $sql_All = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $id");
     while($row = $sql_All->fetch_assoc()) {
-        $Asset_id = $row['id'];
+        $assetTag = $row['assettag'];
     }
     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                            VALUES ('', '$name', 'Deleted Turnover Ref for Asset ID: $Asset_id', NOW())");
+                            VALUES ('', '$name', 'Deleted turnover reference code for Asset Tag: $assetTag', NOW())");
 
     header("Location: ../admin/references.php");
 }

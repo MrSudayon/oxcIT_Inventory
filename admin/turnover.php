@@ -3,31 +3,35 @@ require '../php/db_connection.php';
 
 $select = new Select();
 $db = new Connection();
+
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
+    $username = $user['username'];
+
 } else {
     header("Location: ../php/login.php");
 }
 
+    
 if(isset($_GET['select'])) {
     $selected = $_GET['select'];
-    // query to update Turnover date.
-    // $name = $user['username'];
-    // $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-    //                         VALUES ('', '$name', 'Turnover Tag: $assettag', NOW())");
-} elseif(isset($_GET['id'])) {
-    $userID = $_GET['id'];
-
-    $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
-    $res = mysqli_query($db->conn, $sql);
     
-    while($row = mysqli_fetch_assoc($res)) {
-        $name = $row['assigned'];
-        $dept = $row['department'];
-        $turnover_ref = $row['turnover_ref'];
-        // Logic to Ignore or dismiss if selected a multiple username/assigned user
-    }
+    
 
+// } elseif(isset($_GET['id'])) {
+//     $userID = $_GET['id'];
+
+//     $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
+//     $res = mysqli_query($db->conn, $sql);
+    
+//     while($row = mysqli_fetch_assoc($res)) {
+//         $name = $row['assigned'];
+//         $dept = $row['department'];
+//         $turnover_ref = $row['turnover_ref'];
+//         // Logic to Ignore or dismiss if selected a multiple username/assigned user
+//     }
+
+// } else {
 } else {
     ?>
         <script>
@@ -36,6 +40,10 @@ if(isset($_GET['select'])) {
         </script>
     <?php
 }
+    
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -63,16 +71,10 @@ if(isset($selected)) {
             $arrayName[] = $name;
         }
             
-        $sql1 = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id='$userID'");
-        $username = $user['username'];
-
-        while($row1 = mysqli_fetch_assoc($sql1)) {
-            $assettag = $row1['assettag'];
-            $assigned = $row1['assigned'];
-            $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                                VALUES ('', '$username', 'Turnover Record Tags: $assettag, assigned to: $assigned', NOW())");
-        }
     }
+    $assetUser = "SELECT * FROM assets_tbl WHERE id='$userID' AND status != 'Archive'";
+    $assetUserID = mysqli_query($db->conn, $assetUser);
+
 }
 
 ?>  
@@ -81,7 +83,7 @@ if(isset($selected)) {
     </div>
     <br><br><br>
     <center>
-    <h2>Turnover Form</h2><br>
+    <h2>Turnover Form</h2>
     </center>
     <div class="reference-code" align="right">
     <?php 
@@ -114,17 +116,38 @@ if(isset($selected)) {
         } else {
             if ($turnover_ref == '') {
                 echo "<b>Ref#: " .$newCode. "</b>";
+
                 // query to fetch code in assets_tbl
                 foreach ($selected as $userID) { 
                     $sql = mysqli_query($db->conn, "UPDATE assets_tbl SET turnover_ref = '$newCode' WHERE id='$userID' AND status!='Archive'");
                 }
+
+                while($row = mysqli_fetch_assoc($assetUserID)) {
+                    $assettag = $row['assettag'];
+                    $assigned = $row['lastused'];
+            
+                    $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                                         VALUES ('', '$username', 'Turnover asset: $assettag, Last used by: $assigned', NOW())");
+                }
             } else {
                 echo "<b>Ref#: " . $turnover_ref . "</b>";
+                while($row = mysqli_fetch_assoc($assetUserID)) {
+                    $assettag = $row['assettag'];
+                    $assigned = $row['lastused'];
+            
+                    $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                                         VALUES ('', '$username', 'Viewed turnover form: $assettag, Last used by: $assigned', NOW())");
+                }
             }
         }
     } else {
-        echo "<b>Ref#: " . $turnover_ref . "</b>";
-    } 
+        ?>
+            <script> 
+            alert ('asdasder is not Allowed!')
+            window.location.href = 'dashboard.php';
+            </script> 
+        <?php
+    }
     ?>
     </div>
         <table class="assets-table">

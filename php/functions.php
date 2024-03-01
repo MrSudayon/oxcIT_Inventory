@@ -207,7 +207,7 @@ class Operations {
 
         if(isset($_POST['search'])) {
             $search = $_POST['search'];
-            $sql = "SELECT * FROM employee_tbl WHERE name LIKE '$search%' OR division LIKE '%$search%' OR location LIKE '%$search%' ORDER BY status DESC";
+            $sql = "SELECT * FROM employee_tbl WHERE name LIKE '%$search%' OR division LIKE '%$search%' OR location LIKE '%$search%' ORDER BY status DESC";
             $res = mysqli_query($db->conn, $sql);
         
             return $res;

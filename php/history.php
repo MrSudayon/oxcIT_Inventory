@@ -18,24 +18,22 @@ if(!empty($_SESSION['id'])) {
     <link rel="icon" href="../assets/logo.jpg">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Admin Dashboard</title>
+    <title>History</title>
 </head>
 <body>
-    <?php include '../inc/header.php'; ?>
-    <!-- <header>
+    <header>
         <div class="logo">
             <a href="../admin/dashboard.php"><img src="../assets/logo.png" width="150px"></img></a>
         </div>
         <div class="dropdown">
             <button class="dropbtn">Menu</button>
             <div class="dropdown-content">
-                <a href="../php/add_emp_info.php">Register</a>
+                <a href="../admin/configuration.php">Configuration</a>
                 <a href="../php/history.php">History</a>
-                <a href="../php/logout.php">Logout</a>
+                <a href="../php/logout.php?id=<?php echo $id; ?>&name=<?php echo $username; ?>">Logout</a>
             </div>
         </div>
-       
-    </header> -->
+    </header>
     
         <div class="content">
             <div class="title">
@@ -47,18 +45,10 @@ if(!empty($_SESSION['id'])) {
                 </form>
                 </div>
             </div>
-            <!-- <div class="search-container">
-                <form action="" method="POST">
-                    <input type="text" placeholder="Search.." name="search">
-                    <button type="submit"><i class="fa fa-search"></i></button>
-                </form>
-            </div> -->
-
-            <!-- <form action="accountability.php" method="get"> -->
+         
                 <table class="assets-table">
                     <tr>
-                        <!-- <th><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th> -->
-                        <!-- <th>ID</th> -->
+                  
                         <th>User</th>
                         <th>Action</th>
                         <th>Date</th>
@@ -73,7 +63,6 @@ if(!empty($_SESSION['id'])) {
                         while($row = mysqli_fetch_assoc($searchData)) {
                         
                     ?> 
-                        <!-- <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td> -->
                         <td><?php echo $row['name']; ?></td>
                         <td><?php echo $row['action']; ?></td>
                         <td><?php echo $row['date']; ?></td>
@@ -83,7 +72,6 @@ if(!empty($_SESSION['id'])) {
                     ?>
                 </table>
 
-            <!-- </form> -->
             
         </div>
 
