@@ -16,7 +16,6 @@ if(!empty($_SESSION['id'])) {
 if(isset($_GET['select'])) {
 
     $selected = $_GET['select'];
-    
     foreach ($selected as $userID){ 
         $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
         $res = mysqli_query($db->conn, $sql);
@@ -30,19 +29,19 @@ if(isset($_GET['select'])) {
     }
 
     $assetUserID = mysqli_query($db->conn, "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'");
-// } elseif(isset($_GET['id'])) {
-//     $assetId = $_GET['id'];
-//     $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$assetId' AND status !='Archive'";
-//     $res = mysqli_query($db->conn, $sql);
-    
-//     while($row = mysqli_fetch_assoc($res)) {
-//         $name = $row['assigned'];
-//         $dept = $row['department'];
-//         $turnover_ref = $row['turnover_ref'];
-//         // Logic to Ignore or dismiss if selected a multiple username/assigned user
-//     }
 
-// } else {
+// From reference Tab to existing Turnover form
+} elseif(isset($_GET['id'])) {
+    $assetId = $_GET['id'];
+    $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$assetId' AND status !='Archive'";
+    $res = mysqli_query($db->conn, $sql);
+    
+    while($row = mysqli_fetch_assoc($res)) {
+        $name = $row['assigned'];
+        $dept = $row['department'];
+        $turnover_ref = $row['turnover_ref'];
+    }
+
 } else {
     ?>
         <script>
@@ -52,9 +51,6 @@ if(isset($_GET['select'])) {
     <?php
 }
     
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -75,84 +71,89 @@ if(isset($_GET['select'])) {
     <center>
     <h2>Turnover Form</h2>
     </center>
-    <div class="reference-code" align="right">
-        <?php 
-            // Generating Reference Code
-            $n=4;
-            function getCode($n) {
-                $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                $randomString = '';
-                
-                for ($i = 0; $i < $n; $i++) {
-                    $index = rand(0, strlen($characters) - 1);
-                    $randomString .= $characters[$index];
-                    $refCode = $randomString. "-" .date("Y");
-                }
-                
-                return "TRNO-".$refCode;
-            }
-            $newCode = getCode($n);
-
-            if($name = '') {
-                ?>
-                    <script> 
-                    alert ('⚠️No assigned')
-                    window.location.href = 'dashboard.php';
-                    </script> 
-                <?php
-            }
-
-            elseif(isset($arrayName)) {
-                if(count(array_unique($arrayName))>1) {
-                    ?>
-                        <script> 
-                        alert ('⚠️Multiple User is not Allowed!')
-                        window.location.href = 'dashboard.php';
-                        </script> 
-                    <?php
-                } else {
-                    if ($turnover_ref == '') {
-                        echo "<b>Ref#: " .$newCode. "</b>";
-
-                        // query to fetch code in assets_tbl
-                        foreach ($selected as $userID) { 
-                            $sql = mysqli_query($db->conn, "UPDATE assets_tbl SET turnover_ref = '$newCode' WHERE id='$userID' AND status!='Archive'");
-                        }
-
-                        while($row = mysqli_fetch_assoc($assetUserID)) {
-                            $assettag = $row['assettag'];
-                            $assigned = $row['assigned'];
-                    
-                            $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                                                    VALUES ('', '$username', 'Generated turnover form: $assettag, Last used by: $assigned', NOW())");
-                        }
-                    } else {
-                        echo "<b>Ref#: " . $turnover_ref . "</b>";
-                        echo $userID;
-                        echo $assetUserID;
-
-                        while($row = mysqli_fetch_assoc($assetUserID)) {
-                            $assettag = $row['assettag'];
-                            $assigned = $row['assigned'];
-                    
-                            $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                                                    VALUES ('', '$username', 'Viewed turnover form: $assettag, Last used by: $assigned', NOW())");
-                                                    echo $name;
-                                                    die();
-                        }
-                    }
-                }
-            } else {
-                ?>
-                    <script> 
-                    alert ('What...')
-                    window.location.href = 'dashboard.php';
-                    </script> 
-                <?php
-            }
+<div class="reference-code" align="right">
+<?php 
+         // Generating Reference Code
+    $n=4;
+    function getCode($n) {
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
         
+        for ($i = 0; $i < $n; $i++) {
+            $index = rand(0, strlen($characters) - 1);
+            $randomString .= $characters[$index];
+            $refCode = $randomString. "-" .date("Y");
+        }
+        
+        return "TRNO-".$refCode;
+    }
+
+    $newCode = getCode($n);
+
+    if(isset($arrayName)) {
+        if($arrayName != array_filter($arrayName)) {
+            ?>
+                <script> 
+                alert ('⚠️No assigned')
+                window.location.href = 'dashboard.php';
+                </script> 
+            <?php
+            die();
+        } elseif(count(array_unique($arrayName))>1) {
+            ?>
+                <script> 
+                alert ('⚠️Multiple User is not Allowed!')
+                window.location.href = 'dashboard.php';
+                </script> 
+            <?php
+        } else {
+            while($row = mysqli_fetch_assoc($assetUserID)) {
+                $assettag = $row['assettag'];
+                $assigned = $row['assigned'];
+            }
+            if ($turnover_ref == '') {
+                echo "<b>Ref#: " .$newCode. "</b>";
+                // $reference_Code = $newCode;
+                // query to fetch code in assets_tbl
+                foreach ($selected as $userID) { 
+                    $sql = mysqli_query($db->conn, "UPDATE assets_tbl SET turnover_ref = '$newCode' WHERE id='$userID' AND status!='Archive'");
+                }
+                    $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                        VALUES ('', '$username', 'Generated turnover form: $assettag, Last used by: $assigned', NOW())");
+            } else {
+                echo "<b>Ref#: " . $turnover_ref . "</b>";
+                // $reference_Code = $turnover_ref;
+    
+                    $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                        VALUES ('', '$username', 'Viewed turnover form: $assettag, Last used by: $assigned', NOW())");
+            }
+        }
+    } elseif(isset($_GET['id'])) {
+
+        $assetUserID = mysqli_query($db->conn, "SELECT DISTINCT * FROM assets_tbl WHERE id='$assetId' AND status !='Archive'");
+
+        while($row = mysqli_fetch_assoc($assetUserID)) {
+            $assettag = $row['assettag'];
+            $assigned = $row['assigned'];
+        }
+        
+        echo "<b>Ref#: " . $turnover_ref . "</b>";
+        // $reference_Code = $turnover_ref;
+
+            $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                VALUES ('', '$username', 'Viewed turnover form: $assettag, from Reference tbl Last used by: $assigned', NOW())");
+        
+
+    } else {
         ?>
-    </div>
+            <script> 
+            alert ('What...')
+            window.location.href = 'dashboard.php';
+            </script> 
+        <?php
+    }
+?>
+</div>
     <table class="assets-table">
         
         <tr>
@@ -175,7 +176,7 @@ if(isset($_GET['select'])) {
                     $ram = $row['MEMORY'];
                     $storage = $row['STORAGE'];
                     $specs = 'CPU: ' . $cpu . '<br>MEMORY: ' . $ram . '<br>STORAGE: ' . $storage;
-            ?>
+        ?>
             <tr>
             
                 <td><?php echo $row['assettype']; ?></td>
@@ -185,9 +186,11 @@ if(isset($_GET['select'])) {
                 <td><?php echo $row['remarks']; ?></td>    
             
             </tr>
-            <?php
+        <?php
                 }
             }
+        ?>
+        <?php
         } elseif(isset($_GET['id'])) {
             $userID = $_GET['id'];
 
@@ -214,9 +217,7 @@ if(isset($_GET['select'])) {
         <?php
             }
         }    
-           
         ?>
-        
         
     </table>
     <div class="info"><br>
@@ -239,6 +240,7 @@ if(isset($_GET['select'])) {
     </div>
     
 </div>
+
         
 <script src="../js/print.js"></script>
 </body>

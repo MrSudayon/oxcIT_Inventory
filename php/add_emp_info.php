@@ -63,7 +63,7 @@ if(!empty($_SESSION['id'])) {
                     <div class="input-box">
                         <span class="details">Division:</span>
                         <select name="division" required>
-                        <option>Please Select</option>
+                        <option value="">Please Select</option>
 
                         <?php
                             $getDept = $getInfo->getEmpDiv();
@@ -82,7 +82,7 @@ if(!empty($_SESSION['id'])) {
                     <div class="input-box">
                         <span class="details">Location:</span>
                         <select name="location" required>
-                        <option>Please Select</option>
+                        <option value="">Please Select</option>
                         <?php
                             $getLoc = $getInfo->getEmpLoc();
                             foreach($getLoc as $row) {

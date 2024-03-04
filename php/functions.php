@@ -14,7 +14,7 @@ class Operations {
         $session = $select->selectUserById($_SESSION['id']);
         $name = $session['username'];
 
-        if(!isset($assigned)) {
+        if(!isset($assigned) || $assigned = "") {
             $dept = "";
             $location = "";
         } else {
@@ -24,9 +24,8 @@ class Operations {
                 $dept = $row['division'];
                 $location = $row['location'];
             } 
-        }
-            
-        $lastused = $assigned;
+            $lastused = $assigned;
+        }          
         
         $query = "INSERT INTO assets_tbl (id, department, assettype, assettag, model, serial, supplier, CPU, MEMORY, STORAGE, OS, Others, assigned, lastused, status, location, datepurchased, cost, repair_cost, remarks, datedeployed)
                                 VALUES ('','$dept','$type','$tag','$mdl','$srl','$spplr','$cpu','$ram','$storage','$os','$others','$assigned','$lastused','$stts','$location','$dtprchs', '$cost', '$repair_cost','$rmrks','$datedeployed')";

@@ -167,8 +167,25 @@ if(!empty($_SESSION['id'])) {
                         <input type="date" name="turnover">
                     </div> -->
                     <div class="input-box">
-                        <span class="details">Last Used by:</span>
-                        <input type="text" name="lastused" placeholder="Last used..." value="" >
+                        <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
+                        <!-- <input type="text" name="lastused" placeholder="Last used..." value="" > -->
+                        <select name="lastused" id="assigned" class="assigned">
+                            <option value="">Please Select</option>
+                            <?php
+                                    $results = new get_All_User();
+
+                                    // $user = $results->selectAllUser();
+                                    $user = $results->selectAllEmp();
+                                    foreach($user as $row) {
+                            ?>
+                            <option value="<?php echo $row['name']; ?>">
+                                <?php echo $row['name']; ?>
+                            </option>
+                            <?php
+                                }
+                                
+                            ?>
+                        </select>
                     </div>
                     <!-- <div class="input-box">
                         <span class="details">Division</span>
