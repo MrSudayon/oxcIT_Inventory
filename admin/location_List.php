@@ -75,7 +75,7 @@ if(!empty($_SESSION['id'])) {
                         <td><?php echo $row['name']; ?></td>
                         <td>
                         <center>
-                            <a href="../update/update-selected.php?locID=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>
+                            <a href="../update/locUpd.php?locID=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>
 
                             <!-- <a href="remove?deptID=" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a> -->
                         </center>

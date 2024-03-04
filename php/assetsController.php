@@ -1,8 +1,12 @@
 <?php
 // include_once '../php/db_connection.php';
 $select = new Select();
+$session = $select->selectUserById($_SESSION['id']);
+
+$name = $session['username'];
 
 class assetsController {
+
     public function edit($id) {
         global $db;
         $assetID = mysqli_real_escape_string($db->conn, $id);
@@ -11,7 +15,7 @@ class assetsController {
         if($res->num_rows == 1){
             $data = $res->fetch_assoc();
             return $data;
-        }else{
+        } else {
             return false;
         }
     }
@@ -57,9 +61,8 @@ class assetsController {
                 $assettag = $row['assettag'];
             }
         if($result) {
-
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                                VALUES('', '$name', 'Updated the Tag: $assettag from Assets Record' , NOW())");
+                                VALUES('', '$name', 'Updated item: $assettag ID: $assetID from Assets Record' , NOW())");
             return true;
         } else {
             return false;
@@ -80,6 +83,7 @@ class assetsController {
         $sql = "SELECT * FROM assets_tbl WHERE id = $assetID AND status != 'Archive'";
         $res = mysqli_query($db->conn,$sql);
         while($row = $res->fetch_assoc()) {
+            $assetName = $row['assettype'];
             $turnover_ref = $row['turnover_ref'];
         }
         
@@ -96,11 +100,14 @@ class assetsController {
             }
 
             $db->conn->query("UPDATE assets_tbl SET lastused='$lastused', dateturnover='$turnover', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1");
+            
+            mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                                VALUES('', '$name', 'Turnover asset: $assetName ID: $assetID' , NOW())");
+            
             return 1; // Turnover success
            
         } else {
             return 100;
-            
         }    
         
             
@@ -139,7 +146,8 @@ class assetsController {
 
         if($result) {
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-            VALUES('', '$name', 'Updated Employee ID: $empID' , NOW())");
+            VALUES('', '$name', 'Updated employee: $empname ID: $empID' , NOW())");
+
             return true;
         } else {
             return false;
@@ -176,23 +184,16 @@ class assetsController {
         $result = $db->conn->query($qry);
 
         if($result) {
+            mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+            VALUES('', '$name', 'Updated asset item: $assetname ID: $assetItemID' , NOW())");
+
             return true;
-            ?>
-                <script>
-                    alert('Update Successfully');
-                    window.location.href = '../admin/asset_List.php';
-                </script>
-            <?php
-
-        mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-        VALUES('', '$name', 'Updated Asset Item ID: $assetItemID' , NOW())");
-
         } else {
             return false;
         } 
     }
 
-    // Asset Item
+    // Division Item
     public function divisionEdit($id) {
         global $db;
         $divID = mysqli_real_escape_string($db->conn, $id);
@@ -213,26 +214,49 @@ class assetsController {
         $divname = $input['name'];
         $status = $input['status'];
         
-        // Get current user for History record....
-        $session = $select->selectUserById($_SESSION['id']);
-        $name = $session['username'];
-
         // validation of Turnover reference code
         $qry = "UPDATE dept_tbl SET name='$divname', status='$status' WHERE id='$divID' LIMIT 1";
         $result = $db->conn->query($qry);
 
         if($result) {
+            mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                VALUES('', '$name', 'Updated division name: $divname' , NOW())");
+
             return true;
-            ?>
-                <script>
-                    alert('Update Successfully');
-                    window.location.href = '../admin/asset_List.php';
-                </script>
-            <?php
+        } else {
+            return false;
+        } 
+    }
 
-        mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-        VALUES('', '$name', 'Updated Division ID: $divID, name: $divname' , NOW())");
+    public function locationEdit($id) {
+        global $db;
+        $ID = mysqli_real_escape_string($db->conn, $id);
+        $locQuery = "SELECT * FROM loc_tbl WHERE id='$ID'";
+        $res = mysqli_query($db->conn, $locQuery);
+        if($res->num_rows == 1){
+            $data = $res->fetch_assoc();
+            return $data;
+        }else{
+            return false;
+        }
+    }
+    public function locationUpdate($input, $id) {
+        global $db;
+        global $select;
 
+        $ID = mysqli_real_escape_string($db->conn, $id);
+        $locName = $input['name'];
+        $status = $input['status'];
+
+        // validation of Turnover reference code
+        $qry = "UPDATE loc_tbl SET name='$locName', status='$status' WHERE id='$ID' LIMIT 1";
+        $result = $db->conn->query($qry);
+
+        if($result) {
+            mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+            VALUES('', '$name', 'Updated location name: $locName' , NOW())");
+
+            return true;
         } else {
             return false;
         } 

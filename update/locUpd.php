@@ -54,7 +54,7 @@ if(!empty($_SESSION['id'])) {
         if(isset($_GET['locID'])) {
             $locID = mysqli_real_escape_string($db->conn, $_GET['locID']);
             $asset = new assetsController;
-            $result = $asset->divisionEdit($locID);
+            $result = $asset->locationEdit($locID);
 
             if($result) {
         ?>
@@ -68,7 +68,7 @@ if(!empty($_SESSION['id'])) {
                     </div>
                     
                     <div class="input-box">
-                        <span class="details">Status</span>
+                        <span class="details" style="margin-bottom: 10px;">Status</span>
                         <select name="status">
                         <?php
                             $status = $result['status'];

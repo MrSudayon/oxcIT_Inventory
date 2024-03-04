@@ -5,12 +5,21 @@ $select = new Select();
 
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
+    $username = $user['username'];
 } else {
     header("Location: ../php/login.php");
 }
 
 if(isset($_GET['select'])) {
     $selected = $_GET['select'];
+    
+    $escaped_values = array_map(array($db->conn, 'real_escape_string'), array_values($selected));
+    
+    $values  = implode(', ', array_values($escaped_values));
+    // History
+    mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+        VALUES ('','$username','Generated a report for asset IDs: $values',NOW())");
+    
 } else {
     ?>
         <script>
@@ -28,7 +37,7 @@ if(isset($_GET['select'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../assets/logo.jpg">
     <link rel="stylesheet" href="../css/accountability.css">
-    <title>Turnover Form</title>
+    <title>Report</title>
 </head>
 <body>
 <div class="content">

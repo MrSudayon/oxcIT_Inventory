@@ -5,6 +5,7 @@ $select = new Select();
 
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
+    $username = $user['username'];
 
     if ($user['role'] == 'admin') {
         
@@ -13,9 +14,12 @@ if(!empty($_SESSION['id'])) {
         if(isset($_POST['submit'])) {
 
             $result = $register->addAssetItem($_POST['name']);
+            $assetName = $_POST['name'];
             
             if($result == 1) {
                 echo "<script> alert('Registration Successful'); </script>";
+                $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                        VALUES ('', '$username', 'Added new asset item: $assetName', NOW())");
             }
             elseif($result == 10) {
                 echo "<script> alert('This Asset already exists'); </script>";

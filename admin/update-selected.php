@@ -119,7 +119,7 @@ if(isset($_POST['updateAssetItem'])) {
     }
 }
 
-// Update Division item
+// Update division
 if(isset($_POST['updateDivision'])) {
     $id = mysqli_real_escape_string($db->conn,$_POST['divisionID']);
     $input = [
@@ -143,14 +143,14 @@ if(isset($_POST['updateDivision'])) {
     }
 }
 
-// Update Division item
-if(isset($_POST['locationID'])) {
+// Update location
+if(isset($_POST['updateLocation'])) {
     $id = mysqli_real_escape_string($db->conn,$_POST['locationID']);
     $input = [
         'name' => mysqli_real_escape_string($db->conn,$_POST['name']),
         'status' => mysqli_real_escape_string($db->conn,$_POST['status']),
     ];
-    $result = $asset->divisionUpdate($input, $id);
+    $result = $asset->locationUpdate($input, $id);
 
     if($result) {
         echo "<script>
