@@ -10,11 +10,6 @@ if(!empty($_SESSION['id'])) {
     $id = $user['id'];
     $username = $user['username'];
 
-    $sql = mysqli_query($db->conn, "SELECT * FROM users_tbl WHERE id='$id'");
-
-    $row = $sql->fetch_assoc();
-    $role = $row['role'];
-
 } else {
     header("Location: ../php/login.php");
 }
@@ -62,11 +57,27 @@ if(!empty($_SESSION['id'])) {
                         <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
                     </div>
                     <?php
-                        $searchData = $getAllRecord->searchData();
+                        $searchData = $getAllRecord->searchDataPagination();
+                        // $rowCount = mysqli_num_rows($searchData);
                         $rowCount = $searchData->num_rows;
+                        
+                        $results_per_page = 10;
+
+                        if (!isset ($_GET['page']) ) {  
+                            $page = 1;  
+                        } else {  
+                            $page = $_GET['page'];  
+                        }  
+                        $number_of_page = ceil ($rowCount / $results_per_page);  
+                        $page_first_result = ($page-1) * $results_per_page;  
+
+                        $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' LIMIT ". $page_first_result . ',' . $results_per_page;
+                        $res = mysqli_query($db->conn, $sql);
+
+                        $countperPage = $res->num_rows;
                     ?>
                     <div class="count">
-                        <p>Asset count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCount; ?></b></p>
+                        <p>Asset count: <b style="color: yellow; font-size: 20px;"><?php echo $countperPage; ?></b></p>
                     </div>
                 </div>
                 
@@ -89,7 +100,10 @@ if(!empty($_SESSION['id'])) {
                     <tbody>
                     <tr>
                     <?php 
-                        while($row = mysqli_fetch_assoc($searchData)) {
+                        // $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' LIMIT ". $page_first_result . ',' . $results_per_page;
+                        // $res = mysqli_query($db->conn, $sql);
+
+                        while ($row = mysqli_fetch_array($res)) {  
                     ?> 
                         <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>
                         <td><?php echo $row['assigned']; ?></td>
@@ -104,9 +118,9 @@ if(!empty($_SESSION['id'])) {
 
                         <td>
                         <center>
-                            <a href="../update/assetUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="32px"></a>&nbsp;
-                            <a href="../update/turnoverUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/turnover.png" width="32px"></a>&nbsp;
-                            <a href="../update/remove.php?assetID=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
+                            <a href="../update/assetUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
+                            <a href="../update/turnoverUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/turnover.png" width="24px"></a>&nbsp;
+                            <a href="../update/remove.php?assetID=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                         </center>
                             
                         </td>    
@@ -118,9 +132,12 @@ if(!empty($_SESSION['id'])) {
                         }
                     ?>
                 </table>
-                
-                
             </form>
+            <?php
+            for($page = 1; $page<= $number_of_page; $page++) {  
+                echo '<a href = "dashboard.php?page=' . $page . '">' . $page . ' </a>';  
+            }  
+            ?>
             
         </div>
 </body>

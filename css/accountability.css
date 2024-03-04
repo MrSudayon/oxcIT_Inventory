@@ -57,12 +57,12 @@ table {
 }
 .assets-table {
     width: 100%;
+    font-size: 12px;
     border-collapse: collapse;
-
 }
 th {
-    background-color: rgb(255, 255, 54);
-    color: black;
+    background-color: rgb(94, 94, 94);
+    color: white;
 }
 th, td {
     padding: 5px 10px;

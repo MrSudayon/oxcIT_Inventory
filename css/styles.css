@@ -108,6 +108,7 @@ main {
 .assets-table, table {
     background-color: #b1b1b1;
     color: black;
+    font-size: 12px;
     width: 100%;
     border-collapse: collapse;
 }
@@ -119,9 +120,9 @@ th, td {
 th {
     font-weight: 600;
     padding: 8px;
-
-    background-color: rgb(255, 255, 54);
-    color: black;
+    /* background-color: rgb(255, 255, 54); */
+    background-color: rgb(94, 94, 94);
+    color: white;
 }
 
 .count {
