@@ -168,7 +168,7 @@ class Operations {
 
         if(isset($_POST['search'])) {
             $search = $_POST['search'];
-            $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assigned LIKE '%$search%' OR accountability_ref LIKE '$search' 
+            $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assigned LIKE '%$search%' OR accountability_ref LIKE '%$search%' 
             OR turnover_ref LIKE '%$search%')";
             $res = mysqli_query($db->conn, $sql);
         
@@ -188,14 +188,14 @@ class Operations {
     //Emp List
     function getEmpDiv() {
         global $db;
-        $sql = "SELECT * FROM dept_tbl WHERE status='1'";
+        $sql = "SELECT * FROM dept_tbl WHERE status=1";
         $res = mysqli_query($db->conn, $sql);
 
         return $res;
     }
     function getEmpLoc() {
         global $db;
-        $sql = "SELECT * FROM loc_tbl WHERE status='1'";
+        $sql = "SELECT * FROM loc_tbl WHERE status=1";
         $res = mysqli_query($db->conn, $sql);
 
         return $res;

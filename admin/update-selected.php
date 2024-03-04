@@ -29,7 +29,7 @@ if(isset($_POST['update-asset'])) {
 
     if($result) {
         echo "<script>
-        alert('⚠️Update Successful');
+        alert('✅Update Successful');
         window.location.href='../admin/dashboard.php';
         </script>";
         die();
@@ -56,7 +56,7 @@ if(isset($_POST['turnover-asset'])) {
 
     if ($result == 1) {
         echo "<script>
-                alert('⚠️Turnover Successful');
+                alert('✅Turnover Successful');
                 window.location.href='../admin/dashboard.php';
                 </script>";
         die();
@@ -82,7 +82,7 @@ if(isset($_POST['updateEmp'])) {
 
     if($result) {
         echo "<script>
-        alert('⚠️Update Successful');
+        alert('✅Update Successful');
         window.location.href='../admin/emp_List.php';
         </script>";
         die();
@@ -106,7 +106,7 @@ if(isset($_POST['updateAssetItem'])) {
 
     if($result) {
         echo "<script>
-        alert('⚠️Update Successful');
+        alert('✅Update Successful');
         window.location.href='../admin/asset_List.php';
         </script>";
         die();
@@ -130,7 +130,7 @@ if(isset($_POST['updateDivision'])) {
 
     if($result) {
         echo "<script>
-        alert('⚠️Update Successful');
+        alert('✅Update Successful');
         window.location.href='../admin/dept_List.php';
         </script>";
         die();
@@ -154,7 +154,7 @@ if(isset($_POST['locationID'])) {
 
     if($result) {
         echo "<script>
-        alert('⚠️Update Successful');
+        alert('✅Update Successful');
         window.location.href='../admin/location_List.php';
         </script>";
         die();

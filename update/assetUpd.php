@@ -97,6 +97,7 @@ if(!empty($_SESSION['id'])) {
                                 <option value="Deployed">Deployed</option>
                                 <option value="To be Deploy">To be deploy</option>
                                 <option value="Deffective">Defective</option>
+                                <option value="Sell">Sell</option>
                             </select>
                         </div>
                         <div class="input-box">

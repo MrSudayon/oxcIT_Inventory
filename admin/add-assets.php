@@ -100,6 +100,7 @@ if(!empty($_SESSION['id'])) {
                             <option value="Deployed">Deployed</option>
                             <option value="To be Deploy">To be deploy</option>
                             <option value="Deffective">Defective</option>
+                            <option value="Sell">Sell</option>
                         </select>
                     </div>
                     <div class="input-box" id="repair-cost">
@@ -167,7 +168,7 @@ if(!empty($_SESSION['id'])) {
                     </div> -->
                     <div class="input-box">
                         <span class="details">Last Used by:</span>
-                        <input type="text" name="lastused" style="background-color: #ccc;" readonly>
+                        <input type="text" name="lastused" placeholder="Last used..." value="" >
                     </div>
                     <!-- <div class="input-box">
                         <span class="details">Division</span>
