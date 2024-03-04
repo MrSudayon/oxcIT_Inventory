@@ -5,6 +5,7 @@ $select = new Select();
 
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
+    $username = $user['username'];
 
     if ($user['role'] == 'admin') {
         
@@ -14,8 +15,11 @@ if(!empty($_SESSION['id'])) {
 
             $result = $register->addDivision($_POST['name']);
             
+            $divName = $_POST['name'];
             if($result == 1) {
                 echo "<script> alert('Registration Successful'); </script>";
+                $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                        VALUES ('', '$username', 'Added division: $divName', NOW())");
             }
             elseif($result == 10) {
                 echo "<script> alert('This Division already exists'); </script>";

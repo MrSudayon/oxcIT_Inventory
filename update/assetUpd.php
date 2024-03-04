@@ -136,7 +136,7 @@ if(!empty($_SESSION['id'])) {
                     <div class="title"></div>
                     <div class="asset-details">
                         <div class="input-box">
-                        <span class="details">Assign To</span>
+                        <span class="details" style="margin-bottom: 10px;">Assign To</span>
                             <select name="assigned" id="assigned" class="assigned">
                                 <option value="<?=$result['assigned']?>"><?=$result['assigned']?></option>
                                 <?php
@@ -151,7 +151,6 @@ if(!empty($_SESSION['id'])) {
                                 </option>
                                 <?php
                                     }
-                                    
                                 ?>
                             </select>
                         </div>
@@ -160,8 +159,24 @@ if(!empty($_SESSION['id'])) {
                             <input type="date" name="turnover" value="<?=$result['dateturnover']?>">
                         </div>
                         <div class="input-box">
-                            <span class="details">Last Used by:</span>
-                            <input type="text" name="lastused" value="<?=$result['lastused']?>">
+                            <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
+                            <!-- <input type="text" name="lastused" value=""> -->
+                                <select name="lastused" id="lastused" class="assigned">
+                                    <option value="<?=$result['lastused']?>"><?=$result['lastused']?></option>
+                                    <?php
+                                            $results = new get_All_User();
+
+                                            // $user = $results->selectAllUser();
+                                            $user = $results->selectAllEmp();
+                                            foreach($user as $row) {
+                                    ?>
+                                    <option value="<?php echo $row['name']; ?>">
+                                        <?php echo $row['name']; ?>
+                                    </option>
+                                    <?php
+                                        }
+                                    ?>
+                                </select>
                         </div>
                     </div>
                     

@@ -6,6 +6,7 @@ $getInfo = new Operations();
 
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
+    $username = $user['username'];
 
     if ($user['role'] == 'admin') {
         
@@ -14,9 +15,12 @@ if(!empty($_SESSION['id'])) {
         if(isset($_POST['submit'])) {
 
             $result = $register->addEmployee($_POST['name'], $_POST['division'], $_POST['location']);
-            
-            if($result == 1) {
+            $empName = $_POST['name'];
+
+            if($result == 1) { 
                 echo "<script> alert('Registration Successful'); </script>";
+                $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                        VALUES ('', '$username', 'Added empployee: $empName', NOW())");
             }
             elseif($result == 10) {
                 echo "<script> alert('This Name already exists'); </script>";
@@ -61,7 +65,7 @@ if(!empty($_SESSION['id'])) {
 
                     <!-- Link to dbase dept table -->
                     <div class="input-box">
-                        <span class="details">Division:</span>
+                        <span class="details" style="margin-bottom: 10px;">Division:</span>
                         <select name="division" required>
                         <option value="">Please Select</option>
 
@@ -80,7 +84,7 @@ if(!empty($_SESSION['id'])) {
 
                     <!-- Link to dbase location table -->
                     <div class="input-box">
-                        <span class="details">Location:</span>
+                        <span class="details" style="margin-bottom: 10px;">Location:</span>
                         <select name="location" required>
                         <option value="">Please Select</option>
                         <?php

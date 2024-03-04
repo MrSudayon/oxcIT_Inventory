@@ -68,7 +68,7 @@ if(!empty($_SESSION['id'])) {
                     </div>
                     
                     <div class="input-box">
-                        <span class="details">Status</span>
+                        <span class="details" style="margin-bottom: 10px;">Status</span>
                         <select name="status">
                         <?php
                             $status = $result['status'];

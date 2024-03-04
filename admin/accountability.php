@@ -5,6 +5,8 @@ $select = new Select();
 
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
+    $username = $user['username'];
+
 } else {
     header("Location: ../php/login.php");
 }
@@ -12,19 +14,19 @@ if(!empty($_SESSION['id'])) {
 if(isset($_GET['select'])) {
     $selected = $_GET['select'];
 
-foreach ($selected as $userID) { 
-    $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
-    $res = mysqli_query($db->conn, $sql);
+    foreach ($selected as $userID) { 
+        $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
+        $res = mysqli_query($db->conn, $sql);
 
-    while($row = mysqli_fetch_assoc($res)) {
-        $name = $row['assigned'];
-        $dept = $row['department'];
-        $acc_ref = $row['accountability_ref'];
-        $arrayName[] = $name;
-        // Logic to Ignore or dismiss if selected a multiple username/assigned user
-        
+        while($row = mysqli_fetch_assoc($res)) {
+            $name = $row['assigned'];
+            $dept = $row['department'];
+            $acc_ref = $row['accountability_ref'];
+            $arrayName[] = $name;            
+        }
     }
-}
+    $assetUserID = mysqli_query($db->conn, "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'");
+
 } elseif(isset($_GET['selectAll'])) {
     ?>
         <script>
@@ -42,8 +44,9 @@ foreach ($selected as $userID) {
         $name = $row['assigned'];
         $dept = $row['department'];
         $acc_ref = $row['accountability_ref'];
-        // Logic to Ignore or dismiss if selected a multiple username/assigned user
     }
+    
+    $assetUserID = mysqli_query($db->conn, "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'");
 
 } else {
     ?>
@@ -66,25 +69,6 @@ foreach ($selected as $userID) {
 </head>
 <body>
 <div class="content">
-<?php 
-
-                
-// foreach ($selected as $userID) { 
-//         $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
-//         $res = mysqli_query($db->conn, $sql);
-    
-//     while($row = mysqli_fetch_assoc($res)) {
-//         $name = $row['assigned'];
-//         $dept = $row['department'];
-//         $acc_ref = $row['accountability_ref'];
-//         $arrayName[] = $name;
-//         // Logic to Ignore or dismiss if selected a multiple username/assigned user
-        
-//     }
-// }
-
-
-?>  
     <div class="logo">
         <a href="dashboard.php"><img src="../assets/logo.png" width="150px"></img></a>
     </div>
@@ -113,29 +97,38 @@ foreach ($selected as $userID) {
         // If reference code exists, Display existing Ref Code
         // else generate new
     if(isset($arrayName)) {
-        if(count(array_unique($arrayName))>1) {
+        if($arrayName != array_filter($arrayName)) {
+            ?>
+                <script> 
+                alert ('⚠️Invalid Action')
+                window.location.href = 'dashboard.php';
+                </script> 
+            <?php
+            die();
+        } elseif(count(array_unique($arrayName))>1) {
             ?>
                 <script> 
                 alert ('Multiple User is not Allowed!')
                 window.location.href = 'dashboard.php';
                 </script> 
             <?php
-        } elseif($name == '') {
-            ?>
-                <script> 
-                alert ('There is no Assigned User')
-                window.location.href = 'dashboard.php';
-                </script> 
-            <?php
         } else {
+            while($row = mysqli_fetch_assoc($assetUserID)) {
+                $assettag = $row['assettag'];
+                $assigned = $row['assigned'];
+            }
             if ($acc_ref == '') {
                 echo "<b>Ref#: " .$newCode. "</b>";
                 // query to fetch code in assets_tbl
                 foreach ($selected as $userID) { 
                     $sql = mysqli_query($db->conn, "UPDATE assets_tbl SET accountability_ref = '$newCode' WHERE id='$userID' AND status!='Archive'");
                 }
+                $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                        VALUES ('', '$username', 'Generated accountability form: $assettag, Last used by: $assigned', NOW())");
             } else {
                 echo "<b>Ref#: " . $acc_ref . "</b>";
+                $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                        VALUES ('', '$username', 'Viewed accountability form for: $assettag', NOW())");
             }
         }
     } else {
@@ -186,9 +179,16 @@ foreach ($selected as $userID) {
             } elseif(isset($_GET['id'])) {
                 $userID = $_GET['id'];
 
+                while($row = mysqli_fetch_assoc($assetUserID)) {
+                    $assettag = $row['assettag'];
+                    $assigned = $row['assigned'];
+                }
+                $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                        VALUES ('', '$username', 'Viewed accountability form: $assettag, from Reference tbl Last used by: $assigned', NOW())");
+
                 $sql = "SELECT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
                     $res = mysqli_query($db->conn, $sql);
-    
+                
                 while($row = mysqli_fetch_assoc($res)) {
                     $cpu = $row['CPU'];
                     $ram = $row['MEMORY'];

@@ -94,11 +94,10 @@ if(isset($_GET['select'])) {
         if($arrayName != array_filter($arrayName)) {
             ?>
                 <script> 
-                alert ('⚠️No assigned')
+                alert ('⚠️Invalid Action')
                 window.location.href = 'dashboard.php';
                 </script> 
             <?php
-            die();
         } elseif(count(array_unique($arrayName))>1) {
             ?>
                 <script> 
@@ -125,7 +124,7 @@ if(isset($_GET['select'])) {
                 // $reference_Code = $turnover_ref;
     
                     $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                        VALUES ('', '$username', 'Viewed turnover form: $assettag, Last used by: $assigned', NOW())");
+                        VALUES ('', '$username', 'Viewed turnover form for: $assigned', NOW())");
             }
         }
     } elseif(isset($_GET['id'])) {
