@@ -33,7 +33,6 @@ body {
     font-family: "Rubik", sans-serif;
     min-height: 100dvh;
     overflow: hidden;
-
 }
 
 header {
@@ -90,7 +89,6 @@ header {
 .content {
     min-height: 100dvh;
     background: linear-gradient(-95deg, var(--ter-color), var(--bg-color));
-
     padding: 10px 40px;
 }
 .config-buttons {

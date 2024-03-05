@@ -40,21 +40,18 @@ if(!empty($_SESSION['id'])) {
     <div class="title">
         <h1> ASSET DASHBOARD </h1>
         <div class="search-container">
-        <form action="" method="POST">
-            <input type="text" placeholder="Search.." name="search">
-            <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
+            <form action="" method="POST">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
         </div>
     </div>
     
     <form action="" method="get">
         <div class="table-nav">
             <div class="link-btns">
-                <a href="add-assets.php" class="link-btn">New Item</a>
-                <!--  -->
-                <button type="submit" formaction="accountability.php" class="link-btn" name="accountability">Accountability</button>
-                <button type="submit" formaction="turnover.php" class="link-btn" name="turnover">Turnover</button>
-                <button type="submit" formaction="references.php" class="link-btn" name="references">Reference</button>
+                <!-- <a href="add-assets.php" class="link-btn"></a> -->
+                <button type="submit" formaction="accountability.php" class="link-btn" name="accountability">New Item</button>
                 <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
             </div>
             <?php
@@ -64,11 +61,12 @@ if(!empty($_SESSION['id'])) {
                 
                 $results_per_page = 10;
 
-                if (!isset ($_GET['page']) ) {  
-                    $page = 1;  
-                } else {  
-                    $page = $_GET['page'];  
-                }  
+                if (!isset ($_GET['page']) ) {
+                    $page = 1;
+                } else {
+                    $page = $_GET['page'];
+                }
+
                 $number_of_page = ceil ($rowCount / $results_per_page);  
                 $page_first_result = ($page-1) * $results_per_page;  
 
@@ -101,9 +99,6 @@ if(!empty($_SESSION['id'])) {
             <tbody>
             <tr>
             <?php 
-                // $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' LIMIT ". $page_first_result . ',' . $results_per_page;
-                // $res = mysqli_query($db->conn, $sql);
-
                 while ($row = mysqli_fetch_array($res)) {  
             ?> 
                 <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>

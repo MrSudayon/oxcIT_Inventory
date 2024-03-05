@@ -23,23 +23,23 @@ if(!empty($_SESSION['id'])) {
     <link rel="icon" href="../assets/logo.jpg">
     <link rel="stylesheet" href="../css/config.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Configuration</title>
+    <title>Asset list</title>
 </head>
 <body>
-    <?php include '../inc/header.php'; ?>
+<?php include '../inc/header.php'; ?>
     
-        <div class="content">
-            <div class="title">
-                <h1> CONFIGURATION</h1>
-            </div>
-            <div class="config-buttons">
-                <div class="config-btn"><a href="../admin/emp_List.php"><img src="../assets/icons/config/employee.png"></a></div>
-                <div class="config-btn"><a href="../admin/asset_List.php"><img src="../assets/icons/config/asset.png"></a></div>
-                <div class="config-btn"><a href="../admin/dept_List.php"><img src="../assets/icons/config/division.png"></a></div>
-                <div class="config-btn"><a href="../admin/location_List.php"><img src="../assets/icons/config/location.png"></a></div>
-            </div>
+    <div class="content">
+        <div class="title">
+            <h1>DASHBOARD</h1>
         </div>
-        
-        <script src="../js/dashboard.js"></script>
+        <div class="config-buttons">
+            <div class="config-btn"><a href="../admin/dashboard.php" title="Asset"><img src="../assets/icons/config/dash.png"></a><br></div>
+            <div class="config-btn"><a href="../admin/create_accountability.php" title="Accountability"><img src="../assets/icons/config/daily-tasks.png"></a></div>
+            <div class="config-btn"><a href="../admin/create_turnover.php" title="Turnover"><img src="../assets/icons/config/turnover.png"></a></div>
+            <div class="config-btn"><a href="../admin/references.php" title="Reference"><img src="../assets/icons/config/research.png"></a></div>
+        </div>
+    </div>
+    
+    <script src="../js/dashboard.js"></script>
 </body>
 </html>

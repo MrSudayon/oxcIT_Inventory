@@ -1,9 +1,6 @@
 <?php
 // include_once '../php/db_connection.php';
 $select = new Select();
-$session = $select->selectUserById($_SESSION['id']);
-
-$name = $session['username'];
 
 class assetsController {
 
@@ -101,6 +98,8 @@ class assetsController {
 
             $db->conn->query("UPDATE assets_tbl SET lastused='$lastused', dateturnover='$turnover', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1");
             
+            $session = $select->selectUserById($_SESSION['id']);
+            $name = $session['username'];
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                                 VALUES('', '$name', 'Turnover asset: $assetName ID: $assetID' , NOW())");
             
@@ -218,6 +217,8 @@ class assetsController {
         $qry = "UPDATE dept_tbl SET name='$divname', status='$status' WHERE id='$divID' LIMIT 1";
         $result = $db->conn->query($qry);
 
+        $session = $select->selectUserById($_SESSION['id']);
+        $name = $session['username'];
         if($result) {
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                 VALUES('', '$name', 'Updated division name: $divname' , NOW())");
@@ -252,6 +253,8 @@ class assetsController {
         $qry = "UPDATE loc_tbl SET name='$locName', status='$status' WHERE id='$ID' LIMIT 1";
         $result = $db->conn->query($qry);
 
+        $session = $select->selectUserById($_SESSION['id']);
+        $name = $session['username'];
         if($result) {
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
             VALUES('', '$name', 'Updated location name: $locName' , NOW())");
