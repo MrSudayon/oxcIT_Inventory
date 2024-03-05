@@ -65,7 +65,7 @@ if(isset($_GET['select'])) {
 <body>
 <div class="content">
     <div class="logo">
-        <a href="dashboard.php"><img src="../assets/logo.png" width="150px"></img></a>
+        <a href="create_turnover.php"><img src="../assets/logo.png" width="150px"></img></a>
     </div>
     <br><br><br>
     <center>

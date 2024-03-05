@@ -70,7 +70,7 @@ if(isset($_GET['select'])) {
 <body>
 <div class="content">
     <div class="logo">
-        <a href="dashboard.php"><img src="../assets/logo.png" width="150px"></img></a>
+        <a href="create_accountability.php"><img src="../assets/logo.png" width="150px"></img></a>
     </div>
     <br><br><br>
     <center>
@@ -171,7 +171,6 @@ if(isset($_GET['select'])) {
                     <td><?php echo $row['serial']; ?></td>
                     <td><?php echo $row['datedeployed']; ?></td>
                     <td><?php echo $row['remarks']; ?></td>    
-                
                 </tr>
                 <?php
                     }
