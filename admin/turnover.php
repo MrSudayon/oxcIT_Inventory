@@ -46,7 +46,7 @@ if(isset($_GET['select'])) {
     ?>
         <script>
             alert('Please select User');
-            window.location.replace('dashboard.php');
+            window.location.replace('create_turnover.php');
         </script>
     <?php
 }
@@ -95,14 +95,14 @@ if(isset($_GET['select'])) {
             ?>
                 <script> 
                 alert ('⚠️Invalid Action')
-                window.location.href = 'dashboard.php';
+                window.location.href = 'create_turnover.php';
                 </script> 
             <?php
         } elseif(count(array_unique($arrayName))>1) {
             ?>
                 <script> 
                 alert ('⚠️Multiple User is not Allowed!')
-                window.location.href = 'dashboard.php';
+                window.location.href = 'create_turnover.php';
                 </script> 
             <?php
         } else {
@@ -146,8 +146,8 @@ if(isset($_GET['select'])) {
     } else {
         ?>
             <script> 
-            alert ('What...')
-            window.location.href = 'dashboard.php';
+            alert ('Invalid...')
+            window.location.href = 'create_turnover.php';
             </script> 
         <?php
     }

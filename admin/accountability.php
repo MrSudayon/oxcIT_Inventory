@@ -101,7 +101,7 @@ if(isset($_GET['select'])) {
             ?>
                 <script> 
                 alert ('⚠️Invalid Action')
-                window.location.href = 'dashboard.php';
+                window.location.href = 'create_accountability.php';
                 </script> 
             <?php
             die();
@@ -109,7 +109,7 @@ if(isset($_GET['select'])) {
             ?>
                 <script> 
                 alert ('Multiple User is not Allowed!')
-                window.location.href = 'dashboard.php';
+                window.location.href = 'create_accountability.php';
                 </script> 
             <?php
         } else {
