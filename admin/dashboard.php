@@ -58,9 +58,9 @@ if(!empty($_SESSION['id'])) {
                 <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
             </div>
             <?php
-                $searchData = $getAllRecord->searchData();
-                $rowCount = $searchData->num_rows;
-                
+                $sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive'";
+                $results = mysqli_query($db->conn, $sqlSelectAll);
+
                 $results_per_page = 15;
 
                 if (!isset ($_GET['page']) ) {  
@@ -68,16 +68,26 @@ if(!empty($_SESSION['id'])) {
                 } else {  
                     $page = $_GET['page'];  
                 }  
+                
+                $rowCount = $results->num_rows;
                 $number_of_page = ceil ($rowCount / $results_per_page);  
                 $page_first_result = ($page-1) * $results_per_page;  
 
-                $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' LIMIT ". $page_first_result . ',' . $results_per_page;
+                if(isset($_POST['search']) && $_POST['search'] != "") {
+                    $search = $_POST['search'];
+                    
+                    $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assigned LIKE '$search%' OR assigned LIKE '%$search' OR assigned LIKE '%$search%' OR department LIKE '%$search%'
+                    OR assettype LIKE '%$search%' OR status LIKE '%$search%' OR location LIKE '%$search%'
+                    OR assettag LIKE '%$search%' OR model LIKE '%$search%' OR CPU LIKE '%$search%' OR MEMORY LIKE '%$search%' OR STORAGE LIKE '%$search%'
+                    OR remarks LIKE '%$search%' OR Others LIKE '%$search%') LIMIT " . $results_per_page;
+                } else {
+                    $sql =  "SELECT * FROM assets_tbl WHERE status!='Archive' LIMIT ". $page_first_result . ',' . $results_per_page;
+                }
                 $res = mysqli_query($db->conn, $sql);
-
-                $countperPage = $res->num_rows;
+                $rowCountPage = $res->num_rows;
             ?>
             <div class="count">
-                <p>Asset count: <b style="color: yellow; font-size: 20px;"><?php echo $countperPage; ?></b></p>
+                <p>Asset count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCountPage; ?></b></p>
             </div>
         </div>
         
@@ -100,9 +110,6 @@ if(!empty($_SESSION['id'])) {
             <tbody>
             <tr>
             <?php 
-                // $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' LIMIT ". $page_first_result . ',' . $results_per_page;
-                // $res = mysqli_query($db->conn, $sql);
-
                 while ($row = mysqli_fetch_array($res)) {  
             ?> 
                 <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>

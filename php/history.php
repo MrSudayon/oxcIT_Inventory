@@ -50,40 +50,38 @@ if(!empty($_SESSION['id'])) {
                 <!-- <a href="add-assets.php" class="link-btn"></a> -->
             </div>
             <?php
-                $getAllRecord = new Operations();
+               $sqlSelectAll = "SELECT * FROM history_tbl";
+               $results = mysqli_query($db->conn, $sqlSelectAll);
 
-                $searchData = $getAllRecord->searchHistory();
-                // $rowCount = mysqli_num_rows($searchData);
-                if(isset($searchData)) {
-                    $rowCount = $searchData->num_rows;
-                } else {
-                    $rowCount = 0;
-                }
-                
-                
+               $results_per_page = 25;
+
+               if (!isset ($_GET['page']) ) {  
+                   $page = 1;  
+               } else {  
+                   $page = $_GET['page'];  
+               }  
+               
+               $rowCount = $results->num_rows;
+               $number_of_page = ceil ($rowCount / $results_per_page);  
+               $page_first_result = ($page-1) * $results_per_page;  
+
+               if(isset($_POST['search']) && $_POST['search'] != "") {
+                   $search = $_POST['search'];
+                   $page = 1;  
+                   
+                   $sql = "SELECT * FROM history_tbl WHERE name LIKE '%$search%' OR action LIKE '%$search%' OR date LIKE '%$search%' LIMIT " . $results_per_page;
+               } else {
+                $page = 1;  
+
+                   $sql =  "SELECT * FROM history_tbl LIMIT ". $page_first_result . ',' . $results_per_page;
+               }
+               $res = mysqli_query($db->conn, $sql);
+               $rowCountPage = $res->num_rows;
             ?>
             <div class="count">
-                <p>Asset count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCount; ?></b></p>
+                <p>Asset count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCountPage; ?></b></p>
             </div>
-        </div>
-        <?php
-        if($rowCount>0) {
-
-            $results_per_page = 10;
-
-            if (!isset ($_GET['page']) ) {  
-                $page = 1;  
-            } else {  
-                $page = $_GET['page'];  
-            }  
-            $number_of_page = ceil ($rowCount / $results_per_page);  
-            $page_first_result = ($page-1) * $results_per_page;  
-
-            // $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' LIMIT ". $page_first_result . ',' . $results_per_page;
-            // $res = mysqli_query($db->conn, $sql);
-
-        ?>
-         
+        </div>        
                 <table class="assets-table">
                     <tr>
                   
@@ -94,7 +92,7 @@ if(!empty($_SESSION['id'])) {
                     
                     <tr>
                     <?php
-                        while($row = mysqli_fetch_assoc($searchData)) {
+                        while($row = mysqli_fetch_assoc($res)) {
                     ?> 
                         <td><?php echo $row['name']; ?></td>
                         <td><?php echo $row['action']; ?></td>
@@ -109,7 +107,6 @@ if(!empty($_SESSION['id'])) {
                 for($page = 1; $page<= $number_of_page; $page++) {  
                     echo '<a href = "history.php?page=' . $page . '">' . $page . ' </a>';  
                 }  
-            }
                 ?>
 
             

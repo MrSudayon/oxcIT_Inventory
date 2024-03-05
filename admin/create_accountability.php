@@ -23,7 +23,7 @@ if(!empty($_SESSION['id'])) {
     <link rel="icon" href="../assets/logo.jpg">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>ACCOUNTABILITY</title>
+    <title>Accountability</title>
     <script src="../js/dashboard.js"></script>
 </head>
 <style>
