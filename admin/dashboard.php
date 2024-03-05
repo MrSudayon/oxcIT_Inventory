@@ -38,7 +38,7 @@ if(!empty($_SESSION['id'])) {
     
 <div class="content">
     <div class="title">
-        <h1> ASSET DASHBOARD </h1>
+        <h1> ASSET LIST </h1>
         <div class="search-container">
         <form action="" method="POST">
             <input type="text" placeholder="Search.." name="search">

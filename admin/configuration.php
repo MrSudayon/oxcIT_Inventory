@@ -30,7 +30,7 @@ if(!empty($_SESSION['id'])) {
     
     <div class="content">
         <div class="title">
-            <h1>DASHBOARD</h1>
+            <h1>Hello, <span class="uname"><?php echo $username; ?></span>!</h1>
         </div>
         <div class="config-buttons">
             <div class="config-btn"><a href="../admin/dashboard.php" title="Asset"><img src="../assets/icons/config/dash.png"></a><br></div>

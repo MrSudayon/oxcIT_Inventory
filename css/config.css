@@ -91,6 +91,16 @@ header {
     background: linear-gradient(-95deg, var(--ter-color), var(--bg-color));
     padding: 10px 40px;
 }
+.title h1 {
+    font-size: 40px;
+    text-align: justify;
+    /* -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black; */
+}
+.uname {
+    color: rgb(212, 212, 212);
+    font-size: 50px;
+}
 .config-buttons {
     margin-top: 150px;
     display: flex;
