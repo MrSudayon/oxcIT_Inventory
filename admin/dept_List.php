@@ -43,7 +43,7 @@ if(!empty($_SESSION['id'])) {
             </div>
             <div class="table-nav">
                 <div class="link-btns">
-                    <a href="../admin/configuration.php" class="link-btn" >Back</a>
+                    <a href="../admin/dashboard.php" class="link-btn" >Back</a>
                     <a href="../php/add_division.php" class="link-btn">Add Division</a>
                 </div>
 

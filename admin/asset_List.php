@@ -41,7 +41,7 @@ if(!empty($_SESSION['id'])) {
 
             <div class="table-nav">
                 <div class="link-btns">
-                    <a href="../admin/configuration.php" class="link-btn" >Back</a>
+                    <a href="../admin/dashboard.php" class="link-btn" >Back</a>
                     <a href="../php/add_assetItem.php" class="link-btn">Add Asset</a>
                 </div>
 
