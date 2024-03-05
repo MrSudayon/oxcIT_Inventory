@@ -23,7 +23,7 @@ if(!empty($_SESSION['id'])) {
     <link rel="icon" href="../assets/logo.jpg">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Asset List</title>
+    <title>ACCOUNTABILITY</title>
     <script src="../js/dashboard.js"></script>
 </head>
 <style>
@@ -38,7 +38,7 @@ if(!empty($_SESSION['id'])) {
     
 <div class="content">
     <div class="title">
-        <h1> ASSET DASHBOARD </h1>
+        <h1> ACCOUNTABILITY </h1>
         <div class="search-container">
             <form action="" method="POST">
                 <input type="text" placeholder="Search.." name="search">
@@ -51,35 +51,41 @@ if(!empty($_SESSION['id'])) {
         <div class="table-nav">
             <div class="link-btns">
                 <!-- <a href="add-assets.php" class="link-btn"></a> -->
-                <button type="submit" formaction="accountability.php" class="link-btn" name="accountability">New Item</button>
-                <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
+                <button type="submit" formaction="accountability.php" class="link-btn" name="accountability">Generate</button>
             </div>
             <?php
                 $searchData = $getAllRecord->searchDataPagination();
                 // $rowCount = mysqli_num_rows($searchData);
-                $rowCount = $searchData->num_rows;
-                
-                $results_per_page = 10;
-
-                if (!isset ($_GET['page']) ) {
-                    $page = 1;
+                if(isset($searchData)) {
+                    $rowCount = $searchData->num_rows;
                 } else {
-                    $page = $_GET['page'];
+                    $rowCount = 0;
                 }
-
-                $number_of_page = ceil ($rowCount / $results_per_page);  
-                $page_first_result = ($page-1) * $results_per_page;  
-
-                $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' LIMIT ". $page_first_result . ',' . $results_per_page;
-                $res = mysqli_query($db->conn, $sql);
-
-                $countperPage = $res->num_rows;
+                
+                
             ?>
             <div class="count">
-                <p>Asset count: <b style="color: yellow; font-size: 20px;"><?php echo $countperPage; ?></b></p>
+                <p>Asset count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCount; ?></b></p>
             </div>
         </div>
-        
+        <?php
+        if($rowCount>0) {
+
+            $results_per_page = 10;
+
+            if (!isset ($_GET['page']) ) {  
+                $page = 1;  
+            } else {  
+                $page = $_GET['page'];  
+            }  
+            $number_of_page = ceil ($rowCount / $results_per_page);  
+            $page_first_result = ($page-1) * $results_per_page;  
+
+            // $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' LIMIT ". $page_first_result . ',' . $results_per_page;
+            // $res = mysqli_query($db->conn, $sql);
+
+            $countperPage = $res->num_rows;
+        ?>
         <table class="assets-table" id="myTable">
             <thead>
             <tr>
@@ -99,7 +105,7 @@ if(!empty($_SESSION['id'])) {
             <tbody>
             <tr>
             <?php 
-                while ($row = mysqli_fetch_array($res)) {  
+                while ($row = mysqli_fetch_array($searchData)) {  
             ?> 
                 <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>
                 <td><?php echo $row['assigned']; ?></td>
@@ -130,9 +136,16 @@ if(!empty($_SESSION['id'])) {
         </table>
     </form>
     <?php
-    for($page = 1; $page<= $number_of_page; $page++) {  
-        echo '<a href = "dashboard.php?page=' . $page . '">' . $page . ' </a>';  
-    }  
+            for($page = 1; $page<= $number_of_page; $page++) {  
+                echo '<a href = "dashboard.php?page=' . $page . '">' . $page . ' </a>';  
+            }  
+        } else {
+            ?>
+            <center>
+                <h2 style="color: red;">⚠️Please search and select some user </h2>
+            </center>
+            <?php
+        }
     ?>
     
 </div>

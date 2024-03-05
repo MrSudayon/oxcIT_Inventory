@@ -12,7 +12,7 @@ if(!empty($_SESSION['id'])) {
     $role = $user['role'];
 
     if($role == 'admin') {
-        header("Location: ./admin/dashboard.php");
+        header("Location: ./admin/configuration.php");
         die();
     } else {
         header("Location: ../index.php");

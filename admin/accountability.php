@@ -31,7 +31,7 @@ if(isset($_GET['select'])) {
     ?>
         <script>
             alert('Accountability handle per person only');
-            window.location.replace('dashboard.php');
+            window.location.replace('create_accountability.php');
         </script>
     <?php
 } elseif(isset($_GET['id'])) {
@@ -52,7 +52,7 @@ if(isset($_GET['select'])) {
     ?>
         <script>
             alert('Please select User');
-            window.location.replace('dashboard.php');
+            window.location.replace('create_accountability.php');
         </script>
     <?php
 }
