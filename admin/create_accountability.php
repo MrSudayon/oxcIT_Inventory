@@ -84,7 +84,7 @@ if(!empty($_SESSION['id'])) {
             // $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' LIMIT ". $page_first_result . ',' . $results_per_page;
             // $res = mysqli_query($db->conn, $sql);
 
-            $countperPage = $res->num_rows;
+            // $countperPage = $res->num_rows;
         ?>
         <table class="assets-table" id="myTable">
             <thead>

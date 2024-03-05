@@ -50,7 +50,11 @@ if(!empty($_SESSION['id'])) {
     <form action="" method="get">
         <div class="table-nav">
             <div class="link-btns">
-                <a href="add-assets.php" class="link-btn">New Item</a>
+                <a href="add-assets.php" class="link-btn">New Record</a>
+                <a href="../php/add_assetItem.php" class="link-btn">Add Asset</a>
+                <a href="../php/add_division.php" class="link-btn">Add Division</a>
+                <a href="../php/add_location.php" class="link-btn">Add Location</a>
+                <a href="../php/add_emp_info.php" class="link-btn">Add Employee</a>
                 <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
             </div>
             <?php
