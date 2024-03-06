@@ -15,6 +15,7 @@ if(!empty($_SESSION['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/logo.jpg">
     <link rel="stylesheet" href="../css/styles.css">
     <title>Update</title>
 </head>
@@ -91,8 +92,8 @@ if(!empty($_SESSION['id'])) {
                             <input type="date" name="dateprchs" value="<?=$result['datepurchased']?>" id="" required>
                         </div>
                         <div class="input-box">
-                            <span class="details">Status</span>
-                            <select name="status">
+                            <span class="details" style="margin-bottom: 10px;">Status</span>
+                            <select name="status" id="status" onChange="changetextbox()">
                                 <option value="<?=$result['status']?>"><?=$result['status']?></option>
                                 <option value="For repair">For repair</option>
                                 <option value="Deployed">Deployed</option>
@@ -100,6 +101,10 @@ if(!empty($_SESSION['id'])) {
                                 <option value="Deffective">Defective</option>
                                 <option value="Sell">Sell</option>
                             </select>
+                        </div>
+                        <div class="input-box" id="repair-cost" style="display: none;">
+                            <span class="details">Repair Cost</span>
+                            <input type="text" name="repair-cost" value="" placeholder="Repair Cost...">
                         </div>
                         <div class="input-box">
                             <span class="details">Remarks</span>
@@ -191,6 +196,6 @@ if(!empty($_SESSION['id'])) {
                 ?>
         </div>
     </div>
-    <script src="../js/addAssets.js"></script>
+<script src="../js/addAssets.js"></script>
 </body>
 </html>

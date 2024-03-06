@@ -105,7 +105,7 @@ if(!empty($_SESSION['id'])) {
                             <option value="Sell">Sell</option>
                         </select>
                     </div>
-                    <div class="input-box" id="repair-cost">
+                    <div class="input-box" id="repair-cost" style="display: none;">
                         <span class="details">Repair Cost</span>
                         <input type="text" name="repair-cost" value="" placeholder="Repair Cost...">
                     </div>

@@ -88,6 +88,14 @@ if(!empty($_SESSION['id'])) {
                             
                             </select>
                         </div>
+                        <div class="input-box" id="cost">
+                            <span class="details">Cost</span>
+                            <input type="text" name="cost" style="background-color: #ccc;" value="<?=$result['cost']?>" readonly>
+                        </div>
+                        <div class="input-box" id="repair-cost">
+                            <span class="details">Repair Cost</span>
+                            <input type="text" name="repair-cost" style="background-color: #ccc;" value="<?=$result['repair_cost']?>" readonly>
+                        </div>
                         <div class="input-box">
                             <span class="details">Remarks</span>
                             <input type="text" name="remarks" style="background-color: #ccc;" readonly value="<?=$result['remarks']?>" id="">
