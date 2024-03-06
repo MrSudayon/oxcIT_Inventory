@@ -142,7 +142,7 @@ if(!empty($_SESSION['id'])) {
         } else {
             ?>
             <center>
-                <h2 style="color: red;">⚠️No results, please search and select some user </h2>
+                <h2 style="color: red;">⚠️Search and select user</h2>
             </center>
             <?php
         }

@@ -87,7 +87,7 @@ if(!empty($_SESSION['id'])) {
                 $rowCountPage = $res->num_rows;
             ?>
             <div class="count">
-                <p>Asset count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCountPage; ?></b></p>
+                <p>Showing: <b style="color: yellow; font-size: 20px;"><?php echo $rowCountPage; ?></b> result/s.</p>
             </div>
         </div>
         
@@ -139,12 +139,20 @@ if(!empty($_SESSION['id'])) {
                 }
             ?>
         </table>
+        <?php 
+            // Pagination links
+            if ($page > 1) {
+                echo '<a href="dashboard.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
+            }
+            for($i = 1; $i<= $number_of_page; $i++) {  
+                echo '<a href = "dashboard.php?page=' . $i . '" class="next">' . $i . '</a>';  
+            }  
+            if ($page < $number_of_page) {
+                echo '<a href="dashboard.php?page=' . ($page + 1) . '" class="next">Next</a>';
+            }
+        ?>
+        <br>
     </form>
-    <?php
-    for($page = 1; $page<= $number_of_page; $page++) {  
-        echo '<a href = "dashboard.php?page=' . $page . '">' . $page . ' </a>';  
-    }  
-    ?>
     
 </div>
     

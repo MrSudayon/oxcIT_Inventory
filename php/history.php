@@ -46,38 +46,48 @@ if(!empty($_SESSION['id'])) {
             </div>
 
         <div class="table-nav">
-            <div class="link-btns">
-                <!-- <a href="add-assets.php" class="link-btn"></a> -->
-            </div>
+            <div class="pagination-btns">
             <?php
-               $sqlSelectAll = "SELECT * FROM history_tbl";
-               $results = mysqli_query($db->conn, $sqlSelectAll);
 
-               $results_per_page = 25;
 
-               if (!isset ($_GET['page']) ) {  
-                   $page = 1;  
-               } else {  
-                   $page = $_GET['page'];  
-               }  
-               
-               $rowCount = $results->num_rows;
-               $number_of_page = ceil ($rowCount / $results_per_page);  
-               $page_first_result = ($page-1) * $results_per_page;  
+                $sqlSelectAll = "SELECT * FROM history_tbl";
+                $results = mysqli_query($db->conn, $sqlSelectAll);
 
-               if(isset($_POST['search']) && $_POST['search'] != "") {
-                   $search = $_POST['search'];
-                   $page = 1;  
-                   
-                   $sql = "SELECT * FROM history_tbl WHERE name LIKE '%$search%' OR action LIKE '%$search%' OR date LIKE '%$search%' LIMIT " . $results_per_page;
-               } else {
-                $page = 1;  
+                $results_per_page = 25;
 
-                   $sql =  "SELECT * FROM history_tbl LIMIT ". $page_first_result . ',' . $results_per_page;
-               }
-               $res = mysqli_query($db->conn, $sql);
-               $rowCountPage = $res->num_rows;
-            ?>
+                if (!isset ($_GET['page']) ) {  
+                    $page = 1;  
+                } else {  
+                    $page = $_GET['page'];  
+                }  
+                
+                $rowCount = $results->num_rows;
+                $number_of_page = ceil ($rowCount / $results_per_page);  
+                $page_first_result = ($page-1) * $results_per_page;  
+
+                if(isset($_POST['search']) && $_POST['search'] != "") {
+                        $search = $_POST['search'];
+                        $page = 1;  
+                    
+                        $sql = "SELECT * FROM history_tbl WHERE name LIKE '%$search%' OR action LIKE '%$search%' OR date LIKE '%$search%' LIMIT " . $results_per_page;
+                } else {
+                        $sql =  "SELECT * FROM history_tbl LIMIT ". $page_first_result . ',' . $results_per_page;
+                }
+                $res = mysqli_query($db->conn, $sql);
+                $rowCountPage = $res->num_rows;
+
+                // Pagination nav
+                if ($page > 1) {
+                    echo '<a href="history.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
+                }
+                for($i = 1; $i<= $number_of_page; $i++) {  
+                    echo '<a href = "history.php?page=' . $i . '" class="next">' . $i . '</a>';  
+                }  
+                if ($page < $number_of_page) {
+                    echo '<a href="history.php?page=' . ($page + 1) . '" class="next">Next</a>';
+                }
+                ?>
+            </div>
             <div class="count">
                 <p>Asset count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCountPage; ?></b></p>
             </div>
@@ -102,13 +112,6 @@ if(!empty($_SESSION['id'])) {
                         }
                     ?>
                 </table>
-
-                <?php
-                for($page = 1; $page<= $number_of_page; $page++) {  
-                    echo '<a href = "history.php?page=' . $page . '">' . $page . ' </a>';  
-                }  
-                ?>
-
             
         </div>
 

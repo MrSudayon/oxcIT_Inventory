@@ -2,6 +2,7 @@
 require_once '../php/db_connection.php';
 
 $select = new Select();
+$getAllRecord = new Operations();
 
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
@@ -49,7 +50,53 @@ if(!empty($_SESSION['id'])) {
                 </form>
                 </div>
             </div>
+        <div class="table-nav">
+            <div class="pagination-btns">
+            <?php
+
+                $refData = mysqli_query($db->conn,"SELECT * FROM assets_tbl WHERE status!='Archive' AND (accountability_ref != '' 
+                OR turnover_ref != '')");
+                $rowCount = $refData->num_rows;
+
+                $results_per_page = 20;
+
+                if (!isset ($_GET['page']) ) {  
+                    $page = 1;  
+                } else {  
+                    $page = $_GET['page'];  
+                }  
             
+                $number_of_page = ceil ($rowCount / $results_per_page);  
+                $page_first_result = ($page-1) * $results_per_page;  
+
+                if(isset($_POST['search']) && $_POST['search'] != "") {
+                        $search = $_POST['search'];
+                        $page = 1;  
+                    
+                        $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assigned LIKE '%$search%' OR accountability_ref LIKE '%$search%' 
+                            OR turnover_ref LIKE '%$search%') LIMIT " . $results_per_page;
+                } else {
+                        $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' LIMIT ". $page_first_result . ',' . $results_per_page;
+                }
+                $res = mysqli_query($db->conn, $sql);
+                $rowCountPage = $res->num_rows;
+
+                // Pagination nav
+                if ($page > 1) {
+                    echo '<a href="references.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
+                }
+                for($i = 1; $i<= $number_of_page; $i++) {  
+                    echo '<a href = "references.php?page=' . $i . '" class="next">' . $i . '</a>';  
+                }  
+                if ($page < $number_of_page) {
+                    echo '<a href="references.php?page=' . ($page + 1) . '" class="next">Next</a>';
+                }
+                ?>
+            </div>
+            <div class="count">
+                <p>Asset count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCountPage; ?></b></p>
+            </div>
+        </div> 
             <form action="" method="get">
 
                 <table class="assets-table">
@@ -64,11 +111,9 @@ if(!empty($_SESSION['id'])) {
                     
                     <tr>
                     <?php 
-                        $getAllRecord = new Operations();
 
                         // $Records = $getAllRecord->getAllData();
 
-                        $refData = $getAllRecord->referencesData();
 
                         // foreach($Records as $data) {
                         while($row = mysqli_fetch_assoc($refData)) {
