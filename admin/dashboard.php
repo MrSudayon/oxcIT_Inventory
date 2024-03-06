@@ -79,7 +79,7 @@ if(!empty($_SESSION['id'])) {
                     $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assigned LIKE '$search%' OR assigned LIKE '%$search' OR assigned LIKE '%$search%' OR department LIKE '%$search%'
                     OR assettype LIKE '%$search%' OR status LIKE '%$search%' OR location LIKE '%$search%'
                     OR assettag LIKE '%$search%' OR model LIKE '%$search%' OR CPU LIKE '%$search%' OR MEMORY LIKE '%$search%' OR STORAGE LIKE '%$search%'
-                    OR remarks LIKE '%$search%' OR Others LIKE '%$search%') LIMIT " . $results_per_page;
+                    OR remarks LIKE '%$search%' OR Others LIKE '%$search%')";
                 } else {
                     $sql =  "SELECT * FROM assets_tbl WHERE status!='Archive' LIMIT ". $page_first_result . ',' . $results_per_page;
                 }
@@ -141,14 +141,16 @@ if(!empty($_SESSION['id'])) {
         </table>
         <?php 
             // Pagination links
-            if ($page > 1) {
-                echo '<a href="dashboard.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
-            }
-            for($i = 1; $i<= $number_of_page; $i++) {  
-                echo '<a href = "dashboard.php?page=' . $i . '" class="next">' . $i . '</a>';  
-            }  
-            if ($page < $number_of_page) {
-                echo '<a href="dashboard.php?page=' . ($page + 1) . '" class="next">Next</a>';
+            if($rowCountPage != $rowCount) {
+                if ($page > 1) {
+                    echo '<a href="dashboard.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
+                }
+                for($i = 1; $i<= $number_of_page; $i++) {  
+                    echo '<a href = "dashboard.php?page=' . $i . '" class="next">' . $i . '</a>';  
+                }  
+                if ($page < $number_of_page) {
+                    echo '<a href="dashboard.php?page=' . ($page + 1) . '" class="next">Next</a>';
+                }
             }
         ?>
         <br>
