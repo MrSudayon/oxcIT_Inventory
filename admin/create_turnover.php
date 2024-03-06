@@ -96,7 +96,6 @@ if(!empty($_SESSION['id'])) {
                 <th>Specification</th>
                 <th>Status</th>
                 <th>Ref Code</th>
-                <th coslpan="3" width="12%">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -123,16 +122,6 @@ if(!empty($_SESSION['id'])) {
                         }
                     ?>
                 </td>
-
-                <td>
-                <center>
-                    <a href="../update/assetUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
-                    <a href="../update/turnoverUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/turnover.png" width="24px"></a>&nbsp;
-                    <a href="../update/remove.php?assetID=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
-                </center>
-                    
-                </td>    
-            
             </tr>
             </tbody>
             

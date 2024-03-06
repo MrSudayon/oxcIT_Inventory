@@ -68,6 +68,7 @@ class assetsController {
 
     public function assetTurnover($input, $id) {
         global $db;
+        global $select;
 
         $assetID = mysqli_real_escape_string($db->conn, $id);
         $turnover = $input['turnover'];

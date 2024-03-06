@@ -79,9 +79,11 @@ if(!empty($_SESSION['id'])) {
                     $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assigned LIKE '$search%' OR assigned LIKE '%$search' OR assigned LIKE '%$search%' OR department LIKE '%$search%'
                     OR assettype LIKE '%$search%' OR status LIKE '%$search%' OR location LIKE '%$search%'
                     OR assettag LIKE '%$search%' OR model LIKE '%$search%' OR CPU LIKE '%$search%' OR MEMORY LIKE '%$search%' OR STORAGE LIKE '%$search%'
-                    OR remarks LIKE '%$search%' OR Others LIKE '%$search%') ORDER BY LENGTH(assettag), assettag ASC";
+                    OR remarks LIKE '%$search%' OR Others LIKE '%$search%') ORDER BY assettag+0 ASC";
                 } else {
-                    $sql =  "SELECT * FROM assets_tbl WHERE status!='Archive' ORDER BY LENGTH(assettag), assettag ASC LIMIT ". $page_first_result . ',' . $results_per_page;
+                    // $sql =  "SELECT * FROM assets_tbl WHERE status!='Archive' ORDER BY lpad(assettag, 10, 0) LIMIT ". $page_first_result . ',' . $results_per_page;
+                    $sql =  "SELECT * FROM assets_tbl WHERE status!='Archive' ORDER BY assettag+0 ASC LIMIT ". $page_first_result . ',' . $results_per_page;
+                    
                 }
                 $res = mysqli_query($db->conn, $sql);
                 $rowCountPage = $res->num_rows;
