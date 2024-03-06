@@ -103,20 +103,20 @@ if(!empty($_SESSION['id'])) {
                     <tr>
                         <!-- <th><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th> -->
                         <th>User</th>
-                        <th>Accountability Ref</th>
-                        <th width="3%;"></th>
-                        <th>Turnover Ref</th>
-                        <th width="3%;"></th>
+                        <th colspan=2>Accountability Ref</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th colspan=2>Turnover Ref</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th width="1%">Action</th>
                     </tr>
                     
                     <tr>
                     <?php 
 
-                        // $Records = $getAllRecord->getAllData();
-
-
-                        // foreach($Records as $data) {
-                        while($row = mysqli_fetch_assoc($refData)) {
+                    // Get reference records
+                    while($row = mysqli_fetch_assoc($refData)) {
                         
                     ?> 
                         <!-- <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td> -->
@@ -128,30 +128,42 @@ if(!empty($_SESSION['id'])) {
 
                             if($acctRef == '') {
                                 echo "<td></td>";
+                                
                             } else {                       
                         ?>
-                        <td>
-                        <center>
-                            <a href="../update/remove.php?Acct_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
-                        </center>
+                        <td width="1%">
+                            <center>
+                                <a href="../update/remove.php?Acct_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="18px"></a>
+                            </center>
                         </td>   
                         <?php
                             }
                         ?>
-                        <td><a class="link" href="Turnover.php?id=<?php echo $row['id']; ?>"><?php echo $row['turnover_ref']; ?></a></td>
+                        <td>Signed</td>
+                        <td>03-06-2024</td>
+
+
+                        <td><a class="link" href="turnover.php?id=<?php echo $row['id']; ?>"><?php echo $row['turnover_ref']; ?></a></td>
                         <?php
                             if ($turnoverRef == '') {
                                 echo "<td></td>";
                             } else {
                         ?>
-                        <td>
-                        <center>
-                            <a href="../update/remove.php?Turnover_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
-                        </center>
+                        <td width="1%">
+                            <center>
+                                <a href="../update/remove.php?Turnover_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="18px"></a>
+                            </center>
                         </td>    
                         <?php
                             }
                         ?>
+                        <td>Signed</td>
+                        <td>03-06-2024</td>
+                        <td>
+                            <center>
+                                <a href="../update/referenceUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="18px"></a>&nbsp;
+                            </center>
+                        </td> 
                     
                     </tr>
                     <?php

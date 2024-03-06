@@ -97,8 +97,8 @@ if(!empty($_SESSION['id'])) {
             <thead>
             <tr>
                 <th width="1%"><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
-                <th width="20%">User</th>
                 <th width="1%">Department</th>
+                <th width="18%">Assigned to</th>
                 <th>Asset Type</th>
                 <th>Asset Tag</th>
                 <th>Model</th>
@@ -106,7 +106,7 @@ if(!empty($_SESSION['id'])) {
                 <th>Memory</th>
                 <th>Storage</th>
                 <th>Status</th>
-                <th coslpan="3" width="12%">Action</th>
+                <th coslpan="3" width="10%">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -115,8 +115,8 @@ if(!empty($_SESSION['id'])) {
                 while ($row = mysqli_fetch_array($res)) {  
             ?> 
                 <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>
-                <td><?php echo $row['assigned']; ?></td>
                 <td><?php echo $row['department']; ?></td>
+                <td><?php echo $row['assigned']; ?></td>
                 <td><?php echo $row['assettype']; ?></td>
                 <td><?php echo $row['assettag']; ?></td>
                 <td><?php echo $row['model']; ?></td>

@@ -83,10 +83,18 @@ class assetsController {
         while($row = $res->fetch_assoc()) {
             $assetName = $row['assettype'];
             $turnover_ref = $row['turnover_ref'];
+            $assigned = $row['assigned'];
         }
+        
         
         // validation of Turnover reference code
         if($ref_Code == $turnover_ref) {
+            
+            if($lastused != '') {
+                $lastusedby = $assigned;
+            } else {
+                $lastusedby = $lastused;
+            }
 
             // Change Asset data based on Reason of Turnover
             if ($reason == 'Resign') {
@@ -97,7 +105,7 @@ class assetsController {
                 $newStatus = 'Outdated';
             }
 
-            $db->conn->query("UPDATE assets_tbl SET lastused='$lastused', dateturnover='$turnover', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1");
+            $db->conn->query("UPDATE assets_tbl SET assigned='', lastused='$lastusedby', dateturnover='$turnover', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1");
             
             $session = $select->selectUserById($_SESSION['id']);
             $name = $session['username'];
