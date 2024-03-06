@@ -54,58 +54,63 @@ if(!empty($_SESSION['id'])) {
                 <button type="submit" formaction="accountability.php" class="link-btn" name="accountability">Generate</button>
             </div>
             <?php
-                $searchData = $getAllRecord->searchDataPagination();
+                // $searchData = $getAllRecord->searchDataPagination();
                 // $rowCount = mysqli_num_rows($searchData);
-                if(isset($searchData)) {
-                    $rowCount = $searchData->num_rows;
-                } else {
-                    $rowCount = 0;
-                }
+                // if(isset($searchData)) {
+                //     $rowCount = $searchData->num_rows;
+                // } else {
+                //     $rowCount = 0;
+                // }
+                $sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive' AND assigned!=''";
+                $results = mysqli_query($db->conn, $sqlSelectAll);
+
+                $results_per_page = 15;
+
+                if (!isset ($_GET['page']) ) {  
+                    $page = 1;  
+                } else {  
+                    $page = $_GET['page'];  
+                }  
                 
-                
+                $rowCount = $results->num_rows;
+                $number_of_page = ceil ($rowCount / $results_per_page);  
+                $page_first_result = ($page-1) * $results_per_page;  
+
+            if(isset($_POST['search']) && $_POST['search'] != "") {
+                $search = $_POST['search'];
+
+                $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND assigned != '' AND (assigned LIKE '$search%' OR assigned LIKE '%$search' OR assigned LIKE '%$search%' OR department LIKE '%$search%'
+                OR assettype LIKE '%$search%' OR status LIKE '%$search%' OR location LIKE '%$search%'
+                OR assettag LIKE '%$search%' OR model LIKE '%$search%' OR CPU LIKE '%$search%' OR MEMORY LIKE '%$search%' OR STORAGE LIKE '%$search%'
+                OR remarks LIKE '%$search%' OR Others LIKE '%$search%') LIMIT " . $results_per_page;
+            
+                $res = mysqli_query($db->conn, $sql);
+                $countperPage = $res->num_rows;
             ?>
             <div class="count">
-                <p>Asset count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCount; ?></b></p>
+                <p>Asset count: <b style="color: yellow; font-size: 20px;"><?php echo $countperPage; ?></b></p>
             </div>
         </div>
-        <?php
-        if($rowCount>0) {
-
-            $results_per_page = 10;
-
-            if (!isset ($_GET['page']) ) {  
-                $page = 1;  
-            } else {  
-                $page = $_GET['page'];  
-            }  
-            $number_of_page = ceil ($rowCount / $results_per_page);  
-            $page_first_result = ($page-1) * $results_per_page;  
-
-            // $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' LIMIT ". $page_first_result . ',' . $results_per_page;
-            // $res = mysqli_query($db->conn, $sql);
-
-            // $countperPage = $res->num_rows;
-        ?>
+       
         <table class="assets-table" id="myTable">
             <thead>
             <tr>
-                <th><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
+            <th width="1%"><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
                 <th width="20%">User</th>
                 <th width="1%">Department</th>
                 <th>Asset Type</th>
                 <th>Asset Tag</th>
-                <th>Model</th>
-                <th>CPU</th>
-                <th>Memory</th>
-                <th>Storage</th>
+                <th width="8%">Model</th>
+                <th>Specification</th>
                 <th>Status</th>
+                <th>Ref Code</th>
                 <th coslpan="3" width="12%">Action</th>
             </tr>
             </thead>
             <tbody>
             <tr>
             <?php 
-                while ($row = mysqli_fetch_array($searchData)) {  
+                while ($row = mysqli_fetch_array($res)) {  
             ?> 
                 <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>
                 <td><?php echo $row['assigned']; ?></td>
@@ -113,10 +118,19 @@ if(!empty($_SESSION['id'])) {
                 <td><?php echo $row['assettype']; ?></td>
                 <td><?php echo $row['assettag']; ?></td>
                 <td><?php echo $row['model']; ?></td>
-                <td><?php echo $row['CPU']; ?></td>
-                <td><?php echo $row['MEMORY']; ?></td>
-                <td><?php echo $row['STORAGE']; ?></td>
+                <td><?php echo "CPU: " . $row['CPU'] . "<br>RAM: " . $row['MEMORY'] . "<br>STORAGE: " . $row['STORAGE']; ?></td>
                 <td><?php echo $row['status']; ?></td>
+                <td>
+                    <?php
+                        $accountability = $row['accountability_ref'];
+
+                        if($accountability!='') {
+                            echo $accountability;
+                        } else {
+                            echo "N/A";
+                        }
+                    ?>
+                </td>
 
                 <td>
                 <center>
@@ -135,20 +149,38 @@ if(!empty($_SESSION['id'])) {
             ?>
         </table>
     </form>
-    <?php
-            for($page = 1; $page<= $number_of_page; $page++) {  
-                echo '<a href = "dashboard.php?page=' . $page . '">' . $page . ' </a>';  
-            }  
-        } else {
-            ?>
-            <center>
-                <h2 style="color: red;">⚠️Search and select user</h2>
-            </center>
-            <?php
-        }
+    
+<?php
+        // Pagination nav
+    if ($page > 1) {
+        echo '<a href="create_accountability.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
+    }
+    for($i = 1; $i<= $number_of_page; $i++) {  
+        echo '<a href = "create_accountability.php?page=' . $i . '" class="next">' . $i . '</a>';  
+    }  
+    if ($page < $number_of_page) {
+        echo '<a href="create_accountability.php?page=' . ($page + 1) . '" class="next">Next</a>';
+    }
+
+} else {
+    
     ?>
+    <style>
+    .noresult {
+        display: flex;
+        justify-content: center;
+    }
+    </style>
     
+    </div>
+        <div class="noresult">
+            <h2 class="nores" style="color: white; ">⚠️Search and select user</h2>
+        </div>
+    <?php
+}
+?>
 </div>
-    
+
+
 </body>
 </html>

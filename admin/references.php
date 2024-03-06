@@ -70,13 +70,13 @@ if(!empty($_SESSION['id'])) {
                 $page_first_result = ($page-1) * $results_per_page;  
 
                 if(isset($_POST['search']) && $_POST['search'] != "") {
-                        $search = $_POST['search'];
-                        $page = 1;  
-                    
-                        $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assigned LIKE '%$search%' OR accountability_ref LIKE '%$search%' 
-                            OR turnover_ref LIKE '%$search%') LIMIT " . $results_per_page;
+                    $search = $_POST['search'];
+                    $page = 1;  
+                
+                    $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assigned LIKE '%$search%' OR accountability_ref LIKE '%$search%' 
+                        OR turnover_ref LIKE '%$search%') LIMIT " . $results_per_page;
                 } else {
-                        $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' LIMIT ". $page_first_result . ',' . $results_per_page;
+                        $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (accountability_ref != '' OR turnover_ref != '') LIMIT ". $page_first_result . ',' . $results_per_page;
                 }
                 $res = mysqli_query($db->conn, $sql);
                 $rowCountPage = $res->num_rows;

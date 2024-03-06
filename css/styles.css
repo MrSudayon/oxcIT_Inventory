@@ -97,8 +97,8 @@ main {
 .content {
     min-height: 100dvh;
     background: linear-gradient(-95deg, var(--ter-color), var(--bg-color));
-    width: 100%;
     padding: 10px 40px;
+    border: 1px solid black;
 }
  
 /* Table Nav */
