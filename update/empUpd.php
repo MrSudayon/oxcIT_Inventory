@@ -54,6 +54,7 @@ if(!empty($_SESSION['id'])) {
         if(isset($_GET['empID'])) {
             $empID = mysqli_real_escape_string($db->conn, $_GET['empID']);
             $asset = new assetsController;
+            $getData = new Operations;
             $result = $asset->empEdit($empID);
 
             if($result) {
@@ -67,39 +68,38 @@ if(!empty($_SESSION['id'])) {
                         <input type="text" name="name" value="<?=$result['name']?>" required>
                     </div>
                     <div class="input-box">
-                        <span class="details">Division</span>
+                        <span class="details" style="margin-bottom: 10px;">Division</span>
                         <select name="division">
                             <option value="<?=$result['division']?>"><?=$result['division']?></option>
                             <?php
-                                $getData = new Operations;
+                                
                                 $emp = $getData->getEmpDiv();
 
                                 foreach($emp as $empDiv) {
                             ?>
-                                <option value="<?=$empDiv['division']?>"><?php echo $empDiv['division']; ?></option>
+                                <option value="<?=$empDiv['name']?>"><?php echo $empDiv['name']; ?></option>
                             <?php
                                 }
                             ?>
                         </select>
                     </div>
                     <div class="input-box">
-                        <span class="details">Location</span>
+                        <span class="details" style="margin-bottom: 10px;">Location</span>
                         <select name="location">
                             <option value="<?=$result['location']?>"><?=$result['location']?></option>
                             <?php
-                                $getData = new Operations;
                                 $emp = $getData->getEmpLoc();
 
                                 foreach($emp as $empLoc) {
                             ?>
-                                <option value="<?=$empLoc['division']?>"><?php echo $empLoc['division']; ?></option>
+                                <option value="<?=$empLoc['name']?>"><?php echo $empLoc['name']; ?></option>
                             <?php
                                 }
                             ?>
                         </select>
                     </div>
                     <div class="input-box">
-                        <span class="details">Status</span>
+                        <span class="details" style="margin-bottom: 10px;">Status</span>
                         <select name="status">
                         <?php
                             $status = $result['status'];
