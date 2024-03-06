@@ -26,12 +26,13 @@ a {
 }
 
 body {
+    position: absolute;
+
     background-color: var(--ter-color);
     color: rgb(255, 246, 246);
     font-family: "Rubik", sans-serif;
     min-height: 100dvh;
-
-    overflow: hidden;
+    width: 100%;
 }
 
 header {
@@ -43,6 +44,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 10;
 }
 
 .dropbtn {
@@ -85,22 +87,42 @@ header {
 
 .dropdown:hover .dropbtn { color: white;border: 1px solid white; background: linear-gradient(-95deg, var(--ter-color), var(--bg-color));}
 
+/* Login Main */
 main {
-    display: flex;
     height: 100%;
-
     align-items: center;
     justify-content: center;
     background-color:#17171c;
 }
 
 .content {
-    min-height: 100dvh;
+    position: absolute;
+    height: 100dvh;
+    width: 100%;
+    top: 0;
+    z-index: 1;
     background: linear-gradient(-95deg, var(--ter-color), var(--bg-color));
     padding: 10px 40px;
     border: 1px solid black;
 }
  
+
+.return {
+
+    transition: all .3s;
+    border: 1px solid white;
+    padding: 5px 20px;
+    border-radius: 15px;
+    background-color: var(--sec-color);
+    font-weight: 700;
+}
+.return:hover {
+    background-color: white;
+    border: 1px solid black;
+    color: var(--main-color);
+    transition: all .3s;
+}
+
 /* Table Nav */
 .table-nav {
     display: flex;
@@ -260,6 +282,8 @@ form .asset-details .input-box {
     padding-left: 15px;
 }
 .title {
+    margin-top: 100px;
+
     display: flex;
     justify-content: space-between;
 }

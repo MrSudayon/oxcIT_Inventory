@@ -45,6 +45,8 @@ if(!empty($_SESSION['id'])) {
 
     <div class="container">
         <div class="add-form">
+
+        <a href="../admin/dashboard.php" class="return">Back</a>
             <form action="" method="POST">
                 <div class="title">Asset Details</div>
                 <div class="asset-details">

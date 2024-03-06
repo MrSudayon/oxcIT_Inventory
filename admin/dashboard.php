@@ -94,7 +94,7 @@ if(!empty($_SESSION['id'])) {
         <table class="assets-table" id="myTable">
             <thead>
             <tr>
-                <th><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
+                <th width="1%"><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
                 <th width="20%">User</th>
                 <th width="1%">Department</th>
                 <th>Asset Type</th>
