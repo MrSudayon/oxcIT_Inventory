@@ -27,7 +27,6 @@ if(!empty($_SESSION['id'])) {
         <button class="dropbtn">Menu</button>
         <div class="dropdown-content">
             <!-- <a href="../php/add_emp_info.php">Register</a> -->
-            <a href="../admin/configuration.php">Configuration</a>
             <a href="../php/history.php">History</a>
             <a href="../php/logout.php?id=<?php echo $id; ?>&name=<?php echo $username; ?>">Logout</a>
         </div>
@@ -36,6 +35,7 @@ if(!empty($_SESSION['id'])) {
 
     <div class="container">
         <div class="add-form">
+        <a href="../admin/dashboard.php" class="return">Back</a>
             <div class="title">Asset Details</div>
             <?php
             if(isset($_GET['id']))
