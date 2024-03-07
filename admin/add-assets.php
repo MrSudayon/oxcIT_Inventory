@@ -52,8 +52,8 @@ if(!empty($_SESSION['id'])) {
                 <div class="asset-details">
                     <div class="input-box">
                         <span class="details">Asset Type</span>                            
-                        <select name="asset-type" id="Type" onChange="displaySelectedValue()" required>
-                            <option value="">Please Select</option>
+                        <select name="asset-type" id="Type" onChange="changetextbox();displaySelectedValue();" required>
+                            <option>Please Select</option>
                             <?php
                                 $category = new Operations;
                                 $assettype = $category->getAssets();
@@ -73,14 +73,24 @@ if(!empty($_SESSION['id'])) {
                         <input type="text" name="asset-tag" id="asset-tag" hidden>
                         <!-- <input type="text" name="asset-tag" placeholder="Asset Tag" id="Tag" > -->
                     </div>
-                    <div class="input-box">
+                    <div class="input-box" id="model">
                         <span class="details">Model</span>
-                        <input type="text" name="model" placeholder="Model" id="" required>
+                        <input type="text" name="model" placeholder="Model" id="">
                     </div>
-                    <div class="input-box">
+                    <div class="input-box" id="provider" style="display: none;">
+                        <span class="details">Provider</span>
+                        <input type="text" name="provider" placeholder="Provider" id="">
+                    </div>
+                    
+                    <div class="input-box" id="serial">
                         <span class="details">Serial no.</span>
                         <input type="text" name="serial" placeholder="Serial Number" id="">
                     </div>
+                    <div class="input-box" id="mobile" style="display: none;">
+                        <span class="details">Mobile no.</span>
+                        <input type="text" name="mobile" placeholder="Mobile no." id="">
+                    </div>
+
                     <div class="input-box">
                         <span class="details">Supplier</span>
                         <input type="text" name="supplier" placeholder="Supplier" id="">
@@ -117,15 +127,19 @@ if(!empty($_SESSION['id'])) {
                 </div>
                 <div class="title">Specification</div>
                 <div class="asset-details">
-                    <div class="input-box">
+                    <div class="input-box" id="processor">
                         <span class="details">Processor</span>
                         <input type="text" name="processor" placeholder="Processor" id="">
                     </div>
-                    <div class="input-box">
+                    <div class="input-box" id="plan" style="display: none;">
+                        <span class="details">Plan</span>
+                        <input type="text" name="plan" placeholder="Plan" id="">
+                    </div>
+                    <div class="input-box" id="ram">
                         <span class="details">Memory</span>
                         <input type="text" name="memory" placeholder="Memory" id="">
                     </div>
-                    <div class="input-box">
+                    <div class="input-box" id="storage">
                         <span class="details">Storage</span>
                         <input type="text" name="storage" placeholder="Storage" id="">
                     </div>

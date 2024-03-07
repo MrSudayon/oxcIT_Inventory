@@ -38,8 +38,8 @@ function displaySelectedValue() {
     // Display the selected value in the output display
     document.getElementById("tag").innerText = assetTag;
     
-    var assigned = document.getElementById("assigned").value;
-    var selectedEmp = assigned.options[assigned.selectedIndex].value;
+    // var assigned = document.getElementById("assigned").value;
+    // var selectedEmp = assigned.options[assigned.selectedIndex].value;
 
     // document.getElementById("division").innerText = selectedEmp;
     var xhr = new XMLHttpRequest();
@@ -47,9 +47,10 @@ function displaySelectedValue() {
         if (this.readyState == 4 && this.status == 200) {
             var response = JSON.parse(this.responseText);
             document.getElementById("tag").innerText = response.data;
+            assetTagItem = response.data;
         }
     };
-    xhr.open("GET", "getData.php?id=" + selectedEmp, true);
+    // xhr.open("GET", "getData.php?id=" + selectedEmp, true);
     xhr.send();
 }
 
@@ -61,6 +62,32 @@ function changetextbox() {
         repair.style.display = "block";
     } else {
         repair.style.display = "none";
+    }
+
+    var selectElement = document.getElementById("Type");
+    var serial = document.getElementById("serial");
+    var mobile = document.getElementById("mobile");
+    var model = document.getElementById("model");
+    var provider = document.getElementById("provider");
+    var processor = document.getElementById("processor");
+    var plan = document.getElementById("plan");
+
+    if(selectElement.value == "SIM") {
+        serial.style.display = "none";
+        model.style.display = "none";
+        processor.style.display = "none";
+
+        mobile.style.display = "block";
+        provider.style.display = "block";
+        plan.style.display = "block";
+    } else {
+        // serial.style.display = "block";
+        // model.style.display = "block";
+        // processor.style.display = "block";
+
+        mobile.style.display = "none";
+        provider.style.display = "none";
+        plan.style.display = "none";
     }
 }
 

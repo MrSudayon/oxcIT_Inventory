@@ -55,7 +55,7 @@ if(!empty($_SESSION['id'])) {
                         <div class="input-box">
                             <span class="details">Asset Type</span>
                             <!-- <input type="text" name="asset-type" value="" id="" required> -->
-                            <select name="asset-type" id="Type" onChange="displaySelectedValue()" required>
+                            <select name="asset-type" id="Type" onChange="changetextbox();displaySelectedValue();" required>
                                 <option value="<?=$result['assettype']?>"><?=$result['assettype']?></option>
                                 <?php
                                     $category = new Operations;
@@ -71,30 +71,45 @@ if(!empty($_SESSION['id'])) {
                         </div>
                         <div class="input-box">
                             <span class="details">Asset Tag</span>
-                            <!-- <input type="text" name="asset-tag" value="" id="" required> -->
-                            <div class="asset-tag" id="tag" style="background-color: #ccc;"><?=$result['assettag']?></div>
-                            <input type="text" name="asset-tag" value="<?=$result['assettag']?>" id="asset-tag" hidden>
+                            <div class="asset-tag" id="tag" style="background-color: #ccc;"></div>
+                            <input type="text" name="asset-tag" id="asset-tag" hidden>
+                            <!-- <input type="text" name="asset-tag" placeholder="Asset Tag" id="Tag" > -->
                         </div>
-                        <div class="input-box">
+                        <div class="input-box" id="model">
                             <span class="details">Model</span>
-                            <input type="text" name="model" value="<?=$result['model']?>" id="" required>
+                            <input type="text" name="model" placeholder="Model" id="">
                         </div>
-                        <div class="input-box">
+                        <div class="input-box" id="provider" style="display: none;">
+                            <span class="details">Provider</span>
+                            <input type="text" name="provider" placeholder="Provider" id="">
+                        </div>
+                        
+                        <div class="input-box" id="serial">
                             <span class="details">Serial no.</span>
-                            <input type="text" name="serial" value="<?=$result['serial']?>" id="">
+                            <input type="text" name="serial" placeholder="Serial Number" id="">
                         </div>
+                        <div class="input-box" id="mobile" style="display: none;">
+                            <span class="details">Mobile no.</span>
+                            <input type="text" name="mobile" placeholder="Mobile no." id="">
+                        </div>
+
                         <div class="input-box">
                             <span class="details">Supplier</span>
-                            <input type="text" name="supplier" value="<?=$result['supplier']?>" id="">
+                            <input type="text" name="supplier" placeholder="Supplier" id="">
                         </div>
                         <div class="input-box">
+                            <span class="details">Cost</span>
+                            <input type="text" name="cost" placeholder="Item cost.." id="">
+                        </div>
+                        
+                        <div class="input-box">
                             <span class="details">Date Purchased</span>
-                            <input type="date" name="dateprchs" value="<?=$result['datepurchased']?>" id="" required>
+                            <input type="date" name="dateprchs" placeholder="Date Purchased" id="" required>
                         </div>
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Status</span>
                             <select name="status" id="status" onChange="changetextbox()">
-                                <option value="<?=$result['status']?>"><?=$result['status']?></option>
+                                <option>Please select</option>
                                 <option value="For repair">For repair</option>
                                 <option value="Deployed">Deployed</option>
                                 <option value="To be Deploy">To be deploy</option>
@@ -108,23 +123,27 @@ if(!empty($_SESSION['id'])) {
                         </div>
                         <div class="input-box">
                             <span class="details">Remarks</span>
-                            <input type="text" name="remarks" value="<?=$result['remarks']?>" id="">
+                            <input type="text" name="remarks" placeholder="Remarks" id="">
                         </div>
 
                     </div>
                     <div class="title">Specification</div>
                     <div class="asset-details">
-                        <div class="input-box">
+                        <div class="input-box" id="processor">
                             <span class="details">Processor</span>
-                            <input type="text" name="processor" value="<?=$result['CPU']?>" id="">
+                            <input type="text" name="processor" placeholder="Processor" id="">
                         </div>
-                        <div class="input-box">
+                        <div class="input-box" id="plan" style="display: none;">
+                            <span class="details">Plan</span>
+                            <input type="text" name="plan" placeholder="Plan" id="">
+                        </div>
+                        <div class="input-box" id="ram">
                             <span class="details">Memory</span>
-                            <input type="text" name="memory" value="<?=$result['MEMORY']?>" id="">
+                            <input type="text" name="memory" placeholder="Memory" id="">
                         </div>
-                        <div class="input-box">
+                        <div class="input-box" id="storage">
                             <span class="details">Storage</span>
-                            <input type="text" name="storage" value="<?=$result['STORAGE']?>" id="">
+                            <input type="text" name="storage" placeholder="Storage" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Operating System</span>
