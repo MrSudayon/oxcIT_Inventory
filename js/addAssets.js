@@ -81,9 +81,9 @@ function changetextbox() {
         provider.style.display = "block";
         plan.style.display = "block";
     } else {
-        // serial.style.display = "block";
-        // model.style.display = "block";
-        // processor.style.display = "block";
+        serial.style.display = "block";
+        model.style.display = "block";
+        processor.style.display = "block";
 
         mobile.style.display = "none";
         provider.style.display = "none";

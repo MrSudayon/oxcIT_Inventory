@@ -29,15 +29,29 @@ class assetsController {
         $dateprchs = $input['datepurchase'];
         $status = $input['status'];
         $remarks = $input['remarks'];
+
+
+        // Specification
+        // SIM
+        $provider = $input['provider'];
+        $mobile = $input['mobile'];
+        $plan = $input['plan'];
+
+        // Laptop, Desktop, Cellphone
         $cpu = $input['cpu'];
         $ram = $input['ram'];
         $storage = $input['storage'];
         $os = $input['os'];
         $others = $input['others'];
+
+        // Monitor, Keyboard, Mouse
+        // $dimes = $input['dimension'];
+
         $assigned = $input['assigned'];
         $turnover = $input['turnover'];
         $lastused = $input['lastused'];
         $reason = $input['reason'];
+       
         
         if($lastused == '') {
             $lastused = $assigned;
