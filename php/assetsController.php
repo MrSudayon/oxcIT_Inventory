@@ -57,14 +57,32 @@ class assetsController {
             $reason = $input['reason'];
         }
        
-        
-        if($lastused == '') {
-            $lastused = $assigned;
+        if(!isset($assigned) || $assigned == '') {
+            $dept = "";
+            $location = "";
+            
         } else {
-            $lastused = $input['lastused'];
-        }
+            if($status=="") {
+                $status = 'Deployed';
+            }
 
-        $qry = "UPDATE assets_tbl SET assettype='$assetType', assettag='$assetTag', model='$model', serial='$serial', supplier='$supplier', datepurchased='$dateprchs', status='$status', remarks='$remarks', CPU='$cpu', MEMORY='$ram', STORAGE='$storage', OS='$os', Others='$others', assigned='$assigned', lastused='$lastused', dateturnover='$turnover', reason='$reason' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
+            $sql = mysqli_query($db->conn,"SELECT * FROM employee_tbl WHERE name = '$assigned'");
+
+            while($row = $sql->fetch_assoc()) {
+                $dept = $row['division'];
+                $location = $row['location'];
+            } 
+
+            if($lastused == '') {
+                $lastused = $assigned;
+            } else {
+                $lastused = $input['lastused'];
+            }
+        }   
+
+        
+
+        $qry = "UPDATE assets_tbl SET department='$dept', assettype='$assetType', assettag='$assetTag', model='$model', serial='$serial', supplier='$supplier', datepurchased='$dateprchs', status='$status', location='$location', remarks='$remarks', CPU='$cpu', MEMORY='$ram', STORAGE='$storage', OS='$os', Others='$others', assigned='$assigned', lastused='$lastused', dateturnover='$turnover', reason='$reason' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
         $result = $db->conn->query($qry);
 
 
