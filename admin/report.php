@@ -16,9 +16,17 @@ if(isset($_GET['select'])) {
     $escaped_values = array_map(array($db->conn, 'real_escape_string'), array_values($selected));
     
     $values  = implode(', ', array_values($escaped_values));
+
+    $result = mysqli_query($db->conn, "SELECT assettag FROM assets_tbl WHERE id IN ($values)");
+    $names = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $names[] = $row['assettag'];
+    }
+    $nameString = implode(', ', $names);
+    
     // History
     mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-        VALUES ('','$username','Generated a report for asset IDs: $values',NOW())");
+        VALUES ('','$username','Generated a report for asset IDs: $nameString',NOW())");
     
 } else {
     ?>

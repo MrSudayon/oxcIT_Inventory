@@ -106,8 +106,8 @@ if(!empty($_SESSION['id'])) {
                     </div>
                     <div class="input-box">
                         <span class="details" style="margin-bottom: 10px;">Status</span>
-                        <select name="status" id="status" onChange="changetextbox()">
-                            <option>Please select</option>
+                        <select name="status" id="status" onChange="changetextbox()" require>
+                            <option value="">Please select</option>
                             <option value="For repair">For repair</option>
                             <option value="Deployed">Deployed</option>
                             <option value="To be Deploy">To be deploy</option>
@@ -185,7 +185,7 @@ if(!empty($_SESSION['id'])) {
                     <div class="input-box">
                         <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
                         <!-- <input type="text" name="lastused" placeholder="Last used..." value="" > -->
-                        <select name="lastused" id="assigned" class="assigned">
+                        <select name="lastused" id="lastused" class="assigned">
                             <option value="">Please Select</option>
                             <?php
                                     $results = new get_All_User();

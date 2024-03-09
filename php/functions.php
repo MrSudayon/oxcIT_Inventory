@@ -5,7 +5,7 @@
 $db = new Connection();
 $select = new Select();
 class Operations {
-    function record_Data($type, $tag, $mdl, $srl, $spplr, $cost, $repair_cost, $dtprchs, $stts, $rmrks, $cpu, $ram, $storage, $os, $others, $datedeployed, $assigned, $lastused) {
+    function record_Data($type, $tag, $mdl, $srl, $spplr, $cost, $repair_cost, $dtprchs, $stts, $rmrks, $cpu, $ram, $storage, $os, $others, $datedeployed, $assigned, $lastused, $provider, $mobile, $plan) {
         global $db;
         global $select;
         $dept = "";
@@ -14,10 +14,15 @@ class Operations {
         $session = $select->selectUserById($_SESSION['id']);
         $name = $session['username'];
 
-        if(!isset($assigned) || $assigned = "") {
+        if(!isset($assigned) || $assigned == '') {
             $dept = "";
             $location = "";
+            
         } else {
+            if($stts=="") {
+                $stts = 'Deployed';
+            }
+
             $sql = mysqli_query($db->conn,"SELECT * FROM employee_tbl WHERE name = '$assigned'");
 
             while($row = $sql->fetch_assoc()) {
@@ -27,13 +32,14 @@ class Operations {
             $lastused = $assigned;
         }          
         
+        
         $query = "INSERT INTO assets_tbl (id, department, assettype, assettag, model, serial, supplier, CPU, MEMORY, STORAGE, OS, Others, assigned, lastused, status, location, datepurchased, cost, repair_cost, remarks, datedeployed)
                                 VALUES ('','$dept','$type','$tag','$mdl','$srl','$spplr','$cpu','$ram','$storage','$os','$others','$assigned','$lastused','$stts','$location','$dtprchs', '$cost', '$repair_cost','$rmrks','$datedeployed')";
         $result = mysqli_query($db->conn, $query);
 
         if($result) { 
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                                VALUES('', '$name', 'Added a new Asset Data' , NOW())");
+                                VALUES('', '$name', 'Added a new asset: $tag' , NOW())");
             return 1; //Success
         } else {
             return 10; //Store Failed

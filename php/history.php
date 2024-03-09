@@ -69,9 +69,9 @@ if(!empty($_SESSION['id'])) {
                         $search = $_POST['search'];
                         $page = 1;  
                     
-                        $sql = "SELECT * FROM history_tbl WHERE name LIKE '%$search%' OR action LIKE '%$search%' OR date LIKE '%$search%' LIMIT " . $results_per_page;
+                        $sql = "SELECT * FROM history_tbl WHERE name LIKE '%$search%' OR action LIKE '%$search%' OR date LIKE '%$search%' ORDER BY id DESC LIMIT " . $results_per_page;
                 } else {
-                        $sql =  "SELECT * FROM history_tbl LIMIT ". $page_first_result . ',' . $results_per_page;
+                        $sql =  "SELECT * FROM history_tbl ORDER BY id DESC LIMIT ". $page_first_result . ',' . $results_per_page;
                 }
                 $res = mysqli_query($db->conn, $sql);
                 $rowCountPage = $res->num_rows;
