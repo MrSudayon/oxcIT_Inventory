@@ -30,7 +30,7 @@ if(!empty($_SESSION['id'])) {
     
         <div class="content">
             <div class="title">
-                <h1> CONFIGURATION </h1>
+                <h1> Asset </h1>
                 <div class="search-container">
                 <form action="" method="POST">
                     <input type="text" placeholder="Search.." name="search">
@@ -58,7 +58,13 @@ if(!empty($_SESSION['id'])) {
                 
                 <table class="assets-table">
                     <tr>
+
+                    <!-- Category_tbl 3-8-24 -->
                         <th>Asset Type</th>
+                        <th>Asset Tag</th>
+                        <th>Device</th>
+                        <th>specs_id</th>
+                        <th>assets_id</th>
                         <th colspan="2" width="8%">Action</th>
                     </tr>
                     <?php                         
@@ -74,6 +80,10 @@ if(!empty($_SESSION['id'])) {
                             }
                     ?> 
                         <td><?php echo $row['assetType']; ?></td>
+                        <td><?php echo "asd"; ?></td>
+                        <td><?php echo "asd"; ?></td>
+                        <td><?php echo "asd"; ?></td>
+                        <td><?php echo "asd"; ?></td>
                         <td>
                         <center>
                             <a href="../update/assetItemUpd.php?assetItemID=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>

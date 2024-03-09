@@ -55,61 +55,51 @@ if(!empty($_SESSION['id'])) {
                         <div class="input-box">
                             <span class="details">Asset Type</span>
                             <!-- <input type="text" name="asset-type" value="" id="" required> -->
-                            <select name="asset-type" id="Type" onChange="changetextbox();displaySelectedValue();" required>
+                            <select name="asset-type" id="Type" onChange="changetextbox(); displaySelectedValue();" style="background-color: #ccc;" readonly>
                                 <option value="<?=$result['assettype']?>"><?=$result['assettype']?></option>
-                                <?php
-                                    $category = new Operations;
-                                    $assettype = $category->getAssets();
-
-                                    foreach($assettype as $assets) {
-                                ?>
-                                    <option value="<?=$assets['assetType']?>"><?php echo $assets['assetType']; ?></option>
-                                <?php
-                                    }
-                                ?>
+                                
                             </select>
                         </div>
                         <div class="input-box">
                             <span class="details">Asset Tag</span>
-                            <div class="asset-tag" id="tag" style="background-color: #ccc;"></div>
+                            <div class="asset-tag" id="tag" style="background-color: #ccc;"><?=$result['assettag']?></div>
                             <input type="text" name="asset-tag" id="asset-tag" hidden>
-                            <!-- <input type="text" name="asset-tag" placeholder="Asset Tag" id="Tag" > -->
                         </div>
                         <div class="input-box" id="model">
                             <span class="details">Model</span>
-                            <input type="text" name="model" placeholder="Model" id="">
+                            <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
                         </div>
                         <div class="input-box" id="provider" style="display: none;">
                             <span class="details">Provider</span>
-                            <input type="text" name="provider" placeholder="Provider" id="">
+                            <input type="text" name="provider" placeholder="Provider" value="<?=$result['model']?>" id="">
                         </div>
                         
                         <div class="input-box" id="serial">
                             <span class="details">Serial no.</span>
-                            <input type="text" name="serial" placeholder="Serial Number" id="">
+                            <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
                         </div>
                         <div class="input-box" id="mobile" style="display: none;">
                             <span class="details">Mobile no.</span>
-                            <input type="text" name="mobile" placeholder="Mobile no." id="">
+                            <input type="text" name="mobile" value="<?=$result['serial']?>" placeholder="Mobile no." id="">
                         </div>
 
                         <div class="input-box">
                             <span class="details">Supplier</span>
-                            <input type="text" name="supplier" placeholder="Supplier" id="">
+                            <input type="text" name="supplier" value="<?=$result['supplier']?>" placeholder="Supplier" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Cost</span>
-                            <input type="text" name="cost" placeholder="Item cost.." id="">
+                            <input type="text" name="cost" value="<?=$result['cost']?>" placeholder="Item cost.." id="">
                         </div>
                         
                         <div class="input-box">
                             <span class="details">Date Purchased</span>
-                            <input type="date" name="dateprchs" placeholder="Date Purchased" id="" required>
+                            <input type="date" name="dateprchs" value="<?=$result['datepurchased']?>" placeholder="Date Purchased" id="" required>
                         </div>
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Status</span>
                             <select name="status" id="status" onChange="changetextbox()">
-                                <option>Please select</option>
+                                <option value="<?=$result['status']?>"><?=$result['status']?></option>
                                 <option value="For repair">For repair</option>
                                 <option value="Deployed">Deployed</option>
                                 <option value="To be Deploy">To be deploy</option>
@@ -119,11 +109,11 @@ if(!empty($_SESSION['id'])) {
                         </div>
                         <div class="input-box" id="repair-cost" style="display: none;">
                             <span class="details">Repair Cost</span>
-                            <input type="text" name="repair-cost" value="" placeholder="Repair Cost...">
+                            <input type="text" name="repair-cost" value="<?=$result['repair_cost']?>" value="" placeholder="Repair Cost...">
                         </div>
                         <div class="input-box">
                             <span class="details">Remarks</span>
-                            <input type="text" name="remarks" placeholder="Remarks" id="">
+                            <input type="text" name="remarks" value="<?=$result['remarks']?>" placeholder="Remarks" id="">
                         </div>
 
                     </div>
@@ -131,19 +121,19 @@ if(!empty($_SESSION['id'])) {
                     <div class="asset-details">
                         <div class="input-box" id="processor">
                             <span class="details">Processor</span>
-                            <input type="text" name="processor" placeholder="Processor" id="">
+                            <input type="text" name="processor" value="<?=$result['CPU']?>" placeholder="Processor" id="">
                         </div>
                         <div class="input-box" id="plan" style="display: none;">
                             <span class="details">Plan</span>
-                            <input type="text" name="plan" placeholder="Plan" id="">
+                            <input type="text" name="plan" value="<?=$result['CPU']?>" placeholder="Plan" id="">
                         </div>
                         <div class="input-box" id="ram">
                             <span class="details">Memory</span>
-                            <input type="text" name="memory" placeholder="Memory" id="">
+                            <input type="text" name="memory" value="<?=$result['MEMORY']?>" placeholder="Memory" id="">
                         </div>
                         <div class="input-box" id="storage">
                             <span class="details">Storage</span>
-                            <input type="text" name="storage" placeholder="Storage" id="">
+                            <input type="text" name="storage" value="<?=$result['STORAGE']?>" placeholder="Storage" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Operating System</span>
@@ -163,6 +153,7 @@ if(!empty($_SESSION['id'])) {
                         <div class="input-box">
                         <span class="details" style="margin-bottom: 10px;">Assign To</span>
                             <select name="assigned" id="assigned" class="assigned">
+                                <option value="">None</option>
                                 <option value="<?=$result['assigned']?>"><?=$result['assigned']?></option>
                                 <?php
                                         $results = new get_All_User();
@@ -206,7 +197,7 @@ if(!empty($_SESSION['id'])) {
                     </div>
                     
                     <div class="button">
-                        <input type="submit" value="Save" name="update-asset"/>
+                        <input type="submit" onclick="passValue()" value="Save" name="update-asset"/>
                     </div>
                 </form>
                 <?php
@@ -215,6 +206,7 @@ if(!empty($_SESSION['id'])) {
                 ?>
         </div>
     </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="../js/addAssets.js"></script>
 </body>
 </html>

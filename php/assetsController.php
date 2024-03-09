@@ -50,7 +50,12 @@ class assetsController {
         $assigned = $input['assigned'];
         $turnover = $input['turnover'];
         $lastused = $input['lastused'];
-        $reason = $input['reason'];
+
+        // further logic; clear reason upon accounting to other employee
+        $reason = '';
+        if(isset($input['reason'])) {
+            $reason = $input['reason'];
+        }
        
         
         if($lastused == '') {
