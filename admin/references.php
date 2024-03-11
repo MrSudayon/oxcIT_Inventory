@@ -103,13 +103,15 @@ if(!empty($_SESSION['id'])) {
                     <tr>
                         <!-- <th><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th> -->
                         <th>User</th>
-                        <th colspan=2>Accountability Ref</th>
-                        <th>Status</th>
-                        <th>Date</th>
-                        <th colspan=2>Turnover Ref</th>
-                        <th>Status</th>
-                        <th>Date</th>
-                        <th width="1%">Action</th>
+                        <th>Accountability Ref</th>
+                        <th width="5%">Status</th>
+                        <th width="5%">Date</th>
+                        <th width="5%">Action</th>
+
+                        <th>Turnover Ref</th>
+                        <th width="5%">Status</th>
+                        <th width="5%">Turnover Date</th>
+                        <th width="5%">Action</th>
                     </tr>
                     
                     <tr>
@@ -122,48 +124,50 @@ if(!empty($_SESSION['id'])) {
                         <!-- <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td> -->
                         <td><?php echo $row['assigned']; ?></td>
                         <td><a class="link" href="accountability.php?id=<?php echo $row['id']; ?>"><?php echo $row['accountability_ref']; ?></a></td>
+                        
                         <?php 
                             $acctRef = $row['accountability_ref'];
                             $turnoverRef = $row['turnover_ref'];
 
                             if($acctRef == '') {
                                 echo "<td></td>";
-                                
-                            } else {                       
-                        ?>
-                        <td width="1%">
-                            <center>
-                                <a href="../update/remove.php?Acct_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="18px"></a>
-                            </center>
-                        </td>   
-                        <?php
-                            }
-                        ?>
-                        <td>N/A</td>
-                        <td>N/A</td>
-
-
-                        <td><a class="link" href="turnover.php?id=<?php echo $row['id']; ?>"><?php echo $row['turnover_ref']; ?></a></td>
-                        <?php
-                            if ($turnoverRef == '') {
                                 echo "<td></td>";
-                            } else {
-                        ?>
-                        <td width="1%">
-                            <center>
-                                <a href="../update/remove.php?Turnover_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="18px"></a>
-                            </center>
-                        </td>    
-                        <?php
-                            }
+                                echo "<td></td>";
+                            } else {                       
                         ?>
                         <td>N/A</td>
                         <td>N/A</td>
                         <td>
                             <center>
-                                <a href="../update/referenceUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="18px"></a>&nbsp;
+                                <a href="#../update/referenceUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
+                                <a href="../update/remove.php?Acct_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                             </center>
-                        </td> 
+                        </td>
+                        <?php
+                            }
+                        ?>
+
+                        <td><a class="link" href="turnover.php?id=<?php echo $row['id']; ?>"><?php echo $row['turnover_ref']; ?></a></td>
+                        <?php
+                            if ($turnoverRef == '') {
+                                echo "<td></td>";
+                                echo "<td></td>";
+                                echo "<td></td>";
+                            } else {
+                        ?>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                        <td width="1%">
+                            <center>
+                                <a href="#../update/referenceUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
+                                <a href="../update/remove.php?Turnover_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                            </center>
+                        </td>    
+                        <?php
+                            }
+                        ?>
+                        
+                        
                     
                     </tr>
                     <?php
