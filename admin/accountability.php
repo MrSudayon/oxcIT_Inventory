@@ -26,7 +26,6 @@ if(isset($_GET['select'])) {
         }
     }
     $assetUserID = mysqli_query($db->conn, "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'");
-
 } elseif(isset($_GET['selectAll'])) {
     ?>
         <script>
@@ -46,8 +45,7 @@ if(isset($_GET['select'])) {
         $acc_ref = $row['accountability_ref'];
     }
     
-    $assetUserID = mysqli_query($db->conn, "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'");
-
+    $assetUserID = mysqli_query($db->conn, "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'");    
 } else {
     ?>
         <script>
@@ -113,6 +111,7 @@ if(isset($_GET['select'])) {
                 </script> 
             <?php
         } else {
+
             while($row = mysqli_fetch_assoc($assetUserID)) {
                 $assettag = $row['assettag'];
                 $assigned = $row['assigned'];
@@ -125,11 +124,15 @@ if(isset($_GET['select'])) {
                 }
                 $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                         VALUES ('', '$username', 'Generated accountability form: $assettag, Last used by: $assigned', NOW())");
+
+                // Insert accountability code to reference_tbl
+
             } else {
                 echo "<b>Ref#: " . $acc_ref . "</b>";
                 $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                         VALUES ('', '$username', 'Viewed accountability form for: $assettag', NOW())");
             }
+
         }
     } else {
         echo "<b>Ref#: " . $acc_ref . "</b>";
@@ -208,6 +211,9 @@ if(isset($_GET['select'])) {
             <?php
                 }
             }
+
+            // Accountability Details
+            
             ?>
         </table>
         <div class="info"><br>

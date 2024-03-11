@@ -106,7 +106,7 @@ main {
     border: 1px solid black;
 }
  
-
+.center { display: flex; justify-content: center; }
 .return {
 
     transition: all .3s;

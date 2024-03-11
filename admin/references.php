@@ -116,51 +116,61 @@ if(!empty($_SESSION['id'])) {
                     
                     <tr>
                     <?php 
-
                     // Get reference records
-                    while($row = mysqli_fetch_assoc($refData)) {
-                        
-                    ?> 
-                        <!-- <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td> -->
-                        <td><?php echo $row['assigned']; ?></td>
-                        <td><a class="link" href="accountability.php?id=<?php echo $row['id']; ?>"><?php echo $row['accountability_ref']; ?></a></td>
-                        
-                        <?php 
-                            $acctRef = $row['accountability_ref'];
-                            $turnoverRef = $row['turnover_ref'];
+                    $referenceTbl = $getAllRecord->getReferenceTable();
 
-                            if($acctRef == '') {
-                                echo "<td></td>";
-                                echo "<td></td>";
-                                echo "<td></td>";
-                            } else {                       
-                        ?>
-                        <td>N/A</td>
-                        <td>N/A</td>
+                    while($row = mysqli_fetch_assoc($referenceTbl)) {
+                        $assetId = $row['assetId'];
+                        $name = $row['name'];
+
+                        $refSql = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $assetId AND status!='Archive'");
+                        while($ref = mysqli_fetch_assoc($refSql)) {
+                            $acctRef = $ref['accountability_ref'];
+                            $turnoverRef = $ref['turnover_ref'];
+                        
+
+                        if($acctRef != '' || $turnoverRef != '') {
+                    ?> 
+                        <td><?php echo $name; ?></td>
+                    <?php 
+    
+
+                        if($acctRef == '') {
+                        
+                            echo "<td class=link>N/A</td>";
+                            echo "<td>" . $row['acctStatus'];"</td>";
+                            echo "<td>" . $row['acctDate'];"</td>";
+                            echo "<td><a class='center' href='#../update/accRefUpd.php?id=". $assetId ."'><img src='../assets/icons/update.png' width='24px'></a></td>";
+                        } else {                       
+                    ?>
+                        <td><a class="link" href="accountability.php?id=<?php echo $assetId; ?>"><?php echo $acctRef; ?></a></td>
+                        <td><?php echo $row['acctStatus']; ?></td>
+                        <td><?php echo $row['acctDate']; ?></td>
                         <td>
                             <center>
-                                <a href="#../update/referenceUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
-                                <a href="../update/remove.php?Acct_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                                <a href="#../update/referenceUpd.php?id=<?php echo $assetId; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
+                                <a href="../update/remove.php?Acct_id=<?php echo $assetId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                             </center>
                         </td>
                         <?php
                             }
                         ?>
-
-                        <td><a class="link" href="turnover.php?id=<?php echo $row['id']; ?>"><?php echo $row['turnover_ref']; ?></a></td>
+                            
                         <?php
                             if ($turnoverRef == '') {
-                                echo "<td></td>";
-                                echo "<td></td>";
-                                echo "<td></td>";
+                                echo "<td class=link>N/A</td>";
+                                echo "<td>" . $row['trnStatus'];"</td>";
+                                echo "<td>" . $row['trnDate'];"</td>";
+                                echo "<td><a class='center' href='#../update/trnRefUpd.php?id=". $assetId ."'><img src='../assets/icons/update.png' width='24px'></a></td>";
                             } else {
                         ?>
-                        <td>N/A</td>
-                        <td>N/A</td>
+                        <td><a class="link" href="turnover.php?id=<?php echo $assetId; ?>"><?php echo $turnoverRef; ?></a></td>
+                        <td><?php echo $row['trnStatus']; ?></td>
+                        <td><?php echo $row['trnDate']; ?></td>
                         <td width="1%">
                             <center>
-                                <a href="#../update/referenceUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
-                                <a href="../update/remove.php?Turnover_id=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                                <a href="#../update/referenceUpd.php?id=<?php echo $assetId; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
+                                <a href="../update/remove.php?Turnover_id=<?php echo $assetId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                             </center>
                         </td>    
                         <?php
@@ -171,6 +181,8 @@ if(!empty($_SESSION['id'])) {
                     
                     </tr>
                     <?php
+                        }
+                        }
                         }
                     ?>
                 </table>

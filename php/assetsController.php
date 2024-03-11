@@ -143,7 +143,7 @@ class assetsController {
                 $newStatus = 'Outdated';
             }
 
-            $db->conn->query("UPDATE assets_tbl SET assigned='', lastused='$lastusedby', dateturnover='$turnover', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1");
+            $db->conn->query("UPDATE assets_tbl SET assigned='', department='', location='', lastused='$lastusedby', dateturnover='$turnover', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1");
             
             $session = $select->selectUserById($_SESSION['id']);
             $name = $session['username'];

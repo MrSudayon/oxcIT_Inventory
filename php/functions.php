@@ -5,6 +5,9 @@
 $db = new Connection();
 $select = new Select();
 class Operations {
+    public $id;
+    public $select;
+    public $db;
     function record_Data($type, $tag, $mdl, $srl, $spplr, $cost, $repair_cost, $dtprchs, $stts, $rmrks, $cpu, $ram, $storage, $os, $others, $datedeployed, $assigned, $lastused, $provider, $mobile, $plan) {
         global $db;
         global $select;
@@ -313,5 +316,15 @@ class Operations {
 
         $db->conn->close();
     }
+
+
+    // Getting reference table values
+    function getReferenceTable() {
+        global $db;
+        $sql = mysqli_query($db->conn, "SELECT * FROM reference_tbl ORDER BY name ASC");
+
+        return $sql;  
+    }
+   
 }
 ?>

@@ -169,7 +169,7 @@ if(!empty($_SESSION['id'])) {
                                     $user = $results->selectAllEmp();
                                     foreach($user as $row) {
                             ?>
-                            <option value="<?php echo $row['name']; ?>">
+                            <option value="<?php echo $row['id']; ?>">
                                 <?php echo $row['name']; ?>
                             </option>
                             <?php

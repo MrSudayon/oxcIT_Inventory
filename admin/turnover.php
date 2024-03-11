@@ -32,8 +32,9 @@ if(isset($_GET['select'])) {
 
 // From reference Tab to existing Turnover form
 } elseif(isset($_GET['id'])) {
-    $assetId = $_GET['id'];
-    $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$assetId' AND status !='Archive'";
+    $userID = $_GET['id'];
+
+    $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
     $res = mysqli_query($db->conn, $sql);
     
     while($row = mysqli_fetch_assoc($res)) {
@@ -41,6 +42,8 @@ if(isset($_GET['select'])) {
         $dept = $row['department'];
         $turnover_ref = $row['turnover_ref'];
     }
+    
+    $assetUserID = mysqli_query($db->conn, "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'");    
 
 } else {
     ?>
@@ -110,6 +113,7 @@ if(isset($_GET['select'])) {
                 $assettag = $row['assettag'];
                 $assigned = $row['assigned'];
             }
+
             if ($turnover_ref == '') {
                 echo "<b>Ref#: " .$newCode. "</b>";
                 // $reference_Code = $newCode;
@@ -119,30 +123,23 @@ if(isset($_GET['select'])) {
                 }
                     $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                         VALUES ('', '$username', 'Generated turnover form: $assettag, Last used by: $assigned', NOW())");
+
+                // Insert turnover code to reference_tbl
+                $assetId = $userID;
+                $refQry = mysqli_query($db->conn, "INSERT INTO reference_tbl (id, assetId, name, acctStatus, acctDate, trnStatus, trnDate)
+                VALUES ('', '$assetId', '$assigned', '', '', 1, NOW())");
+
+                // 0 none
+                // 1 Process
+                // 2 Form signed
+
             } else {
                 echo "<b>Ref#: " . $turnover_ref . "</b>";
-                // $reference_Code = $turnover_ref;
     
-                    $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                        VALUES ('', '$username', 'Viewed turnover form for: $assigned', NOW())");
+                $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                VALUES ('', '$username', 'Viewed turnover form for: $assigned', NOW())");
             }
         }
-    } elseif(isset($_GET['id'])) {
-
-        $assetUserID = mysqli_query($db->conn, "SELECT DISTINCT * FROM assets_tbl WHERE id='$assetId' AND status !='Archive'");
-
-        while($row = mysqli_fetch_assoc($assetUserID)) {
-            $assettag = $row['assettag'];
-            $assigned = $row['assigned'];
-        }
-        
-        echo "<b>Ref#: " . $turnover_ref . "</b>";
-        // $reference_Code = $turnover_ref;
-
-            $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                VALUES ('', '$username', 'Viewed turnover form: $assettag, from Reference tbl Last used by: $assigned', NOW())");
-        
-
     } else {
         ?>
             <script> 
