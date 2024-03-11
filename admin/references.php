@@ -139,8 +139,8 @@ if(!empty($_SESSION['id'])) {
                         <?php
                             }
                         ?>
-                        <td>Signed</td>
-                        <td>03-06-2024</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
 
 
                         <td><a class="link" href="turnover.php?id=<?php echo $row['id']; ?>"><?php echo $row['turnover_ref']; ?></a></td>
@@ -157,8 +157,8 @@ if(!empty($_SESSION['id'])) {
                         <?php
                             }
                         ?>
-                        <td>Signed</td>
-                        <td>03-06-2024</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
                         <td>
                             <center>
                                 <a href="../update/referenceUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="18px"></a>&nbsp;

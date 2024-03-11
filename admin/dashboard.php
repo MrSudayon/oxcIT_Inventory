@@ -82,7 +82,7 @@ if(!empty($_SESSION['id'])) {
                     OR remarks LIKE '%$search%' OR Others LIKE '%$search%') ORDER BY assettag+0 ASC, assettype";
                 } else {
                     // $sql =  "SELECT * FROM assets_tbl WHERE status!='Archive' ORDER BY lpad(assettag, 10, 0) LIMIT ". $page_first_result . ',' . $results_per_page;
-                    $sql =  "SELECT * FROM assets_tbl WHERE status!='Archive' ORDER BY assettag+0 ASC, assettype LIMIT ". $page_first_result . ',' . $results_per_page;
+                    $sql =  "SELECT * FROM assets_tbl WHERE status!='Archive' ORDER BY assettag+0 ASC, assigned DESC LIMIT ". $page_first_result . ',' . $results_per_page;
                     
                 }
                 $res = mysqli_query($db->conn, $sql);
@@ -122,9 +122,13 @@ if(!empty($_SESSION['id'])) {
                 <td><?php echo $row['assettag']; ?></td>
                 <td><?php echo $row['model']; ?></td>
                 <td>
-                    <?php echo "CPU: " . $row['CPU'] . "
+                    <?php 
+
+                    // Logic if laptop/desktop = true {}
+                        echo "CPU: " . $row['CPU'] . "
                             <br>MEMORY: " . $row['MEMORY'] . "
-                            <br>STORAGE: " . $row['STORAGE']; ?>
+                            <br>STORAGE: " . $row['STORAGE']; 
+                    ?>
                 </td>
                     
                 <!-- <td> echo $row['CPU']; ?></td>

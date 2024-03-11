@@ -14,7 +14,7 @@ if(!empty($_SESSION['id'])) {
         if(isset($_POST['submit'])) {
 
             $result = $register->addLocation($_POST['name']);
-            $locaName = $_POST['name'];
+            $locName = $_POST['name'];
             
             if($result == 1) {
                 echo "<script> alert('Registration Successful'); </script>";
