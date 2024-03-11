@@ -7,9 +7,9 @@ function toggle(source) {
 }
 
 function checkDelete(){
-    return confirm('Are you sure you want to delete this Data?');
+    return confirm('🗑️Are you sure you want to delete this Data?');
 }
 
 function checkPrompt(){
-    return confirm('<iframe src="../assets/process-error.svg">"Confirm?');
+    return confirm('✔️Confirm?');
 }

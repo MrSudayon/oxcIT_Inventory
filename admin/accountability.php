@@ -29,7 +29,7 @@ if(isset($_GET['select'])) {
 } elseif(isset($_GET['selectAll'])) {
     ?>
         <script>
-            alert('Accountability handle per person only');
+            alert('Accountability handles per person only');
             window.location.replace('create_accountability.php');
         </script>
     <?php
@@ -113,20 +113,35 @@ if(isset($_GET['select'])) {
         } else {
 
             while($row = mysqli_fetch_assoc($assetUserID)) {
+                $id = $row['id'];
                 $assettag = $row['assettag'];
                 $assigned = $row['assigned'];
             }
+
+            // If assetId is existed in reference tbl
+            $refSql = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $id");
+            while($rowRef = mysqli_fetch_assoc($refSql)) {
+                $assetsId = $rowRef['assetId'];
+            }
+
             if ($acc_ref == '') {
                 echo "<b>Ref#: " .$newCode. "</b>";
                 // query to fetch code in assets_tbl
                 foreach ($selected as $userID) { 
-                    $sql = mysqli_query($db->conn, "UPDATE assets_tbl SET accountability_ref = '$newCode' WHERE id='$userID' AND status!='Archive'");
+                    $sql = mysqli_query($db->conn, "UPDATE assets_tbl SET accountability_ref='$newCode' WHERE id='$userID' AND status!='Archive'");
                 }
                 $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                         VALUES ('', '$username', 'Generated accountability form: $assettag, Last used by: $assigned', NOW())");
-
+                    
                 // Insert accountability code to reference_tbl
-
+                if($id != $assetsId || $assetsId == '') {
+                    $refQry = mysqli_query($db->conn, "INSERT INTO reference_tbl (id, assetId, name, acctStatus, acctDate, trnStatus, trnDate)
+                    VALUES ('', '$userID', '$assigned', 1, '', '', '')");
+                }
+                
+                // 0 N/A
+                // 1 Process
+                // 2 Signed
             } else {
                 echo "<b>Ref#: " . $acc_ref . "</b>";
                 $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
@@ -137,7 +152,7 @@ if(isset($_GET['select'])) {
     } else {
         echo "<b>Ref#: " . $acc_ref . "</b>";
     }
-        
+
     ?>
     </div>
         <table class="assets-table">

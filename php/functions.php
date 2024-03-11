@@ -8,7 +8,7 @@ class Operations {
     public $id;
     public $select;
     public $db;
-    function record_Data($type, $tag, $mdl, $srl, $spplr, $cost, $repair_cost, $dtprchs, $stts, $rmrks, $cpu, $ram, $storage, $os, $others, $datedeployed, $assigned, $lastused, $provider, $mobile, $plan) {
+    function record_Data($type, $tag, $mdl, $srl, $spplr, $cost, $repair_cost, $dtprchs, $stts, $rmrks, $cpu, $ram, $storage, $os, $others, $datedeployed, $empId, $lastused, $provider, $mobile, $plan) {
         global $db;
         global $select;
         $dept = "";
@@ -17,7 +17,7 @@ class Operations {
         $session = $select->selectUserById($_SESSION['id']);
         $name = $session['username'];
 
-        if(!isset($assigned) || $assigned == '') {
+        if(!isset($empId) || $empId == '') {
             $dept = "";
             $location = "";
             
@@ -26,9 +26,10 @@ class Operations {
                 $stts = 'Deployed';
             }
 
-            $sql = mysqli_query($db->conn,"SELECT * FROM employee_tbl WHERE name = '$assigned'");
+            $sql = mysqli_query($db->conn,"SELECT * FROM employee_tbl WHERE id = '$empId'");
 
             while($row = $sql->fetch_assoc()) {
+                $assigned = $row['name'];
                 $dept = $row['division'];
                 $location = $row['location'];
             } 

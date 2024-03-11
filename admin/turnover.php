@@ -3,7 +3,7 @@ require '../php/db_connection.php';
 
 $select = new Select();
 $db = new Connection();
-
+$functions = new Operations();
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
     $username = $user['username'];
@@ -110,32 +110,39 @@ if(isset($_GET['select'])) {
             <?php
         } else {
             while($row = mysqli_fetch_assoc($assetUserID)) {
+                $id = $row['id'];
                 $assettag = $row['assettag'];
                 $assigned = $row['assigned'];
+            }
+            // If assetId is existed in reference tbl
+            $refSql = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $id");
+            while($rowRef = mysqli_fetch_assoc($refSql)) {
+                $assetsId = $rowRef['assetId'];
             }
 
             if ($turnover_ref == '') {
                 echo "<b>Ref#: " .$newCode. "</b>";
-                // $reference_Code = $newCode;
-                // query to fetch code in assets_tbl
+
+                // query to fetch and update assets_tbl
                 foreach ($selected as $userID) { 
                     $sql = mysqli_query($db->conn, "UPDATE assets_tbl SET turnover_ref = '$newCode' WHERE id='$userID' AND status!='Archive'");
                 }
                     $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                         VALUES ('', '$username', 'Generated turnover form: $assettag, Last used by: $assigned', NOW())");
 
-                // Insert turnover code to reference_tbl
-                $assetId = $userID;
-                $refQry = mysqli_query($db->conn, "INSERT INTO reference_tbl (id, assetId, name, acctStatus, acctDate, trnStatus, trnDate)
-                VALUES ('', '$assetId', '$assigned', '', '', 1, NOW())");
 
-                // 0 none
+                // Insert accountability code to reference_tbl
+                if($id != $assetsId) {
+                    $refQry = mysqli_query($db->conn, "INSERT INTO reference_tbl (id, assetId, name, acctStatus, acctDate, trnStatus, trnDate)
+                    VALUES ('', '$userID', '$assigned', '', '', 1, '')");
+                }
+                
+                // 0 N/A
                 // 1 Process
-                // 2 Form signed
-
+                // 2 Signed
             } else {
                 echo "<b>Ref#: " . $turnover_ref . "</b>";
-    
+                
                 $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                 VALUES ('', '$username', 'Viewed turnover form for: $assigned', NOW())");
             }

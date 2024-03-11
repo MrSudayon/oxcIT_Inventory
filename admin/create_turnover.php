@@ -51,7 +51,7 @@ if(!empty($_SESSION['id'])) {
         <div class="table-nav">
             <div class="link-btns">
                 <!-- <a href="add-assets.php" class="link-btn"></a> -->
-                <button type="submit" formaction="turnover.php" class="link-btn" name="turnover">Generate</button>
+                <button type="submit" formaction="turnover.php" class="link-btn" name="turnover" onclick="return checkPrompt()">Generate</button>
             </div>
             <?php
                 $sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive' AND assigned!=''";

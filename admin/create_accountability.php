@@ -51,7 +51,7 @@ if(!empty($_SESSION['id'])) {
         <div class="table-nav">
             <div class="link-btns">
                 <!-- <a href="add-assets.php" class="link-btn"></a> -->
-                <button type="submit" formaction="accountability.php" class="link-btn" name="accountability">Generate</button>
+                <button type="submit" formaction="accountability.php" class="link-btn" name="accountability" onclick="return checkPrompt()">Generate</button>
             </div>
             <?php
                 // $searchData = $getAllRecord->searchDataPagination();
@@ -171,5 +171,6 @@ if(!empty($_SESSION['id'])) {
 </div>
 
 
+<script src="../js/dashboard.js"></script>
 </body>
 </html>
