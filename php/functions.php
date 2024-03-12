@@ -37,8 +37,8 @@ class Operations {
         }          
         
         
-        $query = "INSERT INTO assets_tbl (id, department, assettype, assettag, model, serial, supplier, CPU, MEMORY, STORAGE, OS, Others, assigned, lastused, status, location, datepurchased, cost, repair_cost, remarks, datedeployed)
-                                VALUES ('','$dept','$type','$tag','$mdl','$srl','$spplr','$cpu','$ram','$storage','$os','$others','$assigned','$lastused','$stts','$location','$dtprchs', '$cost', '$repair_cost','$rmrks','$datedeployed')";
+        $query = "INSERT INTO assets_tbl (id, department, assettype, assettag, model, serial, supplier, CPU, MEMORY, STORAGE, OS, Others, empId, assigned, lastused, status, location, datepurchased, cost, repair_cost, remarks, datedeployed)
+                                VALUES ('','$dept','$type','$tag','$mdl','$srl','$spplr','$cpu','$ram','$storage','$os','$others','$empId','$assigned','$lastused','$stts','$location','$dtprchs', '$cost', '$repair_cost','$rmrks','$datedeployed')";
         $result = mysqli_query($db->conn, $query);
 
         if($result) { 

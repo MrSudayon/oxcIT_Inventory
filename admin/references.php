@@ -124,17 +124,34 @@ if(!empty($_SESSION['id'])) {
                         $name = $row['name'];
                         $accStatus = $row['acctStatus'];
                         $trnStatus = $row['trnStatus'];
-                        if($accStatus == 1) {
-                            $accStatus = 'Signed';
-                        } else {
-                            $accStatus = 'On Process';
-                        } 
-
-                        if($trnStatus == 1) {
-                            $trnStatus = 'Signed';
-                        } else {
-                            $trnStatus = 'On Process';
+                        
+                        // 0 N/A
+                        // 1 Process
+                        // 2 Signed
+                        switch($accStatus) {
+                            case 1:
+                                $accStatus = 'On Process';
+                                break;
+                            case 2:
+                                $accStatus = 'Signed';
+                                break;
+                            default:
+                                $accStatus = 'N/A';
                         }
+                            
+                        switch($trnStatus) {
+                            case 1:
+                                $trnStatus = 'On Process';
+                                break;
+                            case 2:
+                                $trnStatus = 'Signed';
+                                break;
+                            default:
+                                $trnStatus = 'N/A';
+                        }
+
+                        
+
 
                         $refSql = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $assetId AND status!='Archive'");
                         while($ref = mysqli_fetch_assoc($refSql)) {

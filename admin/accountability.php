@@ -35,17 +35,21 @@ if(isset($_GET['select'])) {
     <?php
 } elseif(isset($_GET['id'])) {
     $userID = $_GET['id'];
-
-    $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
-    $res = mysqli_query($db->conn, $sql);
+    $assetUserID =  mysqli_query($db->conn,"SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'");
     
-    while($row = mysqli_fetch_assoc($res)) {
-        $name = $row['assigned'];
-        $dept = $row['department'];
+    while($row = mysqli_fetch_assoc($assetUserID)) {
         $acc_ref = $row['accountability_ref'];
+        $empId = $row['empId'];
+        $assettag = $row['assettag'];
+        $assigned = $row['assigned'];    
     }
+
+    $empSql = mysqli_query($db->conn, "SELECT * FROM employee_tbl WHERE id='$empId' AND status=1");
+    $row1 = $empSql->fetch_assoc();
     
-    $assetUserID = mysqli_query($db->conn, "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'");    
+    $name = $row1['name'];
+    $dept = $row1['division'];
+    
 } else {
     ?>
         <script>
@@ -119,6 +123,7 @@ if(isset($_GET['select'])) {
             }
 
             // If assetId is existed in reference tbl
+            global $assetsId;
             $refSql = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $id");
             while($rowRef = mysqli_fetch_assoc($refSql)) {
                 $assetsId = $rowRef['assetId'];
@@ -195,11 +200,11 @@ if(isset($_GET['select'])) {
                 }
             } elseif(isset($_GET['id'])) {
                 $userID = $_GET['id'];
-
-                while($row = mysqli_fetch_assoc($assetUserID)) {
-                    $assettag = $row['assettag'];
-                    $assigned = $row['assigned'];
-                }
+                global $name;
+                global $dept;
+                // while($row = mysqli_fetch_assoc($assetUserID)) {
+                    
+                // }
                 $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                         VALUES ('', '$username', 'Viewed accountability form: $assettag, from Reference tbl Last used by: $assigned', NOW())");
 
@@ -226,9 +231,6 @@ if(isset($_GET['select'])) {
             <?php
                 }
             }
-
-            // Accountability Details
-            
             ?>
         </table>
         <div class="info"><br>

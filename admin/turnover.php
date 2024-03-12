@@ -134,7 +134,7 @@ if(isset($_GET['select'])) {
                 // Insert accountability code to reference_tbl
                 if($id != $assetsId) {
                     $refQry = mysqli_query($db->conn, "INSERT INTO reference_tbl (id, assetId, name, acctStatus, acctDate, trnStatus, trnDate)
-                    VALUES ('', '$userID', '$assigned', '', '', 1, '')");
+                    VALUES ('', '$userID', '$assigned', 1, '', '', '')");
                 }
                 
                 // 0 N/A
