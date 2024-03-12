@@ -311,6 +311,22 @@ class assetsController {
             return false;
         } 
     }
+
+
+    // Reference Update
+    public function editReference($id) {
+        global $db;
+
+        $refId = mysqli_real_escape_string($db->conn, $id);
+        $sql = "SELECT * FROM reference_tbl WHERE assetId='$refId'";
+        $res = mysqli_query($db->conn, $sql);
+        if($res->num_rows == 1){
+            $data = $res->fetch_assoc();
+            return $data;
+        } else {
+            return false;
+        }
+    }
 }
 
 ?>

@@ -43,13 +43,6 @@ if(isset($_GET['select'])) {
         $assettag = $row['assettag'];
         $assigned = $row['assigned'];    
     }
-
-    $empSql = mysqli_query($db->conn, "SELECT * FROM employee_tbl WHERE id='$empId' AND status=1");
-    $row1 = $empSql->fetch_assoc();
-    
-    $name = $row1['name'];
-    $dept = $row1['division'];
-    
 } else {
     ?>
         <script>
@@ -122,12 +115,8 @@ if(isset($_GET['select'])) {
                 $assigned = $row['assigned'];
             }
 
-            // If assetId is existed in reference tbl
-            global $assetsId;
-            $refSql = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $id");
-            while($rowRef = mysqli_fetch_assoc($refSql)) {
-                $assetsId = $rowRef['assetId'];
-            }
+           
+            
 
             if ($acc_ref == '') {
                 echo "<b>Ref#: " .$newCode. "</b>";
@@ -138,10 +127,16 @@ if(isset($_GET['select'])) {
                 $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                         VALUES ('', '$username', 'Generated accountability form: $assettag, Last used by: $assigned', NOW())");
                     
+
+                // If assetId is existed in reference tbl
+                $refSql = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $id");
+
                 // Insert accountability code to reference_tbl
-                if($id != $assetsId || $assetsId == '') {
+                if(!$refSql) {
                     $refQry = mysqli_query($db->conn, "INSERT INTO reference_tbl (id, assetId, name, acctStatus, acctDate, trnStatus, trnDate)
                     VALUES ('', '$userID', '$assigned', 1, '', '', '')");
+                } else {
+                    $refQry = mysqli_query($db->conn, "UPDATE reference_tbl SET acctStatus=1");
                 }
                 
                 // 0 N/A
@@ -200,8 +195,8 @@ if(isset($_GET['select'])) {
                 }
             } elseif(isset($_GET['id'])) {
                 $userID = $_GET['id'];
-                global $name;
-                global $dept;
+
+                
                 // while($row = mysqli_fetch_assoc($assetUserID)) {
                     
                 // }
@@ -229,6 +224,11 @@ if(isset($_GET['select'])) {
                 
                 </tr>
             <?php
+                }
+                $empSql = mysqli_query($db->conn, "SELECT * FROM employee_tbl WHERE id='$empId'");
+                while($row1 = mysqli_fetch_assoc($empSql)) {
+                    $name = $row1['name'];
+                    $dept = $row1['division'];
                 }
             }
             ?>

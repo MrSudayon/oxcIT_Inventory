@@ -150,9 +150,6 @@ if(!empty($_SESSION['id'])) {
                                 $trnStatus = 'N/A';
                         }
 
-                        
-
-
                         $refSql = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $assetId AND status!='Archive'");
                         while($ref = mysqli_fetch_assoc($refSql)) {
                             $acctRef = $ref['accountability_ref']; 
@@ -163,12 +160,11 @@ if(!empty($_SESSION['id'])) {
                         if($acctRef != '' || $turnoverRef != '') {
                             
                             if($name!='' && $name1=='') {
-                                echo "<tr style='background-color: pink;'>";
+                                echo "<tr style='background-color: #afafaf ;'>";
                             } else {
                                 echo "<tr>";
                             }
                     ?> 
-                    
                         <td><?php echo $name; ?></td>
                     <?php 
     
@@ -207,7 +203,7 @@ if(!empty($_SESSION['id'])) {
                         <td><?php echo $row['trnDate']; ?></td>
                         <td>
                             <center>
-                                <a href="#../update/referenceUpd.php?id=<?php echo $assetId; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
+                                <a href="../update/referenceUpd.php?id=<?php echo $assetId; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
                                 <a href="../update/remove.php?Turnover_id=<?php echo $assetId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                             </center>
                         </td>    

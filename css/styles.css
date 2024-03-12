@@ -28,7 +28,8 @@ a {
 body {
     position: absolute;
 
-    background-color: var(--ter-color);
+    /* background-color: var(--ter-color); */
+    background: var(--bg-color);
     color: rgb(255, 246, 246);
     font-family: "Rubik", sans-serif;
     min-height: 100dvh;
@@ -130,7 +131,7 @@ main {
 }
 
 .assets-table, table {
-    background-color: #b1b1b1;
+    background-color: #e4e4e4;
     color: black;
     font-size: 12px;
     width: 100%;

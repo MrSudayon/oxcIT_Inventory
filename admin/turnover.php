@@ -109,16 +109,16 @@ if(isset($_GET['select'])) {
                 </script> 
             <?php
         } else {
+
+            // assets tbl
             while($row = mysqli_fetch_assoc($assetUserID)) {
-                $id = $row['id'];
+                $id = $row['id']; //assetId 
                 $assettag = $row['assettag'];
                 $assigned = $row['assigned'];
             }
-            // If assetId is existed in reference tbl
-            $refSql = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $id");
-            while($rowRef = mysqli_fetch_assoc($refSql)) {
-                $assetsId = $rowRef['assetId'];
-            }
+            
+            
+            
 
             if ($turnover_ref == '') {
                 echo "<b>Ref#: " .$newCode. "</b>";
@@ -131,12 +131,16 @@ if(isset($_GET['select'])) {
                         VALUES ('', '$username', 'Generated turnover form: $assettag, Last used by: $assigned', NOW())");
 
 
+                // If assetId is existing in reference tbl
+                $refSql = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $id");
+
                 // Insert accountability code to reference_tbl
-                if($id != $assetsId) {
+                if(!$refSql) {
                     $refQry = mysqli_query($db->conn, "INSERT INTO reference_tbl (id, assetId, name, acctStatus, acctDate, trnStatus, trnDate)
-                    VALUES ('', '$userID', '$assigned', 1, '', '', '')");
+                    VALUES ('', '$userID', '$assigned', '', '', 1, '')");
+                } else {
+                    $refQry = mysqli_query($db->conn, "UPDATE reference_tbl SET trnStatus=1 WHERE assetId = $id");
                 }
-                
                 // 0 N/A
                 // 1 Process
                 // 2 Signed
@@ -147,6 +151,22 @@ if(isset($_GET['select'])) {
                 VALUES ('', '$username', 'Viewed turnover form for: $assigned', NOW())");
             }
         }
+        
+    // From reference Tab to existing Turnover form
+    } elseif(isset($_GET['id'])) {
+        $userID = $_GET['id'];
+
+        $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
+        $res = mysqli_query($db->conn, $sql);
+        
+        while($row = mysqli_fetch_assoc($res)) {
+            $name = $row['assigned'];
+            $dept = $row['department'];
+            $turnover_ref = $row['turnover_ref'];
+        }
+        
+        $assetUserID = mysqli_query($db->conn, "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'");    
+
     } else {
         ?>
             <script> 
