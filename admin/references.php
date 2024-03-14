@@ -149,13 +149,6 @@ if(!empty($_SESSION['id'])) {
                     }
 
                     if($acctRef != '' || $turnoverRef != '') {
-                        
-                        if($name!='' && $name1=='') {
-                            echo "<tr style='background-color: #afafaf ;'>";
-                        } else {
-                            echo "<tr>";
-                        }
-
                         switch($accStatus) {
                             case 1:
                                 $accStatus = 'On Process';
@@ -177,6 +170,12 @@ if(!empty($_SESSION['id'])) {
                             default:
                                 $trnStatus = 'N/A';
                         }
+                        
+                        if($name!='' && $name1=='') {
+                            echo "<tr style='background-color: #afafaf ;'>";
+                        } else {
+                            echo "<tr>";
+                        }
                         ?> 
                         
                         <td><?php echo $name; ?></td>
@@ -192,7 +191,7 @@ if(!empty($_SESSION['id'])) {
                         } else {               
                         ?>
                             <td><a class="link" href="accountability.php?id=<?php echo $assetId; ?>"><?php echo $acctRef;?></a></td>
-                            <td width="10%;"><a class="link" href="<?php echo $row['acctFile']; ?>" target="_blank"><?php echo $row['acctFile']; ?></td>
+                            <td width="10%;"><a class="link" href="../files/download.php?acctRef_id=<?php echo $row['id']; ?>" target="_blank"><?php echo $row['acctFile']; ?></td>
                             <td><?php echo $accStatus; ?></td>
                             <td><?php echo $row['acctDate']; ?></td>
                             <td>
@@ -222,7 +221,7 @@ if(!empty($_SESSION['id'])) {
                         } else {
                         ?>
                             <td><a class="link" href="turnover.php?id=<?php echo $assetId; ?>"><?php echo $turnoverRef; ?></a></td>
-                            <td width="10%;"><?php echo $row['trnFile']; ?></td>
+                            <td width="10%;"><a class="link" href="../files/download.php?trnRef_id=<?php echo $row['id']; ?>" download target="_blank"><?php echo $row['trnFile']; ?></td>
                             <td><?php echo $trnStatus; ?></td>
                             <td><?php echo $row['trnDate']; ?></td>
                             <td>

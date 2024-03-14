@@ -329,7 +329,7 @@ class assetsController {
             return false;
         }
     }
-    public function updateReference($input, $id, $acctFile, $trnFile) {
+    public function updateReference($input, $id) {
         global $db;
         global $session;
 
@@ -338,12 +338,13 @@ class assetsController {
         $acctDate = $input['acctDate'];
         $trnStatus = $input['trnStatus'];
         $trnDate = $input['trnDate'];
+        $acctFile = $input['acctFile'];
+        $trnFile = $input['trnFile'];
      
         $refId = mysqli_real_escape_string($db->conn, $id);
-        $acctFile1 = mysqli_real_escape_string($db->conn, $acctFile);
-        $trnFile1 = mysqli_real_escape_string($db->conn, $trnFile);
+        
 
-        $sql = "UPDATE reference_tbl SET acctStatus = '$acctStatus', acctFile='$acctFile1', acctDate = '$acctDate', trnStatus = '$trnStatus', trnFile = '$trnFile1', trnDate = '$trnDate' WHERE id = '$refId'";
+        $sql = "UPDATE reference_tbl SET acctStatus = '$acctStatus', acctFile='$acctFile', acctDate = '$acctDate', trnStatus = '$trnStatus', trnFile = '$trnFile', trnDate = '$trnDate' WHERE id = '$refId'";
         $result = $db->conn->query($sql);
 
         $name = $session['username'];

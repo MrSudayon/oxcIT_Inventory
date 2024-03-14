@@ -55,7 +55,7 @@ if(!empty($_SESSION['id'])) {
                     $data = $res->fetch_assoc();
     
             ?>
-                <form action="../admin/update-selected.php" method="POST">
+                <form action="../admin/update-selected.php" method="POST" enctype="multipart/form-data">
                     <div class="asset-details">
                         <input type="hidden" name="id" value="<?=$result['id']?>">
 
@@ -96,6 +96,7 @@ if(!empty($_SESSION['id'])) {
                                         <option value="1">On Process</option>
                                         <option value="2">Signed</option>
                                     <?php
+                                    break;
                             }
                             ?>
                                 
@@ -103,7 +104,7 @@ if(!empty($_SESSION['id'])) {
                         </div>
                         <div class="input-box">
                             <span class="details">Accountability File</span>
-                            <input type="file" name="acctfile" accept="files/*" value="<?=$result['acctFile']?>">
+                            <input type="file" name="acctfile" id="acctfile" accept="files/*" value="<?=$result['acctFile']?>">
                         </div>
                         <div class="input-box">
                             <span class="details">Date</span>

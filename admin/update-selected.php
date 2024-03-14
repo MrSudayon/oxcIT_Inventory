@@ -172,32 +172,77 @@ if(isset($_POST['updateLocation'])) {
 }
 
 // Reference update
-$newFileName = null;
 if(isset($_POST['update-reference'])) {
     $id = mysqli_real_escape_string($db->conn,$_POST['id']);
+    $trnFileName = '';
+    $accFileName = '';
     if (isset($_FILES['acctfile']) && $_FILES['acctfile']['error'] === UPLOAD_ERR_OK) {
-  
+
         // uploaded file details
-    
-        $fileTmpPath = $_FILES['acctfile']['tmp_name'];
-    
-        $fileName = $_FILES['acctfile']['name'];
-    
+        $fileTmpPath = $_FILES["acctfile"]['tmp_name'];
+
+        $accFileName = basename($_FILES["acctfile"]['name']);
+        print_r($accFileName);
+        
         $fileSize = $_FILES['acctfile']['size'];
     
         $fileType = $_FILES['acctfile']['type'];
     
-        $fileNameCmps = explode(".", $fileName);
+        $fileNameCmps = explode(".", $accFileName);
+    
+        $fileExtension = strtolower(end($fileNameCmps));
+        print_r($fileNameCmps);
+        
+        $uploaddir = '../files/accountability/' . $_FILES['acctfile']['name'];
+    
+        // file extensions allowed
+        $allowedfileExtensions = array('jpg', 'gif', 'png', 'zip', 'txt', 'xls', 'xlsx', 'doc');
+    
+        if (in_array($fileExtension, $allowedfileExtensions)) {
+    
+            if(move_uploaded_file($fileTmpPath, $uploaddir)) {
+                ?>
+                    <script>
+                        alert("File uploaded successfully");
+                    </script>	
+                <?php
+            } else {
+                ?>
+                    <script>
+                        alert("File upload fail");
+                    </script>	
+                <?php
+                $message = 'An error occurred while uploading the file to the destination directory. Ensure that the web server has access to write in the path directory.';
+            }
+    
+        } else {
+            $message = 'Upload failed as the file type is not acceptable. The allowed file types are:' . implode(',', $allowedfileExtensions);
+        }
+    }
+
+    if (isset($_FILES['trnfile']) && $_FILES['trnfile']['error'] === UPLOAD_ERR_OK) {
+
+        // uploaded file details
+        $fileTmpPath = $_FILES["trnfile"]['tmp_name'];
+
+        $trnFileName = basename($_FILES["trnfile"]['name']);
+        
+        $fileSize = $_FILES['trnfile']['size'];
+    
+        $fileType = $_FILES['trnfile']['type'];
+    
+        $fileNameCmps = explode(".", $trnFileName);
+        print_r($fileNameCmps);
     
         $fileExtension = strtolower(end($fileNameCmps));
         
-        $uploaddir = '../files/accountability/';
+        $uploaddir = '../files/turnover/';
         
         // removing extra spaces
-        $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
-    
+        $newFileName = md5(time() . $trnFileName) . '.' . $fileExtension;
+        
         // file extensions allowed
-        $allowedfileExtensions = array('jpg', 'gif', 'png', 'zip', 'txt', 'xls', 'doc');
+        $allowedfileExtensions = array('jpg', 'png', 'zip', 'txt', 'xls', 'xlsx', 'doc');
     
         if (in_array($fileExtension, $allowedfileExtensions)) {
     
@@ -210,15 +255,18 @@ if(isset($_POST['update-reference'])) {
                         alert("File uploaded successfully");
                     </script>	
                 <?php
-
             } else {
+                ?>
+                    <script>
+                        alert("File upload fail");
+                    </script>	
+                <?php
                 $message = 'An error occurred while uploading the file to the destination directory. Ensure that the web server has access to write in the path directory.';
             }
     
         } else {
-            $message = 'Upload failed as the file type is not acceptable. The allowed file types are:' . implode(',', $allowedfileExtensions);
+            echo ('Upload failed as the file type is not acceptable. The allowed file types are:' . implode(',', $allowedfileExtensions));
         }
-  
     }
     
 
@@ -226,27 +274,27 @@ if(isset($_POST['update-reference'])) {
         'name' => mysqli_real_escape_string($db->conn,$_POST['name']),
         'acctStatus' => mysqli_real_escape_string($db->conn,$_POST['acctStatus']),
         'acctDate' => mysqli_real_escape_string($db->conn,$_POST['acctDate']),
-        // 'acctFile' => $newFileName,
+        'acctFile' => mysqli_real_escape_string($db->conn,$accFileName),
 
         'trnStatus' => mysqli_real_escape_string($db->conn,$_POST['trnStatus']),
         'trnDate' => mysqli_real_escape_string($db->conn,$_POST['trnDate']),
-        // 'trnFile' => $trnFile,
+        'trnFile' => mysqli_real_escape_string($db->conn,$trnFileName),
     ];
-    $acctFile = $newFileName;
-    $trnFile = $newFileName;
 
-    $result = $asset->updateReference($input, $id, $acctFile, $trnFile);
+   
+    $result = $asset->updateReference($input, $id);
 
     if($result) {
         echo "<script>
         alert('✅Update Successful');
         window.location.href='../admin/references.php';
         </script>";
-        // die();
+        die();
 
     } else {
         echo "<script>
         alert('⚠️Update Error');
+        window.location.href='../admin/references.php';
         </script>";
         die();
     }
