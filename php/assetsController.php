@@ -2,6 +2,10 @@
 // include_once '../php/db_connection.php';
 $select = new Select();
 
+if(isset($_SESSION['id'])) {
+    $session = $select->selectUserById($_SESSION['id']);
+}
+
 class assetsController {
 
     public function edit($id) {
@@ -106,7 +110,7 @@ class assetsController {
 
     public function assetTurnover($input, $id) {
         global $db;
-        global $select;
+        global $session;
 
         $assetID = mysqli_real_escape_string($db->conn, $id);
         $turnover = $input['turnover'];
@@ -145,7 +149,6 @@ class assetsController {
 
             $db->conn->query("UPDATE assets_tbl SET assigned='', department='', location='', lastused='$lastusedby', dateturnover='$turnover', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1");
             
-            $session = $select->selectUserById($_SESSION['id']);
             $name = $session['username'];
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                                 VALUES('', '$name', 'Turnover asset: $assetName ID: $assetID' , NOW())");
@@ -162,6 +165,8 @@ class assetsController {
     // Emp
     public function empEdit($id) {
         global $db;
+        global $session;
+
         $empID = mysqli_real_escape_string($db->conn, $id);
         $empQuery = "SELECT * FROM employee_tbl WHERE id='$empID'";
         $res = mysqli_query($db->conn, $empQuery);
@@ -174,7 +179,7 @@ class assetsController {
     }
     public function empUpdate($input, $id) {
         global $db;
-        global $select;
+        global $session;
 
         $empID = mysqli_real_escape_string($db->conn, $id);
         $empname = $input['name'];
@@ -183,7 +188,6 @@ class assetsController {
         $status = $input['status'];
         
         // Get current user for History record....
-        $session = $select->selectUserById($_SESSION['id']);
         $name = $session['username'];
 
         // validation of Turnover reference code
@@ -215,14 +219,13 @@ class assetsController {
     }
     public function assetItemUpdate($input, $id) {
         global $db;
-        global $select;
+        global $session;
 
         $assetItemID = mysqli_real_escape_string($db->conn, $id);
         $assetname = $input['name'];
         $status = $input['status'];
         
         // Get current user for History record....
-        $session = $select->selectUserById($_SESSION['id']);
         $name = $session['username'];
 
         // validation of Turnover reference code
@@ -254,7 +257,7 @@ class assetsController {
     }
     public function divisionUpdate($input, $id) {
         global $db;
-        global $select;
+        global $session;
 
         $divID = mysqli_real_escape_string($db->conn, $id);
         $divname = $input['name'];
@@ -264,7 +267,6 @@ class assetsController {
         $qry = "UPDATE dept_tbl SET name='$divname', status='$status' WHERE id='$divID' LIMIT 1";
         $result = $db->conn->query($qry);
 
-        $session = $select->selectUserById($_SESSION['id']);
         $name = $session['username'];
         if($result) {
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
@@ -278,6 +280,7 @@ class assetsController {
 
     public function locationEdit($id) {
         global $db;
+
         $ID = mysqli_real_escape_string($db->conn, $id);
         $locQuery = "SELECT * FROM loc_tbl WHERE id='$ID'";
         $res = mysqli_query($db->conn, $locQuery);
@@ -290,7 +293,7 @@ class assetsController {
     }
     public function locationUpdate($input, $id) {
         global $db;
-        global $select;
+        global $session;
 
         $ID = mysqli_real_escape_string($db->conn, $id);
         $locName = $input['name'];
@@ -300,7 +303,6 @@ class assetsController {
         $qry = "UPDATE loc_tbl SET name='$locName', status='$status' WHERE id='$ID' LIMIT 1";
         $result = $db->conn->query($qry);
 
-        $session = $select->selectUserById($_SESSION['id']);
         $name = $session['username'];
         if($result) {
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
@@ -326,6 +328,32 @@ class assetsController {
         } else {
             return false;
         }
+    }
+    public function updateReference($input, $id) {
+        global $db;
+        global $session;
+
+        $refName = $input['name'];
+        $acctStatus = $input['acctStatus'];
+        $acctDate = $input['acctDate'];
+        $trnStatus = $input['trnStatus'];
+        $trnDate = $input['trnDate'];
+        $acctFile = $input['acctFile'];
+        $trnFile = $input['trnFile'];
+        $refId = mysqli_real_escape_string($db->conn, $id);
+
+        $sql = "UPDATE reference_tbl SET acctStatus = '$acctStatus', acctFile='$acctFile', acctDate = '$acctDate', trnStatus = '$trnStatus', trnFile = '$trnFile', trnDate = '$trnDate' WHERE id = '$refId'";
+        $result = $db->conn->query($sql);
+
+        $name = $session['username'];
+        if($result) {
+            mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+            VALUES('', '$name', 'Updated reference ID: $refId. Name: $refName' , NOW())");
+
+            return true;
+        } else {
+            return false;
+        } 
     }
 }
 

@@ -41,7 +41,7 @@ if(!empty($_SESSION['id'])) {
             <?php
             if(isset($_GET['id']))
             {
-                $refId = mysqli_real_escape_string($db->conn, $_GET['id']);
+                $refId = mysqli_real_escape_string($db->conn, $_GET['id']); // assetId from reference tbl
                 $ref = new assetsController;
                 $result = $ref->editReference($refId);
 
@@ -49,18 +49,19 @@ if(!empty($_SESSION['id'])) {
                     
                     $trnStatus = $result['trnStatus'];
                     $accStatus = $result['acctStatus'];
-                    $empId = $result['assetId'];
                     
-                    $sql = "SELECT * FROM assets_tbl WHERE id='$empId'";
+                    $sql = "SELECT * FROM assets_tbl WHERE id='$refId'";
                     $res = mysqli_query($db->conn, $sql);
                     $data = $res->fetch_assoc();
     
             ?>
                 <form action="../admin/update-selected.php" method="POST">
                     <div class="asset-details">
+                        <input type="hidden" name="id" value="<?=$result['id']?>">
+
                         <div class="input-box" style="width: 100%;">
                             <span class="details">Name</span>
-                            <input type="text" name="name" id="name" value="<?=$result['name']?>" style="background-color: #ccc;" readonly>
+                            <input type="text" name="name" value="<?=$result['name']?>" style="background-color: #ccc;" readonly>
                         </div>
                         <div class="input-box">
                             <span class="details">Accountability Code</span>
@@ -68,7 +69,7 @@ if(!empty($_SESSION['id'])) {
                         </div>
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Status</span>
-                            <select name="trnStatus">
+                            <select name="acctStatus">
 
                             <?php
                             switch($accStatus) {
@@ -89,11 +90,20 @@ if(!empty($_SESSION['id'])) {
                                     <?php
                                     break;
                                 default:
-                                    $trnStatus = 'N/A';
+                                    $accStatus = 'N/A';
+                                    ?>
+                                        <option value="<?=$result['acctStatus']?>"><?php echo $accStatus; ?></option>
+                                        <option value="1">On Process</option>
+                                        <option value="2">Signed</option>
+                                    <?php
                             }
                             ?>
                                 
                             </select>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Accountability File</span>
+                            <input type="file" name="acctfile" accept="files/*" value="<?=$result['acctFile']?>">
                         </div>
                         <div class="input-box">
                             <span class="details">Date</span>
@@ -130,10 +140,19 @@ if(!empty($_SESSION['id'])) {
                                     break;
                                 default:
                                     $trnStatus = 'N/A';
+                                    ?>
+                                        <option value="<?=$result['trnStatus']?>"><?php echo $trnStatus; ?></option>
+                                        <option value="1">On Process</option>
+                                        <option value="2">Signed</option>
+                                    <?php
                             }
                             ?>
                                 
                             </select>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Turnover File</span>
+                            <input type="file" name="trnfile" accept="files/*" value="<?=$result['trnFile']?>">
                         </div>
                         <div class="input-box">
                             <span class="details">Date</span>

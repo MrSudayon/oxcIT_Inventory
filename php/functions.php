@@ -4,17 +4,20 @@
 
 $db = new Connection();
 $select = new Select();
+
+if(isset($_SESSION['id'])) {
+    $session = $select->selectUserById($_SESSION['id']);
+}
 class Operations {
     public $id;
     public $select;
     public $db;
     function record_Data($type, $tag, $mdl, $srl, $spplr, $cost, $repair_cost, $dtprchs, $stts, $rmrks, $cpu, $ram, $storage, $os, $others, $datedeployed, $empId, $lastused, $provider, $mobile, $plan) {
         global $db;
-        global $select;
+        
         $dept = "";
         $location = "";
         // $specification = $cpu . ", " . $ram . ", " . $storage . ", " . $os . ", " . $others;  
-        $session = $select->selectUserById($_SESSION['id']);
         $name = $session['username'];
 
         if(!isset($empId) || $empId == '') {

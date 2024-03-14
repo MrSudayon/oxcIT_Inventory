@@ -17,11 +17,6 @@ class Connection {
             die ("Connection Failed: ".mysqli_error($this->conn));
         }
     }
-
-    // public function check($a) {
-    //     $return = mysqli_real_escape_string($this->conn,$a);
-    //     return $return;
-    // }
 }
 
 class AddItems extends Connection {

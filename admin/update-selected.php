@@ -171,4 +171,83 @@ if(isset($_POST['updateLocation'])) {
     }
 }
 
+// Reference update
+if(isset($_POST['update-reference'])) {
+    $id = mysqli_real_escape_string($db->conn,$_POST['id']);
+
+    if (isset($_FILES['acctfile']) && $_FILES['acctfile']['error'] === UPLOAD_ERR_OK) {
+  
+        // uploaded file details
+    
+        $fileTmpPath = $_FILES['acctfile']['tmp_name'];
+    
+        $fileName = $_FILES['acctfile']['name'];
+    
+        $fileSize = $_FILES['acctfile']['size'];
+    
+        $fileType = $_FILES['acctfile']['type'];
+    
+        $fileNameCmps = explode(".", $fileName);
+    
+        $fileExtension = strtolower(end($fileNameCmps));
+        
+        $uploaddir = '../files/accountability/';
+        
+        // removing extra spaces
+        $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+    
+        // file extensions allowed
+        $allowedfileExtensions = array('jpg', 'gif', 'png', 'zip', 'txt', 'xls', 'doc');
+    
+        if (in_array($fileExtension, $allowedfileExtensions)) {
+    
+            // directory where file will be moved
+            $uploadfile = $uploaddir . basename($_FILES['acctfile']['name']);
+    
+            if(move_uploaded_file($fileTmpPath, $dest_path)) {
+                ?>
+                    <script>
+                        alert("File uploaded successfully");
+                    </script>	
+                <?php
+                $acctFile = $newFileName;
+
+            } else {
+                $message = 'An error occurred while uploading the file to the destination directory. Ensure that the web server has access to write in the path directory.';
+            }
+    
+        } else {
+            $message = 'Upload failed as the file type is not acceptable. The allowed file types are:' . implode(',', $allowedfileExtensions);
+        }
+  
+    }
+    
+    $trnFile = 'Okay';
+
+    $input = [
+        'name' => mysqli_real_escape_string($db->conn,$_POST['name']),
+        'acctStatus' => mysqli_real_escape_string($db->conn,$_POST['acctStatus']),
+        'acctDate' => mysqli_real_escape_string($db->conn,$_POST['acctDate']),
+        'acctFile' => $acctFile,
+
+        'trnStatus' => mysqli_real_escape_string($db->conn,$_POST['trnStatus']),
+        'trnDate' => mysqli_real_escape_string($db->conn,$_POST['trnDate']),
+        'trnFile' => $trnFile,
+    ];
+    $result = $asset->updateReference($input, $id);
+
+    if($result) {
+        echo "<script>
+        alert('✅Update Successful');
+        </script>";
+        die();
+        // window.location.href='../admin/references.php';
+
+    } else {
+        echo "<script>
+        alert('⚠️Update Error');
+        </script>";
+        die();
+    }
+}
 ?>

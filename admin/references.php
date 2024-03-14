@@ -73,10 +73,10 @@ if(!empty($_SESSION['id'])) {
                     $search = $_POST['search'];
                     $page = 1;  
                 
-                    $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assigned LIKE '%$search%' OR accountability_ref LIKE '%$search%' 
+                    $sql = "SELECT * FROM reference_tbl WHERE name LIKE '%$search%' OR accountability_ref LIKE '%$search%' 
                         OR turnover_ref LIKE '%$search%') LIMIT " . $results_per_page;
                 } else {
-                        $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (accountability_ref != '' OR turnover_ref != '') LIMIT ". $page_first_result . ',' . $results_per_page;
+                        $sql = "SELECT * FROM reference_tbl LIMIT ". $page_first_result . ',' . $results_per_page;
                 }
                 $res = mysqli_query($db->conn, $sql);
                 $rowCountPage = $res->num_rows;
@@ -94,7 +94,7 @@ if(!empty($_SESSION['id'])) {
                 ?>
             </div>
             <div class="count">
-                <p>Asset count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCountPage; ?></b></p>
+                <p>Asset count: <b style="color: yellow; font-size: 20px;"><?php echo 1 ?></b></p>
             </div>
         </div> 
             <form action="" method="get">
@@ -103,12 +103,12 @@ if(!empty($_SESSION['id'])) {
                     <tr>
                         <!-- <th><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th> -->
                         <th>User</th>
-                        <th>Accountability Ref</th>
+                        <th colspan=2>Accountability Ref</th>
                         <th width="5%">Status</th>
                         <th width="5%">Date</th>
-                        <th width="5%"></th>
+                        <th width="1%"></th>
 
-                        <th>Turnover Ref</th>
+                        <th colspan=2>Turnover Ref</th>
                         <th width="5%">Status</th>
                         <th width="5%">Date</th>
                         <th width="5%">Action</th>
@@ -172,12 +172,14 @@ if(!empty($_SESSION['id'])) {
                         if($acctRef == '') {
                         
                             echo "<td style='font-weight:600;'>N/A</td>";
+                            echo "<td></td>";
                             echo "<td>" . $accStatus;"</td>";
                             echo "<td>" . $row['acctDate'];"</td>";
                             echo "<td></td>";
                         } else {                       
                     ?>
-                        <td><a class="link" href="accountability.php?id=<?php echo $assetId; ?>"><?php echo $acctRef; ?></a></td>
+                        <td><a class="link" href="accountability.php?id=<?php echo $assetId; ?>"><?php echo $acctRef;?></a></td>
+                        <td width="10%;"><a class="link"  href="<?php echo $row['acctFile']; ?>" target="_blank"><?php echo $row['acctFile']; ?></td>
                         <td><?php echo $accStatus; ?></td>
                         <td><?php echo $row['acctDate']; ?></td>
                         <td>
@@ -193,12 +195,14 @@ if(!empty($_SESSION['id'])) {
                     <?php
                         if ($turnoverRef == '') {
                             echo "<td style='font-weight:600;'>N/A</td>";
+                            echo "<td></td>";
                             echo "<td>" . $trnStatus;"</td>";
                             echo "<td>" . $row['trnDate'];"</td>";
                             echo "<td><a class='center' href='#../update/trnRefUpd.php?id=". $assetId ."'><img src='../assets/icons/update.png' width='24px'></a></td>";
                         } else {
                     ?>
                         <td><a class="link" href="turnover.php?id=<?php echo $assetId; ?>"><?php echo $turnoverRef; ?></a></td>
+                        <td width="10%;"><?php echo $row['trnFile']; ?></td>
                         <td><?php echo $trnStatus; ?></td>
                         <td><?php echo $row['trnDate']; ?></td>
                         <td>
