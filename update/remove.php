@@ -28,7 +28,15 @@ if(isset($_GET['assetID'])) {
 if(isset($_GET['Acct_id'])) {
     $id = $_GET['Acct_id'];
 
-    $query = mysqli_query($db->conn, "UPDATE assets_tbl SET accountability_ref='' WHERE id='$id'");
+    // $query = mysqli_query($db->conn, "UPDATE assets_tbl SET accountability_ref='',  WHERE id='$id'");
+    $query = mysqli_query($db->conn, "UPDATE assets_tbl A, reference_tbl R 
+                                        SET A.accountability_ref='',
+                                            R.acctDate='',
+                                            R.acctStatus='N/A',
+                                            R.acctFile='N/A' 
+                                        WHERE A.id = R.assetId
+                                        AND R.assetId = '$id'"
+                                        );
 
     $sql_All = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $id");
     while($row = $sql_All->fetch_assoc()) {
@@ -40,11 +48,18 @@ if(isset($_GET['Acct_id'])) {
     header("Location: ../admin/references.php");
 } 
 
-// Turnover Ref Deletion
+// Reference_id Ref Deletion
 if(isset($_GET['Turnover_id'])) {
     $id = $_GET['Turnover_id'];
 
-    $query = mysqli_query($db->conn, "UPDATE assets_tbl SET turnover_ref='' WHERE id='$id'");
+    $query = mysqli_query($db->conn, "UPDATE assets_tbl A, reference_tbl R 
+                                        SET A.turnover_ref='',
+                                            R.trnDate='',
+                                            R.trnStatus='N/A',
+                                            R.trnFile='N/A' 
+                                        WHERE A.id = R.assetId
+                                        AND R.assetId = '$id'"
+                                        );
 
     $sql_All = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $id");
     while($row = $sql_All->fetch_assoc()) {

@@ -172,9 +172,9 @@ if(isset($_POST['updateLocation'])) {
 }
 
 // Reference update
+$newFileName = null;
 if(isset($_POST['update-reference'])) {
     $id = mysqli_real_escape_string($db->conn,$_POST['id']);
-
     if (isset($_FILES['acctfile']) && $_FILES['acctfile']['error'] === UPLOAD_ERR_OK) {
   
         // uploaded file details
@@ -210,7 +210,6 @@ if(isset($_POST['update-reference'])) {
                         alert("File uploaded successfully");
                     </script>	
                 <?php
-                $acctFile = $newFileName;
 
             } else {
                 $message = 'An error occurred while uploading the file to the destination directory. Ensure that the web server has access to write in the path directory.';
@@ -222,26 +221,28 @@ if(isset($_POST['update-reference'])) {
   
     }
     
-    $trnFile = 'Okay';
 
     $input = [
         'name' => mysqli_real_escape_string($db->conn,$_POST['name']),
         'acctStatus' => mysqli_real_escape_string($db->conn,$_POST['acctStatus']),
         'acctDate' => mysqli_real_escape_string($db->conn,$_POST['acctDate']),
-        'acctFile' => $acctFile,
+        // 'acctFile' => $newFileName,
 
         'trnStatus' => mysqli_real_escape_string($db->conn,$_POST['trnStatus']),
         'trnDate' => mysqli_real_escape_string($db->conn,$_POST['trnDate']),
-        'trnFile' => $trnFile,
+        // 'trnFile' => $trnFile,
     ];
-    $result = $asset->updateReference($input, $id);
+    $acctFile = $newFileName;
+    $trnFile = $newFileName;
+
+    $result = $asset->updateReference($input, $id, $acctFile, $trnFile);
 
     if($result) {
         echo "<script>
         alert('✅Update Successful');
+        window.location.href='../admin/references.php';
         </script>";
-        die();
-        // window.location.href='../admin/references.php';
+        // die();
 
     } else {
         echo "<script>

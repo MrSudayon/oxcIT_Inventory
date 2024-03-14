@@ -325,7 +325,7 @@ class Operations {
     // Getting reference table values
     function getReferenceTable() {
         global $db;
-        $sql = mysqli_query($db->conn, "SELECT * FROM reference_tbl ORDER BY name ASC");
+        $sql = mysqli_query($db->conn, "SELECT * FROM reference_tbl ORDER BY name ASC, acctStatus ASC, trnStatus");
 
         return $sql;  
     }
