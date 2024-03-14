@@ -182,7 +182,6 @@ if(isset($_POST['update-reference'])) {
         $fileTmpPath = $_FILES["acctfile"]['tmp_name'];
 
         $accFileName = basename($_FILES["acctfile"]['name']);
-        print_r($accFileName);
         
         $fileSize = $_FILES['acctfile']['size'];
     
@@ -191,30 +190,18 @@ if(isset($_POST['update-reference'])) {
         $fileNameCmps = explode(".", $accFileName);
     
         $fileExtension = strtolower(end($fileNameCmps));
-        print_r($fileNameCmps);
         
         $uploaddir = '../files/accountability/' . $_FILES['acctfile']['name'];
     
         // file extensions allowed
-        $allowedfileExtensions = array('jpg', 'gif', 'png', 'zip', 'txt', 'xls', 'xlsx', 'doc');
+        $allowedfileExtensions = array('zip', 'pdf', 'docx', 'pptx','xlsx', 'jpg', 'pdf');
     
         if (in_array($fileExtension, $allowedfileExtensions)) {
-    
-            if(move_uploaded_file($fileTmpPath, $uploaddir)) {
-                ?>
-                    <script>
-                        alert("File uploaded successfully");
-                    </script>	
-                <?php
+            if($fileSize > 2000000) {
+                echo "<script> alert('File too large'); window.history.back();</script>";
             } else {
-                ?>
-                    <script>
-                        alert("File upload fail");
-                    </script>	
-                <?php
-                $message = 'An error occurred while uploading the file to the destination directory. Ensure that the web server has access to write in the path directory.';
+                move_uploaded_file($fileTmpPath, $uploaddir);
             }
-    
         } else {
             $message = 'Upload failed as the file type is not acceptable. The allowed file types are:' . implode(',', $allowedfileExtensions);
         }

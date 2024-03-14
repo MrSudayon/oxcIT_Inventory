@@ -23,13 +23,19 @@ if (isset($_GET['acctRef_id'])) {
         header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');
         header('Content-Type: application/force-download');
-        header('Content-Disposition: attachment; filename=' . basename($filepath));
+        header('Content-Disposition: attachment; filename="' . basename($filepath) . '"');
         header('Expires: 0');
         header('Cache-Control: must-revalidate');
         header('Pragma: public');
         header('Content-Length: ' . filesize($filepath));
-        readfile('../files/accountability/' . $file['acctFile']);
-        flush(); // Flush system output buffer
+        readfile($filepath);
+        
+        ob_clean();
+        flush();
+    
+        // Output the file
+        // print_r($filepath);
+         // Flush system output buffer
         // Now update downloads count
         // $newCount = $file['downloads'] + 1;
         // $updateQuery = "UPDATE tblfiles SET downloads=$newCount WHERE id=$id";
@@ -42,7 +48,7 @@ if (isset($_GET['acctRef_id'])) {
         header("Location: ../admin/references.php");
         exit();
     } else {
-        print_r('?');
+        print_r('File not found');
     }
 
 }
