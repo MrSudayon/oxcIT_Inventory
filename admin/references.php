@@ -221,7 +221,7 @@ if(!empty($_SESSION['id'])) {
                         } else {
                         ?>
                             <td><a class="link" href="turnover.php?id=<?php echo $assetId; ?>"><?php echo $turnoverRef; ?></a></td>
-                            <td width="10%;"><a class="link" href="../files/download.php?trnRef_id=<?php echo $row['id']; ?>" download target="_blank"><?php echo $row['trnFile']; ?></td>
+                            <td width="10%;"><a class="link" href="../files/download.php?trnRef_id=<?php echo $row['id']; ?>" target="_blank"><?php echo $row['trnFile']; ?></td>
                             <td><?php echo $trnStatus; ?></td>
                             <td><?php echo $row['trnDate']; ?></td>
                             <td>

@@ -194,7 +194,7 @@ if(isset($_POST['update-reference'])) {
         $uploaddir = '../files/accountability/' . $_FILES['acctfile']['name'];
     
         // file extensions allowed
-        $allowedfileExtensions = array('zip', 'pdf', 'docx', 'pptx','xlsx', 'jpg', 'pdf');
+        $allowedfileExtensions = array('zip', 'pdf', 'jpg', 'pdf');
     
         if (in_array($fileExtension, $allowedfileExtensions)) {
             if($fileSize > 2000000) {
@@ -203,56 +203,38 @@ if(isset($_POST['update-reference'])) {
                 move_uploaded_file($fileTmpPath, $uploaddir);
             }
         } else {
-            $message = 'Upload failed as the file type is not acceptable. The allowed file types are:' . implode(',', $allowedfileExtensions);
+            echo "<script> alert('Upload failed as the file type is not acceptable. The allowed file types are:' . implode(',', $allowedfileExtensions)'); window.history.back();</script>";
         }
     }
 
     if (isset($_FILES['trnfile']) && $_FILES['trnfile']['error'] === UPLOAD_ERR_OK) {
 
         // uploaded file details
-        $fileTmpPath = $_FILES["trnfile"]['tmp_name'];
+        $fileTmpPath = $_FILES["acctfile"]['tmp_name'];
 
-        $trnFileName = basename($_FILES["trnfile"]['name']);
+        $accFileName = basename($_FILES["acctfile"]['name']);
         
-        $fileSize = $_FILES['trnfile']['size'];
+        $fileSize = $_FILES['acctfile']['size'];
     
-        $fileType = $_FILES['trnfile']['type'];
+        $fileType = $_FILES['acctfile']['type'];
     
-        $fileNameCmps = explode(".", $trnFileName);
-        print_r($fileNameCmps);
+        $fileNameCmps = explode(".", $accFileName);
     
         $fileExtension = strtolower(end($fileNameCmps));
         
-        $uploaddir = '../files/turnover/';
-        
-        // removing extra spaces
-        $newFileName = md5(time() . $trnFileName) . '.' . $fileExtension;
-        
+        $uploaddir = '../files/accountability/' . $_FILES['acctfile']['name'];
+    
         // file extensions allowed
-        $allowedfileExtensions = array('jpg', 'png', 'zip', 'txt', 'xls', 'xlsx', 'doc');
+        $allowedfileExtensions = array('zip', 'pdf', 'jpg', 'pdf');
     
         if (in_array($fileExtension, $allowedfileExtensions)) {
-    
-            // directory where file will be moved
-            $uploadfile = $uploaddir . basename($_FILES['acctfile']['name']);
-    
-            if(move_uploaded_file($fileTmpPath, $dest_path)) {
-                ?>
-                    <script>
-                        alert("File uploaded successfully");
-                    </script>	
-                <?php
+            if($fileSize > 2000000) {
+                echo "<script> alert('File too large'); window.history.back();</script>";
             } else {
-                ?>
-                    <script>
-                        alert("File upload fail");
-                    </script>	
-                <?php
-                $message = 'An error occurred while uploading the file to the destination directory. Ensure that the web server has access to write in the path directory.';
+                move_uploaded_file($fileTmpPath, $uploaddir);
             }
-    
         } else {
-            echo ('Upload failed as the file type is not acceptable. The allowed file types are:' . implode(',', $allowedfileExtensions));
+            echo "<script> alert('Upload failed as the file type is not acceptable. The allowed file types are:' . implode(',', $allowedfileExtensions)'); window.history.back();</script>";
         }
     }
     
