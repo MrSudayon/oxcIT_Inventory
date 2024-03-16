@@ -17,18 +17,32 @@ if(isset($_GET['select'])) {
 
     $selected = $_GET['select'];
     foreach ($selected as $userID){ 
-        $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
+        // $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
+        $sql = 
+        "SELECT DISTINCT a.*, 
+        e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.turnoverRef  
+        FROM assets_tbl AS a 
+        LEFT JOIN reference_tbl AS r ON r.assetId = a.id
+        LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+        WHERE e.id='$userID' AND a.status !='Archive'";
+
         $res = mysqli_query($db->conn, $sql);
     
         while($row = mysqli_fetch_assoc($res)) {
-            $name = $row['assigned'];
-            $dept = $row['department'];
-            $turnover_ref = $row['turnover_ref'];
+            $name = $row['ename'];
+            $dept = $row['division'];
+            $turnover_ref = $row['turnoverRef'];
             $arrayName[] = $name;
         }
     }
 
-    $assetUserID = mysqli_query($db->conn, "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'");
+    $assetUserID = mysqli_query($db->conn, 
+                                        "SELECT DISTINCT a.*, 
+                                        e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.turnoverRef  
+                                        FROM assets_tbl AS a 
+                                        LEFT JOIN reference_tbl AS r ON r.assetId = a.id
+                                        LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+                                        WHERE e.id='$userID' AND a.status !='Archive'");
 
 // From reference Tab to existing Turnover form
 } elseif(isset($_GET['id'])) {
@@ -43,7 +57,13 @@ if(isset($_GET['select'])) {
         $turnover_ref = $row['turnover_ref'];
     }
     
-    $assetUserID = mysqli_query($db->conn, "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'");    
+    $assetUserID = mysqli_query($db->conn, 
+                                        "SELECT DISTINCT a.*, 
+                                        e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.turnoverRef  
+                                        FROM assets_tbl AS a 
+                                        LEFT JOIN reference_tbl AS r ON r.assetId = a.id
+                                        LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+                                        WHERE e.id='$userID' AND a.status !='Archive'");
 
 } else {
     ?>
@@ -95,12 +115,14 @@ if(isset($_GET['select'])) {
 
     if(isset($arrayName)) {
         if($arrayName != array_filter($arrayName)) {
-            ?>
-                <script> 
-                alert ('⚠️Invalid Action')
-                window.location.href = 'create_turnover.php';
-                </script> 
-            <?php
+            // ?
+            //     <script> 
+            //     alert ('⚠️Invalid Action')
+            //     window.location.href = 'create_turnover.php';
+            //     </script> 
+            // <?php
+            print_r($arrayName);
+            print_r($userID);
         } elseif(count(array_unique($arrayName))>1) {
             ?>
                 <script> 
@@ -114,14 +136,16 @@ if(isset($_GET['select'])) {
             while($row = mysqli_fetch_assoc($assetUserID)) {
                 $id = $row['id']; //assetId 
                 $assettag = $row['assettag'];
-                $assigned = $row['assigned'];
+                $assigned = $row['ename'];
             }
             
             
             
 
             if ($turnover_ref == '') {
-                echo "<b>Ref#: " .$newCode. "</b>";
+echo $userID;
+print_r($selected);
+echo "<b>Ref#: " .$newCode. "</b>";
 
                 // query to fetch and update assets_tbl
                 foreach ($selected as $userID) { 
@@ -165,7 +189,13 @@ if(isset($_GET['select'])) {
             $turnover_ref = $row['turnover_ref'];
         }
         
-        $assetUserID = mysqli_query($db->conn, "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'");    
+        $assetUserID = mysqli_query($db->conn, 
+                                                "SELECT DISTINCT a.*, 
+                                                e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.turnoverRef  
+                                                FROM assets_tbl AS a 
+                                                LEFT JOIN reference_tbl AS r ON r.assetId = a.id
+                                                LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+                                                WHERE e.id='$userID' AND a.status !='Archive'");
 
     } else {
         ?>

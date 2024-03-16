@@ -54,8 +54,25 @@ if(!empty($_SESSION['id'])) {
                 <button type="submit" formaction="turnover.php" class="link-btn" name="turnover" onclick="return checkPrompt()">Generate</button>
             </div>
             <?php
-                $sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive' AND assigned!=''";
+                $sqlSelectAll = 
+                "SELECT a.*, 
+                e.id, e.name, e.division, e.location, 
+                r.* 
+                FROM assets_tbl AS a 
+                INNER JOIN reference_tbl r 
+                ON r.assetId = a.id
+                LEFT JOIN employee_tbl AS e 
+                ON e.id = a.empId 
+                WHERE a.status!='Archive' AND (a.empId!='' || a.empId = null)";
                 $results = mysqli_query($db->conn, $sqlSelectAll);
+
+                // Department</th>
+                // Asset Type</th>
+                // Asset Tag</th>
+                // Model</th>
+                // Specification</th>
+                // Status</th>
+                // Ref Code</th>
 
                 $results_per_page = 15;
 
@@ -72,10 +89,20 @@ if(!empty($_SESSION['id'])) {
             if(isset($_POST['search']) && $_POST['search'] != "") {
                 $search = $_POST['search'];
 
-                $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND assigned != '' AND (assigned LIKE '$search%' OR assigned LIKE '%$search' OR assigned LIKE '%$search%' OR department LIKE '%$search%'
-                OR assettype LIKE '%$search%' OR status LIKE '%$search%' OR location LIKE '%$search%'
-                OR assettag LIKE '%$search%' OR model LIKE '%$search%' OR CPU LIKE '%$search%' OR MEMORY LIKE '%$search%' OR STORAGE LIKE '%$search%'
-                OR remarks LIKE '%$search%' OR Others LIKE '%$search%') LIMIT " . $results_per_page;
+                $sql = 
+                "SELECT a.*, 
+                e.id, e.name AS ename, e.division, r.assetId, r.name, r.turnoverRef  
+                FROM assets_tbl AS a 
+                LEFT JOIN reference_tbl AS r ON r.assetId = a.id
+                LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+                WHERE a.empId !=0 AND a.status!='Archive' AND (a.empId != 0 OR a.empId IS NOT NULL) AND (e.name LIKE '$search%' OR e.name LIKE '%$search' OR e.name LIKE '%$search%' OR e.division LIKE '%$search%'
+                OR a.assettype LIKE '%$search%' OR a.status LIKE '%$search%' OR e.location LIKE '%$search%'
+                OR a.assettag LIKE '%$search%' OR model LIKE '%$search%' OR remarks LIKE '%$search%') LIMIT " . $results_per_page;
+            
+                // "SELECT * FROM assets_tbl WHERE status!='Archive' AND assigned != '' AND (assigned LIKE '$search%' OR assigned LIKE '%$search' OR assigned LIKE '%$search%' OR department LIKE '%$search%'
+                // OR assettype LIKE '%$search%' OR status LIKE '%$search%' OR location LIKE '%$search%'
+                // OR assettag LIKE '%$search%' OR model LIKE '%$search%' OR CPU LIKE '%$search%' OR MEMORY LIKE '%$search%' OR STORAGE LIKE '%$search%'
+                // OR remarks LIKE '%$search%' OR Others LIKE '%$search%') LIMIT " . $results_per_page;
             
                 $res = mysqli_query($db->conn, $sql);
                 $countperPage = $res->num_rows;
@@ -104,16 +131,17 @@ if(!empty($_SESSION['id'])) {
                 while ($row = mysqli_fetch_array($res)) {  
             ?> 
                 <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>
-                <td><?php echo $row['assigned']; ?></td>
-                <td><?php echo $row['department']; ?></td>
+                <td><?php echo $row['ename']; ?></td>
+                <td><?php echo $row['division']; ?></td>
                 <td><?php echo $row['assettype']; ?></td>
                 <td><?php echo $row['assettag']; ?></td>
                 <td><?php echo $row['model']; ?></td>
-                <td><?php echo "CPU: " . $row['CPU'] . "<br>RAM: " . $row['MEMORY'] . "<br>STORAGE: " . $row['STORAGE']; ?></td>
+                <td></td>
+                <!-- <td>< echo "CPU: " . $row['CPU'] . "<br>RAM: " . $row['MEMORY'] . "<br>STORAGE: " . $row['STORAGE']; ?></td> -->
                 <td><?php echo $row['status']; ?></td>
                 <td>
                     <?php
-                        $turnover = $row['turnover_ref'];
+                        $turnover = $row['turnoverRef'];
 
                         if($turnover!='') {
                             echo $turnover;

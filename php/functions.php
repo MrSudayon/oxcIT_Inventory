@@ -12,8 +12,9 @@ class Operations {
     public $id;
     public $select;
     public $db;
-    function record_Data($type, $tag, $mdl, $srl, $spplr, $cost, $repair_cost, $dtprchs, $stts, $rmrks, $cpu, $ram, $storage, $os, $others, $datedeployed, $empId, $lastused, $provider, $mobile, $plan) {
+    function record_Data($type, $tag, $mdl, $srl, $spplr, $cost, $repair_cost, $dtprchs, $stts, $rmrks, $cpu, $ram, $storage, $os, $datedeployed, $empId, $lastused, $provider, $mobile, $plan) {
         global $db;
+        global $session;
         
         $dept = "";
         $location = "";
@@ -33,15 +34,17 @@ class Operations {
 
             while($row = $sql->fetch_assoc()) {
                 $assigned = $row['name'];
-                $dept = $row['division'];
-                $location = $row['location'];
             } 
             $lastused = $assigned;
         }          
         
         
-        $query = "INSERT INTO assets_tbl (id, department, assettype, assettag, model, serial, supplier, CPU, MEMORY, STORAGE, OS, Others, empId, assigned, lastused, status, location, datepurchased, cost, repair_cost, remarks, datedeployed)
-                                VALUES ('','$dept','$type','$tag','$mdl','$srl','$spplr','$cpu','$ram','$storage','$os','$others','$empId','$assigned','$lastused','$stts','$location','$dtprchs', '$cost', '$repair_cost','$rmrks','$datedeployed')";
+        // $query = "INSERT INTO assets_tbl (id, department, assettype, assettag, model, serial, supplier, CPU, MEMORY, STORAGE, OS, Others, empId, assigned, lastused, status, location, datepurchased, cost, repair_cost, remarks, datedeployed)
+        //                         VALUES ('','$dept','$type','$tag','$mdl','$srl','$spplr','$cpu','$ram','$storage','$os','$others','$empId','$assigned','$lastused','$stts','$location','$dtprchs', '$cost', '$repair_cost','$rmrks','$datedeployed')";
+        // $result = mysqli_query($db->conn, $query);
+        $query = "INSERT INTO assets_tbl (id, assettype, assettag, model, serial, supplier, empId, lastused, status, datepurchased, cost, repair_cost, remarks, datedeployed)
+                                    VALUES ('','$type','$tag','$mdl','$srl','$spplr','$empId','$lastused','$stts','$dtprchs', '$cost', '$repair_cost','$rmrks','$datedeployed')";
+       
         $result = mysqli_query($db->conn, $query);
 
         if($result) { 

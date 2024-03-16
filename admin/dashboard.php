@@ -76,14 +76,26 @@ if(!empty($_SESSION['id'])) {
                 if(isset($_POST['search']) && $_POST['search'] != "") {
                     $search = $_POST['search'];
                     
-                    $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assigned LIKE '$search%' OR assigned LIKE '%$search' OR assigned LIKE '%$search%' OR department LIKE '%$search%'
-                    OR assettype LIKE '%$search%' OR status LIKE '%$search%' OR location LIKE '%$search%'
-                    OR assettag LIKE '%$search%' OR model LIKE '%$search%' OR CPU LIKE '%$search%' OR MEMORY LIKE '%$search%' OR STORAGE LIKE '%$search%'
-                    OR remarks LIKE '%$search%' OR Others LIKE '%$search%') ORDER BY assettag+0 ASC, assettype";
+                    $sql = 
+                    "SELECT a.*, 
+                    e.* 
+                    FROM assets_tbl AS a 
+                    LEFT JOIN employee_tbl AS e 
+                    ON a.empId = e.id 
+                    WHERE a.status!='Archive' AND (e.name LIKE '$search%' OR e.name LIKE '%$search' OR e.name LIKE '%$search%' OR e.division LIKE '%$search%'
+                    OR a.assettype LIKE '%$search%' OR a.status LIKE '%$search%' OR e.location LIKE '%$search%'
+                    OR a.assettag LIKE '%$search%' OR a.model LIKE '%$search%') 
+                    ORDER BY a.assettype+0 ASC, a.assettype";
                 } else {
                     // $sql =  "SELECT * FROM assets_tbl WHERE status!='Archive' ORDER BY lpad(assettag, 10, 0) LIMIT ". $page_first_result . ',' . $results_per_page;
-                    $sql =  "SELECT * FROM assets_tbl WHERE status!='Archive' ORDER BY assettag+0 ASC, assigned DESC LIMIT ". $page_first_result . ',' . $results_per_page;
-                    
+                    $sql =  
+                    "SELECT a.id, a.assettype, a.assettag, a.model, a.status, 
+                    e.id, e.name, e.division, e.location 
+                    FROM assets_tbl AS a 
+                    LEFT JOIN employee_tbl AS e 
+                    ON e.id = a.empId 
+                    WHERE a.status!='Archive' 
+                    ORDER BY a.assettype ASC, a.assettag+0 LIMIT ". $page_first_result . ',' . $results_per_page;
                 }
                 $res = mysqli_query($db->conn, $sql);
                 $rowCountPage = $res->num_rows;
@@ -98,26 +110,21 @@ if(!empty($_SESSION['id'])) {
             <tr>
                 <th width="1%"><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
                 <th width="18%">Assigned to</th>
-                <th width="1%">Department</th>
                 <th>Asset Type</th>
                 <th>Asset Tag</th>
                 <th>Model</th>
                 <th>Specification</th>
-                <!-- <th>CPU</th>
-                <th>Memory</th>
-                <th>Storage</th> -->
                 <th>Status</th>
                 <th coslpan="3" width="10%">Action</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-            <?php 
+            <?php
                 while ($row = mysqli_fetch_array($res)) {  
             ?> 
                 <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>
-                <td><?php echo $row['assigned']; ?></td>
-                <td><?php echo $row['department']; ?></td>
+                <td><?php echo $row['name']; ?></td>
                 <td><?php echo $row['assettype']; ?></td>
                 <td><?php echo $row['assettag']; ?></td>
                 <td><?php echo $row['model']; ?></td>
@@ -135,13 +142,17 @@ if(!empty($_SESSION['id'])) {
                 <td> echo $row['MEMORY']; ?></td>
                 <td> echo $row['STORAGE']; ?></td> -->
                 <td><?php echo $row['status']; ?></td>
-
+            
                 <td>
                 <center>
                     <a href="../update/assetUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
-                    <?php if($row['turnover_ref'] != '') { ?>
+                    <?php 
+                        $sqlSel = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $id"); 
+                        while($results = mysqli_fetch_assoc($sqlSel)) {
+                        if($results['turnoverRef'] != '') { 
+                    ?>    
                         <a href="../update/turnoverUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/turnover.png" width="24px"></a>&nbsp;
-                    <?php } ?>
+                    <?php }} ?>
                     <a href="../update/remove.php?assetID=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                 </center>
                     

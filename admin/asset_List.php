@@ -61,10 +61,10 @@ if(!empty($_SESSION['id'])) {
 
                     <!-- Category_tbl 3-8-24 -->
                         <th>Asset Type</th>
-                        <th>Asset Tag</th>
+                        <!-- <th>Asset Tag</th>
                         <th>Device</th>
                         <th>specs_id</th>
-                        <th>assets_id</th>
+                        <th>assets_id</th> -->
                         <th colspan="2" width="8%">Action</th>
                     </tr>
                     <?php                         
@@ -80,10 +80,6 @@ if(!empty($_SESSION['id'])) {
                             }
                     ?> 
                         <td><?php echo $row['assetType']; ?></td>
-                        <td><?php echo "asd"; ?></td>
-                        <td><?php echo "asd"; ?></td>
-                        <td><?php echo "asd"; ?></td>
-                        <td><?php echo "asd"; ?></td>
                         <td>
                         <center>
                             <a href="../update/assetItemUpd.php?assetItemID=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>

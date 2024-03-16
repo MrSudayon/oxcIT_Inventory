@@ -54,7 +54,7 @@ if(!empty($_SESSION['id'])) {
                     <div class="input-box">
                         <span class="details">Asset Type</span>                            
                         <select name="asset-type" id="Type" onChange="changetextbox();displaySelectedValue();" required>
-                            <option>Please Select</option>
+                            <option disable>Please Select</option>
                             <?php
                                 $category = new Operations;
                                 $assettype = $category->getAssets();
@@ -126,37 +126,7 @@ if(!empty($_SESSION['id'])) {
                     </div>
                    
                 </div>
-                <div class="title">Specification</div>
-                <div class="asset-details">
-                    <div class="input-box" id="processor">
-                        <span class="details">Processor</span>
-                        <input type="text" name="processor" placeholder="Processor" id="">
-                    </div>
-                    <div class="input-box" id="plan" style="display: none;">
-                        <span class="details">Plan</span>
-                        <input type="text" name="plan" placeholder="Plan" id="">
-                    </div>
-                    <div class="input-box" id="ram">
-                        <span class="details">Memory</span>
-                        <input type="text" name="memory" placeholder="Memory" id="">
-                    </div>
-                    <div class="input-box" id="storage">
-                        <span class="details">Storage</span>
-                        <input type="text" name="storage" placeholder="Storage" id="">
-                    </div>
-                    <div class="input-box">
-                        <span class="details">Operating System</span>
-                        <input type="text" name="os" placeholder="Operating System" id="">
-                    </div>
-                    <div class="input-box">
-                        <span class="details">Others</span>
-                        <input type="text" name="other" placeholder="Others" id="">
-                    </div>
-                    <div class="input-box">
-                        <span class="details">Date Deployed</span>
-                        <input type="date" name="datedeployed" placeholder="Date Deployed" value="" id="datedeployed">
-                    </div>
-                </div>
+    
                 <div class="title"></div>
                 <div class="asset-details">
                     <div class="input-box">
@@ -195,7 +165,7 @@ if(!empty($_SESSION['id'])) {
                                     $user = $results->selectAllEmp();
                                     foreach($user as $row) {
                             ?>
-                            <option value="<?php echo $row['name']; ?>">
+                            <option value="<?php echo $row['id']; ?>">
                                 <?php echo $row['name']; ?>
                             </option>
                             <?php
@@ -204,15 +174,6 @@ if(!empty($_SESSION['id'])) {
                             ?>
                         </select>
                     </div>
-                    <!-- <div class="input-box">
-                        <span class="details">Division</span>
-                        <div class="division" id="division"></div>
-                        <input type="text" name="department" placeholder="Division" id="1" style="background-color: #ccc;" readonly>
-                    </div>
-                    <div class="input-box">
-                        <span class="details">Location</span>
-                        <input type="text" name="location" placeholder="Location" id="location" style="background-color: #ccc;" readonly>
-                    </div> -->
                 </div>
                 <div class="button">
                     <input type="submit" onclick="passValue()" value="Save" name="save"/>

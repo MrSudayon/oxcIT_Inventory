@@ -53,7 +53,7 @@ if(isset($_POST['turnover-asset'])) {
     $input = [
         'turnover' => mysqli_real_escape_string($db->conn,$_POST['turnover']),
         'lastused' => mysqli_real_escape_string($db->conn,$_POST['lastused']),
-        'reason' => mysqli_real_escape_string($db->conn,$_POST['reason']),
+        // 'reason' => mysqli_real_escape_string($db->conn,$_POST['reason']),
         'ref_code' => mysqli_real_escape_string($db->conn,$_POST['ref_code']),
     ];
     $result = $asset->assetTurnover($input, $id);

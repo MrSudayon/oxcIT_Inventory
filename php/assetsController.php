@@ -57,10 +57,10 @@ class assetsController {
         $lastused = $input['lastused'];
 
         // further logic; clear reason upon accounting to other employee
-        $reason = '';
-        if(isset($input['reason'])) {
-            $reason = $input['reason'];
-        }
+        // $reason = '';
+        // if(isset($input['reason'])) {
+        //     $reason = $input['reason'];
+        // }
        
         if(!isset($assigned) || $assigned == '') {
             $dept = "";
