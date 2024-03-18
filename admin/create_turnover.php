@@ -90,14 +90,14 @@ if(!empty($_SESSION['id'])) {
                 $search = $_POST['search'];
 
                 $sql = 
-                "SELECT a.*, 
-                e.id, e.name AS ename, e.division, r.assetId, r.name, r.turnoverRef  
+                "SELECT a.id AS aId, a.empId, a.status, a.assettype, a.assettag, a.model, a.remarks, 
+                e.id, e.name AS ename, e.division, e.location, r.assetId, r.name, r.turnoverRef AS turnoverRef
                 FROM assets_tbl AS a 
                 LEFT JOIN reference_tbl AS r ON r.assetId = a.id
                 LEFT JOIN employee_tbl AS e ON a.empId = e.id 
                 WHERE a.empId !=0 AND a.status!='Archive' AND (a.empId != 0 OR a.empId IS NOT NULL) AND (e.name LIKE '$search%' OR e.name LIKE '%$search' OR e.name LIKE '%$search%' OR e.division LIKE '%$search%'
                 OR a.assettype LIKE '%$search%' OR a.status LIKE '%$search%' OR e.location LIKE '%$search%'
-                OR a.assettag LIKE '%$search%' OR model LIKE '%$search%' OR remarks LIKE '%$search%') LIMIT " . $results_per_page;
+                OR a.assettag LIKE '%$search%' OR a.model LIKE '%$search%' OR a.remarks LIKE '%$search%') LIMIT " . $results_per_page;
             
                 // "SELECT * FROM assets_tbl WHERE status!='Archive' AND assigned != '' AND (assigned LIKE '$search%' OR assigned LIKE '%$search' OR assigned LIKE '%$search%' OR department LIKE '%$search%'
                 // OR assettype LIKE '%$search%' OR status LIKE '%$search%' OR location LIKE '%$search%'
@@ -130,7 +130,7 @@ if(!empty($_SESSION['id'])) {
             <?php 
                 while ($row = mysqli_fetch_array($res)) {  
             ?> 
-                <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>
+                <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['aId']; ?>"></td>
                 <td><?php echo $row['ename']; ?></td>
                 <td><?php echo $row['division']; ?></td>
                 <td><?php echo $row['assettype']; ?></td>
