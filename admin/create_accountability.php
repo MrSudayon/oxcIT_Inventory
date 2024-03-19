@@ -9,7 +9,6 @@ if(!empty($_SESSION['id'])) {
 
     $id = $user['id'];
     $username = $user['username'];
-
 } else {
     header("Location: ../php/login.php");
 }
@@ -83,13 +82,14 @@ if(!empty($_SESSION['id'])) {
 
                 $sql = 
                 "SELECT a.id AS aId, a.empId, a.status, a.assettype, a.assettag, a.model, a.remarks, 
-                e.id, e.name AS ename, e.division, e.location, r.assetId, r.name, r.accountabilityRef AS accountabilityRef
+                e.id, e.name AS ename, e.division, e.location, r.assetId, r.name, r.accountabilityRef AS accountabilityRef 
                 FROM assets_tbl AS a 
                 LEFT JOIN reference_tbl AS r ON r.assetId = a.id
                 LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                WHERE a.empId !=0 AND a.status!='Archive' AND (a.empId != 0 OR a.empId IS NOT NULL) AND (e.name LIKE '$search%' OR e.name LIKE '%$search' OR e.name LIKE '%$search%' OR e.division LIKE '%$search%'
-                OR a.assettype LIKE '%$search%' OR a.status LIKE '%$search%' OR e.location LIKE '%$search%'
-                OR a.assettag LIKE '%$search%' OR a.model LIKE '%$search%' OR a.remarks LIKE '%$search%') LIMIT " . $results_per_page;
+                WHERE a.empId !=0 AND a.status!='Archive' AND (a.empId != 0 OR a.empId IS NOT NULL) AND (e.name LIKE '$search%' OR e.name LIKE '%$search' 
+                OR e.name LIKE '%$search%' OR e.division LIKE '%$search%' OR a.assettype LIKE '%$search%' OR a.status LIKE '%$search%' OR a.assettag LIKE '%$search%' 
+                OR a.model LIKE '%$search%' OR a.remarks LIKE '%$search%') 
+                LIMIT " . $results_per_page;
             
                 $res = mysqli_query($db->conn, $sql);
                 $countperPage = $res->num_rows;
@@ -115,10 +115,7 @@ if(!empty($_SESSION['id'])) {
             </thead>
             <tbody>
             <tr>
-            <?php
-            print_r($res); 
-                while ($row = mysqli_fetch_array($res)) {  
-            ?> 
+            <?php while ($row = mysqli_fetch_array($res)) {  ?> 
                 <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['aId']; ?>"></td>
                 <td><?php echo $row['ename']; ?></td>
                 <td><?php echo $row['division']; ?></td>
@@ -138,16 +135,15 @@ if(!empty($_SESSION['id'])) {
                         }
                     ?>
                 </td>
+            <?php } ?>
             </tr>
             </tbody>
             
-            <?php
-                }
-            ?>
+           
         </table>
     </form>
     
-<?php
+    <?php
         // Pagination nav
     if ($page > 1) {
         echo '<a href="create_accountability.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';

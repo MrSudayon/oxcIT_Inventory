@@ -78,16 +78,16 @@ if(isset($_GET['select'])) {
 } 
     ?>
 
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="../assets/logo.jpg">
-        <link rel="stylesheet" href="../css/accountability.css">
-        <title>Turnover Form</title>
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/logo.jpg">
+    <link rel="stylesheet" href="../css/accountability.css">
+    <title>Turnover Form</title>
+</head>
+<body>
     <div class="content">
         <div class="logo">
             <a href="create_turnover.php"><img src="../assets/logo.png" width="150px"></img></a>
@@ -98,7 +98,7 @@ if(isset($_GET['select'])) {
         </center>
     <div class="reference-code" align="right">
     <?php 
-         // Generating Reference Code
+    // Generating Reference Code
     $n=4;
     function getCode($n) {
         $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -114,7 +114,13 @@ if(isset($_GET['select'])) {
     }
 
     $newCode = getCode($n);
-
+    // 
+    // 
+    if(!$name) {
+        $name = "_________________";
+        $dept = "_________________";
+    }
+    
     if(isset($arrayName)) {
         if($arrayName != array_filter($arrayName)) {
             ?>
@@ -132,35 +138,39 @@ if(isset($_GET['select'])) {
             <?php
         } else {
 
-
             if ($turnover_ref == '') {
                 echo "<b>Ref#: " .$newCode. "</b>";
                 // If assetId is existed in reference tbl
-                $refSql = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $aId AND accountabilityRef != ''");
+                $refSql = mysqli_query($db->conn, 
+                    "SELECT * FROM reference_tbl 
+                    WHERE assetId = $aId AND accountabilityRef != ''");
 
                 // Insert accountability code to reference_tbl
                 if(!$refSql) {
-                    $refQry = mysqli_query($db->conn, "INSERT INTO reference_tbl (assetId, name, turnoverRef, turnoverStatus, referenceStatus)
-                                                        VALUES ('$id', '$name', '$newCode',1, 1)");
+                    $refQry = mysqli_query($db->conn, 
+                        "INSERT INTO reference_tbl (assetId, name, turnoverRef, turnoverStatus, referenceStatus)
+                        VALUES ('$id','$name','$newCode',1,1)");
                 } else {
-                    $refQry = mysqli_query($db->conn, "UPDATE reference_tbl SET accountabilityStatus=1, accountabilityRef='$newCode'");
+                    $refQry = mysqli_query($db->conn, 
+                        "UPDATE reference_tbl 
+                        SET accountabilityStatus=1, accountabilityRef='$newCode'");
                 }
 
-                $history = mysqli_query($db->conn, "INSERT INTO history_tbl (name, action, date)
-                        VALUES ('$username', 'Generated turnover form: $assettag, Last used by: $name', NOW())");
+                $history = mysqli_query($db->conn, 
+                    "INSERT INTO history_tbl (name, action, date)
+                    VALUES ('$username', 'Generated turnover form: $assettag, Last used by: $name', NOW())");
 
             } else {
                 echo "<b>Ref#: " . $turnover_ref . "</b>";
                 
-                $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                VALUES ('', '$username', 'Viewed turnover form for: $name', NOW())");
+                $history = mysqli_query($db->conn, 
+                    "INSERT INTO history_tbl (name, action, date)
+                    VALUES ('$username', 'Viewed turnover form for: $name', NOW())");
             }
         }
     }    
-    // From reference Tab to existing Turnover form
-
-?>
-</div>
+    ?>
+    </div>
     <table class="assets-table">
         
         <tr>
@@ -170,33 +180,16 @@ if(isset($_GET['select'])) {
             <th>Serial no.</th>
             <th>Remarks</th>
         </tr>
-        <?php 
-        if(isset($_GET['selected']) || isset($selected)) {
-            ?>
-                <tr>
-                
-                    <td><?php echo $assettype; ?></td>
-                    <td><?php echo $userID; ?></td>
-                    <td><?php echo $model; ?></td>
-                    <td><?php echo $serial; ?></td>
-                    <td><?php echo $remarks; ?></td>       
-                
-                </tr>
-            <?php
-        } elseif(isset($_GET['id']) || isset($userID)) {
-            ?>
-            <tr>
-                
-                <td><?php echo $assettype; ?></td>
-                <td><?php echo $userID; ?></td>
-                <td><?php echo $model; ?></td>
-                <td><?php echo $serial; ?></td>
-                <td><?php echo $remarks; ?></td>    
+        
+        <tr>
             
-            </tr>
-            <?php
-        }    
-        ?>
+            <td><?php echo $assettype; ?></td>
+            <td><?php echo $userID; ?></td>
+            <td><?php echo $model; ?></td>
+            <td><?php echo $serial; ?></td>
+            <td><?php echo $remarks; ?></td>    
+        
+        </tr>
         
     </table>
     <div class="info"><br>

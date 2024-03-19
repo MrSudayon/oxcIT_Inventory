@@ -18,45 +18,58 @@ if(isset($_GET['select'])) {
 
     foreach ($selected as $userID){ 
         $sql = 
-        "SELECT DISTINCT a.id AS aId, a.empId, a.status, a.assettype, a.assettag, a.model, a.remarks, 
-        e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, 
-        r.accountabilityRef AS accountabilityRef 
+        "SELECT DISTINCT a.id AS aId, a.empId AS empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, a.datedeployed, 
+        e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.accountabilityRef AS accountabilityRef   
         FROM assets_tbl AS a 
-        LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+        LEFT JOIN reference_tbl AS r ON r.assetId = a.id
         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
         WHERE a.id='$userID' AND a.status !='Archive'";
 
         $res = mysqli_query($db->conn, $sql);
     
         while($row = mysqli_fetch_assoc($res)) {
-            $aId = $row['aId'];
+            $id = $row['aId'];
+            $empId = $row['empId'];
+
             $name = $row['ename'];
+            $arrayName[] = $name;
             $dept = $row['division'];
             $acc_ref = $row['accountabilityRef'];
+
+            $assettype = $row['assettype'];
             $assettag = $row['assettag'];
-            $arrayName[] = $name;
+            $datedeployed = $row['datedeployed'];
+            $serial = $row['serial'];
+            $remarks = $row['remarks'];
         }
     }
 } elseif(isset($_GET['id'])) {
     $userID = $_GET['id'];
 
     $sql = 
-        "SELECT DISTINCT a.id AS aId, a.assettag AS assettag, a.empId AS empId, 
-        e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.accountabilityRef AS accountabilityRef  
+        "SELECT DISTINCT a.id AS aId, a.empId AS empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, a.datedeployed, 
+        e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.accountabilityRef AS accountabilityRef   
         FROM assets_tbl AS a 
         LEFT JOIN reference_tbl AS r ON r.assetId = a.id
         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-        WHERE r.id='$userID' AND a.status !='Archive'";
+        WHERE a.id='$userID' AND a.status !='Archive'";
 
     $res = mysqli_query($db->conn, $sql);
 
     while($row = mysqli_fetch_assoc($res)) {
-        $aId = $row['aId'];
+        $id = $row['aId'];
+        $empId = $row['empId'];
+
         $name = $row['ename'];
+        $arrayName[] = $name;
         $dept = $row['division'];
         $acc_ref = $row['accountabilityRef'];
-        $empId = $row['empId'];
+
+        $assettype = $row['assettype'];
         $assettag = $row['assettag'];
+        $datedeployed = $row['datedeployed'];
+        $serial = $row['serial'];
+        $remarks = $row['remarks'];
     }
 } else {
     ?>
@@ -104,7 +117,14 @@ if(isset($_GET['select'])) {
     }
 
     $newCode = getCode($n);
-    // If reference code exists, Display existing Ref Code
+
+    // 
+    // 
+    if(!$name) {
+        $name = "_________________";
+        $dept = "_________________";
+    }
+
     if(isset($arrayName)) {
         if($arrayName != array_filter($arrayName)) {
             ?>
@@ -124,23 +144,32 @@ if(isset($_GET['select'])) {
 
             if ($acc_ref == '') {
                 echo "<b>Ref#: " .$newCode. "</b>";
-                // If assetId is existed in reference tbl
-                $refSql = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $aId AND turnoverRef != ''");
 
-                // Insert accountability code to reference_tbl
+                // If assetId is existed in reference tbl
+                $refSql = mysqli_query($db->conn, 
+                    "SELECT * FROM reference_tbl 
+                    WHERE assetId = $aId 
+                    AND turnoverRef != ''");
+
                 if(!$refSql) {
-                    $refQry = mysqli_query($db->conn, "INSERT INTO reference_tbl (assetId, name, accountabilityRef, accountabilityStatus, referenceStatus)
-                                                        VALUES ('$userID', '$name', '$newCode', 1, 1)");
+                    $refQry = mysqli_query($db->conn, 
+                        "INSERT INTO reference_tbl (assetId, name, accountabilityRef, accountabilityStatus, referenceStatus)
+                        VALUES ('$userID', '$name', '$newCode', 1, 1)");
                 } else {
-                    $refQry = mysqli_query($db->conn, "UPDATE reference_tbl SET accountabilityStatus=1, accountabilityRef='$newCode'");
+                    $refQry = mysqli_query($db->conn, 
+                    "UPDATE reference_tbl 
+                    SET accountabilityStatus=1, accountabilityRef='$newCode'");
                 }
 
-                $history = mysqli_query($db->conn, "INSERT INTO history_tbl (name, action, date)
-                        VALUES ('$username', 'Generated accountability form: $assettag, Last used by: $name', NOW())");
+                $history = mysqli_query($db->conn, 
+                    "INSERT INTO history_tbl (name, action, date)
+                    VALUES ('$username', 'Generated accountability form: $assettag, Last used by: $name', NOW())");
             } else {
                 echo "<b>Ref#: " . $acc_ref . "</b>";
-                $history = mysqli_query($db->conn, "INSERT INTO history_tbl (name, action, date)
-                        VALUES ('$username', 'Viewed accountability form for: $assettag', NOW())");
+
+                $history = mysqli_query($db->conn, 
+                    "INSERT INTO history_tbl (name, action, date)
+                    VALUES ('$username', 'Viewed accountability form for: $assettag', NOW())");
             }
 
         }
@@ -154,74 +183,24 @@ if(isset($_GET['select'])) {
             <tr>
                 <th>Asset Type</th>
                 <th>Specification</th>
-                <th>Others</th>
+                <!-- <th>Others</th> -->
                 <th>Serial no.</th>
                 <th>Date Deployed</th>
                 <th>Remarks</th>
             </tr>
-            <?php 
 
-            if(isset($_GET['select'])) {
-                $selected = $_GET['select'];
+            <tr>
+            
+                <td><?php echo $assettype; ?></td>
+                <td><?php echo $userID; ?></td>
+                <td><?php echo $serial; ?></td>
+                <td><?php echo $datedeployed; ?></td>
+                <td><?php echo $remarks; ?></td>    
+ 
 
-                foreach ($selected as $userID) {
-                    $sql = "SELECT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
-                    $res = mysqli_query($db->conn, $sql);
-    
-                while($row = mysqli_fetch_assoc($res)) {
-                    // $cpu = $row['CPU'];
-                    // $ram = $row['MEMORY'];
-                    // $storage = $row['STORAGE'];
-                    // $specs = 'CPU: ' . $cpu . '<br>MEMORY: ' . $ram . '<br>STORAGE: ' . $storage;
-                    
-                    
-                ?>
-                <tr>
-                
-                    <td><?php echo $row['assettype']; ?></td>
-                    <td><?php echo $specs; ?></td>
-                    <td><?php echo $row['Others']; ?></td>
-                    <td><?php echo $row['serial']; ?></td>
-                    <td><?php echo $row['datedeployed']; ?></td>
-                    <td><?php echo $row['remarks']; ?></td>    
-                </tr>
-                <?php
-                    }
-                }
-            } elseif(isset($_GET['id'])) {
-                $userID = $_GET['id'];
+            
+            </tr>
 
-                
-                // while($row = mysqli_fetch_assoc($assetUserID)) {
-                    
-                // }
-                $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                        VALUES ('', '$username', 'Viewed accountability form: $assettag, from Reference tbl Last used by: $assigned', NOW())");
-
-                $sql = "SELECT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
-                    $res = mysqli_query($db->conn, $sql);
-                
-                while($row = mysqli_fetch_assoc($res)) {
-                    $cpu = $row['CPU'];
-                    $ram = $row['MEMORY'];
-                    $storage = $row['STORAGE'];
-                    $specs = 'CPU: ' . $cpu . '<br>MEMORY: ' . $ram . '<br>STORAGE: ' . $storage;
-    
-                ?>
-                <tr>
-                
-                    <td><?php echo $row['assettype']; ?></td>
-                    <td><?php echo $specs; ?></td>
-                    <td><?php echo $row['Others']; ?></td>
-                    <td><?php echo $row['serial']; ?></td>
-                    <td><?php echo $row['datedeployed']; ?></td>
-                    <td><?php echo $row['remarks']; ?></td>    
-                
-                </tr>
-            <?php
-                }
-            }
-            ?>
         </table>
         <div class="info"><br>
             <h3>Responsibilities</h3>

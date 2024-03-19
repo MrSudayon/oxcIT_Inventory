@@ -66,14 +66,6 @@ if(!empty($_SESSION['id'])) {
                 WHERE a.status!='Archive' AND (a.empId!='' || a.empId = null)";
                 $results = mysqli_query($db->conn, $sqlSelectAll);
 
-                // Department</th>
-                // Asset Type</th>
-                // Asset Tag</th>
-                // Model</th>
-                // Specification</th>
-                // Status</th>
-                // Ref Code</th>
-
                 $results_per_page = 15;
 
                 if (!isset ($_GET['page']) ) {  
@@ -95,15 +87,10 @@ if(!empty($_SESSION['id'])) {
                 FROM assets_tbl AS a 
                 LEFT JOIN reference_tbl AS r ON r.assetId = a.id
                 LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                WHERE a.empId !=0 AND a.status!='Archive' AND (a.empId != 0 OR a.empId IS NOT NULL) AND (e.name LIKE '$search%' OR e.name LIKE '%$search' OR e.name LIKE '%$search%' OR e.division LIKE '%$search%'
-                OR a.assettype LIKE '%$search%' OR a.status LIKE '%$search%' OR e.location LIKE '%$search%'
+                WHERE a.empId !=0 AND a.status!='Archive' AND (a.empId != 0 OR a.empId IS NOT NULL) AND (e.name LIKE '$search%' OR e.name LIKE '%$search' 
+                OR e.name LIKE '%$search%' OR e.division LIKE '%$search%' OR a.assettype LIKE '%$search%' OR a.status LIKE '%$search%' 
                 OR a.assettag LIKE '%$search%' OR a.model LIKE '%$search%' OR a.remarks LIKE '%$search%') LIMIT " . $results_per_page;
-            
-                // "SELECT * FROM assets_tbl WHERE status!='Archive' AND assigned != '' AND (assigned LIKE '$search%' OR assigned LIKE '%$search' OR assigned LIKE '%$search%' OR department LIKE '%$search%'
-                // OR assettype LIKE '%$search%' OR status LIKE '%$search%' OR location LIKE '%$search%'
-                // OR assettag LIKE '%$search%' OR model LIKE '%$search%' OR CPU LIKE '%$search%' OR MEMORY LIKE '%$search%' OR STORAGE LIKE '%$search%'
-                // OR remarks LIKE '%$search%' OR Others LIKE '%$search%') LIMIT " . $results_per_page;
-            
+
                 $res = mysqli_query($db->conn, $sql);
                 $countperPage = $res->num_rows;
             ?>
@@ -144,7 +131,6 @@ if(!empty($_SESSION['id'])) {
                         $turnover = $row['turnoverRef'];
 
                         if($turnover!='') {
-                            // > <input type="hidden" id="turnover" value="<?php echo $turnover; >?php
                             echo $turnover;
                         } else {
                             echo "N/A";
