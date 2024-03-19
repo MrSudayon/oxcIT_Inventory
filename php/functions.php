@@ -328,7 +328,19 @@ class Operations {
     // Getting reference table values
     function getReferenceTable() {
         global $db;
-        $sql = mysqli_query($db->conn, "SELECT * FROM reference_tbl ORDER BY name ASC, accountabilityStatus ASC, turnoverStatus");
+        // $sql = mysqli_query($db->conn, "SELECT * FROM reference_tbl ORDER BY name ASC, accountabilityStatus ASC, turnoverStatus");
+        $sqlSelect = 
+                        "SELECT a.id AS aId, a.empId, a.status AS status, a.assettype, a.assettag AS tag, a.model, a.remarks, 
+                        e.id, e.name AS ename, e.division, e.location, 
+                        r.id AS rid, r.assetId AS assetId, r.name AS rname, r.turnoverRef AS turnoverRef, r.accountabilityRef AS accountabilityRef, 
+                        r.turnoverStatus AS turnoverStatus, r.accountabilityStatus AS accountabilityStatus, 
+                        r.turnoverDate AS turnoverDate, r.accountabilityDate AS accountabilityDate,
+                        r.turnoverFile AS turnoverFile, r.accountabilityFile AS accountabilityFile, r.referenceStatus  
+                        FROM assets_tbl AS a 
+                        LEFT JOIN reference_tbl AS r ON r.assetId = a.id
+                        LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+                        WHERE status!='Archive'";
+        $sql = mysqli_query($db->conn, $sqlSelect);
 
         return $sql;  
     }

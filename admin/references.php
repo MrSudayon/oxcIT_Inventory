@@ -59,17 +59,17 @@ if(!empty($_SESSION['id'])) {
             <div class="pagination-btns">
             <?php
 
-                $refData = mysqli_query($db->conn,
-                "SELECT a.id AS aId, a.empId, a.status, a.assettype, a.assettag, a.model, a.remarks, 
-                e.id, e.name AS ename, e.division, e.location, r.assetId, r.name, r.turnoverRef AS turnoverRef, r.accountabilityRef AS accountabilityRef 
-                FROM assets_tbl AS a 
-                LEFT JOIN reference_tbl AS r ON r.assetId = a.id
-                LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                WHERE status!='Archive' AND (accountabilityRef != '' 
-                OR turnoverRef != '')");
+                $refData = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE accountabilityRef != '' OR turnoverRef != ''");
+                // "SELECT a.id AS aId, a.empId, a.status, a.assettype, a.assettag, a.model, a.remarks, 
+                // e.id, e.name AS ename, e.division, e.location, r.assetId, r.name, r.turnoverRef AS turnoverRef, r.accountabilityRef AS accountabilityRef 
+                // FROM assets_tbl AS a 
+                // LEFT JOIN reference_tbl AS r ON r.assetId = a.id
+                // LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+                // WHERE status!='Archive' AND (accountabilityRef != '' 
+                // OR turnoverRef != '')");
                 $rowCount = $refData->num_rows;
-
-                $results_per_page = 20;
+                
+                $results_per_page = 10;
 
                 if (!isset ($_GET['page']) ) {  
                     $page = 1;  
@@ -84,10 +84,10 @@ if(!empty($_SESSION['id'])) {
                     $search = $_POST['search'];
                     $page = 1;  
                 
-                    $sql = "SELECT * FROM reference_tbl WHERE name LIKE '%$search%' OR accountability_ref LIKE '%$search%' 
-                        OR turnover_ref LIKE '%$search%') LIMIT " . $results_per_page;
+                    $sql = "SELECT * FROM reference_tbl WHERE name LIKE '%$search%' OR accountabilityRef LIKE '%$search%' 
+                        OR turnoverRef LIKE '%$search%' LIMIT " . $results_per_page;
                 } else {
-                        $sql = "SELECT * FROM reference_tbl LIMIT ". $page_first_result . ',' . $results_per_page;
+                    $sql = "SELECT * FROM reference_tbl LIMIT ". $page_first_result . ', ' . $results_per_page;
                 }
                 $res = mysqli_query($db->conn, $sql);
                 $rowCountPage = $res->num_rows;
@@ -105,7 +105,7 @@ if(!empty($_SESSION['id'])) {
                 ?>
             </div>
             <div class="count">
-                <p>Asset count: <b style="color: yellow; font-size: 20px;"><?php echo 1 ?></b></p>
+                <p>Asset count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCountPage ?></b></p>
             </div>
         </div> 
             <form action="" method="get">
@@ -134,47 +134,30 @@ if(!empty($_SESSION['id'])) {
                             pointer-events: all;
                             filter: grayscale(0);
                         }</style>
-                    
+                      <tr>
                     <?php 
-
+                    
+                if($rowCount < 1) {
+                    echo "<td colspan=13 style='text-align:center; color:red; font-size: 1.5em;'>No result</td>";
+                } else {
                     // Get reference records
                     $referenceTbl = $getAllRecord->getReferenceTable();
 
                     while($row = mysqli_fetch_assoc($referenceTbl)) {
-                        $assetId = $row['assetId'];
-                    
-                        // 0 N/A
-                        // 1 Process
-                        // 2 Signed
-                    
-                    $sqlSelect = 
-                        "SELECT a.id AS aId, a.empId, a.status, a.assettype, a.assettag, a.model, a.remarks, 
-                        e.id, e.name AS ename, e.division, e.location, 
-                        r.assetId, r.name AS rname, r.turnoverRef AS turnoverRef, r.accountabilityRef AS accountabilityRef, 
-                        r.turnoverStatus AS turnoverStatus, r.accountabilityStatus AS accountabilityStatus, 
-                        r.turnoverDate AS turnoverDate, r.accountabilityDate AS accountabilityDate , r.referenceStatus 
-                        FROM assets_tbl AS a 
-                        LEFT JOIN reference_tbl AS r ON r.assetId = a.id
-                        LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                        WHERE assetId = $assetId AND status!='Archive'";
-                    }
-                    $refSql = mysqli_query($db->conn, $sqlSelect);
+                        $id = $row['rid'];
+                        $assettag = $row['tag'];
+                        $acctRef = $row['accountabilityRef']; 
+                        $acctStatus = $row['accountabilityStatus']; 
+                        $acctDate = $row['accountabilityDate']; 
+                        $turnoverRef = $row['turnoverRef'];
+                        $turnoverStatus = $row['turnoverStatus']; 
+                        $turnoverDate = $row['turnoverDate'];
+                        $name1 = $row['rname']; 
 
-                    while($ref = mysqli_fetch_assoc($refSql)) {
-                        $acctRef = $ref['accountabilityRef']; 
-                        $acctStatus = $ref['accountabilityStatus']; 
-                        $acctDate = $ref['accountabilityDate']; 
-                        $assettag = $ref['assettag'];
-                        $turnoverRef = $ref['turnoverRef'];
-                        $turnoverStatus = $ref['turnoverStatus']; 
-                        $turnoverDate = $ref['turnoverDate'];
-                        $name1 = $ref['rname']; 
-                    
-                
-                        print_r($ref); 
-
-                            // echo $assettag;
                         if($acctRef != '' || $turnoverRef != '') {
+                            // 0 N/A
+                            // 1 Process
+                            // 2 Signed
                             switch($acctStatus) {
                                 case 1:
                                     $acctStatus = 'On Process';
@@ -183,7 +166,7 @@ if(!empty($_SESSION['id'])) {
                                     $acctStatus = 'Signed';
                                     break;
                                 default:
-                                    $acctStatus = 'N/A';
+                                    $acctStatus = 'None';
                             }
                                 
                             switch($turnoverStatus) {
@@ -194,7 +177,7 @@ if(!empty($_SESSION['id'])) {
                                     $turnoverStatus = 'Signed';
                                     break;
                                 default:
-                                    $turnoverStatus = 'N/A';
+                                    $turnoverStatus = 'None';
                             }
                             
                             // if($name1=='') {
@@ -203,7 +186,7 @@ if(!empty($_SESSION['id'])) {
                             //     echo "<tr>";
                             // }
                             ?> 
-                        <tr>    
+                          
                             <td><?php echo $name1; ?></td>
 
                             <?php 
@@ -211,24 +194,24 @@ if(!empty($_SESSION['id'])) {
                                 
                                 echo "<td style='font-weight:600;'>N/A</td>";
                                 echo "<td style='font-weight:600;'>N/A</td>";
-                                echo "<td></td>";
+                                echo "<td style='font-weight:600;'>N/A</td>";
                                 echo "<td>" . $acctStatus;"</td>";
                                 echo "<td>" . $acctDate;"</td>";
-                                echo "<td></td>";
+                                echo "<td><span class='disable-btn'><img src='../assets/icons/remove.png' width='24px'></span></td>";
                             } else {               
                             ?>
 
-                                <td><?php $assettag;?></td>
+                                <td><?php echo $assettag;?></td>
                                 <td><a class="link" href="accountability.php?id=<?php echo $assetId; ?>"><?php echo $acctRef;?></a></td>
-                                <td width="10%;"><a class="link" href="../files/download.php?acctRef_id=<?php echo $row['id']; ?>" target="_blank"><?php echo $row['accountabilityFile']; ?></td>
+                                <td width="10%;"><a class="link" href="../files/download.php?acctRef_id=<?php echo $id; ?>" target="_blank"><?php echo $row['accountabilityFile']; ?></td>
                                 <td><?php echo $acctStatus; ?></td>
                                 <td><?php echo $row['accountabilityDate']; ?></td>
                                 <td>
                                     <center>
                                         <?php if($acctStatus == 'Signed') { ?>
-                                            <span class="disable-btn"><a href="../update/remove.php?Acct_id=<?php echo $assetId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a></span>
+                                            <span class="disable-btn"><a href="../update/remove.php?Acct_id=<?php echo $id; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a></span>
                                         <?php } else { ?>
-                                            <a href="../update/remove.php?Acct_id=<?php echo $assetId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                                            <a href="../update/remove.php?Acct_id=<?php echo $id; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                                         <?php } ?>
                                     </center>
                                 </td>
@@ -240,45 +223,44 @@ if(!empty($_SESSION['id'])) {
                             if ($turnoverRef == '') {
                                 echo "<td style='font-weight:600;'>N/A</td>";
                                 echo "<td style='font-weight:600;'>N/A</td>";   
-                                echo "<td></td>";
+                                echo "<td style='font-weight:600;'>N/A</td>";   
                                 echo "<td>" . $turnoverStatus;"</td>";
                                 echo "<td>" . $turnoverDate;"</td>";   
                                 if($turnoverStatus == 'Signed') {              
-                                    echo "<td><center><span class='disable-btn'><a href='../update/referenceUpd.php?id=" . $assetId . "'><img src='../assets/icons/update.png' width='24px'></a></span></center></td>";
+                                    echo "<td><center><span class='disable-btn'><a href='../update/referenceUpd.php?id=" . $id . "'><img src='../assets/icons/update.png' width='24px'></a></span></center></td>";
                                 } else {
-                                    echo "<td><center><a href='../update/referenceUpd.php?id=" . $assetId . "'><img src='../assets/icons/update.png' width='24px'></a></center></td>";
+                                    echo "<td><center><a href='../update/referenceUpd.php?id=" . $id . "'><img src='../assets/icons/update.png' width='24px'></a></center></td>";
                                 }
                             } else {
                             ?>
-                                <td><?php $ref['assettag'];?></td>
+                                <td><?php echo $assettag;?></td>
+                                <td><a class="link" href="turnover.php?id=<?php echo $id; ?>"><?php echo $turnoverRef;?></a></td>
                                 <td width="10%;"><a class="link" href="../files/download.php?trnRef_id=<?php echo $row['id']; ?>" target="_blank"><?php echo $row['turnoverFile']; ?></td>
-                                <td><?php echo $turnoverStatus; ?></td>
+                                <td><?php echo $id; ?></td>
                                 <td><?php echo $turnoverDate; ?></td>
                                 <td>
                                     <center>
                                         <?php if($turnoverStatus == 'Signed' && $acctStatus == 'Signed') { ?>
-                                            <span class="disable-btn"><a href="../update/referenceUpd.php?id=<?php echo $assetId; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;</span>
+                                            <span class="disable-btn"><a href="../update/referenceUpd.php?id=<?php echo $id; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;</span>
                                         <?php } else { ?>
-                                            <a href="../update/referenceUpd.php?id=<?php echo $assetId; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
+                                            <a href="../update/referenceUpd.php?id=<?php echo $id; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
                                         <?php } ?>
 
                                         <?php if($turnoverStatus == 'Signed') { ?>
-                                            <span class="disable-btn"><a href="../update/remove.php?Turnover_id=<?php echo $assetId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a></span>
+                                            <span class="disable-btn"><a href="../update/remove.php?Turnover_id=<?php echo $id; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a></span>
                                         <?php } else { ?>
-                                            <a href="../update/remove.php?Acct_id=<?php echo $assetId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                                            <a href="../update/remove.php?Turnover_id=<?php echo $id; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                                         <?php } ?>
                                         
                                     </center>
                                 </td>    
                             <?php
                             }
+                        }
+                    }
+                } 
                             ?>                        
                         </tr>
-                <?php
-                    }
-                }
-                    
-                ?>
                 </table>
                 
                 

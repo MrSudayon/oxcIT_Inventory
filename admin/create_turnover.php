@@ -144,6 +144,7 @@ if(!empty($_SESSION['id'])) {
                         $turnover = $row['turnoverRef'];
 
                         if($turnover!='') {
+                            ?> <input type="hidden" id="turnover" value="<?php echo $turnover; ?>"><?php
                             echo $turnover;
                         } else {
                             echo "N/A";
