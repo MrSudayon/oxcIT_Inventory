@@ -13,12 +13,5 @@ function checkDelete(){
 
 function checkPrompt(){
     
-    var turnoverCode = document.getElementById('#turnover')
-    var accountabilityCode = document.getElementById('#accountability')
-
-    if((turnoverCode='') || (accountabilityCode='')) {
-        return confirm('✔️Confirm?')
-    } else { 
-        return false;
-    }
+    return confirm('✔️Confirm?')
 }

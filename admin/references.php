@@ -144,7 +144,8 @@ if(!empty($_SESSION['id'])) {
                     $referenceTbl = $getAllRecord->getReferenceTable();
 
                     while($row = mysqli_fetch_assoc($referenceTbl)) {
-                        $id = $row['rid'];
+                        $aId = $row['aId'];
+                        $assetId = $row['assetId'];
                         $assettag = $row['tag'];
                         $acctRef = $row['accountabilityRef']; 
                         $acctStatus = $row['accountabilityStatus']; 
@@ -234,7 +235,7 @@ if(!empty($_SESSION['id'])) {
                             } else {
                             ?>
                                 <td><?php echo $assettag;?></td>
-                                <td><a class="link" href="turnover.php?id=<?php echo $id; ?>"><?php echo $turnoverRef;?></a></td>
+                                <td><a class="link" href="turnover.php?id=<?php echo $assetId; ?>"><?php echo $turnoverRef;?></a></td>
                                 <td width="10%;"><a class="link" href="../files/download.php?trnRef_id=<?php echo $row['id']; ?>" target="_blank"><?php echo $row['turnoverFile']; ?></td>
                                 <td><?php echo $id; ?></td>
                                 <td><?php echo $turnoverDate; ?></td>

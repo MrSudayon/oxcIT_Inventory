@@ -115,10 +115,11 @@ if(!empty($_SESSION['id'])) {
             </thead>
             <tbody>
             <tr>
-            <?php 
+            <?php
+            print_r($res); 
                 while ($row = mysqli_fetch_array($res)) {  
             ?> 
-                <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>
+                <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['aId']; ?>"></td>
                 <td><?php echo $row['ename']; ?></td>
                 <td><?php echo $row['division']; ?></td>
                 <td><?php echo $row['assettype']; ?></td>
@@ -130,9 +131,7 @@ if(!empty($_SESSION['id'])) {
                 <td>
                     <?php
                         $accountability = $row['accountabilityRef'];
-
                         if($accountability!='') {
-                            ?> <input type="hidden" id="accountability" value="<?php echo $accountability; ?>"><?php
                             echo $accountability;
                         } else {
                             echo "N/A";

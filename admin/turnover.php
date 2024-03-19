@@ -11,13 +11,11 @@ if(!empty($_SESSION['id'])) {
 } else {
     header("Location: ../php/login.php");
 }
-
     
 if(isset($_GET['select'])) {
-
     $selected = $_GET['select'];
+    
     foreach ($selected as $userID){ 
-        // $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
         $sql = 
         "SELECT DISTINCT a.*, 
         e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.turnoverRef  
@@ -29,20 +27,55 @@ if(isset($_GET['select'])) {
         $res = mysqli_query($db->conn, $sql);
     
         while($row = mysqli_fetch_assoc($res)) {
+            $id = $row['aId'];
+
             $name = $row['ename'];
+            $arrayName[] = $name;
             $dept = $row['division'];
             $turnover_ref = $row['turnoverRef'];
-            $arrayName[] = $name;
+
+            $assettype = $row['assettype'];
+            $assettag = $row['assettag'];
+            $model = $row['model'];
+            $serial = $row['serial'];
+            $remarks = $row['remarks'];
         }
     }
+} elseif(isset($_GET['id'])) {
+    $userID = $_GET['id'];
 
-    $assetUserID = mysqli_query($db->conn, 
-                                        "SELECT DISTINCT a.id AS aId, a.empId, a.status, a.assettype, a.assettag, a.model, a.remarks, 
-                                        e.id, e.name AS ename, e.division, e.location, r.assetId, r.name, r.turnoverRef 
-                                        FROM assets_tbl AS a 
-                                        LEFT JOIN reference_tbl AS r ON r.assetId = a.id
-                                        LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                                        WHERE a.id='$userID' AND a.status !='Archive'"); 
+    $sql = 
+        "SELECT DISTINCT a.id AS aId, a.empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, 
+        e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.turnoverRef  
+        FROM assets_tbl AS a 
+        LEFT JOIN reference_tbl AS r ON r.assetId = a.id
+        LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+        WHERE a.id='$userID' AND a.status !='Archive'";
+
+        $res = mysqli_query($db->conn, $sql);
+    
+        while($row = mysqli_fetch_assoc($res)) {
+            $id = $row['aId'];
+
+            $name = $row['ename'];
+            $arrayName[] = $name;
+            $dept = $row['division'];
+            $turnover_ref = $row['turnoverRef'];
+
+            $assettype = $row['assettype'];
+            $assettag = $row['assettag'];
+            $model = $row['model'];
+            $serial = $row['serial'];
+            $remarks = $row['remarks'];
+        }
+} else {
+    ?>
+        <script>
+            alert('Please select User');
+            window.location.replace('create_turnover.php');
+        </script>
+    <?php
+} 
     ?>
 
     <!DOCTYPE html>
@@ -90,9 +123,6 @@ if(isset($_GET['select'])) {
                 window.location.href = 'create_turnover.php';
                 </script> 
             <?php
-            // print_r($arrayName);
-            // print_r($userID);
-
         } elseif(count(array_unique($arrayName))>1) {
             ?>
                 <script> 
@@ -102,68 +132,33 @@ if(isset($_GET['select'])) {
             <?php
         } else {
 
-            // assets tbl
-            while($row = mysqli_fetch_assoc($assetUserID)) {
-                $id = $row['aId']; //assetId 
-                $assettag = $row['assettag'];
-                $assigned = $row['ename'];
-            }
 
             if ($turnover_ref == '') {
                 echo "<b>Ref#: " .$newCode. "</b>";
-                // If assetId is existing in reference tbl
-                // $refSql = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $id");
+                // If assetId is existed in reference tbl
+                $refSql = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $aId AND accountabilityRef != ''");
 
                 // Insert accountability code to reference_tbl
-                // if(!$refSql) {
-                    $refQry = mysqli_query($db->conn, "INSERT INTO reference_tbl (id, assetId, name, turnoverRef, turnoverStatus, turnoverFile, turnoverDate, referenceStatus)
-                    VALUES ('', '$id', '$assigned', '$newCode', 0, '', '', 1)");
-                // } else {    
-                //     $refQry = mysqli_query($db->conn, "UPDATE reference_tbl SET turnoverStatus=1 WHERE assetId = $id");
-                // }
+                if(!$refSql) {
+                    $refQry = mysqli_query($db->conn, "INSERT INTO reference_tbl (assetId, name, turnoverRef, turnoverStatus, referenceStatus)
+                                                        VALUES ('$id', '$name', '$newCode',1, 1)");
+                } else {
+                    $refQry = mysqli_query($db->conn, "UPDATE reference_tbl SET accountabilityStatus=1, accountabilityRef='$newCode'");
+                }
+
+                $history = mysqli_query($db->conn, "INSERT INTO history_tbl (name, action, date)
+                        VALUES ('$username', 'Generated turnover form: $assettag, Last used by: $name', NOW())");
+
             } else {
                 echo "<b>Ref#: " . $turnover_ref . "</b>";
                 
                 $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                VALUES ('', '$username', 'Viewed turnover form for: $assigned', NOW())");
+                VALUES ('', '$username', 'Viewed turnover form for: $name', NOW())");
             }
         }
     }    
     // From reference Tab to existing Turnover form
-} elseif(isset($_GET['id'])) {
-    $userID = $_GET['id'];
 
-    $sql = 
-        "SELECT DISTINCT a.*, 
-        e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.turnoverRef  
-        FROM assets_tbl AS a 
-        LEFT JOIN reference_tbl AS r ON r.assetId = a.id
-        LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-        WHERE a.id='$userID' AND a.status !='Archive'";
-
-        $res = mysqli_query($db->conn, $sql);
-    
-        while($row = mysqli_fetch_assoc($res)) {
-            $name = $row['ename'];
-            $dept = $row['division'];
-            $turnover_ref = $row['turnoverRef'];
-        }
-    
-    $assetUserID = mysqli_query($db->conn, 
-                                        "SELECT DISTINCT a.*, 
-                                        e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.turnoverRef  
-                                        FROM assets_tbl AS a 
-                                        LEFT JOIN reference_tbl AS r ON r.assetId = a.id
-                                        LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                                        WHERE a.id='$userID' AND a.status !='Archive'");
-} else {
-    ?>
-        <script>
-            alert('Please select User');
-            window.location.replace('create_turnover.php');
-        </script>
-    <?php
-} 
 ?>
 </div>
     <table class="assets-table">
@@ -176,68 +171,30 @@ if(isset($_GET['select'])) {
             <th>Remarks</th>
         </tr>
         <?php 
-        if($selected) {
-            //  = $_GET['select'];
-
-            foreach ($selected as $userID) {
-                // $sql = "SELECT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
-                $sql = "SELECT a.id AS aId, a.empId, a.status, a.assettype, a.assettag, a.model, a.serial, a.remarks, 
-                        e.id, e.name AS ename, e.division, e.location, r.assetId, r.name, r.turnoverRef 
-                        FROM assets_tbl AS a 
-                        LEFT JOIN reference_tbl AS r ON r.assetId = a.id
-                        LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                        WHERE a.id='$userID' AND status !='Archive'";
-                        $res = mysqli_query($db->conn, $sql);
-
-                $res = mysqli_query($db->conn, $sql);
-
-                while($row = mysqli_fetch_assoc($res)) {
-                    $id = $row['aId'];
-                    $ram = $row['name'];
-                    // $storage = $row['STORAGE'];
-                    // $specs = 'CPU: ' . $cpu . '<br>MEMORY: ' . $ram . '<br>STORAGE: ' . $storage;
-        ?>
-            <tr>
-            
-                <td><?php echo $row['assettype']; ?></td>
-                <td><?php echo $id; ?></td>
-                <td><?php echo $row['model']; ?></td>
-                <td><?php echo $row['serial']; ?></td>
-                <td><?php echo $row['remarks']; ?></td>    
-            
-            </tr>
-        <?php
-                }
-            }
-        ?>
-        <?php
-        // } elseif(isset($_GET['id'])) {
-        } elseif($userID) {
-
-            $userID = $_GET['id'];
-
-            $sql = "SELECT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
-                $res = mysqli_query($db->conn, $sql);
-
-            while($row = mysqli_fetch_assoc($res)) {
-                $cpu = $row['CPU'];
-                $ram = $row['MEMORY'];
-                $storage = $row['STORAGE'];
-                $specs = 'CPU: ' . $cpu . '<br>MEMORY: ' . $ram . '<br>STORAGE: ' . $storage;
+        if(isset($_GET['selected']) || isset($selected)) {
+            ?>
+                <tr>
                 
+                    <td><?php echo $assettype; ?></td>
+                    <td><?php echo $userID; ?></td>
+                    <td><?php echo $model; ?></td>
+                    <td><?php echo $serial; ?></td>
+                    <td><?php echo $remarks; ?></td>       
                 
+                </tr>
+            <?php
+        } elseif(isset($_GET['id']) || isset($userID)) {
             ?>
             <tr>
-            
-                <td><?php echo $row['assettype']; ?></td>
-                <td><?php echo $specs; ?></td>
-                <td><?php echo $row['Others']; ?></td>
-                <td><?php echo $row['serial']; ?></td>
-                <td><?php echo $row['remarks']; ?></td>    
+                
+                <td><?php echo $assettype; ?></td>
+                <td><?php echo $userID; ?></td>
+                <td><?php echo $model; ?></td>
+                <td><?php echo $serial; ?></td>
+                <td><?php echo $remarks; ?></td>    
             
             </tr>
-        <?php
-            }
+            <?php
         }    
         ?>
         

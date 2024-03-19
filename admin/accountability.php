@@ -2,7 +2,8 @@
 require '../php/db_connection.php';
 
 $select = new Select();
-
+$db = new Connection();
+$functions = new Operations();
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
     $username = $user['username'];
@@ -12,36 +13,50 @@ if(!empty($_SESSION['id'])) {
 }
 
 if(isset($_GET['select'])) {
+
     $selected = $_GET['select'];
 
-    foreach ($selected as $userID) { 
-        $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
-        $res = mysqli_query($db->conn, $sql);
+    foreach ($selected as $userID){ 
+        $sql = 
+        "SELECT DISTINCT a.id AS aId, a.empId, a.status, a.assettype, a.assettag, a.model, a.remarks, 
+        e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, 
+        r.accountabilityRef AS accountabilityRef 
+        FROM assets_tbl AS a 
+        LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+        LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+        WHERE a.id='$userID' AND a.status !='Archive'";
 
+        $res = mysqli_query($db->conn, $sql);
+    
         while($row = mysqli_fetch_assoc($res)) {
-            $name = $row['assigned'];
-            $dept = $row['department'];
-            $acc_ref = $row['accountability_ref'];
-            $arrayName[] = $name;            
+            $aId = $row['aId'];
+            $name = $row['ename'];
+            $dept = $row['division'];
+            $acc_ref = $row['accountabilityRef'];
+            $assettag = $row['assettag'];
+            $arrayName[] = $name;
         }
     }
-    $assetUserID = mysqli_query($db->conn, "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'");
-} elseif(isset($_GET['selectAll'])) {
-    ?>
-        <script>
-            alert('Accountability handles per person only');
-            window.location.replace('create_accountability.php');
-        </script>
-    <?php
 } elseif(isset($_GET['id'])) {
     $userID = $_GET['id'];
-    $assetUserID =  mysqli_query($db->conn,"SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'");
-    
-    while($row = mysqli_fetch_assoc($assetUserID)) {
-        $acc_ref = $row['accountability_ref'];
+
+    $sql = 
+        "SELECT DISTINCT a.id AS aId, a.assettag AS assettag, a.empId AS empId, 
+        e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.accountabilityRef AS accountabilityRef  
+        FROM assets_tbl AS a 
+        LEFT JOIN reference_tbl AS r ON r.assetId = a.id
+        LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+        WHERE r.id='$userID' AND a.status !='Archive'";
+
+    $res = mysqli_query($db->conn, $sql);
+
+    while($row = mysqli_fetch_assoc($res)) {
+        $aId = $row['aId'];
+        $name = $row['ename'];
+        $dept = $row['division'];
+        $acc_ref = $row['accountabilityRef'];
         $empId = $row['empId'];
         $assettag = $row['assettag'];
-        $assigned = $row['assigned'];    
     }
 } else {
     ?>
@@ -74,23 +89,22 @@ if(isset($_GET['select'])) {
     <div class="reference-code" align="right">
     <?php 
         // Generating Reference Code
-        $n=4;
-        function getCode($n) {
-            $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $randomString = '';
-         
-            for ($i = 0; $i < $n; $i++) {
-                $index = rand(0, strlen($characters) - 1);
-                $randomString .= $characters[$index];
-                $refCode = $randomString. "-" .date("Y");
-            }
-            
-            return "ACCT-".$refCode;
-        }
-        $newCode = getCode($n);
+    $n=4;
+    function getCode($n) {
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
         
-        // If reference code exists, Display existing Ref Code
-        // else generate new
+        for ($i = 0; $i < $n; $i++) {
+            $index = rand(0, strlen($characters) - 1);
+            $randomString .= $characters[$index];
+            $refCode = $randomString. "-" .date("Y");
+        }
+        
+        return "ACCT-".$refCode;
+    }
+
+    $newCode = getCode($n);
+    // If reference code exists, Display existing Ref Code
     if(isset($arrayName)) {
         if($arrayName != array_filter($arrayName)) {
             ?>
@@ -99,7 +113,6 @@ if(isset($_GET['select'])) {
                 window.location.href = 'create_accountability.php';
                 </script> 
             <?php
-            die();
         } elseif(count(array_unique($arrayName))>1) {
             ?>
                 <script> 
@@ -109,48 +122,30 @@ if(isset($_GET['select'])) {
             <?php
         } else {
 
-            while($row = mysqli_fetch_assoc($assetUserID)) {
-                $id = $row['id'];
-                $assettag = $row['assettag'];
-                $assigned = $row['assigned'];
-            }
-
-           
-            
-
             if ($acc_ref == '') {
                 echo "<b>Ref#: " .$newCode. "</b>";
-                // query to fetch code in assets_tbl
-                foreach ($selected as $userID) { 
-                    $sql = mysqli_query($db->conn, "UPDATE assets_tbl SET accountability_ref='$newCode' WHERE id='$userID' AND status!='Archive'");
-                }
-                $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                        VALUES ('', '$username', 'Generated accountability form: $assettag, Last used by: $assigned', NOW())");
-                    
-
                 // If assetId is existed in reference tbl
-                $refSql = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $id");
+                $refSql = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $aId AND turnoverRef != ''");
 
                 // Insert accountability code to reference_tbl
                 if(!$refSql) {
-                    $refQry = mysqli_query($db->conn, "INSERT INTO reference_tbl (id, assetId, name, acctStatus, acctDate, trnStatus, trnDate)
-                    VALUES ('', '$userID', '$assigned', 1, '', '', '')");
+                    $refQry = mysqli_query($db->conn, "INSERT INTO reference_tbl (assetId, name, accountabilityRef, accountabilityStatus, referenceStatus)
+                                                        VALUES ('$userID', '$name', '$newCode', 1, 1)");
                 } else {
-                    $refQry = mysqli_query($db->conn, "UPDATE reference_tbl SET acctStatus=1");
+                    $refQry = mysqli_query($db->conn, "UPDATE reference_tbl SET accountabilityStatus=1, accountabilityRef='$newCode'");
                 }
-                
-                // 0 N/A
-                // 1 Process
-                // 2 Signed
+
+                $history = mysqli_query($db->conn, "INSERT INTO history_tbl (name, action, date)
+                        VALUES ('$username', 'Generated accountability form: $assettag, Last used by: $name', NOW())");
             } else {
                 echo "<b>Ref#: " . $acc_ref . "</b>";
-                $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                        VALUES ('', '$username', 'Viewed accountability form for: $assettag', NOW())");
+                $history = mysqli_query($db->conn, "INSERT INTO history_tbl (name, action, date)
+                        VALUES ('$username', 'Viewed accountability form for: $assettag', NOW())");
             }
 
         }
     } else {
-        echo "<b>Ref#: " . $acc_ref . "</b>";
+        die();
     }
 
     ?>
@@ -174,10 +169,10 @@ if(isset($_GET['select'])) {
                     $res = mysqli_query($db->conn, $sql);
     
                 while($row = mysqli_fetch_assoc($res)) {
-                    $cpu = $row['CPU'];
-                    $ram = $row['MEMORY'];
-                    $storage = $row['STORAGE'];
-                    $specs = 'CPU: ' . $cpu . '<br>MEMORY: ' . $ram . '<br>STORAGE: ' . $storage;
+                    // $cpu = $row['CPU'];
+                    // $ram = $row['MEMORY'];
+                    // $storage = $row['STORAGE'];
+                    // $specs = 'CPU: ' . $cpu . '<br>MEMORY: ' . $ram . '<br>STORAGE: ' . $storage;
                     
                     
                 ?>
@@ -224,11 +219,6 @@ if(isset($_GET['select'])) {
                 
                 </tr>
             <?php
-                }
-                $empSql = mysqli_query($db->conn, "SELECT * FROM employee_tbl WHERE id='$empId'");
-                while($row1 = mysqli_fetch_assoc($empSql)) {
-                    $name = $row1['name'];
-                    $dept = $row1['division'];
                 }
             }
             ?>
