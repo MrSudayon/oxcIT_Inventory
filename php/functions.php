@@ -56,6 +56,33 @@ class Operations {
         }
     }
 
+    function saveAssetDetails() {
+        global $db;
+        global $session;
+        
+        $type = $_POST['asset-type'];
+        $tag = $_POST['asset-tag'];
+        $dateprchs = $_POST['dateprchs'];
+        $model = $_POST['model'];
+        $serial = $_POST['serial'];
+        $supplier = $_POST['supplier'];
+
+        
+        $query = "INSERT INTO assets_tbl (assettype, assettag, model, serial, supplier, datepurchased)
+                VALUES ('$type','$tag','$model','$serial','$supplier','$dateprchs')";
+       
+        $result = mysqli_query($db->conn, $query);
+
+        return $result;
+
+        // if($result) { 
+        //     mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+        //                         VALUES('', '$name', 'Added a new asset: $tag' , NOW())");
+        //     return 1; //Success
+        // } else {
+        //     return 10; //Store Failed
+        // }
+    }
 
     function getAllData() {
         global $db;

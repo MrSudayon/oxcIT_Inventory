@@ -7,22 +7,21 @@ $select = new Select();
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
     if($user['role'] == 'admin') {
-        $record = new Operations();
+        // $record = new Operations();
 
-        if(isset($_POST['save'])) {
-            $countRes = $record->checkAssetCount($_POST['asset-type']);
+        // if(isset($_POST['save'])) {
+
+        //     $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], $_POST['cost'], $_POST['repair-cost'], $_POST['dateprchs'], $_POST['status'], $_POST['remarks'], $_POST['processor'], $_POST['memory'], $_POST['storage'], $_POST['os'], $_POST['other'], $_POST['datedeployed'], $_POST['assigned'], $_POST['lastused'], $_POST['provider'], $_POST['mobile'], $_POST['plan']);
             
-            $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], $_POST['cost'], $_POST['repair-cost'], $_POST['dateprchs'], $_POST['status'], $_POST['remarks'], $_POST['processor'], $_POST['memory'], $_POST['storage'], $_POST['os'], $_POST['other'], $_POST['datedeployed'], $_POST['assigned'], $_POST['lastused'], $_POST['provider'], $_POST['mobile'], $_POST['plan']);
-            
 
-            if($result == 1) {
-                echo "<script> alert('Data Stored successfully!'); </script>";
-                header("Refresh:0; url=dashboard.php");
+        //     if($result == 1) {
+        //         echo "<script> alert('Data Stored successfully!'); </script>";
+        //         header("Refresh:0; url=dashboard.php");
 
-            } elseif($result == 100) {
-                echo "<script> alert('Failed'); </script>";
-            }                
-        }
+        //     } elseif($result == 100) {
+        //         echo "<script> alert('Failed'); </script>";
+        //     }                
+        // }
 
     } else {
         header("Location: ../index.php");
@@ -39,6 +38,7 @@ if(!empty($_SESSION['id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../assets/logo.jpg">
     <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Add Assets</title>
 </head>
 <body>
@@ -48,13 +48,14 @@ if(!empty($_SESSION['id'])) {
         <div class="add-form">
 
             <a href="../admin/dashboard.php" class="return">Back</a>
-            <form action="" method="POST">
+            <form method="POST" id="addAssetForm">
                 <div class="title">Asset Details</div>
                 <div class="asset-details">
                     <div class="input-box">
                         <span class="details">Asset Type</span>                            
-                        <select name="asset-type" id="Type" onChange="changetextbox();displaySelectedValue();" required>
-                            <option disable>Please Select</option>
+                        <select name="asset-type" id="Type" required="required" onChange="displaySelectedValue();" required>
+                        <!-- <select name="asset-type" id="Type" onChange="changetextbox();displaySelectedValue();" required> -->
+                            <option value="">Please Select</option>
                             <?php
                                 $category = new Operations;
                                 $assettype = $category->getAssets();
@@ -126,57 +127,59 @@ if(!empty($_SESSION['id'])) {
                     </div>
                    
                 </div>
-    
-                <div class="title"></div>
+                <div id="nextPage">
+
+                </div>
+                <!-- <div class="title"></div>
                 <div class="asset-details">
                     <div class="input-box">
                         <span class="details" style="margin-bottom: 10px;">Assign To</span>
                         <select name="assigned" id="assigned" class="assigned">
                             <option value="">Please Select</option>
-                            <?php
+                            ?php
                                     $results = new get_All_User();
 
                                     // $user = $results->selectAllUser();
                                     $user = $results->selectAllEmp();
                                     foreach($user as $row) {
                             ?>
-                            <option value="<?php echo $row['id']; ?>">
-                                <?php echo $row['name']; ?>
+                            <option value="?php echo $row['id']; ?>">
+                                ?php echo $row['name']; ?>
                             </option>
-                            <?php
+                            ?php
                                 }
                                 
                             ?>
                         </select>
                     </div>
-                    <!-- <div class="input-box">
+                    <div class="input-box">
                         <span class="details">Turnover Date</span>
                         <input type="date" name="turnover">
-                    </div> -->
+                    </div>
                     <div class="input-box">
                         <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
-                        <!-- <input type="text" name="lastused" placeholder="Last used..." value="" > -->
                         <select name="lastused" id="lastused" class="assigned">
                             <option value="">Please Select</option>
-                            <?php
+                            ?php
                                     $results = new get_All_User();
 
                                     // $user = $results->selectAllUser();
                                     $user = $results->selectAllEmp();
                                     foreach($user as $row) {
                             ?>
-                            <option value="<?php echo $row['id']; ?>">
-                                <?php echo $row['name']; ?>
+                            <option value="?php echo $row['id']; ?>">
+                                ?php echo $row['name']; ?>
                             </option>
-                            <?php
+                            ?php
                                 }
                                 
                             ?>
                         </select>
                     </div>
-                </div>
+                </div> -->
                 <div class="button">
-                    <input type="submit" onclick="passValue()" value="Save" name="save"/>
+                    <input type="submit" onclick="passValue()" value="Next" name="next"/>
+                    <input type="hidden" name="action" id="action" value="saveAssetDetails" />		
                 </div>
             </form>
         </div>

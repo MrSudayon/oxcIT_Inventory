@@ -1,3 +1,25 @@
+
+$(document).ready(function() {
+    $('#addAssetForm').submit(function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Serialize form data
+        var formData = $(this).serialize();
+
+        // Send form data using AJAX
+        $.ajax({
+            type: 'POST',
+            url: '../admin/admin_action.php', // Update the URL with the correct endpoint for the current page
+            data: formData,
+            success: function(response) {
+                $('#addAssetForm').replaceWith(response); // Replace first form with second form
+            },
+            error: function(xhr, status, error) {
+                alert('Failed to store data!');
+            }
+        });
+    });
+});
 function removeVowels(str) {
     // Use a regular expression to replace vowels (both upper and lower case) with an empty string
     return str.replace(/[aeiouEI]/g, '');
@@ -30,6 +52,41 @@ function displaySelectedValue() {
     // Get the select element
     var selectElement = document.getElementById("Type");
 
+    var status = document.getElementById("status");
+    var repair = document.getElementById("repair-cost");
+
+    // var selectElement = document.getElementById("Type");
+    var serial = document.getElementById("serial");
+    var mobile = document.getElementById("mobile");
+    var model = document.getElementById("model");
+    var provider = document.getElementById("provider");
+    // var processor = document.getElementById("processor");
+    // var plan = document.getElementById("plan");
+    if (status.value == "For repair") {
+        repair.style.display = "block";
+    } else {
+        repair.style.display = "none";
+    }
+
+    if(selectElement.value == "SIM") {
+        serial.style.display = "none";
+        model.style.display = "none";
+        // processor.style.display = "none";
+
+        mobile.style.display = "block";
+        provider.style.display = "block";
+        // plan.style.display = "block";
+    } else {
+        serial.style.display = "block";
+        model.style.display = "block";
+        // processor.style.display = "block";
+
+        mobile.style.display = "none";
+        provider.style.display = "none";
+        // plan.style.display = "none";
+    }
+
+
     // Get the selected value
     var selectedValue = selectElement.options[selectElement.selectedIndex].value;
     var asset = removeVowels(selectedValue);
@@ -55,40 +112,7 @@ function displaySelectedValue() {
 }
 
 function changetextbox() {
-    var status = document.getElementById("status");
-    var repair = document.getElementById("repair-cost");
     
-    if (status.value == "For repair") {
-        repair.style.display = "block";
-    } else {
-        repair.style.display = "none";
-    }
-
-    var selectElement = document.getElementById("Type");
-    var serial = document.getElementById("serial");
-    var mobile = document.getElementById("mobile");
-    var model = document.getElementById("model");
-    var provider = document.getElementById("provider");
-    var processor = document.getElementById("processor");
-    var plan = document.getElementById("plan");
-
-    if(selectElement.value == "SIM") {
-        serial.style.display = "none";
-        model.style.display = "none";
-        processor.style.display = "none";
-
-        mobile.style.display = "block";
-        provider.style.display = "block";
-        plan.style.display = "block";
-    } else {
-        serial.style.display = "block";
-        model.style.display = "block";
-        processor.style.display = "block";
-
-        mobile.style.display = "none";
-        provider.style.display = "none";
-        plan.style.display = "none";
-    }
 }
 
 function passValue() {

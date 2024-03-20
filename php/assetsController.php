@@ -87,7 +87,7 @@ class assetsController {
 
         
 
-        $qry = "UPDATE assets_tbl SET department='$dept', assettype='$assetType', assettag='$assetTag', model='$model', serial='$serial', supplier='$supplier', datepurchased='$dateprchs', status='$status', location='$location', remarks='$remarks', CPU='$cpu', MEMORY='$ram', STORAGE='$storage', OS='$os', Others='$others', assigned='$assigned', lastused='$lastused', dateturnover='$turnover', reason='$reason', datedeployed='$datedeployed' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
+        $qry = "UPDATE assets_tbl SET department='$dept', assettype='$assetType', assettag='$assetTag', model='$model', serial='$serial', supplier='$supplier', datepurchased='$dateprchs', status='$status', location='$location', remarks='$remarks', CPU='$cpu', MEMORY='$ram', STORAGE='$storage', OS='$os', Others='$others', assigned='$assigned', lastused='$lastused', dateturnover='$turnover', datedeployed='$datedeployed' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
         $result = $db->conn->query($qry);
 
 

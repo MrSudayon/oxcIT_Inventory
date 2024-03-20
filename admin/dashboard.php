@@ -109,11 +109,10 @@ if(!empty($_SESSION['id'])) {
             <thead>
             <tr>
                 <th width="1%"><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
-                <th width="18%">Assigned to</th>
                 <th>Asset Type</th>
                 <th>Asset Tag</th>
                 <th>Model</th>
-                <th>Specification</th>
+                <th width="50%">Specification</th>
                 <th>Status</th>
                 <th coslpan="3" width="10%">Action</th>
             </tr>
@@ -124,7 +123,6 @@ if(!empty($_SESSION['id'])) {
                 while ($row = mysqli_fetch_array($res)) {  
             ?> 
                 <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>
-                <td><?php echo $row['name']; ?></td>
                 <td><?php echo $row['assettype']; ?></td>
                 <td><?php echo $row['assettag']; ?></td>
                 <td><?php echo $row['model']; ?></td>
@@ -132,9 +130,9 @@ if(!empty($_SESSION['id'])) {
                     <?php 
 
                     // Logic if laptop/desktop = true {}
-                        echo "CPU: " . $row['CPU'] . "
-                            <br>MEMORY: " . $row['MEMORY'] . "
-                            <br>STORAGE: " . $row['STORAGE']; 
+                        echo "CPU:  
+                            <br>MEMORY:   
+                            <br>STORAGE: " ; 
                     ?>
                 </td>
                     
