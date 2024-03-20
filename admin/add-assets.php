@@ -38,6 +38,7 @@ if(!empty($_SESSION['id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../assets/logo.jpg">
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/modal.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Add Assets</title>
 </head>
@@ -46,146 +47,15 @@ if(!empty($_SESSION['id'])) {
 
     <div class="container">
         <div class="add-form">
-
+    
             <a href="../admin/dashboard.php" class="return">Back</a>
-            <form method="POST" id="addAssetForm">
-                <div class="title">Asset Details</div>
-                <div class="asset-details">
-                    <div class="input-box">
-                        <span class="details">Asset Type</span>                            
-                        <select name="asset-type" id="Type" required="required" onChange="displaySelectedValue();" required>
-                        <!-- <select name="asset-type" id="Type" onChange="changetextbox();displaySelectedValue();" required> -->
-                            <option value="">Please Select</option>
-                            <?php
-                                $category = new Operations;
-                                $assettype = $category->getAssets();
+            <?php include 'addAssetModal.php'; ?>
 
-                                foreach($assettype as $assets) {
-                            ?>
-                                <option value="<?=$assets['assetType']?>"><?php echo $assets['assetType']; ?></option>
-                            <?php
-                                }
-                            ?>
-                        </select>
-                    </div>
-                        
-                    <div class="input-box">
-                        <span class="details">Asset Tag</span>
-                        <div class="asset-tag" id="tag" style="background-color: #ccc;"></div>
-                        <input type="text" name="asset-tag" id="asset-tag" hidden>
-                        <!-- <input type="text" name="asset-tag" placeholder="Asset Tag" id="Tag" > -->
-                    </div>
-                    <div class="input-box" id="model">
-                        <span class="details">Model</span>
-                        <input type="text" name="model" placeholder="Model" id="">
-                    </div>
-                    <div class="input-box" id="provider" style="display: none;">
-                        <span class="details">Provider</span>
-                        <input type="text" name="provider" placeholder="Provider" id="">
-                    </div>
-                    
-                    <div class="input-box" id="serial">
-                        <span class="details">Serial no.</span>
-                        <input type="text" name="serial" placeholder="Serial Number" id="">
-                    </div>
-                    <div class="input-box" id="mobile" style="display: none;">
-                        <span class="details">Mobile no.</span>
-                        <input type="text" name="mobile" placeholder="Mobile no." id="">
-                    </div>
-
-                    <div class="input-box">
-                        <span class="details">Supplier</span>
-                        <input type="text" name="supplier" placeholder="Supplier" id="">
-                    </div>
-                    <div class="input-box">
-                        <span class="details">Cost</span>
-                        <input type="text" name="cost" placeholder="Item cost.." id="">
-                    </div>
-                    
-                    <div class="input-box">
-                        <span class="details">Date Purchased</span>
-                        <input type="date" name="dateprchs" placeholder="Date Purchased" id="" required>
-                    </div>
-                    <div class="input-box">
-                        <span class="details" style="margin-bottom: 10px;">Status</span>
-                        <select name="status" id="status" onChange="changetextbox()" require>
-                            <option value="">Please select</option>
-                            <option value="For repair">For repair</option>
-                            <option value="Deployed">Deployed</option>
-                            <option value="To be Deploy">To be deploy</option>
-                            <option value="Deffective">Defective</option>
-                            <option value="Sell">Sell</option>
-                        </select>
-                    </div>
-                    <div class="input-box" id="repair-cost" style="display: none;">
-                        <span class="details">Repair Cost</span>
-                        <input type="text" name="repair-cost" value="" placeholder="Repair Cost...">
-                    </div>
-                    <div class="input-box">
-                        <span class="details">Remarks</span>
-                        <input type="text" name="remarks" placeholder="Remarks" id="">
-                    </div>
-                   
-                </div>
-                <div id="nextPage">
-
-                </div>
-                <!-- <div class="title"></div>
-                <div class="asset-details">
-                    <div class="input-box">
-                        <span class="details" style="margin-bottom: 10px;">Assign To</span>
-                        <select name="assigned" id="assigned" class="assigned">
-                            <option value="">Please Select</option>
-                            ?php
-                                    $results = new get_All_User();
-
-                                    // $user = $results->selectAllUser();
-                                    $user = $results->selectAllEmp();
-                                    foreach($user as $row) {
-                            ?>
-                            <option value="?php echo $row['id']; ?>">
-                                ?php echo $row['name']; ?>
-                            </option>
-                            ?php
-                                }
-                                
-                            ?>
-                        </select>
-                    </div>
-                    <div class="input-box">
-                        <span class="details">Turnover Date</span>
-                        <input type="date" name="turnover">
-                    </div>
-                    <div class="input-box">
-                        <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
-                        <select name="lastused" id="lastused" class="assigned">
-                            <option value="">Please Select</option>
-                            ?php
-                                    $results = new get_All_User();
-
-                                    // $user = $results->selectAllUser();
-                                    $user = $results->selectAllEmp();
-                                    foreach($user as $row) {
-                            ?>
-                            <option value="?php echo $row['id']; ?>">
-                                ?php echo $row['name']; ?>
-                            </option>
-                            ?php
-                                }
-                                
-                            ?>
-                        </select>
-                    </div>
-                </div> -->
-                <div class="button">
-                    <input type="submit" onclick="passValue()" value="Next" name="next"/>
-                    <input type="hidden" name="action" id="action" value="saveAssetDetails" />		
-                </div>
-            </form>
         </div>
     </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="../js/addAssets.js"></script>
+
 </body>
 </html>

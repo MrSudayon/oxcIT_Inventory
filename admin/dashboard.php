@@ -181,6 +181,7 @@ if(!empty($_SESSION['id'])) {
     </form>
     
 </div>
-    
+<?php include 'addAssetModal.php'; ?>
+
 </body>
 </html>
