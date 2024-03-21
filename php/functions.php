@@ -243,26 +243,14 @@ class Operations {
         return $res;
     }
 
-    function searchEmp() {
+    function getEmp() {
         global $db;
         global $res;
 
-        if(isset($_POST['search'])) {
-            $search = $_POST['search'];
-            $sql = "SELECT * FROM employee_tbl WHERE name LIKE '%$search%' OR division LIKE '%$search%' OR location LIKE '%$search%' ORDER BY status DESC";
-            $res = mysqli_query($db->conn, $sql);
-        
-            return $res;
-        } else {
-            $sql = "SELECT * FROM employee_tbl ORDER BY status DESC";
-            $res = mysqli_query($db->conn, $sql);
+        $sql = "SELECT * FROM employee_tbl ";
+       
+        return $sql;
 
-            return $res;
-        }
-
-        mysqli_free_result($res);
-
-        $db->conn->close();
     }
 
     // Asset List

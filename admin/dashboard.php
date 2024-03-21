@@ -281,10 +281,6 @@ if(!empty($_SESSION['id'])) {
                 }
             }
         ?>
-        <script>
-           
-        </script>
-        <br>
     </form>
     
 </div>

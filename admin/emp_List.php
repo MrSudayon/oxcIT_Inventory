@@ -50,8 +50,39 @@ th {
                 </div>
 
                 <?php
-                    $List = $getAllRecord->searchEmp();
-                    $rowCount = $List->num_rows;
+                    $List = $getAllRecord->getEmp();
+                    $results = mysqli_query($db->conn, $List);
+
+                    $results_per_page = 30;
+
+                    if (!isset ($_GET['page']) ) {  
+                        $page = 1;  
+                    } else {  
+                        $page = $_GET['page'];  
+                    }  
+                    
+                    $rowCount = $results->num_rows;
+                    $number_of_page = ceil ($rowCount / $results_per_page);  
+                    $page_first_result = ($page-1) * $results_per_page;  
+
+                    
+                    if(isset($_POST['search']) && $_POST['search'] != "") {
+                        $search = $_POST['search'];
+
+                        $sql = 
+                        "SELECT * FROM employee_tbl 
+                        WHERE name LIKE '%$search%' OR division LIKE '%$search%' OR location LIKE '%$search%'";
+                    
+                    } else {
+                        // $sql =  "SELECT * FROM assets_tbl WHERE status!='Archive' ORDER BY lpad(assettag, 10, 0) LIMIT ". $page_first_result . ',' . $results_per_page;
+                        $sql =  
+                        "SELECT * FROM employee_tbl 
+                        ORDER BY empStatus DESC 
+                        LIMIT ". $page_first_result . ',' . $results_per_page;
+                    
+                    }
+                    $res = mysqli_query($db->conn, $sql);
+                    $rowCountPage = $res->num_rows;
                 ?>
                 <div class="count">
                     <p>Emp count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCount; ?></b></p>
@@ -67,9 +98,9 @@ th {
                         <th colspan="2" width="8%">Action</th>
                     </tr>
                     <?php 
-                        while($row = mysqli_fetch_assoc($List)) {
+                        while($row = mysqli_fetch_assoc($res)) {
                                  
-                            $status = $row['status'];
+                            $status = $row['empStatus'];
                             if($status==0) {
                                 echo "<tr style='background-color: pink'>";
                             } else {
@@ -92,7 +123,26 @@ th {
                     ?>
                 </table>
                 
+            <?php
+            if($rowCountPage != $rowCount) {
+                if ($page > 1) {
+                    echo '<a href="dashboard.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
+                }
                 
+                $max_page_range = 7; // Maximum number of pages to show in pagination
+                $start_page = max(1, $page - floor($max_page_range / 3));
+                $end_page = min($number_of_page, $start_page + $max_page_range - 1);
+                
+                for($i = $start_page; $i <= $end_page; $i++) {
+                    $active_class = ($i == $page) ? 'active' : ''; // Add active class to current page
+                    echo '<a href="dashboard.php?page=' . $i . '" class="next ' . $active_class . '">' . $i . '</a>';                  
+                }  
+                
+                if ($page < $number_of_page) {
+                    echo '<a href="dashboard.php?page=' . ($page + 1) . '" class="next">Next</a>';
+                }
+            }
+            ?>
             </form>
             
         </div>
