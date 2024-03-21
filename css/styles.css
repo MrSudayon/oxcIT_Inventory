@@ -134,6 +134,7 @@ main {
     background-color: #e4e4e4;
     color: black;
     font-size: 12px;
+    /* height: 100dvh; */
     width: 100%;
     border-collapse: collapse;
 }
@@ -294,7 +295,6 @@ form .asset-details .input-box {
 }
 
 input[type=text],
-input[type=select],
 input[type=date] {
     padding-left: 15px;
     border-radius: 5px 0 0 5px;
@@ -302,9 +302,11 @@ input[type=date] {
     margin-top: 8px;
     font-size: 15px;
     border: none;
+    width: 233px;
 }
 
-.search-container button {
+.search-container button,
+.filter button {
     border-radius: 0 5px 5px 0;
 
     float: right;
@@ -316,6 +318,28 @@ input[type=date] {
     border: none;
     cursor: pointer;
 }
+
+.filter select {
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 14px;
+    border: none;
+}
+
+
+/* 
+.search-container .filter {
+    border-radius: 0 5px 5px 0;
+
+    float: left;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+} */
 
 .asset-details .input-box .asset-tag {
     display: flex;
@@ -358,3 +382,4 @@ form .button input:hover {
         overflow-y: scroll;
     }
 }
+

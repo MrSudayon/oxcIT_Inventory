@@ -23,6 +23,8 @@ if(!empty($_SESSION['id'])) {
     <link rel="icon" href="../assets/logo.jpg">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../js/addAssets.js"></script>
     <title>Asset List</title>
     <script src="../js/dashboard.js"></script>
 </head>
@@ -39,12 +41,38 @@ if(!empty($_SESSION['id'])) {
 <div class="content">
     <div class="title">
         <h1> ASSET LIST </h1>
+        
         <div class="search-container">
-        <form action="" method="POST">
-            <input type="text" placeholder="Search.." name="search">
-            <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
+            <form action="" method="POST" class="">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        <!-- </div>
+        <div class="filter"> -->
+            <form action="" method="POST" class="filter">
+                <select name="aType" class="">
+                    <option>Select Asset</option>
+                    <?php
+                        $assettype = $getAllRecord->getAssets();
+                        foreach($assettype as $assets) {
+                    ?>
+                        <option value="<?=$assets['assetType']?>"><?php echo $assets['assetType']; ?></option>
+                    <?php
+                        }
+                    ?>
+                </select>
+                <select name="aStatus" class="">
+                    <option>Select Status</option>
+                    <option value="For repair">For repair</option>
+                    <option value="Deployed">Deployed</option>
+                    <option value="To be Deploy">To be deploy</option>
+                    <option value="Deffective">Defective</option>
+                    <option value="Sell">Sell</option>
+                </select>
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
         </div>
+        
     </div>
     
     <form action="" method="get">
@@ -73,9 +101,10 @@ if(!empty($_SESSION['id'])) {
                 $number_of_page = ceil ($rowCount / $results_per_page);  
                 $page_first_result = ($page-1) * $results_per_page;  
 
+                
                 if(isset($_POST['search']) && $_POST['search'] != "") {
                     $search = $_POST['search'];
-                    
+
                     $sql = 
                     "SELECT a.*, 
                     e.* 
@@ -84,22 +113,55 @@ if(!empty($_SESSION['id'])) {
                     ON a.empId = e.id 
                     WHERE a.status!='Archive' AND (e.name LIKE '$search%' OR e.name LIKE '%$search' OR e.name LIKE '%$search%' OR e.division LIKE '%$search%'
                     OR a.assettype LIKE '%$search%' OR a.status LIKE '%$search%' OR e.location LIKE '%$search%'
-                    OR a.assettag LIKE '%$search%' OR a.model LIKE '%$search%') 
-                    ORDER BY a.assettype+0 ASC, a.assettype";
+                    OR a.assettag LIKE '%$search%' OR a.model LIKE '%$search%')";
+                 
+                } 
+                elseif((isset($_POST['aType']) && $_POST['aType'] != "") or (isset($_POST['aStatus']) && $_POST['aStatus'] != "")) {
+
+                    $type = $_POST['aType'];
+                    $status = $_POST['aStatus'];
+                    $sql = 
+                    "SELECT a.*, 
+                    e.* 
+                    FROM assets_tbl AS a 
+                    LEFT JOIN employee_tbl AS e 
+                    ON a.empId = e.id 
+                    WHERE a.status='$status' AND a.assettype = '$type' LIMIT ". $page_first_result . ',' . $results_per_page;
+                    
                 } else {
                     // $sql =  "SELECT * FROM assets_tbl WHERE status!='Archive' ORDER BY lpad(assettag, 10, 0) LIMIT ". $page_first_result . ',' . $results_per_page;
                     $sql =  
-                    "SELECT a.id, a.assettype, a.assettag, a.model, a.status, 
+                    "SELECT a.id, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, 
                     e.id, e.name, e.division, e.location 
                     FROM assets_tbl AS a 
                     LEFT JOIN employee_tbl AS e 
                     ON e.id = a.empId 
                     WHERE a.status!='Archive' 
-                    ORDER BY a.assettype ASC, a.assettag+0 LIMIT ". $page_first_result . ',' . $results_per_page;
+                    LIMIT ". $page_first_result . ',' . $results_per_page;
+                  
                 }
                 $res = mysqli_query($db->conn, $sql);
                 $rowCountPage = $res->num_rows;
-            ?>
+
+                $rows = [];
+                while ($row = mysqli_fetch_assoc($res)) {
+                    $rows[] = $row;
+                }
+                
+                // Sort the result array by assettag
+                usort($rows, function($a, $b) {
+                    preg_match('/\d+$/', $a['assettag'], $aMatches);
+                    preg_match('/\d+$/', $b['assettag'], $bMatches);
+                    $aNum = intval($aMatches[0] ?? 0);
+                    $bNum = intval($bMatches[0] ?? 0);
+
+                    if ($aNum == $bNum) {
+                        return strcmp($a['assettag'], $b['assettag']);
+                    }
+                    return ($aNum < $bNum) ? -1 : 1;
+                });
+                
+            ?>            
             <div class="count">
                 <p>Showing: <b style="color: yellow; font-size: 20px;"><?php echo $rowCountPage; ?></b> result/s.</p>
             </div>
@@ -120,7 +182,8 @@ if(!empty($_SESSION['id'])) {
             <tbody>
             <tr>
             <?php
-                while ($row = mysqli_fetch_array($res)) {  
+                // while ($row = mysqli_fetch_array($res)) {  
+                foreach ($rows as $row) {
             ?> 
                 <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>
                 <td><?php echo $row['assettype']; ?></td>
@@ -181,7 +244,6 @@ if(!empty($_SESSION['id'])) {
     </form>
     
 </div>
-<?php include 'addAssetModal.php'; ?>
 
 </body>
 </html>
