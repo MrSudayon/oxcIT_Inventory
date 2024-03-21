@@ -12,6 +12,6 @@ function checkDelete(){
 }
 
 function checkPrompt(){
-    
     return confirm('✔️Confirm?')
 }
+

@@ -154,6 +154,7 @@ if(!empty($_SESSION['id'])) {
                         <span class="details" style="margin-bottom: 10px;">Assigned To</span>
                             <select name="assigned" id="assigned" class="assigned">
                                 <option value="<?=$result['assigned']?>"><?=$result['assigned']?></option>
+                                <option value="">Clear</option>
                                 <?php
                                         $results = new get_All_User();
 

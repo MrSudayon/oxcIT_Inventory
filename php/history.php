@@ -53,7 +53,7 @@ if(!empty($_SESSION['id'])) {
                 $sqlSelectAll = "SELECT * FROM history_tbl";
                 $results = mysqli_query($db->conn, $sqlSelectAll);
 
-                $results_per_page = 20;
+                $results_per_page = 30;
 
                 if (!isset ($_GET['page']) ) {  
                     $page = 1;  

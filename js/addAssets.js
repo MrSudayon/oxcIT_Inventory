@@ -106,7 +106,7 @@ function removeVowels(str) {
 }
 function displaySelectedValue() {
     // Get the select element
-    var selectElement = document.getElementById("Type");
+    const selectElement = document.getElementById("Type");
 
 
     
@@ -120,16 +120,15 @@ function displaySelectedValue() {
     document.getElementById("tag").innerText = assetTag;
     
 
-    var serial = document.getElementById("serial");
-    var mobile = document.getElementById("mobile");
-    var model = document.getElementById("model");
-    var provider = document.getElementById("provider");
-    var processor = document.getElementById("processor");
-    var plan = document.getElementById("plan");
-    var ram = document.getElementById("ram");
-    var storage = document.getElementById("storage");
-    var os = document.getElementById("os");
-    var plan = document.getElementById("plan");
+    const serial = document.getElementById("serial");
+    const mobile = document.getElementById("mobile");
+    const model = document.getElementById("model");
+    const processor = document.getElementById("processor");
+    const plan = document.getElementById("plan");
+    const ram = document.getElementById("ram");
+    const storage = document.getElementById("storage");
+    const os = document.getElementById("os");
+    const dimes = document.getElementById("dimes");
 
     if(selectElement.value == "SIM") {
         serial.style.display = "none";
@@ -138,29 +137,56 @@ function displaySelectedValue() {
         ram.style.display = "none";
         storage.style.display = "none";
         os.style.display = "none";
+        dimes.style.display = "none";
 
         mobile.style.display = "block";
-        provider.style.display = "block";
         plan.style.display = "block";
-    } else {
+    } else if(selectElement.value == "Laptop" || selectElement.value == "Desktop") {
         serial.style.display = "block";
         model.style.display = "block";
         processor.style.display = "block";
+        ram.style.display = "block";
+        storage.style.display = "block";
+        os.style.display = "block";
 
+        dimes.style.display = "none";
         mobile.style.display = "none";
-        provider.style.display = "none";
         plan.style.display = "none";
+    } else if(selectElement.value == "Monitor" || selectElement.value == "UPS" || selectElement.value == "AVR" || selectElement.value == "Printer") {
+        processor.style.display = "none";
+        ram.style.display = "none";
+        storage.style.display = "none";
+        os.style.display = "none";
+        mobile.style.display = "none";
+        plan.style.display = "none";
+
+        serial.style.display = "block";
+        model.style.display = "block";
+        dimes.style.display = "block";
+    } else if(selectElement.value == "Mobile") {
+        processor.style.display = "none";
+        dimes.style.display = "none";
+        os.style.display = "none";
+        mobile.style.display = "none";
+        plan.style.display = "none";
+
+        serial.style.display = "block";
+        model.style.display = "block";
+        ram.style.display = "block";
+        storage.style.display = "block";
+    } else {
+        processor.style.display = "none";
+        ram.style.display = "none";
+        storage.style.display = "none";
+        os.style.display = "none";
+        mobile.style.display = "none";
+        plan.style.display = "none";
+
+        serial.style.display = "block";
+        model.style.display = "block";
+        dimes.style.display = "none";
     }
-    // document.getElementById("division").innerText = selectedEmp;
-    // var xhr = new XMLHttpRequest();
-    // xhr.onreadystatechange = function() {
-    //     if (this.readyState == 4 && this.status == 200) {
-    //         var response = JSON.parse(this.responseText);
-    //         document.getElementById("tag").innerText = response.data;
-    //     }
-    // };
-    // xhr.open("GET", "../admin/admin_action.php?id='17'", true);
-    // xhr.send();
+    
 }
 
 function changetextbox() {
@@ -170,8 +196,11 @@ function changetextbox() {
     
     if (status.value == "For repair") {
         repair.style.display = "block";
+        datedeployed.style.display = "none";
+
     } else if (status.value == "Deployed") {
         datedeployed.style.display = "block";
+        repair.style.display = "none";
     } else {
         repair.style.display = "none";
         datedeployed.style.display = "none";

@@ -24,9 +24,9 @@ if(!empty($_SESSION['id'])) {
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../js/dashboard.js"></script>
     <script src="../js/addAssets.js"></script>
     <title>Asset List</title>
-    <script src="../js/dashboard.js"></script>
 </head>
 <style>
     .table-nav {
@@ -116,7 +116,7 @@ if(!empty($_SESSION['id'])) {
                     OR a.assettag LIKE '%$search%' OR a.model LIKE '%$search%')";
                  
                 } 
-                elseif((isset($_POST['aType']) && $_POST['aType'] != "") or (isset($_POST['aStatus']) && $_POST['aStatus'] != "")) {
+                elseif((isset($_POST['aType']) && $_POST['aType'] != "") || (isset($_POST['aStatus']) && $_POST['aStatus'] != "")) {
 
                     $type = $_POST['aType'];
                     $status = $_POST['aStatus'];
@@ -184,6 +184,8 @@ if(!empty($_SESSION['id'])) {
             <?php
                 // while ($row = mysqli_fetch_array($res)) {  
                 foreach ($rows as $row) {
+                    $status = $row['status'];
+                    
             ?> 
                 <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>
                 <td><?php echo $row['assettype']; ?></td>
@@ -202,8 +204,29 @@ if(!empty($_SESSION['id'])) {
                 <!-- <td> echo $row['CPU']; ?></td>
                 <td> echo $row['MEMORY']; ?></td>
                 <td> echo $row['STORAGE']; ?></td> -->
-                <td><?php echo $row['status']; ?></td>
-            
+                
+                <td><?php echo "<span class='statusSpan' >".$status."</span>" ?></td>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var spans = document.getElementsByClassName("statusSpan"); 
+                        for (var i = 0; i < spans.length; i++) {
+                            var span = spans[i];
+                            if (span.innerHTML === 'Deployed') { 
+                                span.classList.add("deployed"); 
+                            } else if (span.innerHTML === 'To be Deploy') { 
+                                span.classList.add("available"); 
+                            } else if (span.innerHTML === 'Defective' || span.innerHTML === 'For repair') { 
+                                span.classList.add("defect"); 
+                            } else if (span.innerHTML === 'Sell') { 
+                                span.classList.add("sell"); 
+                            } else {
+                                span.classList.add("missing"); 
+                                // span.innerHTML.add("missing"); 
+                            }
+                        }
+                    });
+                </script>
+
                 <td>
                 <center>
                     <a href="../update/assetUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
@@ -228,18 +251,39 @@ if(!empty($_SESSION['id'])) {
         </table>
         <?php 
             // Pagination links
+            // if($rowCountPage != $rowCount) {
+            //     if ($page > 1) {
+            //         echo '<a href="dashboard.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
+            //     }
+            //     for($i = 1; $i<= $number_of_page; $i++) {  
+            //         echo '<a href = "dashboard.php?page=' . $i . '" class="next">' . $i . '</a>';  
+            //     }  
+            //     if ($page < $number_of_page) {
+            //         echo '<a href="dashboard.php?page=' . ($page + 1) . '" class="next">Next</a>';
+            //     }
+            // }
             if($rowCountPage != $rowCount) {
                 if ($page > 1) {
                     echo '<a href="dashboard.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
                 }
-                for($i = 1; $i<= $number_of_page; $i++) {  
-                    echo '<a href = "dashboard.php?page=' . $i . '" class="next">' . $i . '</a>';  
+                
+                $max_page_range = 7; // Maximum number of pages to show in pagination
+                $start_page = max(1, $page - floor($max_page_range / 3));
+                $end_page = min($number_of_page, $start_page + $max_page_range - 1);
+                
+                for($i = $start_page; $i <= $end_page; $i++) {
+                    $active_class = ($i == $page) ? 'active' : ''; // Add active class to current page
+                    echo '<a href="dashboard.php?page=' . $i . '" class="next ' . $active_class . '">' . $i . '</a>';                  
                 }  
+                
                 if ($page < $number_of_page) {
                     echo '<a href="dashboard.php?page=' . ($page + 1) . '" class="next">Next</a>';
                 }
             }
         ?>
+        <script>
+           
+        </script>
         <br>
     </form>
     

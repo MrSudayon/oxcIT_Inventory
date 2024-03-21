@@ -53,8 +53,8 @@ if(!empty($_SESSION['id'])) {
                 <div class="asset-details">
                     <div class="input-box">
                         <span class="details" style="margin-bottom: 10px;">Asset Type</span>                            
-                        <select name="asset-type" id="Type" onChange="changetextbox();displaySelectedValue();" require='required'>
-                            <option>Please Select</option>
+                        <select name="asset-type" id="Type" onChange="changetextbox();displaySelectedValue();" required>
+                            <option value='' hidden selected disabled>Please Select</option>
                             <?php
                                 $category = new Operations;
                                 $assettype = $category->getAssets();
@@ -77,10 +77,6 @@ if(!empty($_SESSION['id'])) {
                     <div class="input-box" id="model">
                         <span class="details">Model</span>
                         <input type="text" name="model" placeholder="Model" id="">
-                    </div>
-                    <div class="input-box" id="provider" style="display: none;">
-                        <span class="details">Provider</span>
-                        <input type="text" name="provider" placeholder="Provider" id="">
                     </div>
                     
                     <div class="input-box" id="serial">
@@ -107,13 +103,14 @@ if(!empty($_SESSION['id'])) {
                     </div>
                     <div class="input-box">
                         <span class="details" style="margin-bottom: 10px;">Status</span>
-                        <select name="status" id="status" onChange="changetextbox()" require>
-                            <option value="">Please select</option>
+                        <select name="status" id="status" onChange="changetextbox()"  required>
+                            <option value='' hidden selected disabled>Please select</option>
                             <option value="For repair">For repair</option>
                             <option value="Deployed">Deployed</option>
                             <option value="To be Deploy">To be deploy</option>
-                            <option value="Deffective">Defective</option>
+                            <option value="Defective">Defective</option>
                             <option value="Sell">Sell</option>
+                            <option value="Missing">Missing</option>
                         </select>
                     </div>
                     <div class="input-box" id="repair-cost" style="display: none;">
@@ -135,6 +132,10 @@ if(!empty($_SESSION['id'])) {
                     <div class="input-box" id="plan" style="display: none;">
                         <span class="details">Plan</span>
                         <input type="text" name="plan" placeholder="Plan" id="">
+                    </div>
+                    <div class="input-box" id="dimes" style="display: none;">
+                        <span class="details">Dimension</span>
+                        <input type="text" name="dimes" placeholder="dimes" id="">
                     </div>
                     <div class="input-box" id="ram">
                         <span class="details">Memory</span>
@@ -162,7 +163,7 @@ if(!empty($_SESSION['id'])) {
                     <div class="input-box">
                         <span class="details" style="margin-bottom: 10px;">Assign To</span>
                         <select name="assigned" id="assigned" class="assigned">
-                            <option value="">Please Select</option>
+                            <option value='' hidden selected disabled>Please Select</option>
                             <?php
                                     $results = new get_All_User();
 
@@ -187,7 +188,7 @@ if(!empty($_SESSION['id'])) {
                         <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
                         <!-- <input type="text" name="lastused" placeholder="Last used..." value="" > -->
                         <select name="lastused" id="lastused" class="assigned">
-                            <option value="">Please Select</option>
+                            <option value='' hidden selected disabled>Please Select</option>
                             <?php
                                     $results = new get_All_User();
 
