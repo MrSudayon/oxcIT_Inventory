@@ -77,14 +77,23 @@ if(!empty($_SESSION['id'])) {
                 $rowCountPage = $res->num_rows;
 
                 // Pagination nav
-                if ($page > 1) {
-                    echo '<a href="history.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
-                }
-                for($i = 1; $i<= $number_of_page; $i++) {  
-                    echo '<a href = "history.php?page=' . $i . '" class="next">' . $i . '</a>';  
-                }  
-                if ($page < $number_of_page) {
-                    echo '<a href="history.php?page=' . ($page + 1) . '" class="next">Next</a>';
+                if($rowCountPage != $rowCount) {
+                    if ($page > 1) {
+                        echo '<a href="history.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
+                    }
+                    
+                    $max_page_range = 7; // Maximum number of pages to show in pagination
+                    $start_page = max(1, $page - floor($max_page_range / 3));
+                    $end_page = min($number_of_page, $start_page + $max_page_range - 1);
+                    
+                    for($i = $start_page; $i <= $end_page; $i++) {
+                        $active_class = ($i == $page) ? 'active' : ''; // Add active class to current page
+                        echo '<a href="history.php?page=' . $i . '" class="next ' . $active_class . '">' . $i . '</a>';                  
+                    }  
+                    
+                    if ($page < $number_of_page) {
+                        echo '<a href="history.php?page=' . ($page + 1) . '" class="next">Next</a>';
+                    }
                 }
                 ?>
             </div>
