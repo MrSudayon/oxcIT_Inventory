@@ -5,8 +5,8 @@ $asset = new assetsController;
 if(isset($_POST['update-asset'])) {
     $id = mysqli_real_escape_string($db->conn,$_POST['assetID']);
     $input = [
-        'assettype' => mysqli_real_escape_string($db->conn,$_POST['asset-type']),
-        'assettag' => mysqli_real_escape_string($db->conn,$_POST['asset-tag']),
+        // 'assettype' => mysqli_real_escape_string($db->conn,$_POST['asset-type']),
+        // 'assettag' => mysqli_real_escape_string($db->conn,$_POST['asset-tag']),
         'model' => mysqli_real_escape_string($db->conn,$_POST['model']),
         'serial' => mysqli_real_escape_string($db->conn,$_POST['serial']),
         'supplier' => mysqli_real_escape_string($db->conn,$_POST['supplier']),
