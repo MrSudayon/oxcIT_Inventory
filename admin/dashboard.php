@@ -106,8 +106,8 @@ if(!empty($_SESSION['id'])) {
                     $search = $_POST['search'];
 
                     $sql = 
-                    "SELECT a.*, 
-                    e.* 
+                    "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, 
+                    e.id, e.name, e.division, e.location 
                     FROM assets_tbl AS a 
                     LEFT JOIN employee_tbl AS e 
                     ON a.empId = e.id 
@@ -121,8 +121,8 @@ if(!empty($_SESSION['id'])) {
                     $type = $_POST['aType'];
                     $status = $_POST['aStatus'];
                     $sql = 
-                    "SELECT a.*, 
-                    e.* 
+                    "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, 
+                    e.id, e.name, e.division, e.location 
                     FROM assets_tbl AS a 
                     LEFT JOIN employee_tbl AS e 
                     ON a.empId = e.id 
@@ -131,7 +131,7 @@ if(!empty($_SESSION['id'])) {
                 } else {
                     // $sql =  "SELECT * FROM assets_tbl WHERE status!='Archive' ORDER BY lpad(assettag, 10, 0) LIMIT ". $page_first_result . ',' . $results_per_page;
                     $sql =  
-                    "SELECT a.id, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, 
+                    "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, 
                     e.id, e.name, e.division, e.location 
                     FROM assets_tbl AS a 
                     LEFT JOIN employee_tbl AS e 
@@ -185,9 +185,9 @@ if(!empty($_SESSION['id'])) {
                 // while ($row = mysqli_fetch_array($res)) {  
                 foreach ($rows as $row) {
                     $status = $row['status'];
-                    
+                    $aId = $row['aId'];
             ?> 
-                <td><input type="checkbox" id="select" name="select[]" value="<?php echo $row['id']; ?>"></td>
+                <td><input type="checkbox" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
                 <td><?php echo $row['assettype']; ?></td>
                 <td><?php echo $row['assettag']; ?></td>
                 <td><?php echo $row['model']; ?></td>
@@ -229,15 +229,15 @@ if(!empty($_SESSION['id'])) {
 
                 <td>
                 <center>
-                    <a href="../update/assetUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
+                    <a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
                     <?php 
                         $sqlSel = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $id"); 
                         while($results = mysqli_fetch_assoc($sqlSel)) {
                         if($results['turnoverRef'] != '') { 
                     ?>    
-                        <a href="../update/turnoverUpd.php?id=<?php echo $row['id']; ?>"><img src="../assets/icons/turnover.png" width="24px"></a>&nbsp;
+                        <a href="../update/turnoverUpd.php?id=<?php echo $aId; ?>"><img src="../assets/icons/turnover.png" width="24px"></a>&nbsp;
                     <?php }} ?>
-                    <a href="../update/remove.php?assetID=<?php echo $row['id']; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                    <a href="../update/remove.php?assetID=<?php echo $aId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                 </center>
                     
                 </td>    

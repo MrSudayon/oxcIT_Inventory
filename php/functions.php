@@ -25,11 +25,9 @@ class Operations {
       
 
         // further logic; clear reason upon accounting to other employee
-   
-        
 
         $query = "INSERT INTO assets_tbl (assettype, assettag, model, serial, supplier, empId, lastused, status, datepurchased, cost, repair_cost, remarks, datedeployed, cpu, memory, storage, dimes, mobile, plan, os)
-                                    VALUES ('$type','$tag','$mdl','$srl','$spplr','$empId','$lastused','$stts','$dtprchs', '$cost', '$repair_cost','$rmrks','$datedeployed')";
+                                    VALUES ('$type','$tag','$mdl','$srl','$spplr','$empId','$lastused','$stts','$dtprchs', '$cost', '$repair_cost','$rmrks','$datedeployed','$cpu','$ram','$storage','$dimes','$mobile','$plan','$os')";
        
         $result = mysqli_query($db->conn, $query);
 

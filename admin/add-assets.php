@@ -12,7 +12,9 @@ if(!empty($_SESSION['id'])) {
         if(isset($_POST['save'])) {
             $countRes = $record->checkAssetCount($_POST['asset-type']);
             
-            $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], $_POST['cost'], $_POST['repair-cost'], $_POST['dateprchs'], $_POST['status'], $_POST['remarks'], $_POST['processor'], $_POST['memory'], $_POST['storage'], $_POST['os'], $_POST['other'], $_POST['datedeployed'], $_POST['assigned'], $_POST['lastused'], $_POST['mobile'], $_POST['plan']);
+            $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], 
+            $_POST['assigned'], $_POST['lastused'], $_POST['status'], $_POST['dateprchs'], $_POST['cost'], $_POST['repair-cost'], $_POST['remarks'], $_POST['datedeployed'], 
+            $_POST['processor'], $_POST['memory'], $_POST['storage'], $_POST['dimes'], $_POST['mobile'], $_POST['plan'], $_POST['os']);
             
 
             if($result == 1) {
@@ -135,7 +137,7 @@ if(!empty($_SESSION['id'])) {
                     </div>
                     <div class="input-box" id="dimes" style="display: none;">
                         <span class="details">Dimension</span>
-                        <input type="text" name="dimes" placeholder="dimes" id="">
+                        <input type="text" name="dimes" placeholder="Dimension" id="">
                     </div>
                     <div class="input-box" id="ram">
                         <span class="details">Memory</span>
@@ -149,10 +151,10 @@ if(!empty($_SESSION['id'])) {
                         <span class="details">Operating System</span>
                         <input type="text" name="os" placeholder="Operating System" id="">
                     </div>
-                    <div class="input-box">
+                    <!-- <div class="input-box">
                         <span class="details">Others</span>
                         <input type="text" name="other" placeholder="Others" id="">
-                    </div>
+                    </div> -->
                     <div class="input-box" id="datedeployed" style="display: none;">
                         <span class="details">Date Deployed</span>
                         <input type="date" name="datedeployed" placeholder="Date Deployed" value="" id="">

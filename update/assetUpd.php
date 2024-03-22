@@ -123,28 +123,28 @@ if(!empty($_SESSION['id'])) {
                     <div class="asset-details">
                         <div class="input-box" id="processor">
                             <span class="details">Processor</span>
-                            <input type="text" name="processor" value="<?=$result['CPU']?>" id="">
+                            <input type="text" name="processor" value="<?=$result['cpu']?>" id="">
                         </div>
                         <div class="input-box" id="plan" style="display: none;">
                             <span class="details">Plan</span>
-                            <input type="text" name="plan" value="<?=$result['CPU']?>" id="">
+                            <input type="text" name="plan" value="<?=$result['plan']?>" id="">
                         </div>
                         <div class="input-box" id="ram">
                             <span class="details">Memory</span>
-                            <input type="text" name="memory" value="<?=$result['MEMORY']?>" id="">
+                            <input type="text" name="memory" value="<?=$result['memory']?>" id="">
                         </div>
                         <div class="input-box" id="storage">
                             <span class="details">Storage</span>
-                            <input type="text" name="storage" value="<?=$result['STORAGE']?>" id="">
+                            <input type="text" name="storage" value="<?=$result['storage']?>" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Operating System</span>
-                            <input type="text" name="os" value="<?=$result['OS']?>" id="">
+                            <input type="text" name="os" value="<?=$result['os']?>" id="">
                         </div>
-                        <div class="input-box">
+                        <!-- <div class="input-box">
                             <span class="details">Others</span>
                             <input type="text" name="other" value="<?=$result['Others']?>" id="">
-                        </div>
+                        </div> -->
                         <div class="input-box">
                             <span class="details">Date Deployed</span>
                             <input type="date" name="datedeployed" value="<?=$result['datedeployed']?>" id="">
@@ -155,7 +155,7 @@ if(!empty($_SESSION['id'])) {
                         <div class="input-box">
                         <span class="details" style="margin-bottom: 10px;">Assigned To</span>
                             <select name="assigned" id="assigned" class="assigned">
-                                <option value="<?=$result['assigned']?>"><?=$result['assigned']?></option>
+                                <option value="<?=$result['ename']?>"><?=$result['ename']?></option>
                                 <option value=''>Clear</option>
                                 <?php
                                         $user = $results->selectAllEmp();
@@ -171,7 +171,7 @@ if(!empty($_SESSION['id'])) {
                         </div>
                         <div class="input-box">
                             <span class="details">Turnover Date</span>
-                            <input type="date" name="turnover" value="<?=$result['dateturnover']?>">
+                            <input type="date" name="turnover" value="<?=$result['turnoverDate']?>">
                         </div>
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Last Used by:</span>

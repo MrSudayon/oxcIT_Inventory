@@ -11,8 +11,18 @@ class assetsController {
     public function edit($id) {
         global $db;
         $assetID = mysqli_real_escape_string($db->conn, $id);
-        $assetQuery = "SELECT * FROM assets_tbl WHERE id='$assetID' AND status!='Archive'";
+        // $assetQuery = "SELECT * FROM assets_tbl WHERE id='$assetID' AND status!='Archive'";
+        $assetQuery = "SELECT a.id AS aId, a.assettype, a.assettag, a.model, a.status, 
+                        a.serial, a.supplier, a.cost, a.datepurchased, a.remarks, a.cpu, a.memory, a.storage, a.os, 
+                        a.datedeployed, a.lastused, 
+                        e.id, e.name AS ename, e.division, e.location, 
+                        r.assetId, r.turnoverDate AS turnoverDate 
+                        FROM assets_tbl AS a 
+                        LEFT JOIN employee_tbl AS e ON e.id = a.empId 
+                        LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+                        WHERE a.id = '$assetID' AND a.status != 'Archive'";
         $res = mysqli_query($db->conn, $assetQuery);
+
         if($res->num_rows == 1){
             $data = $res->fetch_assoc();
             return $data;
@@ -38,7 +48,6 @@ class assetsController {
 
         // Specification
         // SIM
-        $provider = $input['provider'];
         $mobile = $input['mobile'];
         $plan = $input['plan'];
 
