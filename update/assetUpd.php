@@ -2,6 +2,8 @@
 require '../php/db_connection.php';
 
 $select = new Select();
+$results = new get_All_User();
+$asset = new assetsController;
 
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
@@ -43,7 +45,6 @@ if(!empty($_SESSION['id'])) {
             if(isset($_GET['id']))
             {
                 $assetID = mysqli_real_escape_string($db->conn, $_GET['id']);
-                $asset = new assetsController;
                 $result = $asset->edit($assetID);
 
                 if($result) {
@@ -103,8 +104,9 @@ if(!empty($_SESSION['id'])) {
                                 <option value="For repair">For repair</option>
                                 <option value="Deployed">Deployed</option>
                                 <option value="To be Deploy">To be deploy</option>
-                                <option value="Deffective">Defective</option>
+                                <option value="Defective">Defective</option>
                                 <option value="Sell">Sell</option>
+                                <option value="Missing">Missing</option>
                             </select>
                         </div>
                         <div class="input-box" id="repair-cost" style="display: none;">
@@ -154,15 +156,12 @@ if(!empty($_SESSION['id'])) {
                         <span class="details" style="margin-bottom: 10px;">Assigned To</span>
                             <select name="assigned" id="assigned" class="assigned">
                                 <option value="<?=$result['assigned']?>"><?=$result['assigned']?></option>
-                                <option value="">Clear</option>
+                                <option value=''>Clear</option>
                                 <?php
-                                        $results = new get_All_User();
-
-                                        // $user = $results->selectAllUser();
                                         $user = $results->selectAllEmp();
                                         foreach($user as $row) {
                                 ?>
-                                <option value="<?php echo $row['name']; ?>">
+                                <option value="<?php echo $row['id']; ?>">
                                     <?php echo $row['name']; ?>
                                 </option>
                                 <?php
@@ -179,14 +178,12 @@ if(!empty($_SESSION['id'])) {
                             <!-- <input type="text" name="lastused" value=""> -->
                                 <select name="lastused" id="lastused" class="assigned">
                                     <option value="<?=$result['lastused']?>"><?=$result['lastused']?></option>
+                                    <option value=''>Clear</option>
                                     <?php
-                                            $results = new get_All_User();
-
-                                            // $user = $results->selectAllUser();
                                             $user = $results->selectAllEmp();
                                             foreach($user as $row) {
                                     ?>
-                                    <option value="<?php echo $row['name']; ?>">
+                                    <option value="<?php echo $row['id']; ?>">
                                         <?php echo $row['name']; ?>
                                     </option>
                                     <?php

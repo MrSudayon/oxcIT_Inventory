@@ -25,7 +25,6 @@ if(isset($_POST['update-asset'])) {
         'turnover' => mysqli_real_escape_string($db->conn,$_POST['turnover']),
         'lastused' => mysqli_real_escape_string($db->conn,$_POST['lastused']),
 
-        'provider' => mysqli_real_escape_string($db->conn,$_POST['provider']),
         'mobile' => mysqli_real_escape_string($db->conn,$_POST['mobile']),
         'plan' => mysqli_real_escape_string($db->conn,$_POST['plan']),
     ];

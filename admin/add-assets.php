@@ -12,7 +12,7 @@ if(!empty($_SESSION['id'])) {
         if(isset($_POST['save'])) {
             $countRes = $record->checkAssetCount($_POST['asset-type']);
             
-            $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], $_POST['cost'], $_POST['repair-cost'], $_POST['dateprchs'], $_POST['status'], $_POST['remarks'], $_POST['processor'], $_POST['memory'], $_POST['storage'], $_POST['os'], $_POST['other'], $_POST['datedeployed'], $_POST['assigned'], $_POST['lastused'], $_POST['provider'], $_POST['mobile'], $_POST['plan']);
+            $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], $_POST['cost'], $_POST['repair-cost'], $_POST['dateprchs'], $_POST['status'], $_POST['remarks'], $_POST['processor'], $_POST['memory'], $_POST['storage'], $_POST['os'], $_POST['other'], $_POST['datedeployed'], $_POST['assigned'], $_POST['lastused'], $_POST['mobile'], $_POST['plan']);
             
 
             if($result == 1) {
@@ -103,7 +103,7 @@ if(!empty($_SESSION['id'])) {
                     </div>
                     <div class="input-box">
                         <span class="details" style="margin-bottom: 10px;">Status</span>
-                        <select name="status" id="status" onChange="changetextbox()"  required>
+                        <select name="status" id="status" onChange="changetextbox()" required>
                             <option value='' hidden selected disabled>Please select</option>
                             <option value="For repair">For repair</option>
                             <option value="Deployed">Deployed</option>
@@ -163,7 +163,7 @@ if(!empty($_SESSION['id'])) {
                     <div class="input-box">
                         <span class="details" style="margin-bottom: 10px;">Assign To</span>
                         <select name="assigned" id="assigned" class="assigned">
-                            <option value='' hidden selected disabled>Please Select</option>
+                            <option value='' selected>Please Select</option>
                             <?php
                                     $results = new get_All_User();
 
@@ -188,7 +188,7 @@ if(!empty($_SESSION['id'])) {
                         <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
                         <!-- <input type="text" name="lastused" placeholder="Last used..." value="" > -->
                         <select name="lastused" id="lastused" class="assigned">
-                            <option value='' hidden selected disabled>Please Select</option>
+                            <option value='' selected>Please Select</option>
                             <?php
                                     $results = new get_All_User();
 

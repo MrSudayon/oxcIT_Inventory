@@ -12,85 +12,72 @@ class Operations {
     public $id;
     public $select;
     public $db;
-    // function record_Data($type, $tag, $mdl, $srl, $spplr, $cost, $repair_cost, $dtprchs, $stts, $rmrks, $cpu, $ram, $storage, $os, $datedeployed, $empId, $lastused, $provider, $mobile, $plan) {
-    //     global $db;
-    //     global $session;
-        
-    //     $dept = "";
-    //     $location = "";
-    //     // $specification = $cpu . ", " . $ram . ", " . $storage . ", " . $os . ", " . $others;  
-    //     $name = $session['username'];
+    function record_Data($type, $tag, $mdl, $srl, $spplr, $empId, $lastused, $stts, $dtprchs, $cost, $repair_cost, $rmrks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os) {
+        global $db;
+        global $session;
 
-    //     if(!isset($empId) || $empId == '') {
-    //         $dept = "";
-    //         $location = "";
-            
-    //     } else {
-    //         if($stts=="") {
-    //             $stts = 'Deployed';
-    //         }
+        // $specification = $cpu . ", " . $ram . ", " . $storage . ", " . $os . ", " . $others;  
+        $name = $session['username'];
+      
+        if(!isset($empId) || $empId == '') {
+            $empId = 0;
+        }          
+      
 
-    //         $sql = mysqli_query($db->conn,"SELECT * FROM employee_tbl WHERE id = '$empId'");
+        // further logic; clear reason upon accounting to other employee
+   
+        
 
-    //         while($row = $sql->fetch_assoc()) {
-    //             $assigned = $row['name'];
-    //         } 
-    //         $lastused = $assigned;
-    //     }          
-        
-        
-    //     // $query = "INSERT INTO assets_tbl (id, department, assettype, assettag, model, serial, supplier, CPU, MEMORY, STORAGE, OS, Others, empId, assigned, lastused, status, location, datepurchased, cost, repair_cost, remarks, datedeployed)
-    //     //                         VALUES ('','$dept','$type','$tag','$mdl','$srl','$spplr','$cpu','$ram','$storage','$os','$others','$empId','$assigned','$lastused','$stts','$location','$dtprchs', '$cost', '$repair_cost','$rmrks','$datedeployed')";
-    //     // $result = mysqli_query($db->conn, $query);
-    //     $query = "INSERT INTO assets_tbl (id, assettype, assettag, model, serial, supplier, empId, lastused, status, datepurchased, cost, repair_cost, remarks, datedeployed)
-    //                                 VALUES ('','$type','$tag','$mdl','$srl','$spplr','$empId','$lastused','$stts','$dtprchs', '$cost', '$repair_cost','$rmrks','$datedeployed')";
+        $query = "INSERT INTO assets_tbl (assettype, assettag, model, serial, supplier, empId, lastused, status, datepurchased, cost, repair_cost, remarks, datedeployed, cpu, memory, storage, dimes, mobile, plan, os)
+                                    VALUES ('$type','$tag','$mdl','$srl','$spplr','$empId','$lastused','$stts','$dtprchs', '$cost', '$repair_cost','$rmrks','$datedeployed')";
        
-    //     $result = mysqli_query($db->conn, $query);
+        $result = mysqli_query($db->conn, $query);
 
-    //     if($result) { 
-    //         mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-    //                             VALUES('', '$name', 'Added a new asset: $tag' , NOW())");
-    //         return 1; //Success
-    //     } else {
-    //         return 10; //Store Failed
-    //     }
+        if($result) { 
+            mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                                VALUES('', '$name', 'Added a new asset: $tag' , NOW())");
+            return 1; //Success
+        } else {
+            return 10; //Store Failed
+        }
+    }
+
+    // function saveAssetDetails() {
+    //     global $db;
+    
+    //     // Extract fields from POST data
+    //     $type = $_POST['asset-type'];
+    //     $tag = $_POST['asset-tag'];
+    //     $dateprchs = $_POST['dateprchs'];
+    //     $model = $_POST['model'];
+    //     $serial = $_POST['serial'];
+    //     $supplier = $_POST['supplier'];
+    
+    //     // Insert into assets_tbl
+    //     $query = "INSERT INTO assets_tbl (assettype, assettag, model, serial, supplier, datepurchased) VALUES ('$type','$tag','$model','$serial','$supplier','$dateprchs')";
+    //     $result = mysqli_query($db->conn, $query);
+    //     $last_id = mysqli_insert_id($db->conn);
+    
+    //     return array('result' => $result, 'last_id' => $last_id);
+    //     // return $result;
     // }
-    function saveAssetDetails() {
-        global $db;
     
-        // Extract fields from POST data
-        $type = $_POST['asset-type'];
-        $tag = $_POST['asset-tag'];
-        $dateprchs = $_POST['dateprchs'];
-        $model = $_POST['model'];
-        $serial = $_POST['serial'];
-        $supplier = $_POST['supplier'];
+    // function saveAssetFinal() {
+    //     global $db;
     
-        // Insert into assets_tbl
-        $query = "INSERT INTO assets_tbl (assettype, assettag, model, serial, supplier, datepurchased) VALUES ('$type','$tag','$model','$serial','$supplier','$dateprchs')";
-        $result = mysqli_query($db->conn, $query);
-        $last_id = mysqli_insert_id($db->conn);
+    //     // Extract fields from POST data
+    //     $assetId = $_POST['assetId'];
+    //     $cpu = $_POST['processor'];
+    //     $memory = $_POST['memory'];
+    //     $storage = $_POST['storage'];
+    //     $os = $_POST['os'];
     
-        return array('result' => $result, 'last_id' => $last_id);
-        // return $result;
-    }
+    //     // Insert into specs_tbl
+    //     $query = "INSERT INTO specs_tbl (assetId, cpu, memory, storage, os) VALUES ('$assetId','$cpu','$memory','$storage','$os')";
+    //     $result = mysqli_query($db->conn, $query);
     
-    function saveAssetFinal() {
-        global $db;
-    
-        // Extract fields from POST data
-        $assetId = $_POST['assetId'];
-        $cpu = $_POST['processor'];
-        $memory = $_POST['memory'];
-        $storage = $_POST['storage'];
-        $os = $_POST['os'];
-    
-        // Insert into specs_tbl
-        $query = "INSERT INTO specs_tbl (assetId, cpu, memory, storage, os) VALUES ('$assetId','$cpu','$memory','$storage','$os')";
-        $result = mysqli_query($db->conn, $query);
-    
-        return $result;
-    }
+    //     return $result;
+    // }
     function getAllData() {
         global $db;
 
