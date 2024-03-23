@@ -1,16 +1,4 @@
-<?php
-require '../php/db_connection.php';
-
-$select = new Select();
-$results = new get_All_User();
-$asset = new assetsController;
-
-if(!empty($_SESSION['id'])) {
-    $user = $select->selectUserById($_SESSION['id']);
-} else {
-    header("Location: ../php/login.php");
-}
-?>
+<?php include '../inc/auth.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +33,7 @@ if(!empty($_SESSION['id'])) {
             if(isset($_GET['id']))
             {
                 $assetID = mysqli_real_escape_string($db->conn, $_GET['id']);
-                $result = $asset->edit($assetID);
+                $result = $assetController->edit($assetID);
 
                 if($result) {
 
@@ -236,7 +224,7 @@ if(!empty($_SESSION['id'])) {
                         </div> -->
                         <div class="input-box" id="datedeployed" style="display: none;">
                             <span class="details">Date Deployed</span>
-                            <input type="date" name="datedeployed" placeholder="Date Deployed" value="" id="">
+                            <input type="date" name="datedeployed" placeholder="Date Deployed" value="<?=$result['datedeployed']?>" id="">
                         </div>
                     </div>
                     <div class="title"></div>
@@ -247,7 +235,7 @@ if(!empty($_SESSION['id'])) {
                                 <option value="<?=$result['ename']?>"><?=$result['ename']?></option>
                                 <option value=''>Clear</option>
                                 <?php
-                                        $user = $results->selectAllEmp();
+                                        $user = $getAllUser->selectAllEmp();
                                         foreach($user as $row) {
                                 ?>
                                 <option value="<?php echo $row['id']; ?>">
@@ -266,7 +254,7 @@ if(!empty($_SESSION['id'])) {
                                     <option value="<?=$result['lastused']?>"><?=$result['lastused']?></option>
                                     <option value=''>Clear</option>
                                     <?php
-                                            foreach($user as $row) {
+                                        foreach($user as $row) {
                                     ?>
                                     <option value="<?php echo $row['id']; ?>">
                                         <?php echo $row['name']; ?>

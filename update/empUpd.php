@@ -1,19 +1,4 @@
-<?php
-require_once '../php/db_connection.php';
-
-$select = new Select();
-$getEmp = new get_All_User();
-
-if(!empty($_SESSION['id'])) {
-    $user = $select->selectUserById($_SESSION['id']);
-
-    $id = $user['id'];
-    $username = $user['username'];
-
-} else {
-    header("Location: ../php/login.php");
-}
-?>
+<?php include '../inc/auth.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">

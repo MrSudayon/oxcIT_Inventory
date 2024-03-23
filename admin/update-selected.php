@@ -1,6 +1,7 @@
 <?php
 require '../php/db_connection.php';
 $asset = new assetsController;
+$assetController = new assetsController;
 
 if(isset($_POST['update-asset'])) {
     $id = mysqli_real_escape_string($db->conn,$_POST['assetID']);
@@ -28,7 +29,7 @@ if(isset($_POST['update-asset'])) {
         'assigned'     => mysqli_real_escape_string($db->conn,$_POST['assigned']),
         'lastused'     => mysqli_real_escape_string($db->conn,$_POST['lastused'])
     ];
-    $result = $asset->update($input, $id);
+    $result = $assetController->update($input, $id);
 
     if($result) {
         echo "<script>
@@ -55,7 +56,7 @@ if(isset($_POST['turnover-asset'])) {
         // 'reason' => mysqli_real_escape_string($db->conn,$_POST['reason']),
         'ref_code' => mysqli_real_escape_string($db->conn,$_POST['ref_code']),
     ];
-    $result = $asset->assetTurnover($input, $id);
+    $result = $assetController->assetTurnover($input, $id);
 
     if ($result == 1) {
         echo "<script>
@@ -81,7 +82,7 @@ if(isset($_POST['updateEmp'])) {
         'location' => mysqli_real_escape_string($db->conn,$_POST['location']),
         'status' => mysqli_real_escape_string($db->conn,$_POST['status']),
     ];
-    $result = $asset->empUpdate($input, $id);
+    $result = $assetController->empUpdate($input, $id);
 
     if($result) {
         echo "<script>
@@ -105,7 +106,7 @@ if(isset($_POST['updateAssetItem'])) {
         'name' => mysqli_real_escape_string($db->conn,$_POST['name']),
         'status' => mysqli_real_escape_string($db->conn,$_POST['status']),
     ];
-    $result = $asset->assetItemUpdate($input, $id);
+    $result = $assetController->assetItemUpdate($input, $id);
 
     if($result) {
         echo "<script>
@@ -129,7 +130,7 @@ if(isset($_POST['updateDivision'])) {
         'name' => mysqli_real_escape_string($db->conn,$_POST['name']),
         'status' => mysqli_real_escape_string($db->conn,$_POST['status']),
     ];
-    $result = $asset->divisionUpdate($input, $id);
+    $result = $assetController->divisionUpdate($input, $id);
 
     if($result) {
         echo "<script>
@@ -153,7 +154,7 @@ if(isset($_POST['updateLocation'])) {
         'name' => mysqli_real_escape_string($db->conn,$_POST['name']),
         'status' => mysqli_real_escape_string($db->conn,$_POST['status']),
     ];
-    $result = $asset->locationUpdate($input, $id);
+    $result = $assetController->locationUpdate($input, $id);
 
     if($result) {
         echo "<script>
@@ -250,7 +251,7 @@ if(isset($_POST['update-reference'])) {
     ];
 
    
-    $result = $asset->updateReference($input, $id);
+    $result = $assetController->updateReference($input, $id);
 
     if($result) {
         echo "<script>

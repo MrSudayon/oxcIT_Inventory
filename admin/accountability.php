@@ -1,14 +1,6 @@
 <?php
 include '../inc/auth.php';
 
-if(!empty($_SESSION['id'])) {
-    $user = $select->selectUserById($_SESSION['id']);
-    $username = $user['username'];
-
-} else {
-    header("Location: ../php/login.php");
-}
-
 if(isset($_GET['select'])) {
 
     $selected = $_GET['select'];

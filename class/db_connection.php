@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-include 'functions.php';
-include 'assetsController.php';
+include '../class/functions.php';
+include '../class/assetsController.php';
 
 class Connection {
     public $host = "localhost";

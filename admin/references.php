@@ -1,19 +1,4 @@
-<?php
-require_once '../php/db_connection.php';
-
-$select = new Select();
-$getAllRecord = new Operations();
-
-if(!empty($_SESSION['id'])) {
-    $user = $select->selectUserById($_SESSION['id']);
-
-    $id = $user['id'];
-    $username = $user['username'];
-
-} else {
-    header("Location: ../php/login.php");
-}
-?>
+<?php include '../inc/auth.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -150,7 +135,7 @@ if(!empty($_SESSION['id'])) {
                     echo "<td colspan=13 style='text-align:center; color:red; font-size: 1.5em;'>No result</td>";
                 } else {
                     // Get reference records
-                    $referenceTbl = $getAllRecord->getReferenceTable();
+                    $referenceTbl = $operation->getReferenceTable();
 
                     while($row = mysqli_fetch_assoc($referenceTbl)) {
                         $aId = $row['aId'];

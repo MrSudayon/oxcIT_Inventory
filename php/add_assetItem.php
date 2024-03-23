@@ -1,43 +1,23 @@
 <?php 
-require('../php/db_connection.php');
-
-$select = new Select();
-
-if(!empty($_SESSION['id'])) {
-    $user = $select->selectUserById($_SESSION['id']);
-    $username = $user['username'];
-
-    if ($user['role'] == 'admin') {
+include '../inc/auth.php'; 
         
-        $register = new AddItems();
+if(isset($_POST['submit'])) {
 
-        if(isset($_POST['submit'])) {
-
-            $result = $register->addAssetItem($_POST['name']);
-            $assetName = $_POST['name'];
-            
-            if($result == 1) {
-                echo "<script> alert('Registration Successful'); </script>";
-                $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                        VALUES ('', '$username', 'Added new asset item: $assetName', NOW())");
-            }
-            elseif($result == 10) {
-                echo "<script> alert('This Asset already exists'); </script>";
-            }
-            elseif($result == 100) {
-                echo "<script> alert('Something went wrong'); </script>";
-            }
-        }
-    } else {
-        echo "<script> alert('Please contact Admin for creating new user'); </script>";
-        header("Location: ../index.php");
+    $result = $addItems->addAssetItem($_POST['name']);
+    $assetName = $_POST['name'];
+    
+    if($result == 1) {
+        echo "<script> alert('Registration Successful'); </script>";
+        $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                VALUES ('', '$username', 'Added new asset item: $assetName', NOW())");
     }
-} else {
-    header("Location: ../php/login.php");
+    elseif($result == 10) {
+        echo "<script> alert('This Asset already exists'); </script>";
+    }
+    elseif($result == 100) {
+        echo "<script> alert('Something went wrong'); </script>";
+    }
 }
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

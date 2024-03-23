@@ -1,14 +1,4 @@
-<?php
-require '../php/db_connection.php';
-
-$select = new Select();
-
-if(!empty($_SESSION['id'])) {
-    $user = $select->selectUserById($_SESSION['id']);
-} else {
-    header("Location: ../php/login.php");
-}
-?>
+<?php include '../inc/auth.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">

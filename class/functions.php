@@ -1,8 +1,4 @@
 <?php
-
-// include_once '../php/db_connection.php';
-
-$db = new Connection();
 $select = new Select();
 
 if(isset($_SESSION['id'])) {

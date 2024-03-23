@@ -1,43 +1,25 @@
 <?php 
-require('../php/db_connection.php');
+include '../inc/auth.php'; 
 
-$select = new Select();
+$addItems = new AddItems();
 
-if(!empty($_SESSION['id'])) {
-    $user = $select->selectUserById($_SESSION['id']);
-    $username = $user['username'];
+if(isset($_POST['submit'])) {
 
-    if ($user['role'] == 'admin') {
-        
-        $register = new AddItems();
-
-        if(isset($_POST['submit'])) {
-
-            $result = $register->addLocation($_POST['name']);
-            $locName = $_POST['name'];
-            
-            if($result == 1) {
-                echo "<script> alert('Registration Successful'); </script>";
-                $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                        VALUES ('', '$username', 'Added empployee: $locName', NOW())");
-            }
-            elseif($result == 10) {
-                echo "<script> alert('This Division already exists'); </script>";
-            }
-            elseif($result == 100) {
-                echo "<script> alert('Something went wrong'); </script>";
-            }
-        }
-    } else {
-        echo "<script> alert('Please contact Admin for creating new user'); </script>";
-        header("Location: ../index.php");
+    $result = $register->addLocation($_POST['name']);
+    $locName = $_POST['name'];
+    
+    if($result == 1) {
+        echo "<script> alert('Registration Successful'); </script>";
+        $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                VALUES ('', '$username', 'Added empployee: $locName', NOW())");
     }
-} else {
-    header("Location: ../php/login.php");
+    elseif($result == 10) {
+        echo "<script> alert('This Division already exists'); </script>";
+    }
+    elseif($result == 100) {
+        echo "<script> alert('Something went wrong'); </script>";
+    }
 }
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

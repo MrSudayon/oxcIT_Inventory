@@ -1,8 +1,5 @@
 <?php
-require_once '../php/db_connection.php';
-
-$select = new Select();
-$getAllRecord = new Operations();
+include '../inc/auth.php';
 
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);

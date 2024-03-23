@@ -1,11 +1,10 @@
 <?php
-// include_once '../php/db_connection.php';
 $select = new Select();
 
 if(isset($_SESSION['id'])) {
     $session = $select->selectUserById($_SESSION['id']);
+    $sess_name = $session['username'];
 }
-
 class assetsController {
 
     public function edit($id) {
@@ -34,7 +33,7 @@ class assetsController {
     }
     public function update($input, $id) {
         global $db;
-        global $session;
+        global $sess_name;
 
         $assetID = mysqli_real_escape_string($db->conn, $id);
         // $assetType = $input['assettype'];
@@ -89,8 +88,6 @@ class assetsController {
         $qry = "UPDATE assets_tbl SET model='$model', serial='$serial', supplier='$supplier', empId='$empId', lastused='$lastused', status='$status', datepurchased='$dateprchs', cost='$cost', repair_cost='$repair', remarks='$remarks', datedeployed='$datedeployed', cpu='$cpu', memory='$ram', storage='$storage', dimes='$dimes', mobile='$mobile', plan='$plan', os='$os' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
         $result = $db->conn->query($qry);
 
-        // Get current user for History record....
-        $name = $session['username'];
 
         $tag = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $assetID");
             while($row = $tag->fetch_assoc()) {
@@ -98,7 +95,7 @@ class assetsController {
             }
         if($result) {
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                                VALUES('', '$name', 'Updated item: $assettag, ID: $assetID from Assets Record' , NOW())");
+                                VALUES('', '$sess_name', 'Updated item: $assettag, ID: $assetID from Assets Record' , NOW())");
             return true;
         } else {
             return false;
@@ -107,7 +104,7 @@ class assetsController {
 
     public function assetTurnover($input, $id) {
         global $db;
-        global $session;
+        global $sess_name;
 
         $assetID = mysqli_real_escape_string($db->conn, $id);
         $lastused = $input['lastused'];
@@ -145,9 +142,8 @@ class assetsController {
 
             $db->conn->query("UPDATE assets_tbl SET assigned='', department='', location='', lastused='$lastusedby', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1");
             
-            $name = $session['username'];
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                                VALUES('', '$name', 'Turnover asset: $assetName ID: $assetID' , NOW())");
+                                VALUES('', '$sess_name', 'Turnover asset: $assetName ID: $assetID' , NOW())");
             
             return 1; // Turnover success
            
@@ -161,7 +157,6 @@ class assetsController {
     // Emp
     public function empEdit($id) {
         global $db;
-        global $session;
 
         $empID = mysqli_real_escape_string($db->conn, $id);
         $empQuery = "SELECT * FROM employee_tbl WHERE id='$empID'";
@@ -175,7 +170,7 @@ class assetsController {
     }
     public function empUpdate($input, $id) {
         global $db;
-        global $session;
+        global $sess_name;
 
         $empID = mysqli_real_escape_string($db->conn, $id);
         $empname = $input['name'];
@@ -183,16 +178,13 @@ class assetsController {
         $location = $input['location'];
         $status = $input['status'];
         
-        // Get current user for History record....
-        $name = $session['username'];
-
         // validation of Turnover reference code
         $qry = "UPDATE employee_tbl SET name='$empname', division='$division', location='$location', status='$status' WHERE id='$empID' LIMIT 1";
         $result = $db->conn->query($qry);
 
         if($result) {
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-            VALUES('', '$name', 'Updated employee: $empname ID: $empID' , NOW())");
+            VALUES('', '$sess_name', 'Updated employee: $empname ID: $empID' , NOW())");
 
             return true;
         } else {

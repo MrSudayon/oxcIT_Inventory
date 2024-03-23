@@ -1,19 +1,4 @@
-<?php
-require_once '../php/db_connection.php';
-
-$select = new Select();
-$getAllRecord = new Operations();
-
-if(!empty($_SESSION['id'])) {
-    $user = $select->selectUserById($_SESSION['id']);
-
-    $id = $user['id'];
-    $username = $user['username'];
-
-} else {
-    header("Location: ../php/login.php");
-}
-?>
+<?php include '../inc/auth.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +33,7 @@ if(!empty($_SESSION['id'])) {
                 </div>
 
                 <?php
-                    $List = $getAllRecord->searchDept();
+                    $List = $operation->searchDept();
                     $rowCount = $List->num_rows;
                 ?>
                 <div class="count">

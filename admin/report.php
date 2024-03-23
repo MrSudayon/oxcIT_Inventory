@@ -1,14 +1,5 @@
-<?php
-require '../php/db_connection.php';
-
-$select = new Select();
-
-if(!empty($_SESSION['id'])) {
-    $user = $select->selectUserById($_SESSION['id']);
-    $username = $user['username'];
-} else {
-    header("Location: ../php/login.php");
-}
+<?php 
+include '../inc/auth.php';
 
 if(isset($_GET['select'])) {
     $selected = $_GET['select'];

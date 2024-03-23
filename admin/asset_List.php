@@ -1,8 +1,5 @@
 <?php
-require_once '../php/db_connection.php';
-
-$select = new Select();
-$getAllRecord = new Operations();
+include '../inc/auth.php';
 
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
@@ -46,7 +43,7 @@ if(!empty($_SESSION['id'])) {
                 </div>
 
                 <?php
-                    $List = $getAllRecord->searchAsset();
+                    $List = $operation->searchAsset();
                     $rowCount = $List->num_rows;
                 ?>
                 <div class="count">
