@@ -13,12 +13,8 @@ if(!empty($_SESSION['id'])) {
 
     if($role == 'admin') {
         header("Location: ./admin/configuration.php");
-        die();
-    } else {
-        header("Location: ../index.php");
-        die();
+        // $db->conn->close();
     }
-
 } else {
     header("Location: ./php/login.php");
 }
@@ -33,7 +29,7 @@ if(!empty($_SESSION['id'])) {
 </head>
 <body>
     <h1>There's Nothing Here</h1><br>
-    <h1>What u doing here <?php echo $user['username']; ?> Log on admin role</h1>
+    <h1>What u doing here <?php echo $username; ?> Log on admin role</h1>
 
     <a href="./php/logout.php?id=<?php echo $id; ?>&name=<?php echo $username; ?>">Logout</a>
     

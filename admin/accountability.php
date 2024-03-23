@@ -1,9 +1,6 @@
 <?php
-require '../php/db_connection.php';
+include '../inc/auth.php';
 
-$select = new Select();
-$db = new Connection();
-$functions = new Operations();
 if(!empty($_SESSION['id'])) {
     $user = $select->selectUserById($_SESSION['id']);
     $username = $user['username'];

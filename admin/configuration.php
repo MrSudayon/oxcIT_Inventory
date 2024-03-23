@@ -1,20 +1,4 @@
-<?php
-require_once '../php/db_connection.php';
-
-$select = new Select();
-$getAllRecord = new Operations();
-
-if(!empty($_SESSION['id'])) {
-    $user = $select->selectUserById($_SESSION['id']);
-
-    $id = $user['id'];
-    $username = $user['username'];
-
-} else {
-    header("Location: ../php/login.php");
-}
-?>
-
+<?php include '../inc/auth.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,14 +13,19 @@ if(!empty($_SESSION['id'])) {
 <?php include '../inc/header.php'; ?>
     
     <div class="content">
-        <!-- <div class="title">
-            <h1>Hello, <span class="uname"><?php echo $username; ?></span>!</h1>
-        </div> -->
         <div class="config-buttons">
-            <div class="config-btn"><a href="../admin/dashboard.php" title="Asset"><img src="../assets/icons/config/dash.png"></a><br></div>
-            <div class="config-btn"><a href="../admin/create_accountability.php" title="Accountability"><img src="../assets/icons/config/daily-tasks.png"></a></div>
-            <div class="config-btn"><a href="../admin/create_turnover.php" title="Turnover"><img src="../assets/icons/config/turnover.png"></a></div>
-            <div class="config-btn"><a href="../admin/references.php" title="Reference"><img src="../assets/icons/config/research.png"></a></div>
+            <div class="config-btn"><a href="../admin/dashboard.php" title="All Asset"><img src="../assets/icons/config/dash.png"></a><br></div>
+            <div class="config-btn"><a href="../admin/lists/Desktop.php" title="Desktop"><img src="../assets/icons/config/laptop.png"></a><br></div>
+            <div class="config-btn"><a href="../admin/lists/#.php" title="Printer"><img src="../assets/icons/config/printer.png"></a><br></div>
+            <div class="config-btn"><a href="../admin/lists/#.php" title="Mobile"><img src="../assets/icons/config/mobile.png"></a><br></div>
+            <div class="config-btn"><a href="../admin/lists/#.php" title="Sim"><img src="../assets/icons/config/sim.png"></a><br></div>
+        </div>
+        <div class="config-buttons sub-config">
+            <div class="sub-btn"></div>
+            <div class="sub-btn"><a href="../admin/create_accountability.php" title="Accountability"><img src="../assets/icons/config/daily-tasks.png"></a></div>
+            <div class="sub-btn"><a href="../admin/create_turnover.php" title="Turnover"><img src="../assets/icons/config/turnover.png"></a></div>
+            <div class="sub-btn"><a href="../admin/references.php" title="Reference"><img src="../assets/icons/config/research.png"></a></div>
+            <div class="sub-btn"></div>
         </div>
     </div>
     

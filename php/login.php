@@ -1,18 +1,18 @@
 <?php 
 include 'db_connection.php';
 
-
 if(!empty($_SESSION['id'])) {
-    header("Location: ../index.php");
+    header("Location: ../inc/auth.php");
 }
 
 $login = new Login();
 $db = new Connection();
+$select = new Select();
+
 if(isset($_POST['submit'])) {
     $result = $login->login($_POST['username'], $_POST['password']);
-    global $db;
+    global $db;    
     if($result == 1) {
-
         $_SESSION['login'] = true;
         $_SESSION['id'] = $login->idUser();
 
@@ -20,23 +20,16 @@ if(isset($_POST['submit'])) {
         $id = $user_sess['id'];
         $name = $user_sess['username'];
       
-        // $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-        //                             VALUES ('', '$name', 'Logged in', NOW())");   
-        // if(!$sql) {
-        //     die('error'.$db->conn->connect_error);
-        // } else { 
-
         ?>
             <script>
                 alert('Login Successful');
-                // window.location.replace('../admin/dashboard.php');
                 window.location.replace('../index.php');
             </script>
         <?php
         
         $db->conn->close();
-    }
-    elseif($result == 2) {
+
+    } elseif($result == 2) {
         $_SESSION['login'] = true;
         $_SESSION['id'] = $login->idUser();
 
@@ -44,11 +37,6 @@ if(isset($_POST['submit'])) {
         $id = $user_sess['id'];
         $name = $user_sess['username'];
       
-        // $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-        //                             VALUES ('', '$name', 'Logged in', NOW())");   
-        // if(!$sql) {
-        //     die('error'.$db->conn->connect_error);
-        // } else { 
             ?>
                 <script>
                     alert('Login Successful');
@@ -56,8 +44,8 @@ if(isset($_POST['submit'])) {
                 </script>
             <?php
         $db->conn->close();
-    } 
-    elseif($result == 10) {
+
+    } elseif($result == 10) {
         ?>
             <script>
                 alert('Wrong Password');
@@ -65,8 +53,8 @@ if(isset($_POST['submit'])) {
             </script>
         <?php
         $db->conn->close();
-    } 
-    elseif($result == 100) {
+
+    } elseif($result == 100) {
         ?>
             <script>
                 alert('User does not exists');

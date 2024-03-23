@@ -1,19 +1,4 @@
-<?php
-require_once '../php/db_connection.php';
-
-$select = new Select();
-$getAllRecord = new Operations();
-
-if(!empty($_SESSION['id'])) {
-    $user = $select->selectUserById($_SESSION['id']);
-
-    $id = $user['id'];
-    $username = $user['username'];
-
-} else {
-    header("Location: ../php/login.php");
-}
-?>
+<?php include '../inc/auth.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +48,7 @@ if(!empty($_SESSION['id'])) {
                 <select name="aType" class="">
                     <option>Select Asset</option>
                     <?php
-                        $assettype = $getAllRecord->getAssets();
+                        $assettype = $operation->getAssets();
                         foreach($assettype as $assets) {
                     ?>
                         <option value="<?=$assets['assetType']?>"><?php echo $assets['assetType']; ?></option>

@@ -1,36 +1,21 @@
-<?php
-require '../php/db_connection.php';
-// require '../classes/functions.php';
+<?php 
+include '../inc/auth.php';
 
-$select = new Select();
+if(isset($_POST['save'])) {
+    $countRes = $record->checkAssetCount($_POST['asset-type']);
+    
+    $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], 
+    $_POST['assigned'], $_POST['lastused'], $_POST['status'], $_POST['dateprchs'], $_POST['cost'], $_POST['repair-cost'], $_POST['remarks'], $_POST['datedeployed'], 
+    $_POST['processor'], $_POST['memory'], $_POST['storage'], $_POST['dimes'], $_POST['mobile'], $_POST['plan'], $_POST['os']);
+    
 
-if(!empty($_SESSION['id'])) {
-    $user = $select->selectUserById($_SESSION['id']);
-    if($user['role'] == 'admin') {
-        $record = new Operations();
+    if($result == 1) {
+        echo "<script> alert('Data Stored successfully!'); </script>";
+        header("Refresh:0; url=dashboard.php");
 
-        if(isset($_POST['save'])) {
-            $countRes = $record->checkAssetCount($_POST['asset-type']);
-            
-            $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], 
-            $_POST['assigned'], $_POST['lastused'], $_POST['status'], $_POST['dateprchs'], $_POST['cost'], $_POST['repair-cost'], $_POST['remarks'], $_POST['datedeployed'], 
-            $_POST['processor'], $_POST['memory'], $_POST['storage'], $_POST['dimes'], $_POST['mobile'], $_POST['plan'], $_POST['os']);
-            
-
-            if($result == 1) {
-                echo "<script> alert('Data Stored successfully!'); </script>";
-                header("Refresh:0; url=dashboard.php");
-
-            } elseif($result == 100) {
-                echo "<script> alert('Failed'); </script>";
-            }                
-        }
-
-    } else {
-        header("Location: ../index.php");
-    }
-} else {
-    header("Location: ../php/login.php");
+    } elseif($result == 100) {
+        echo "<script> alert('Failed'); </script>";
+    }                
 }
 ?>
 
