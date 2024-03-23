@@ -2,9 +2,9 @@
 include '../inc/auth.php';
 
 if(isset($_POST['save'])) {
-    $countRes = $record->checkAssetCount($_POST['asset-type']);
+    $countRes = $operation->checkAssetCount($_POST['asset-type']);
     
-    $result = $record->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], 
+    $result = $operation->record_Data($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], 
     $_POST['assigned'], $_POST['lastused'], $_POST['status'], $_POST['dateprchs'], $_POST['cost'], $_POST['repair-cost'], $_POST['remarks'], $_POST['datedeployed'], 
     $_POST['processor'], $_POST['memory'], $_POST['storage'], $_POST['dimes'], $_POST['mobile'], $_POST['plan'], $_POST['os']);
     
