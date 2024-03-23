@@ -48,15 +48,17 @@ if(!empty($_SESSION['id'])) {
                 $result = $asset->edit($assetID);
 
                 if($result) {
+
+                    $assetType = $result['assettype'];
             ?>
                 <form action="../admin/update-selected.php" method="POST">
                     <div class="asset-details">
-                        <input type="hidden" name="assetID" value="<?=$result['id']?>">
+                        <input type="hidden" name="assetID" value="<?=$result['aId']?>">
 
                         <div class="input-box">
                             <span class="details">Asset Type</span>
                             <!-- <input type="text" name="asset-type" value="" id="" required> -->
-                            <select name="asset-type" id="Type" onChange="changetextbox(); displaySelectedValue();" style="background-color: #ccc;" readonly>
+                            <select id="Type" onChange="changetextbox(); displaySelectedValue();" style="background-color: #ccc;" readonly>
                                 <option value="<?=$result['assettype']?>"><?=$result['assettype']?></option>
                                 
                             </select>
@@ -64,25 +66,66 @@ if(!empty($_SESSION['id'])) {
                         <div class="input-box">
                             <span class="details">Asset Tag</span>
                             <div class="asset-tag" id="tag" style="background-color: #ccc;"><?=$result['assettag']?></div>
-                            <input type="text" name="asset-tag" id="asset-tag" hidden>
+                            <input type="text" id="asset-tag" hidden>
                         </div>
-                        <div class="input-box" id="model">
-                            <span class="details">Model</span>
-                            <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
-                        </div>
-                        <div class="input-box" id="provider" style="display: none;">
-                            <span class="details">Provider</span>
-                            <input type="text" name="provider" placeholder="Provider" value="<?=$result['model']?>" id="">
-                        </div>
-                        
-                        <div class="input-box" id="serial">
-                            <span class="details">Serial no.</span>
-                            <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
-                        </div>
-                        <div class="input-box" id="mobile" style="display: none;">
-                            <span class="details">Mobile no.</span>
-                            <input type="text" name="mobile" value="<?=$result['serial']?>" placeholder="Mobile no." id="">
-                        </div>
+
+                                                
+                            <?php if($assetType == 'Laptop' || $assetType == 'Desktop' ) { ?>
+                                
+                                <div class="input-box" id="model">
+                                    <span class="details">Model</span>
+                                    <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
+                                </div>
+                                
+                                <div class="input-box" id="serial">
+                                    <span class="details">Serial no.</span>
+                                    <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
+                                </div>
+
+                            <?php } elseif($assetType == 'Mobile') { ?>
+
+                                <div class="input-box" id="model">
+                                    <span class="details">Model</span>
+                                    <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
+                                </div>
+                                
+                                <div class="input-box" id="serial">
+                                    <span class="details">Serial no.</span>
+                                    <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
+                                </div>
+                                
+                            <?php } elseif($assetType == 'Monitor' || $assetType == 'UPS' || $assetType == 'Printer' || $assetType == 'AVR') { ?>
+
+                                <div class="input-box" id="model">
+                                    <span class="details">Model</span>
+                                    <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
+                                </div>
+                                
+                                <div class="input-box" id="serial">
+                                    <span class="details">Serial no.</span>
+                                    <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
+                                </div>
+
+                            <?php } elseif($assetType == 'SIM') { ?>
+
+                                <div class="input-box" id="mobile">
+                                    <span class="details">Mobile no.</span>
+                                    <input type="text" name="mobile" value="<?=$result['serial']?>" placeholder="Mobile no." id="">
+                                </div>
+
+                            <?php } else { ?>
+
+                                <div class="input-box" id="model">
+                                    <span class="details">Model</span>
+                                    <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
+                                </div>
+                                
+                                <div class="input-box" id="serial">
+                                    <span class="details">Serial no.</span>
+                                    <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
+                                </div>
+
+                            <?php } ?>
 
                         <div class="input-box">
                             <span class="details">Supplier</span>
@@ -100,7 +143,7 @@ if(!empty($_SESSION['id'])) {
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Status</span>
                             <select name="status" id="status" onChange="changetextbox()">
-                                <option value="<?=$result['status']?>"><?=$result['status']?></option>
+                                <option value="<?=$result['aStatus']?>"><?=$result['aStatus']?></option>
                                 <option value="For repair">For repair</option>
                                 <option value="Deployed">Deployed</option>
                                 <option value="To be Deploy">To be deploy</option>
@@ -121,33 +164,79 @@ if(!empty($_SESSION['id'])) {
                     </div>
                     <div class="title">Specification</div>
                     <div class="asset-details">
-                        <div class="input-box" id="processor">
-                            <span class="details">Processor</span>
-                            <input type="text" name="processor" value="<?=$result['cpu']?>" id="">
-                        </div>
-                        <div class="input-box" id="plan" style="display: none;">
-                            <span class="details">Plan</span>
-                            <input type="text" name="plan" value="<?=$result['plan']?>" id="">
-                        </div>
-                        <div class="input-box" id="ram">
-                            <span class="details">Memory</span>
-                            <input type="text" name="memory" value="<?=$result['memory']?>" id="">
-                        </div>
-                        <div class="input-box" id="storage">
-                            <span class="details">Storage</span>
-                            <input type="text" name="storage" value="<?=$result['storage']?>" id="">
-                        </div>
-                        <div class="input-box">
-                            <span class="details">Operating System</span>
-                            <input type="text" name="os" value="<?=$result['os']?>" id="">
-                        </div>
+
+                        <?php if($assetType == 'Laptop' || $assetType == 'Desktop' ) { ?>
+
+                            <div class="input-box" id="processor">
+                                <span class="details">Processor</span>
+                                <input type="text" name="processor" value="<?=$result['cpu']?>" placeholder="Processor" id="">
+                            </div>
+                            <div class="input-box" id="ram">
+                                <span class="details">Memory</span>
+                                <input type="text" name="memory" value="<?=$result['memory']?>"v placeholder="Memory" id="">
+                            </div>
+                            <div class="input-box" id="storage">
+                                <span class="details">Storage</span>
+                                <input type="text" name="storage" value="<?=$result['storage']?>" placeholder="Storage" id="">
+                            </div>
+                            <div class="input-box" id="os">
+                                <span class="details">Operating System</span>
+                                <input type="text" name="os" value="<?=$result['os']?>" placeholder="Operating System" id="">
+                            </div>
+
+                        <?php } elseif($assetType == 'Mobile') { ?>
+
+                            <div class="input-box" id="ram">
+                                <span class="details">Memory</span>
+                                <input type="text" name="memory" value="<?=$result['memory']?>"v placeholder="Memory" id="">
+                            </div>
+                            <div class="input-box" id="storage">
+                                <span class="details">Storage</span>
+                                <input type="text" name="storage" value="<?=$result['storage']?>" placeholder="Storage" id="">
+                            </div>
+
+                        <?php } elseif($assetType == 'Monitor' || $assetType == 'UPS' || $assetType == 'Printer' || $assetType == 'AVR') { ?>
+
+                            <div class="input-box" id="dimes">
+                                <span class="details">Dimension</span>
+                                <input type="text" name="dimes" value="<?=$result['dimes']?>" placeholder="Dimension" id="">
+                            </div>
+
+                        <?php } elseif($assetType == 'SIM') { ?>
+
+                            <div class="input-box" id="plan">
+                                <span class="details">Plan</span>
+                                <input type="text" name="plan" value="<?=$result['plan']?>" placeholder="Plan" id="">
+                            </div>
+
+                        <?php } else { ?>
+                        
+                            <div class="input-box" id="processor">
+                                <span class="details">Processor</span>
+                                <input type="text" name="processor" value="<?=$result['cpu']?>" placeholder="Processor" id="">
+                            </div>          
+                            <div class="input-box" id="ram">
+                                <span class="details">Memory</span>
+                                <input type="text" name="memory" value="<?=$result['memory']?>"v placeholder="Memory" id="">
+                            </div>
+                            <div class="input-box" id="storage">
+                                <span class="details">Storage</span>
+                                <input type="text" name="storage" value="<?=$result['storage']?>" placeholder="Storage" id="">
+                            </div>
+                            <div class="input-box" id="os">
+                                <span class="details">Operating System</span>
+                                <input type="text" name="os" value="<?=$result['os']?>" placeholder="Operating System" id="">
+                            </div>
+                            
+                        <?php } ?>
+
                         <!-- <div class="input-box">
                             <span class="details">Others</span>
-                            <input type="text" name="other" value="<?=$result['Others']?>" id="">
+                            <input type="text" name="other" placeholder="Others" id="">
                         </div> -->
-                        <div class="input-box">
+                        <div class="input-box" id="datedeployed" style="display: none;">
                             <span class="details">Date Deployed</span>
-                            <input type="date" name="datedeployed" value="<?=$result['datedeployed']?>" id="">
+                            <input type="date" name="datedeployed" placeholder="Date Deployed" value="" id="">
                         </div>
                     </div>
                     <div class="title"></div>
@@ -169,10 +258,7 @@ if(!empty($_SESSION['id'])) {
                                 ?>
                             </select>
                         </div>
-                        <div class="input-box">
-                            <span class="details">Turnover Date</span>
-                            <input type="date" name="turnover" value="<?=$result['turnoverDate']?>">
-                        </div>
+
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
                             <!-- <input type="text" name="lastused" value=""> -->
@@ -180,7 +266,6 @@ if(!empty($_SESSION['id'])) {
                                     <option value="<?=$result['lastused']?>"><?=$result['lastused']?></option>
                                     <option value=''>Clear</option>
                                     <?php
-                                            $user = $results->selectAllEmp();
                                             foreach($user as $row) {
                                     ?>
                                     <option value="<?php echo $row['id']; ?>">

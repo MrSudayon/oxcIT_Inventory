@@ -40,7 +40,17 @@ if(!empty($_SESSION['id'])) {
     
 <div class="content">
     <div class="title">
-        <h1> ASSET LIST </h1>
+        <div class="title-side">
+            <h1> ASSET LIST </h1>
+            <div class="link-btns">
+                <a href="add-assets.php" class="link-btn">New Record</a>
+                <!-- <a href="../php/add_assetItem.php" class="link-btn">Add Asset</a>
+                <a href="../php/add_division.php" class="link-btn">Add Division</a>
+                <a href="../php/add_location.php" class="link-btn">Add Location</a>
+                <a href="../php/add_emp_info.php" class="link-btn">Add Employee</a> -->
+                <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
+            </div>
+        </div>
         
         <div class="search-container">
             <form action="" method="POST" class="">
@@ -74,17 +84,17 @@ if(!empty($_SESSION['id'])) {
         </div>
         
     </div>
+
     
-    <form action="" method="get">
-        <div class="table-nav">
-            <div class="link-btns">
-                <a href="add-assets.php" class="link-btn">New Record</a>
-                <a href="../php/add_assetItem.php" class="link-btn">Add Asset</a>
-                <a href="../php/add_division.php" class="link-btn">Add Division</a>
-                <a href="../php/add_location.php" class="link-btn">Add Location</a>
-                <a href="../php/add_emp_info.php" class="link-btn">Add Employee</a>
-                <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
-            </div>
+    
+                <!-- <div class="link-btns">
+                    <a href="add-assets.php" class="link-btn">New Record</a>
+                    <a href="../php/add_assetItem.php" class="link-btn">Add Asset</a>
+                    <a href="../php/add_division.php" class="link-btn">Add Division</a>
+                    <a href="../php/add_location.php" class="link-btn">Add Location</a>
+                    <a href="../php/add_emp_info.php" class="link-btn">Add Employee</a>
+                    <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
+                </div> -->
             <?php
                 $sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive'";
                 $results = mysqli_query($db->conn, $sqlSelectAll);
@@ -106,39 +116,39 @@ if(!empty($_SESSION['id'])) {
                     $search = $_POST['search'];
 
                     $sql = 
-                    "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, 
-                    e.id, e.name, e.division, e.location 
-                    FROM assets_tbl AS a 
-                    LEFT JOIN employee_tbl AS e 
-                    ON a.empId = e.id 
-                    WHERE a.status!='Archive' AND (e.name LIKE '$search%' OR e.name LIKE '%$search' OR e.name LIKE '%$search%' OR e.division LIKE '%$search%'
-                    OR a.assettype LIKE '%$search%' OR a.status LIKE '%$search%' OR e.location LIKE '%$search%'
-                    OR a.assettag LIKE '%$search%' OR a.model LIKE '%$search%')";
-                 
+                        "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, 
+                        a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
+                        e.id, e.name, e.division, e.location 
+                        FROM assets_tbl AS a 
+                        LEFT JOIN employee_tbl AS e 
+                        ON a.empId = e.id 
+                        WHERE a.status!='Archive' AND (e.name LIKE '$search%' OR e.name LIKE '%$search' OR e.name LIKE '%$search%' OR e.division LIKE '%$search%'
+                        OR a.assettype LIKE '%$search%' OR a.status LIKE '%$search%' OR e.location LIKE '%$search%'
+                        OR a.assettag LIKE '%$search%' OR a.model LIKE '%$search%')";
                 } 
                 elseif((isset($_POST['aType']) && $_POST['aType'] != "") || (isset($_POST['aStatus']) && $_POST['aStatus'] != "")) {
 
                     $type = $_POST['aType'];
                     $status = $_POST['aStatus'];
                     $sql = 
-                    "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, 
-                    e.id, e.name, e.division, e.location 
-                    FROM assets_tbl AS a 
-                    LEFT JOIN employee_tbl AS e 
-                    ON a.empId = e.id 
-                    WHERE a.status='$status' AND a.assettype = '$type' LIMIT ". $page_first_result . ',' . $results_per_page;
-                    
+                        "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, 
+                        a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
+                        e.id, e.name, e.division, e.location 
+                        FROM assets_tbl AS a 
+                        LEFT JOIN employee_tbl AS e 
+                        ON a.empId = e.id 
+                        WHERE a.status='$status' AND a.assettype = '$type' LIMIT ". $page_first_result . ',' . $results_per_page;
                 } else {
                     // $sql =  "SELECT * FROM assets_tbl WHERE status!='Archive' ORDER BY lpad(assettag, 10, 0) LIMIT ". $page_first_result . ',' . $results_per_page;
                     $sql =  
-                    "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, 
-                    e.id, e.name, e.division, e.location 
-                    FROM assets_tbl AS a 
-                    LEFT JOIN employee_tbl AS e 
-                    ON e.id = a.empId 
-                    WHERE a.status!='Archive' 
-                    LIMIT ". $page_first_result . ',' . $results_per_page;
-                  
+                        "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, 
+                        a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
+                        e.id, e.name, e.division, e.location 
+                        FROM assets_tbl AS a 
+                        LEFT JOIN employee_tbl AS e 
+                        ON e.id = a.empId 
+                        WHERE a.status!='Archive' 
+                        LIMIT ". $page_first_result . ',' . $results_per_page;
                 }
                 $res = mysqli_query($db->conn, $sql);
                 $rowCountPage = $res->num_rows;
@@ -163,19 +173,19 @@ if(!empty($_SESSION['id'])) {
                 
             ?>            
             <div class="count">
-                <p>Showing: <b style="color: yellow; font-size: 20px;"><?php echo $rowCountPage; ?></b> result/s.</p>
+                <p>Showing: <b style="color: yellow; font-size: 20px; text-align: right;"><?php echo $rowCountPage; ?></b> result/s.</p>
             </div>
-        </div>
-        
+    <form action="" method="get">
+
         <table class="assets-table" id="myTable">
             <thead>
             <tr>
                 <th width="1%"><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
-                <th>Asset Type</th>
-                <th>Asset Tag</th>
-                <th>Model</th>
-                <th width="50%">Specification</th>
-                <th>Status</th>
+                <!-- <th>Asset Type</th> -->
+                <th width="10%">Asset Tag</th>
+                <th width="20%">Model</th>
+                <th width="40%">Specification</th>
+                <th width="10%">Status</th>
                 <th coslpan="3" width="10%">Action</th>
             </tr>
             </thead>
@@ -186,24 +196,32 @@ if(!empty($_SESSION['id'])) {
                 foreach ($rows as $row) {
                     $status = $row['status'];
                     $aId = $row['aId'];
+                    $assetType = $row['assettype'];
             ?> 
                 <td><input type="checkbox" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
-                <td><?php echo $row['assettype']; ?></td>
-                <td><?php echo $row['assettag']; ?></td>
+                <!-- <td>?php echo $assetType; ?></td> -->
+                <td><b><?php echo $row['assettag']; ?></b></td>
                 <td><?php echo $row['model']; ?></td>
                 <td>
                     <?php 
-
-                    // Logic if laptop/desktop = true {}
-                        echo "CPU:  
-                            <br>MEMORY:   
-                            <br>STORAGE: " ; 
+                    if($assetType == 'Laptop' || $assetType == 'Desktop' ) { 
+                            echo "CPU: ". $row['cpu'].
+                            "<br>MEMORY: ". $row['memory'].
+                            "<br>STORAGE: ". $row['storage'];
+                            // "<br>OS: ". $row['os'];
+                        } elseif($assetType == 'Mobile') {
+                            echo "MEMORY: ". $row['memory'].
+                            "<br>STORAGE: ". $row['storage'];
+                        } elseif($assetType == 'Monitor' || $assetType == 'UPS' || $assetType == 'Printer' || $assetType == 'AVR') {
+                            echo "DIMENSION: ". $row['dimes'];
+                        } elseif($assetType == 'SIM') {
+                            echo "PLAN: ". $row['plan'];
+                        } else {
+                            echo "MEMORY: ". $row['memory'].
+                            "<br>STORAGE: ". $row['storage'];
+                        }
                     ?>
                 </td>
-                    
-                <!-- <td> echo $row['CPU']; ?></td>
-                <td> echo $row['MEMORY']; ?></td>
-                <td> echo $row['STORAGE']; ?></td> -->
                 
                 <td><?php echo "<span class='statusSpan' >".$status."</span>" ?></td>
                 <script>

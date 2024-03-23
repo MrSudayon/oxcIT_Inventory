@@ -7,26 +7,26 @@ if(isset($_POST['update-asset'])) {
     $input = [
         // 'assettype' => mysqli_real_escape_string($db->conn,$_POST['asset-type']),
         // 'assettag' => mysqli_real_escape_string($db->conn,$_POST['asset-tag']),
-        'model' => mysqli_real_escape_string($db->conn,$_POST['model']),
-        'serial' => mysqli_real_escape_string($db->conn,$_POST['serial']),
-        'supplier' => mysqli_real_escape_string($db->conn,$_POST['supplier']),
+        'model'        => mysqli_real_escape_string($db->conn,$_POST['model']),
+        'serial'       => mysqli_real_escape_string($db->conn,$_POST['serial']),
+        'mobile'       => mysqli_real_escape_string($db->conn,$_POST['mobile']),
+        'supplier'     => mysqli_real_escape_string($db->conn,$_POST['supplier']),
+        'cost'         => mysqli_real_escape_string($db->conn,$_POST['cost']),
         'datepurchase' => mysqli_real_escape_string($db->conn,$_POST['dateprchs']),
-        'status' => mysqli_real_escape_string($db->conn,$_POST['status']),
-        'remarks' => mysqli_real_escape_string($db->conn,$_POST['remarks']),
+        'status'       => mysqli_real_escape_string($db->conn,$_POST['status']),
+        'repair-cost'  => mysqli_real_escape_string($db->conn,$_POST['repair-cost']),
+        'remarks'      => mysqli_real_escape_string($db->conn,$_POST['remarks']),
 
-        'cpu' => mysqli_real_escape_string($db->conn,$_POST['processor']),
-        'ram' => mysqli_real_escape_string($db->conn,$_POST['memory']),
-        'storage' => mysqli_real_escape_string($db->conn,$_POST['storage']),
-        'os' => mysqli_real_escape_string($db->conn,$_POST['os']),
-        'others' => mysqli_real_escape_string($db->conn,$_POST['other']),
+        'cpu'          => mysqli_real_escape_string($db->conn,$_POST['processor']),
+        'plan'         => mysqli_real_escape_string($db->conn,$_POST['plan']),
+        'dimes'        => mysqli_real_escape_string($db->conn,$_POST['dimes']),
+        'ram'          => mysqli_real_escape_string($db->conn,$_POST['memory']),
+        'storage'      => mysqli_real_escape_string($db->conn,$_POST['storage']),
+        'os'           => mysqli_real_escape_string($db->conn,$_POST['os']),
         'datedeployed' => mysqli_real_escape_string($db->conn,$_POST['datedeployed']),
 
-        'assigned' => mysqli_real_escape_string($db->conn,$_POST['assigned']),
-        'turnover' => mysqli_real_escape_string($db->conn,$_POST['turnover']),
-        'lastused' => mysqli_real_escape_string($db->conn,$_POST['lastused']),
-
-        'mobile' => mysqli_real_escape_string($db->conn,$_POST['mobile']),
-        'plan' => mysqli_real_escape_string($db->conn,$_POST['plan']),
+        'assigned'     => mysqli_real_escape_string($db->conn,$_POST['assigned']),
+        'lastused'     => mysqli_real_escape_string($db->conn,$_POST['lastused'])
     ];
     $result = $asset->update($input, $id);
 

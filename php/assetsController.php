@@ -10,16 +10,18 @@ class assetsController {
 
     public function edit($id) {
         global $db;
+        
         $assetID = mysqli_real_escape_string($db->conn, $id);
         // $assetQuery = "SELECT * FROM assets_tbl WHERE id='$assetID' AND status!='Archive'";
-        $assetQuery = "SELECT a.id AS aId, a.assettype, a.assettag, a.model, a.status, 
-                        a.serial, a.supplier, a.cost, a.datepurchased, a.remarks, a.cpu, a.memory, a.storage, a.os, 
+        $assetQuery = "SELECT a.id AS aId, a.assettype, a.assettag, a.model, a.status as aStatus, 
+                        a.serial, a.supplier, a.cost, a.repair_cost, a.datepurchased, a.remarks, 
                         a.datedeployed, a.lastused, 
-                        e.id, e.name AS ename, e.division, e.location, 
-                        r.assetId, r.turnoverDate AS turnoverDate 
+                        a.cpu, a.memory, a.storage, a.os, a.dimes, a.mobile, a.plan, 
+                        e.id, e.name AS ename, e.division, e.location  
+                        -- r.assetId, r.turnoverDate AS turnoverDate 
                         FROM assets_tbl AS a 
                         LEFT JOIN employee_tbl AS e ON e.id = a.empId 
-                        LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+                        -- LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
                         WHERE a.id = '$assetID' AND a.status != 'Archive'";
         $res = mysqli_query($db->conn, $assetQuery);
 
@@ -32,7 +34,7 @@ class assetsController {
     }
     public function update($input, $id) {
         global $db;
-        global $select;
+        global $session;
 
         $assetID = mysqli_real_escape_string($db->conn, $id);
         // $assetType = $input['assettype'];
@@ -41,28 +43,28 @@ class assetsController {
         $serial = $input['serial'];
         $supplier = $input['supplier'];
         $dateprchs = $input['datepurchase'];
-        $datedeployed = $input['datedeployed'];
         $status = $input['status'];
+        $cost = $input['cost'];
+        $repair = $input['repair-cost'];
         $remarks = $input['remarks'];
 
-
         // Specification
-        // SIM
+        // SIM, Mobile
         $mobile = $input['mobile'];
         $plan = $input['plan'];
 
-        // Laptop, Desktop, Cellphone
+        // Monitor, UPS etc..
+        $dimes = $input['dimes'];
+
+        // Laptop, Desktop, Cellphone(Ram/Storage)
         $cpu = $input['cpu'];
         $ram = $input['ram'];
         $storage = $input['storage'];
         $os = $input['os'];
-        $others = $input['others'];
 
-        // Monitor, Keyboard, Mouse
-        // $dimes = $input['dimension'];
+        $datedeployed = $input['datedeployed'];
 
-        $assigned = $input['assigned'];
-        $turnover = $input['turnover'];
+        $empId = $input['assigned'];
         $lastused = $input['lastused'];
 
         // further logic; clear reason upon accounting to other employee
@@ -71,37 +73,23 @@ class assetsController {
         //     $reason = $input['reason'];
         // }
        
-        if(!isset($assigned) || $assigned == '') {
-            $dept = "";
-            $location = "";
-            
-        } else {
-            if($status=="") {
-                $status = 'Deployed';
+        if(isset($empId) || $empId != '') {
+            $sqlSelect = "SELECT * FROM employee_tbl WHERE id='$empId' AND empStatus=1";
+            $result = mysqli_query($db->conn, $sqlSelect);
+            if($result) {
+                while($row = mysqli_fetch_array($result)) {
+                    $empName = $row["name"];
+                }
+                if($lastused == '') {
+                    $lastused = $empName;
+                }
             }
+        }  
 
-            $sql = mysqli_query($db->conn,"SELECT * FROM employee_tbl WHERE name = '$assigned'");
-
-            while($row = $sql->fetch_assoc()) {
-                $dept = $row['division'];
-                $location = $row['location'];
-            } 
-
-            if($lastused == '') {
-                $lastused = $assigned;
-            } else {
-                $lastused = $input['lastused'];
-            }
-        }   
-
-        
-
-        $qry = "UPDATE assets_tbl SET department='$dept', model='$model', serial='$serial', supplier='$supplier', datepurchased='$dateprchs', status='$status', location='$location', remarks='$remarks', CPU='$cpu', MEMORY='$ram', STORAGE='$storage', OS='$os', Others='$others', assigned='$assigned', lastused='$lastused', dateturnover='$turnover', datedeployed='$datedeployed' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
+        $qry = "UPDATE assets_tbl SET model='$model', serial='$serial', supplier='$supplier', empId='$empId', lastused='$lastused', status='$status', datepurchased='$dateprchs', cost='$cost', repair_cost='$repair', remarks='$remarks', datedeployed='$datedeployed', cpu='$cpu', memory='$ram', storage='$storage', dimes='$dimes', mobile='$mobile', plan='$plan', os='$os' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
         $result = $db->conn->query($qry);
 
-
         // Get current user for History record....
-        $session = $select->selectUserById($_SESSION['id']);
         $name = $session['username'];
 
         $tag = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $assetID");
@@ -122,7 +110,6 @@ class assetsController {
         global $session;
 
         $assetID = mysqli_real_escape_string($db->conn, $id);
-        $turnover = $input['turnover'];
         $lastused = $input['lastused'];
         $reason = $input['reason'];
         $ref_Code = $input['ref_code'];
@@ -156,7 +143,7 @@ class assetsController {
                 $newStatus = 'Outdated';
             }
 
-            $db->conn->query("UPDATE assets_tbl SET assigned='', department='', location='', lastused='$lastusedby', dateturnover='$turnover', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1");
+            $db->conn->query("UPDATE assets_tbl SET assigned='', department='', location='', lastused='$lastusedby', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1");
             
             $name = $session['username'];
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)

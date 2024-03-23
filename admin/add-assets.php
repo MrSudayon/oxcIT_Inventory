@@ -127,6 +127,7 @@ if(!empty($_SESSION['id'])) {
                 </div>
                 <div class="title">Specification</div>
                 <div class="asset-details">
+
                     <div class="input-box" id="processor">
                         <span class="details">Processor</span>
                         <input type="text" name="processor" placeholder="Processor" id="">
@@ -151,14 +152,11 @@ if(!empty($_SESSION['id'])) {
                         <span class="details">Operating System</span>
                         <input type="text" name="os" placeholder="Operating System" id="">
                     </div>
-                    <!-- <div class="input-box">
-                        <span class="details">Others</span>
-                        <input type="text" name="other" placeholder="Others" id="">
-                    </div> -->
                     <div class="input-box" id="datedeployed" style="display: none;">
                         <span class="details">Date Deployed</span>
                         <input type="date" name="datedeployed" placeholder="Date Deployed" value="" id="">
                     </div>
+
                 </div>
                 <div class="title"></div>
                 <div class="asset-details">

@@ -152,9 +152,8 @@ th {
 }
 
 .count {
-    display: flex;
-    align-items: center;
     text-wrap: nowrap;
+    text-align: right;
     padding: 5px 40px;
     height: 40px;
     font-size: 16px;
@@ -291,6 +290,10 @@ form .asset-details .input-box {
 }
 .search-container {
     font-size: 5px;
+    margin-bottom: 10px;
+}
+.title-side {
+    font-size: 20px;
     margin-bottom: 10px;
 }
 

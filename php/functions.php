@@ -7,6 +7,7 @@ $select = new Select();
 
 if(isset($_SESSION['id'])) {
     $session = $select->selectUserById($_SESSION['id']);
+    $sess_name = $session['username'];
 }
 class Operations {
     public $id;
@@ -14,14 +15,20 @@ class Operations {
     public $db;
     function record_Data($type, $tag, $mdl, $srl, $spplr, $empId, $lastused, $stts, $dtprchs, $cost, $repair_cost, $rmrks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os) {
         global $db;
-        global $session;
+        global $sess_name;
 
-        // $specification = $cpu . ", " . $ram . ", " . $storage . ", " . $os . ", " . $others;  
-        $name = $session['username'];
-      
-        if(!isset($empId) || $empId == '') {
-            $empId = 0;
-        }          
+        // $specification = $cpu . ", " . $ram . ", " . $storage . ", " . $os . ", " . $others;    
+        if(isset($empId) || $empId != '') {
+            $sql = mysqli_query($db->conn, "SELECT * FROM employee_tbl WHERE id = $empId AND empStatus = 1");
+            if($sql) {
+                while($row = mysqli_fetch_array($sql)) {
+                    $empName = $row["name"];
+                }
+                if($lastused == '') {
+                    $lastused = $empName;
+                }
+            }
+        }      
       
 
         // further logic; clear reason upon accounting to other employee
@@ -33,49 +40,13 @@ class Operations {
 
         if($result) { 
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                                VALUES('', '$name', 'Added a new asset: $tag' , NOW())");
+                                VALUES('', '$sess_name', 'Added a new asset: $tag' , NOW())");
             return 1; //Success
         } else {
             return 10; //Store Failed
         }
     }
 
-    // function saveAssetDetails() {
-    //     global $db;
-    
-    //     // Extract fields from POST data
-    //     $type = $_POST['asset-type'];
-    //     $tag = $_POST['asset-tag'];
-    //     $dateprchs = $_POST['dateprchs'];
-    //     $model = $_POST['model'];
-    //     $serial = $_POST['serial'];
-    //     $supplier = $_POST['supplier'];
-    
-    //     // Insert into assets_tbl
-    //     $query = "INSERT INTO assets_tbl (assettype, assettag, model, serial, supplier, datepurchased) VALUES ('$type','$tag','$model','$serial','$supplier','$dateprchs')";
-    //     $result = mysqli_query($db->conn, $query);
-    //     $last_id = mysqli_insert_id($db->conn);
-    
-    //     return array('result' => $result, 'last_id' => $last_id);
-    //     // return $result;
-    // }
-    
-    // function saveAssetFinal() {
-    //     global $db;
-    
-    //     // Extract fields from POST data
-    //     $assetId = $_POST['assetId'];
-    //     $cpu = $_POST['processor'];
-    //     $memory = $_POST['memory'];
-    //     $storage = $_POST['storage'];
-    //     $os = $_POST['os'];
-    
-    //     // Insert into specs_tbl
-    //     $query = "INSERT INTO specs_tbl (assetId, cpu, memory, storage, os) VALUES ('$assetId','$cpu','$memory','$storage','$os')";
-    //     $result = mysqli_query($db->conn, $query);
-    
-    //     return $result;
-    // }
     function getAllData() {
         global $db;
 
@@ -83,10 +54,6 @@ class Operations {
         $res = mysqli_query($db->conn, $query);
 
         return $res;
-
-        mysqli_free_result($res);
-        $db->conn->close();
-
     }
 
     function getAssets() {
@@ -191,7 +158,6 @@ class Operations {
     }
     function referencesData() {
         global $db;
-        global $res;
 
         if(isset($_POST['search'])) {
             $search = $_POST['search'];
@@ -230,18 +196,14 @@ class Operations {
 
     function getEmp() {
         global $db;
-        global $res;
-
         $sql = "SELECT * FROM employee_tbl ";
        
         return $sql;
-
     }
 
     // Asset List
     function searchAsset() {
         global $db;
-        global $res;
 
         if(isset($_POST['search'])) {
             $search = $_POST['search'];
@@ -255,7 +217,6 @@ class Operations {
 
             return $res;
         }
-
         mysqli_free_result($res);
 
         $db->conn->close();
@@ -264,7 +225,6 @@ class Operations {
     // Dept List
     function searchDept() {
         global $db;
-        global $res;
 
         if(isset($_POST['search'])) {
             $search = $_POST['search'];
@@ -278,7 +238,6 @@ class Operations {
 
             return $res;
         }
-
         mysqli_free_result($res);
 
         $db->conn->close();
@@ -287,7 +246,6 @@ class Operations {
     // Loc List
     function searchLoc() {
         global $db;
-        global $res;
 
         if(isset($_POST['search'])) {
             $search = $_POST['search'];
@@ -301,7 +259,6 @@ class Operations {
 
             return $res;
         }
-
         mysqli_free_result($res);
 
         $db->conn->close();
@@ -327,6 +284,5 @@ class Operations {
 
         return $sql;  
     }
-   
 }
 ?>
