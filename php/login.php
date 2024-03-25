@@ -2,7 +2,7 @@
 include '../class/db_connection.php';
 
 if(!empty($_SESSION['id'])) {
-    header("Location: ../inc/auth.php");
+    header("Location: ../index.php");
 }
 
 $login = new Login();

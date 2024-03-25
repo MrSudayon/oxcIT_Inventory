@@ -14,9 +14,12 @@
     
     <div class="content">
         <div class="config-buttons">
-            <div class="config-btn"><a href="../admin/dashboard.php" title="All Asset"><img src="../assets/icons/config/dash.png"></a><br></div>
-            <div class="config-btn"><a href="../assetLists/Desktop.php" title="Desktop"><img src="../assets/icons/config/laptop.png"></a><br></div>
+            <!-- <div class="config-btn"><a href="" title="All Asset"><img src="../assets/icons/config/dash.png"></a><br></div> -->
+            <div class="config-btn"><a href="../assetLists/Laptop.php" title="Desktop"><img src="../assets/icons/config/laptop.png"></a><br></div>
+            <div class="config-btn"><a href="../assetLists/#.php" title="Desktop"><img src="../assets/icons/config/computer.png"></a><br></div>
+            <div class="config-btn"><a href="../assetLists/#.php" title="Desktop"><img src="../assets/icons/config/monitor.png"></a><br></div>
             <div class="config-btn"><a href="../assetLists/#.php" title="Printer"><img src="../assets/icons/config/printer.png"></a><br></div>
+            <div class="config-btn"><a href="../assetLists/#.php" title="UPS/AVR"><img src="../assets/icons/config/UPS.png"></a><br></div>
             <div class="config-btn"><a href="../assetLists/#.php" title="Mobile"><img src="../assets/icons/config/mobile.png"></a><br></div>
             <div class="config-btn"><a href="../assetLists/#.php" title="Sim"><img src="../assets/icons/config/sim.png"></a><br></div>
         </div>

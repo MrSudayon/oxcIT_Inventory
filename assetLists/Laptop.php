@@ -30,7 +30,6 @@ include '../inc/header.php';
         $rowCount = $results->num_rows;
         $number_of_page = ceil ($rowCount / $results_per_page);  
         $page_first_result = ($page-1) * $results_per_page;  
-
         
         if(isset($_POST['search']) && $_POST['search'] != "") {
             $search = $_POST['search'];
@@ -42,11 +41,10 @@ include '../inc/header.php';
                 FROM assets_tbl AS a 
                 LEFT JOIN employee_tbl AS e 
                 ON a.empId = e.id 
-                WHERE a.status!='Archive' AND (assettype='Desktop' OR assettype='Laptop') AND (e.name LIKE '$search%' OR e.name LIKE '%$search' OR e.name LIKE '%$search%' OR e.division LIKE '%$search%'
+                WHERE a.status!='Archive' AND assettype='Laptop' AND (e.name LIKE '$search%' OR e.name LIKE '%$search' OR e.name LIKE '%$search%' OR e.division LIKE '%$search%'
                 OR a.assettype LIKE '%$search%' OR a.status LIKE '%$search%' OR e.location LIKE '%$search%'
                 OR a.assettag LIKE '%$search%' OR a.model LIKE '%$search%')";
-        } 
-        elseif((isset($_POST['aType']) && $_POST['aType'] != "") || (isset($_POST['aStatus']) && $_POST['aStatus'] != "")) {
+        } elseif((isset($_POST['aType']) && $_POST['aType'] != "") || (isset($_POST['aStatus']) && $_POST['aStatus'] != "")) {
 
             $type = $_POST['aType'];
             $status = $_POST['aStatus'];
@@ -59,7 +57,6 @@ include '../inc/header.php';
                 ON a.empId = e.id 
                 WHERE a.status='$status' AND a.assettype = '$type' LIMIT ". $page_first_result . ',' . $results_per_page;
         } else {
-            // $sql =  "SELECT * FROM assets_tbl WHERE status!='Archive' ORDER BY lpad(assettag, 10, 0) LIMIT ". $page_first_result . ',' . $results_per_page;
             $sql =  
                 "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, 
                 a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
@@ -67,7 +64,7 @@ include '../inc/header.php';
                 FROM assets_tbl AS a 
                 LEFT JOIN employee_tbl AS e 
                 ON e.id = a.empId 
-                WHERE a.status!='Archive' AND (assettype='Desktop' OR assettype='Laptop') 
+                WHERE a.status!='Archive' AND assettype='Laptop' 
                 LIMIT ". $page_first_result . ',' . $results_per_page;
         }
         $res = mysqli_query($db->conn, $sql);
@@ -89,17 +86,11 @@ include '../inc/header.php';
                 return strcmp($a['assettag'], $b['assettag']);
             }
             return ($aNum < $bNum) ? -1 : 1;
-        });
-        
+        });  
     ?>            
     <div class="count">
         <div class="link-btns">
-            <a href="add-assets.php" class="link-btn">New Record</a>
-            <!-- <a href="../php/add_assetItem.php" class="link-btn">Add Asset</a>
-            <a href="../php/add_division.php" class="link-btn">Add Division</a>
-            <a href="../php/add_location.php" class="link-btn">Add Location</a>
-            <a href="../php/add_emp_info.php" class="link-btn">Add Employee</a> -->
-            <!-- <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button> -->
+            <a href="../admin/add-assets.php?id=recordLaptop" class="link-btn">New Record</a>
         </div>
     
         <p>Showing: <b style="color: yellow; font-size: 20px; margin-top: 10px;"><?php echo $rowCountPage; ?></b> result/s.</p>
@@ -109,7 +100,6 @@ include '../inc/header.php';
         <table class="assets-table" id="myTable">
             <thead>
             <tr>
-                <th width="1%"><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
                 <!-- <th>Asset Type</th> -->
                 <th width="10%">Asset Tag</th>
                 <th width="20%">Model</th>
@@ -121,34 +111,18 @@ include '../inc/header.php';
             <tbody>
             <tr>
             <?php
-                // while ($row = mysqli_fetch_array($res)) {  
                 foreach ($rows as $row) {
                     $status = $row['status'];
                     $aId = $row['aId'];
                     $assetType = $row['assettype'];
             ?> 
-                <td><input type="checkbox" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
-                <!-- <td>?php echo $assetType; ?></td> -->
                 <td><b><?php echo $row['assettag']; ?></b></td>
                 <td><?php echo $row['model']; ?></td>
                 <td>
                     <?php 
-                    if($assetType == 'Laptop' || $assetType == 'Desktop' ) { 
-                            echo "CPU: ". $row['cpu'].
-                            "<br>MEMORY: ". $row['memory'].
-                            "<br>STORAGE: ". $row['storage'];
-                            // "<br>OS: ". $row['os'];
-                        } elseif($assetType == 'Mobile') {
-                            echo "MEMORY: ". $row['memory'].
-                            "<br>STORAGE: ". $row['storage'];
-                        } elseif($assetType == 'Monitor' || $assetType == 'UPS' || $assetType == 'Printer' || $assetType == 'AVR') {
-                            echo "DIMENSION: ". $row['dimes'];
-                        } elseif($assetType == 'SIM') {
-                            echo "PLAN: ". $row['plan'];
-                        } else {
-                            echo "MEMORY: ". $row['memory'].
-                            "<br>STORAGE: ". $row['storage'];
-                        }
+                        echo "CPU: ". $row['cpu'].
+                        "<br>MEMORY: ". $row['memory'].
+                        "<br>STORAGE: ". $row['storage'];
                     ?>
                 </td>
                 

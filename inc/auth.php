@@ -14,6 +14,7 @@ if(!empty($_SESSION['id'])) {
     $id = $user['id'];
     $username = $user['username'];
     $role = $user['role'];
+
     if($role != 'admin') {
         header("Location: ../index.php");
     }

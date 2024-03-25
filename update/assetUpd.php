@@ -26,12 +26,12 @@
 
     <div class="container">
         <div class="add-form">
-        <a href="../admin/dashboard.php" class="return">Back</a>
+        <!-- <a href="../admin/dashboard.php" class="return">Back</a> -->
+        <button onclick="history.back()" class="return">Go Back</button>
 
             <div class="title">Asset Details</div>
             <?php
-            if(isset($_GET['id']))
-            {
+            if(isset($_GET['id'])) {
                 $assetID = mysqli_real_escape_string($db->conn, $_GET['id']);
                 $result = $assetController->edit($assetID);
 

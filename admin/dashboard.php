@@ -94,7 +94,7 @@ include '../inc/header.php';
     ?>            
     <div class="count">
         <div class="link-btns">
-            <a href="add-assets.php" class="link-btn">New Record</a>
+            <a href="add-assets.php?id=newRecordAll" class="link-btn">New Record</a>
             <!-- <a href="../php/add_assetItem.php" class="link-btn">Add Asset</a>
             <a href="../php/add_division.php" class="link-btn">Add Division</a>
             <a href="../php/add_location.php" class="link-btn">Add Location</a>

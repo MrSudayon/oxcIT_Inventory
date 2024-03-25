@@ -5,14 +5,15 @@ include 'functions.php';
 include 'assetsController.php';
 
 class Connection {
-    public $host = "localhost";
-    public $user = "root";
-    public $password = "";
+    public $db_host = "localhost";
+    public $db_user = "root";
+    public $db_pass = "";
     public $db_name = "db_oxychem";
     public $conn;
 
     public function __construct() {
-        $this->conn = mysqli_connect($this->host, $this->user, $this->password, $this->db_name);
+        $this->conn = mysqli_connect($this->db_host, $this->db_user, $this->db_pass, $this->db_name);
+        // $db = new mysqli($db_host, $db_user, $db_pass, $db_name);
         if(mysqli_connect_error()) {
             die ("Connection Failed: ".mysqli_error($this->conn));
         }
