@@ -16,7 +16,7 @@ include '../inc/header.php';
         </div>
     </div>
     <?php
-        $sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive'";
+        $sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assettype='Desktop' OR assettype='Laptop')";
         $results = mysqli_query($db->conn, $sqlSelectAll);
 
         $results_per_page = 15;
@@ -42,7 +42,7 @@ include '../inc/header.php';
                 FROM assets_tbl AS a 
                 LEFT JOIN employee_tbl AS e 
                 ON a.empId = e.id 
-                WHERE a.status!='Archive' AND (e.name LIKE '$search%' OR e.name LIKE '%$search' OR e.name LIKE '%$search%' OR e.division LIKE '%$search%'
+                WHERE a.status!='Archive' AND (assettype='Desktop' OR assettype='Laptop') AND (e.name LIKE '$search%' OR e.name LIKE '%$search' OR e.name LIKE '%$search%' OR e.division LIKE '%$search%'
                 OR a.assettype LIKE '%$search%' OR a.status LIKE '%$search%' OR e.location LIKE '%$search%'
                 OR a.assettag LIKE '%$search%' OR a.model LIKE '%$search%')";
         } 
@@ -67,7 +67,7 @@ include '../inc/header.php';
                 FROM assets_tbl AS a 
                 LEFT JOIN employee_tbl AS e 
                 ON e.id = a.empId 
-                WHERE a.status!='Archive' 
+                WHERE a.status!='Archive' AND (assettype='Desktop' OR assettype='Laptop') 
                 LIMIT ". $page_first_result . ',' . $results_per_page;
         }
         $res = mysqli_query($db->conn, $sql);
@@ -115,6 +115,7 @@ include '../inc/header.php';
                 <th width="20%">Model</th>
                 <th width="40%">Specification</th>
                 <th width="10%">Status</th>
+                <th coslpan="3" width="10%">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -172,6 +173,21 @@ include '../inc/header.php';
                         }
                     });
                 </script>
+
+                <td>
+                <center>
+                    <a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
+                    <?php 
+                        $sqlSel = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $id"); 
+                        while($results = mysqli_fetch_assoc($sqlSel)) {
+                        if($results['turnoverRef'] != '') { 
+                    ?>    
+                        <a href="../update/turnoverUpd.php?id=<?php echo $aId; ?>"><img src="../assets/icons/turnover.png" width="24px"></a>&nbsp;
+                    <?php }} ?>
+                    <a href="../update/remove.php?assetID=<?php echo $aId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                </center>
+                    
+                </td>    
             
             </tr>
             </tbody>
@@ -195,7 +211,7 @@ include '../inc/header.php';
             // }
             if($rowCountPage != $rowCount) {
                 if ($page > 1) {
-                    echo '<a href="dashboard.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
+                    echo '<a href="Desktop.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
                 }
                 
                 $max_page_range = 7; // Maximum number of pages to show in pagination
@@ -204,11 +220,11 @@ include '../inc/header.php';
                 
                 for($i = $start_page; $i <= $end_page; $i++) {
                     $active_class = ($i == $page) ? 'active' : ''; // Add active class to current page
-                    echo '<a href="dashboard.php?page=' . $i . '" class="next ' . $active_class . '">' . $i . '</a>';                  
+                    echo '<a href="Desktop.php?page=' . $i . '" class="next ' . $active_class . '">' . $i . '</a>';                  
                 }  
                 
                 if ($page < $number_of_page) {
-                    echo '<a href="dashboard.php?page=' . ($page + 1) . '" class="next">Next</a>';
+                    echo '<a href="Desktop.php?page=' . ($page + 1) . '" class="next">Next</a>';
                 }
             }
         ?>

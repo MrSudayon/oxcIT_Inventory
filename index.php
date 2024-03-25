@@ -1,6 +1,6 @@
 <?php
 
-include 'php/db_connection.php';
+include 'class/db_connection.php';
 
 $select = new Select();
 

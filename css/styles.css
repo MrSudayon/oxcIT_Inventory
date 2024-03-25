@@ -150,10 +150,29 @@ th {
     color: white;
 }
 
+/* Add Linkss */
+.link-btn {
+    background-color: var(--main-color);
+    padding: 5px 25px;
+    border-radius: 15px;
+    font-size: 12px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: all .3s;
+}
+.link-btn:hover {
+    color: var(--main-color);
+    border: 1px solid white;
+    background-color: var(--bg-color);
+    transition: all .3s;
+}
+
 .count {
+    display: flex;
+    justify-content: space-between;
     text-wrap: nowrap;
-    text-align: right;
-    padding: 5px 40px;
+    padding: 5px 40px;    
     height: 40px;
     font-size: 16px;
 }
@@ -199,31 +218,6 @@ th {
 .prev {
     background-color: #ddd;
     color: black;
-}
-/* Add Linkss */
-.link-btns {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 5px 40px;
-    height: 40px;
-    width: 100%;
-}
-.link-btn {
-    background-color: var(--main-color);
-    padding: 5px 25px;
-    border-radius: 15px;
-    font-size: 12px;
-    border: none;
-    color: white;
-    cursor: pointer;
-    transition: all .3s;
-}
-.link-btn:hover {
-    color: var(--main-color);
-    border: 1px solid white;
-    background-color: var(--bg-color);
-    transition: all .3s;
 }
 
 
@@ -289,10 +283,6 @@ form .asset-details .input-box {
 }
 .search-container {
     font-size: 5px;
-    margin-bottom: 10px;
-}
-.title-side {
-    font-size: 20px;
     margin-bottom: 10px;
 }
 

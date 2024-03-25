@@ -1,5 +1,5 @@
 <?php 
-include 'db_connection.php';
+include '../class/db_connection.php';
 
 if(!empty($_SESSION['id'])) {
     header("Location: ../inc/auth.php");
