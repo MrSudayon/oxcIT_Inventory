@@ -1,209 +1,207 @@
 <?php 
 include '../inc/auth.php'; 
-include '../inc/listsHead.php'; 
 include '../inc/header.php'; 
 ?>
     
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="../css/assetStyle.css"> -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script src="../js/addAssets.js"></script>
+    <link rel="icon" href="../assets/logo.jpg">
+    <title>Laptop</title>
+</head>
+<body>
+
+
+<?php
+    $sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assettype='Desktop' OR assettype='Laptop')";
+    $results = mysqli_query($db->conn, $sqlSelectAll);
+
+    $results_per_page = 15;
+
+    if (!isset ($_GET['page']) ) {  
+        $page = 1;  
+    } else {  
+        $page = $_GET['page'];  
+    }  
+    
+    $rowCount = $results->num_rows;
+    $number_of_page = ceil ($rowCount / $results_per_page);  
+    $page_first_result = ($page-1) * $results_per_page;  
+
+    $sql =  
+            "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
+            a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
+            e.id, e.name, e.division, e.location 
+            FROM assets_tbl AS a 
+            LEFT JOIN employee_tbl AS e 
+            ON e.id = a.empId 
+            WHERE a.status!='Archive' AND assettype='Laptop' 
+            LIMIT ". $page_first_result . ',' . $results_per_page;
+    $res = mysqli_query($db->conn, $sql);
+    $rowCountPage = $res->num_rows;
+
+    $rows = [];
+    while ($row = mysqli_fetch_assoc($res)) {
+        $rows[] = $row;
+    }
+    
+    // Sort the result array by assettag
+    usort($rows, function($a, $b) {
+        preg_match('/\d+$/', $a['assettag'], $aMatches);
+        preg_match('/\d+$/', $b['assettag'], $bMatches);
+        $aNum = intval($aMatches[0] ?? 0);
+        $bNum = intval($bMatches[0] ?? 0);
+
+        if ($aNum == $bNum) {
+            return strcmp($a['assettag'], $b['assettag']);
+        }
+        return ($aNum < $bNum) ? -1 : 1;
+    });  
+?>       
+
 <div class="content">
-    <div class="title">
-        <h1> ASSET LIST </h1>
-        
-        <div class="search-container">
-            <form action="" method="POST" class="">
-                <input type="text" placeholder="Search.." name="search">
-                <button type="submit"><i class="fa fa-search"></i></button>
-            </form>
-        </div>
-    </div>
-    <?php
-        $sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assettype='Desktop' OR assettype='Laptop')";
-        $results = mysqli_query($db->conn, $sqlSelectAll);
+    <main class="table" id="customers_table">
+        <section class="table__header">
+            <div class="input-group">
+                <input type="search" placeholder="Search Data...">
+                <img src="../assets/icons/search.png" alt="">
+            </div>
+            
+        </section>
+        <section class="table__body">
+            <table>
+                <thead>
+                    <tr>
+                        <th> Asset Tag <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Model <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Specification <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Purchase Date <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Status <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Action <span class="icon-arrow">&UpArrow;</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                    foreach ($rows as $row) {
+                        $status = $row['status'];
+                        $aId = $row['aId'];
+                        $assetType = $row['assettype'];
 
-        $results_per_page = 15;
-
-        if (!isset ($_GET['page']) ) {  
-            $page = 1;  
-        } else {  
-            $page = $_GET['page'];  
-        }  
-        
-        $rowCount = $results->num_rows;
-        $number_of_page = ceil ($rowCount / $results_per_page);  
-        $page_first_result = ($page-1) * $results_per_page;  
-        
-        if(isset($_POST['search']) && $_POST['search'] != "") {
-            $search = $_POST['search'];
-
-            $sql = 
-                "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, 
-                a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
-                e.id, e.name, e.division, e.location 
-                FROM assets_tbl AS a 
-                LEFT JOIN employee_tbl AS e 
-                ON a.empId = e.id 
-                WHERE a.status!='Archive' AND assettype='Laptop' AND (e.name LIKE '$search%' OR e.name LIKE '%$search' OR e.name LIKE '%$search%' OR e.division LIKE '%$search%'
-                OR a.assettype LIKE '%$search%' OR a.status LIKE '%$search%' OR e.location LIKE '%$search%'
-                OR a.assettag LIKE '%$search%' OR a.model LIKE '%$search%')";
-        } elseif((isset($_POST['aType']) && $_POST['aType'] != "") || (isset($_POST['aStatus']) && $_POST['aStatus'] != "")) {
-
-            $type = $_POST['aType'];
-            $status = $_POST['aStatus'];
-            $sql = 
-                "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, 
-                a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
-                e.id, e.name, e.division, e.location 
-                FROM assets_tbl AS a 
-                LEFT JOIN employee_tbl AS e 
-                ON a.empId = e.id 
-                WHERE a.status='$status' AND a.assettype = '$type' LIMIT ". $page_first_result . ',' . $results_per_page;
-        } else {
-            $sql =  
-                "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, 
-                a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
-                e.id, e.name, e.division, e.location 
-                FROM assets_tbl AS a 
-                LEFT JOIN employee_tbl AS e 
-                ON e.id = a.empId 
-                WHERE a.status!='Archive' AND assettype='Laptop' 
-                LIMIT ". $page_first_result . ',' . $results_per_page;
-        }
-        $res = mysqli_query($db->conn, $sql);
-        $rowCountPage = $res->num_rows;
-
-        $rows = [];
-        while ($row = mysqli_fetch_assoc($res)) {
-            $rows[] = $row;
-        }
-        
-        // Sort the result array by assettag
-        usort($rows, function($a, $b) {
-            preg_match('/\d+$/', $a['assettag'], $aMatches);
-            preg_match('/\d+$/', $b['assettag'], $bMatches);
-            $aNum = intval($aMatches[0] ?? 0);
-            $bNum = intval($bMatches[0] ?? 0);
-
-            if ($aNum == $bNum) {
-                return strcmp($a['assettag'], $b['assettag']);
-            }
-            return ($aNum < $bNum) ? -1 : 1;
-        });  
-    ?>            
-    <div class="count">
-        <div class="link-btns">
-            <a href="../admin/add-assets.php?id=recordLaptop" class="link-btn">New Record</a>
-        </div>
-    
-        <p>Showing: <b style="color: yellow; font-size: 20px; margin-top: 10px;"><?php echo $rowCountPage; ?></b> result/s.</p>
-    </div>
-    <form action="" method="get">
-
-        <table class="assets-table" id="myTable">
-            <thead>
-            <tr>
-                <!-- <th>Asset Type</th> -->
-                <th width="10%">Asset Tag</th>
-                <th width="20%">Model</th>
-                <th width="40%">Specification</th>
-                <th width="10%">Status</th>
-                <th coslpan="3" width="10%">Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-            <?php
-                foreach ($rows as $row) {
-                    $status = $row['status'];
-                    $aId = $row['aId'];
-                    $assetType = $row['assettype'];
-            ?> 
-                <td><b><?php echo $row['assettag']; ?></b></td>
-                <td><?php echo $row['model']; ?></td>
-                <td>
-                    <?php 
-                        echo "CPU: ". $row['cpu'].
-                        "<br>MEMORY: ". $row['memory'].
-                        "<br>STORAGE: ". $row['storage'];
-                    ?>
-                </td>
-                
-                <td><?php echo "<span class='statusSpan' >".$status."</span>" ?></td>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        var spans = document.getElementsByClassName("statusSpan"); 
-                        for (var i = 0; i < spans.length; i++) {
-                            var span = spans[i];
-                            if (span.innerHTML === 'Deployed') { 
-                                span.classList.add("deployed"); 
-                            } else if (span.innerHTML === 'To be Deploy') { 
-                                span.classList.add("available"); 
-                            } else if (span.innerHTML === 'Defective' || span.innerHTML === 'For repair') { 
-                                span.classList.add("defect"); 
-                            } else if (span.innerHTML === 'Sell') { 
-                                span.classList.add("sell"); 
-                            } else {
-                                span.classList.add("missing"); 
-                                // span.innerHTML.add("missing"); 
-                            }
-                        }
-                    });
-                </script>
-
-                <td>
-                <center>
-                    <a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
-                    <?php 
-                        $sqlSel = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $id"); 
-                        while($results = mysqli_fetch_assoc($sqlSel)) {
-                        if($results['turnoverRef'] != '') { 
-                    ?>    
-                        <a href="../update/turnoverUpd.php?id=<?php echo $aId; ?>"><img src="../assets/icons/turnover.png" width="24px"></a>&nbsp;
-                    <?php }} ?>
-                    <a href="../update/remove.php?assetID=<?php echo $aId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
-                </center>
+                        $cpu = $row['cpu'];
+                        $ram = $row['memory'];
+                        $storage = $row['storage']
+                ?> 
                     
-                </td>    
-            
-            </tr>
-            </tbody>
-            
-            <?php
-                }
-            ?>
-        </table>
-        <?php 
-            // Pagination links
-            // if($rowCountPage != $rowCount) {
-            //     if ($page > 1) {
-            //         echo '<a href="dashboard.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
-            //     }
-            //     for($i = 1; $i<= $number_of_page; $i++) {  
-            //         echo '<a href = "dashboard.php?page=' . $i . '" class="next">' . $i . '</a>';  
-            //     }  
-            //     if ($page < $number_of_page) {
-            //         echo '<a href="dashboard.php?page=' . ($page + 1) . '" class="next">Next</a>';
-            //     }
-            // }
-            if($rowCountPage != $rowCount) {
-                if ($page > 1) {
-                    echo '<a href="Desktop.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
-                }
                 
-                $max_page_range = 7; // Maximum number of pages to show in pagination
-                $start_page = max(1, $page - floor($max_page_range / 3));
-                $end_page = min($number_of_page, $start_page + $max_page_range - 1);
-                
-                for($i = $start_page; $i <= $end_page; $i++) {
-                    $active_class = ($i == $page) ? 'active' : ''; // Add active class to current page
-                    echo '<a href="Desktop.php?page=' . $i . '" class="next ' . $active_class . '">' . $i . '</a>';                  
-                }  
-                
-                if ($page < $number_of_page) {
-                    echo '<a href="Desktop.php?page=' . ($page + 1) . '" class="next">Next</a>';
-                }
-            }
-        ?>
-    </form>
-    
+                <tr>
+                    <td><a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></td></a>
+                    <td><?php echo $row['model']; ?></td>
+                    <td>
+                        <?php 
+                        if($cpu == '' || $ram == '' || $storage == '') {
+                            echo "<i style='color:#FF6646;'>No details found.";
+                        } else {
+                            echo "CPU: ". $cpu .
+                            "<br>MEMORY: ". $ram.
+                            "<br>STORAGE: ". $storage;
+                        }
+                            
+                        ?>
+                    </td>
+                    <td><?php echo $row['datepurchased']; ?></td>
+                    <td><?php echo "<span class='statusSpan'>".$status."</span>" ?></td>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            var spans = document.getElementsByClassName("statusSpan");
+                            for (var i = 0; i < spans.length; i++) {
+                                var span = spans[i];
+                                if (span.innerHTML === 'Deployed') {
+                                    span.classList.add("status", "delivered");
+                                } else if (span.innerHTML === 'To be Deploy') {
+                                    span.classList.add("status", "shipped");
+                                } else if (span.innerHTML === 'Defective' || span.innerHTML === 'For repair') {
+                                    span.classList.add("status", "cancelled");
+                                } else if (span.innerHTML === 'Sell') {
+                                    span.classList.add("status", "pending");
+                                } else {
+                                    span.classList.add("status", "missing");
+                                }
+                            }
+                        });
+                    </script>
+
+                    <td>
+                        <!-- <a href="../update/assetUpd.php?id=?php echo $aId; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp; -->
+                        <?php 
+                            $sqlSel = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $id"); 
+                            while($results = mysqli_fetch_assoc($sqlSel)) {
+                            if($results['turnoverRef'] != '') { 
+                        ?>    
+                            <a href="../update/turnoverUpd.php?id=<?php echo $aId; ?>"><img src="../assets/icons/turnover.png" width="24px"></a>&nbsp;
+                        <?php }} ?>
+                        <a href="../update/remove.php?assetID=<?php echo $aId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                        
+                    </td>   
+                </tr>
+                <?php
+                    }
+                ?>
+                </tbody>
+                    <!-- <tr>
+                        <td> 1 </td>
+                        <td> <img src="images/Zinzu Chan Lee.jpg" alt="">Zinzu Chan Lee</td>
+                        <td> Seoul </td>
+                        <td> 17 Dec, 2022 </td>
+                        <td>
+                            <p class="status delivered">Delivered</p>
+                        </td>
+                        <td> <strong> $128.90 </strong></td>
+                    </tr>
+                    <tr>
+                        <td> 2 </td>
+                        <td><img src="images/Jeet Saru.png" alt=""> Jeet Saru </td>
+                        <td> Kathmandu </td>
+                        <td> 27 Aug, 2023 </td>
+                        <td>
+                            <p class="status cancelled">Cancelled</p>
+                        </td>
+                        <td> <strong>$5350.50</strong> </td>
+                    </tr>
+                    <tr>
+                        <td> 3</td>
+                        <td><img src="images/Sonal Gharti.jpg" alt=""> Sonal Gharti </td>
+                        <td> Tokyo </td>
+                        <td> 14 Mar, 2023 </td>
+                        <td>
+                            <p class="status shipped">Shipped</p>
+                        </td>
+                        <td> <strong>$210.40</strong> </td>
+                    </tr>
+                    <tr>
+                        <td> 5</td>
+                        <td><img src="images/Sarita Limbu.jpg" alt=""> Sarita Limbu </td>
+                        <td> Paris </td>
+                        <td> 23 Apr, 2023 </td>
+                        <td>
+                            <p class="status pending">Pending</p>
+                        </td>
+                        <td> <strong>$399.99</strong> </td>
+                    </tr>
+                -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <script src="../js/sort.js"></script>
+
 </div>
 
 </body>
