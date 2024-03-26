@@ -40,20 +40,8 @@ if(isset($_GET['select'])) {
 </head>
 <body>
 <div class="content">
-<?php           
-foreach ($selected as $userID){ 
-        $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
-        $res = mysqli_query($db->conn, $sql);
-    
-    while($row = mysqli_fetch_assoc($res)) {
-        $name = $row['assigned'];
-        $dept = $row['department'];
-    }
-}
-
-?>  
     <div class="logo">
-        <a href="dashboard.php"><img src="../assets/logo.png" width="150px"></img></a>
+        <a href="configuration.php"><img src="../assets/logo.png" width="150px"></img></a>
     </div>
     <br><br><br>
     <center>
@@ -65,7 +53,6 @@ foreach ($selected as $userID){
                 <th>Assigned to</th>
                 <th>Asset Type</th>
                 <th>Specification</th>
-                <th>Others</th>
                 <th>Serial no.</th>
                 <th>Remarks</th>
                 <th>Date Deployed</th>
@@ -73,25 +60,33 @@ foreach ($selected as $userID){
                 <th>Last Used</th>
             </tr>
             <?php 
-                foreach ($selected as $userID) { 
-                    $sql = "SELECT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
-                    $res = mysqli_query($db->conn, $sql);
+            foreach ($selected as $userID){ 
+                // $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
+                $sql = "SELECT DISTINCT a.*, e.id, e.name AS ename, 
+                        r.assetId, r.turnoverDate 
+                        FROM assets_tbl AS a 
+                        LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+                        LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+                        WHERE a.id='$userID' AND a.status !='Archive'";
+                $res = mysqli_query($db->conn, $sql);
+                // foreach ($selected as $userID) { 
+                //     $sql = "SELECT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
+                //     $res = mysqli_query($db->conn, $sql);
                 
                 while($row = mysqli_fetch_assoc($res)) {
-                    $cpu = $row['CPU'];
-                    $ram = $row['MEMORY'];
-                    $storage = $row['STORAGE'];
+                    $cpu = $row['cpu'];
+                    $ram = $row['memory'];
+                    $storage = $row['storage'];
                     $specs = 'CPU: ' . $cpu . '<br>MEMORY: ' . $ram . '<br>STORAGE: ' . $storage;
             ?>
             <tr>
-                <td><?php echo $row['assigned']; ?></td>
+                <td><?php echo $row['ename']; ?></td>
                 <td><?php echo $row['assettype']; ?></td>
                 <td><?php echo $specs; ?></td>
-                <td><?php echo $row['Others']; ?></td>
                 <td><?php echo $row['serial']; ?></td>
                 <td><?php echo $row['remarks']; ?></td>    
                 <td><?php echo $row['datedeployed']; ?></td>    
-                <td><?php echo $row['dateturnover']; ?></td>    
+                <td><?php echo $row['turnoverDate']; ?></td>    
                 <td><?php echo $row['lastused']; ?></td>    
             </tr>
             <?php

@@ -5,6 +5,7 @@ if(isset($_POST['update-asset'])) {
     $id = mysqli_real_escape_string($db->conn,$_POST['assetID']);
 
     if(isset($_POST['action']) && $_POST['action'] == 'ComputerUpdate') {
+        $action = mysqli_real_escape_string($db->conn,$_POST['action']);
         $input = [
             'model'        => mysqli_real_escape_string($db->conn,$_POST['model']),
             'serial'       => mysqli_real_escape_string($db->conn,$_POST['serial']),
@@ -26,7 +27,7 @@ if(isset($_POST['update-asset'])) {
         ];
     } 
    
-    $result = $assetController->update($input, $id);
+    $result = $assetController->update($action, $input, $id);
 
     if($result) {
         echo "<script>

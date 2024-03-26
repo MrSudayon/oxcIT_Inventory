@@ -19,7 +19,9 @@ h1, h2, p, a, label {
     font-family: "Rubik", sans-serif;
     font-weight: 500;
 }
-
+i {
+    font-weight: 800;
+}
 a {
     font-family: "Rubik", sans-serif;
     text-decoration: none;
@@ -33,7 +35,6 @@ a {
         width: auto !important;
     }
 }
-
 
 body {
     /* position: absolute; */

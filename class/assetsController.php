@@ -31,35 +31,65 @@ class assetsController {
             return false;
         }
     }
-    public function update($input, $id) {
+    public function update($action, $input, $id) {
         global $db;
         global $sess_name;
 
         $assetID = mysqli_real_escape_string($db->conn, $id);
         // $assetType = $input['assettype'];
         // $assetTag = $input['assettag'];
+
         $model = $input['model'];
         $serial = $input['serial'];
         $supplier = $input['supplier'];
-        $dateprchs = $input['datepurchase'];
         $status = $input['status'];
         $cost = $input['cost'];
         $repair = $input['repair-cost'];
+        if($action == 'ComputerUpdate') {
+            $cpu = $input['cpu'];
+            $ram = $input['ram'];
+            $storage = $input['storage'];
+            $os = $input['os'];
+
+            $mobile = '';
+            $plan = '';
+            $dimes = '';
+        } 
+        elseif($action == 'SIM') {
+            $cpu = '';
+            $ram = '';
+            $storage = '';
+            $os = '';
+            // SIM, Mobile
+            $mobile = $input['mobile'];
+            $plan = $input['plan'];
+
+            $dimes = '';
+        } 
+        elseif($action == 'Monitor' || $action == 'Printer' || $action == 'UPS') {
+            $cpu = '';
+            $ram = '';
+            $storage = '';
+            $os = '';
+            // Monitor, UPS etc..
+            $dimes = $input['dimes'];
+
+            $mobile = '';
+            $plan = '';
+        } 
+        elseif($action == 'Mobile') {
+            $cpu = '';
+            $ram = $input['ram'];
+            $storage = $input['storage'];
+            $os = '';
+
+            $mobile = '';
+            $plan = '';
+            $dimes = '';
+        }
+
+        $dateprchs = $input['datepurchase'];
         $remarks = $input['remarks'];
-
-        // Specification
-        // SIM, Mobile
-        $mobile = $input['mobile'];
-        $plan = $input['plan'];
-
-        // Monitor, UPS etc..
-        $dimes = $input['dimes'];
-
-        // Laptop, Desktop, Cellphone(Ram/Storage)
-        $cpu = $input['cpu'];
-        $ram = $input['ram'];
-        $storage = $input['storage'];
-        $os = $input['os'];
 
         $datedeployed = $input['datedeployed'];
 

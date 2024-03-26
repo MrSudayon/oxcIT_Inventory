@@ -6,7 +6,7 @@ include '../inc/header.php';
 <body>
 
 <?php
-    $sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assettype='Desktop' OR assettype='Laptop')";
+    $sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive' AND assettype='Laptop'";
     $results = mysqli_query($db->conn, $sqlSelectAll);
 
     $results_per_page = 15;
@@ -100,12 +100,12 @@ include '../inc/header.php';
                         <td><?php echo $row['model']; ?></td>
                         <td>
                             <?php 
-                            if($cpu == '' || $ram == '' || $storage == '') {
+                            if($cpu == '' && $ram == '' && $storage == '') {
                                 echo "<i style='color:#FF6646;'>No details found.";
                             } else {
-                                echo "CPU: ". $cpu .
-                                "<br>MEMORY: ". $ram.
-                                "<br>STORAGE: ". $storage;
+                                echo "CPU: <i>". $cpu .
+                                "</i><br>Ram: <i>". $ram.
+                                "</i><br>Storage: <i>". $storage;
                             }
                                 
                             ?>

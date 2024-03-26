@@ -6,7 +6,7 @@ include '../inc/header.php';
 <body>
 
 <?php
-    $sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive' AND assettype='Desktop'";
+    $sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assettype='UPS' OR assettype='AVR')";
     $results = mysqli_query($db->conn, $sqlSelectAll);
 
     $results_per_page = 15;
@@ -19,7 +19,7 @@ include '../inc/header.php';
                 FROM assets_tbl AS a 
                 LEFT JOIN employee_tbl AS e 
                 ON e.id = a.empId 
-                WHERE a.status!='Archive' AND assettype='Desktop'";
+                WHERE a.status!='Archive' AND (assettype='UPS' OR assettype='AVR')";
         $res = mysqli_query($db->conn, $sql);
         $rowCountPage = $res->num_rows;
     } else {
@@ -37,7 +37,7 @@ include '../inc/header.php';
                 FROM assets_tbl AS a 
                 LEFT JOIN employee_tbl AS e 
                 ON e.id = a.empId 
-                WHERE a.status!='Archive' AND assettype='Desktop' 
+                WHERE a.status!='Archive' AND (assettype='UPS' OR assettype='AVR')' 
                 LIMIT $page_first_result, $results_per_page";
         $res = mysqli_query($db->conn, $sql);
         $rowCountPage = $res->num_rows;
@@ -156,7 +156,7 @@ include '../inc/header.php';
             if($rowCountPage != $rowCount) {
                 echo '<div class="pagination">';
                 if ($page > 1) {
-                    echo '<a href="Desktop.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
+                    echo '<a href="UPS.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
                 }
                 
                 $max_page_range = 7; // Maximum number of pages to show in pagination
@@ -165,12 +165,12 @@ include '../inc/header.php';
                 
                 for($i = $start_page; $i <= $end_page; $i++) {
                     $active_class = ($i == $page) ? 'activePage' : ''; // Add active class to current page
-                    echo '<a href="Desktop.php?page=' . $i . '" class="next ' . $active_class . '">' . $i . '</a>';                  
+                    echo '<a href="UPS.php?page=' . $i . '" class="next ' . $active_class . '">' . $i . '</a>';                  
                 }  
                 
                 if ($page < $number_of_page) {
-                    echo '<a href="Desktop.php?page=' . ($page + 1) . '" class="next">Next</a>';
-                    echo '<a href="Desktop.php?page=all" class="next">All</a>';
+                    echo '<a href="UPS.php?page=' . ($page + 1) . '" class="next">Next</a>';
+                    echo '<a href="UPS.php?page=all" class="next">All</a>';
                 }
                 echo '</div>';
 

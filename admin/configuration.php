@@ -19,9 +19,9 @@
             <div class="config-btn"><a href="../assetLists/Desktop.php" title="Desktop"><img src="../assets/icons/config/computer.png"></a><br></div>
             <div class="config-btn"><a href="../assetLists/Monitor.php" title="Desktop"><img src="../assets/icons/config/monitor.png"></a><br></div>
             <div class="config-btn"><a href="../assetLists/Printer.php" title="Printer"><img src="../assets/icons/config/printer.png"></a><br></div>
-            <div class="config-btn"><a href="../assetLists/#.php" title="UPS/AVR"><img src="../assets/icons/config/UPS.png"></a><br></div>
-            <div class="config-btn"><a href="../assetLists/#.php" title="Mobile"><img src="../assets/icons/config/mobile.png"></a><br></div>
-            <div class="config-btn"><a href="../assetLists/#.php" title="Sim"><img src="../assets/icons/config/sim.png"></a><br></div>
+            <div class="config-btn"><a href="../assetLists/UPS.php" title="UPS/AVR"><img src="../assets/icons/config/UPS.png"></a><br></div>
+            <div class="config-btn"><a href="../assetLists/Mobile.php" title="Mobile"><img src="../assets/icons/config/mobile.png"></a><br></div>
+            <div class="config-btn"><a href="../assetLists/SIM.php" title="Sim"><img src="../assets/icons/config/sim.png"></a><br></div>
         </div>
         <div class="config-buttons sub-config">
             <div class="sub-btn"></div>

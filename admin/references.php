@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../assets/logo.jpg">
+    <link rel="stylesheet" href="../css/formStyles.css">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Reference</title>
@@ -45,13 +46,7 @@
             <?php
 
                 $refData = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE accountabilityRef != '' OR turnoverRef != ''");
-                // "SELECT a.id AS aId, a.empId, a.status, a.assettype, a.assettag, a.model, a.remarks, 
-                // e.id, e.name AS ename, e.division, e.location, r.assetId, r.name, r.turnoverRef AS turnoverRef, r.accountabilityRef AS accountabilityRef 
-                // FROM assets_tbl AS a 
-                // LEFT JOIN reference_tbl AS r ON r.assetId = a.id
-                // LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                // WHERE status!='Archive' AND (accountabilityRef != '' 
-                // OR turnoverRef != '')");
+
                 $rowCount = $refData->num_rows;
                 
                 $results_per_page = 10;
