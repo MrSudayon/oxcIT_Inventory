@@ -101,7 +101,7 @@ include '../inc/header.php';
                         <td>
                             <?php 
                             if($cpu == '' && $ram == '' && $storage == '') {
-                                echo "<i style='color:#FF6646;'>No details found.";
+                                echo "<i style='color:#AC1E00;'>No details found.";
                             } else {
                                 echo "CPU: <i>". $cpu .
                                 "</i><br>Ram: <i>". $ram.

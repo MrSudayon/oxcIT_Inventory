@@ -2,24 +2,23 @@
 include '../inc/auth.php';
 include '../inc/listsHead.php'; 
 include '../inc/header.php'; 
-?>
-<body>
 
-<?php
-    $sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assettype='UPS' OR assettype='AVR')";
+    $sqlSelectAll = "SELECT * FROM employee_tbl";
     $results = mysqli_query($db->conn, $sqlSelectAll);
 
     $results_per_page = 15;
     if (!isset ($_GET['page']) ) {  
         $page = 1;  
     } elseif ($_GET['page'] === 'all') {  
-        $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
-                a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
-                e.id, e.name, e.division, e.location 
-                FROM assets_tbl AS a 
-                LEFT JOIN employee_tbl AS e 
-                ON e.id = a.empId 
-                WHERE a.status!='Archive' AND (assettype='UPS' OR assettype='AVR')";
+        // $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
+        //         a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
+        //         e.id, e.name, e.division, e.location 
+        //         FROM assets_tbl AS a 
+        //         LEFT JOIN employee_tbl AS e 
+        //         ON e.id = a.empId 
+        //         WHERE a.status!='Archive' AND assettype='Laptop'";
+        $sql = "SELECT * FROM employee_tbl 
+                ORDER BY empStatus DESC";
         $res = mysqli_query($db->conn, $sql);
         $rowCountPage = $res->num_rows;
     } else {
@@ -31,14 +30,18 @@ include '../inc/header.php';
     $page_first_result = ($page-1) * $results_per_page;  
 
     if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
-        $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
-                a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
-                e.id, e.name, e.division, e.location 
-                FROM assets_tbl AS a 
-                LEFT JOIN employee_tbl AS e 
-                ON e.id = a.empId 
-                WHERE a.status!='Archive' AND (assettype='UPS' OR assettype='AVR')' 
+        // $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
+        //         a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
+        //         e.id, e.name, e.division, e.location 
+        //         FROM assets_tbl AS a 
+        //         LEFT JOIN employee_tbl AS e 
+        //         ON e.id = a.empId 
+        //         WHERE a.status!='Archive' AND assettype='Laptop' 
+        //         LIMIT $page_first_result, $results_per_page";
+        $sql = "SELECT * FROM employee_tbl 
+                ORDER BY empStatus DESC 
                 LIMIT $page_first_result, $results_per_page";
+
         $res = mysqli_query($db->conn, $sql);
         $rowCountPage = $res->num_rows;
     }
@@ -65,7 +68,7 @@ include '../inc/header.php';
 <div class="content">
     <main class="table" id="customers_table">
         <section class="table__header">
-            <a href="../admin/add-assets.php?id=recordUps" class="link-btn">New Record</a>
+            <a href="../admin/add-assets.php?id=recordLaptop" class="link-btn">New Record</a>
             <div class="input-group">
                 <input type="search" placeholder="Search Data...">
                 <img src="../assets/icons/search.png" alt="">
@@ -76,57 +79,37 @@ include '../inc/header.php';
             <table>
                 <thead>
                     <tr>
-                        <th> Asset Tag <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Model <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Specification <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Purchase Date <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Name <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Location <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Division <span class="icon-arrow">&UpArrow;</span></th>
+                        <!-- <th>  <span class="icon-arrow">&UpArrow;</span></th> -->
                         <th> Status <span class="icon-arrow">&UpArrow;</span></th>
                         <th width='10%'> Action <span class="icon-arrow">&UpArrow;</span></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody>          
                     <?php
                         foreach ($rows as $row) {
-                            $status = $row['status'];
-                            $aId = $row['aId'];
-                            $assetType = $row['assettype'];
-
-                            $cpu = $row['cpu'];
-                            $ram = $row['memory'];
-                            $storage = $row['storage']
-                    ?>            
+                            $status = $row['empStatus'];
+                            $eid = $row['id'];
+                    ?>
                     <tr>
-                        <td><a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></td></a>
-                        <td><?php echo $row['model']; ?></td>
-                        <td>
-                            <?php 
-                            if($cpu == '' && $ram == '' && $storage == '') {
-                                echo "<i style='color:#FF6646;'>No details found.";
-                            } else {
-                                echo "CPU: <i>". $cpu .
-                                "</i><br>Ram: <i>". $ram.
-                                "</i><br>Storage: <i>". $storage;
-                            }
-                                
-                            ?>
-                        </td>
-                        <td><?php echo $row['datepurchased']; ?></td>
+                        <td><a href="../employee/viewEmployee.php?id=<?php echo $eid; ?>"><strong><?php echo $row['name']; ?></strong></td></a>
+                        <td><?php echo $row['location']; ?></td>
+                       
+                        <td><?php echo $row['division']; ?></td>
                         <td><?php echo "<span class='statusSpan'>".$status."</span>" ?></td>
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
                                 var spans = document.getElementsByClassName("statusSpan");
                                 for (var i = 0; i < spans.length; i++) {
                                     var span = spans[i];
-                                    if (span.innerHTML === 'Deployed') {
+                                    if (span.innerHTML === '1') {
+                                        span.innerText = 'Active'; // Use innerText or textContent to update the text
                                         span.classList.add("status", "delivered");
-                                    } else if (span.innerHTML === 'To be Deploy') {
-                                        span.classList.add("status", "shipped");
-                                    } else if (span.innerHTML === 'Defective' || span.innerHTML === 'For repair') {
+                                    } else if (span.innerHTML === '0') {
+                                        span.innerText = 'Inactive';
                                         span.classList.add("status", "cancelled");
-                                    } else if (span.innerHTML === 'Sell') {
-                                        span.classList.add("status", "pending");
-                                    } else {
-                                        span.classList.add("status", "missing");
                                     }
                                 }
                             });
@@ -137,17 +120,17 @@ include '../inc/header.php';
                             <?php 
                                 $sqlSel = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $id"); 
                                 while($results = mysqli_fetch_assoc($sqlSel)) {
-                                if($results['turnoverRef'] != '') { 
+                                    if($results['turnoverRef'] != '') { 
                             ?>    
-                                <a href="../update/turnoverUpd.php?id=<?php echo $aId; ?>"><img src="../assets/icons/turnover.png" width="24px"></a>&nbsp;
-                            <?php }} ?>
-                            <a href="../update/remove.php?assetID=<?php echo $aId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                                <a href="../update/turnoverUpd.php?id=<?php echo $eid; ?>"><img src="../assets/icons/turnover.png" width="24px"></a>&nbsp;
+                            <?php   }
+                                } 
+                            ?>
+                            <a href="../update/remove.php?assetID=<?php echo $eid; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
                             
                         </td>   
                     </tr>
-                    <?php
-                        }
-                    ?>
+                    <?php } ?>
                 </tbody>
             </table>
            
@@ -156,7 +139,7 @@ include '../inc/header.php';
             if($rowCountPage != $rowCount) {
                 echo '<div class="pagination">';
                 if ($page > 1) {
-                    echo '<a href="UPS.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
+                    echo '<a href="Laptop.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
                 }
                 
                 $max_page_range = 7; // Maximum number of pages to show in pagination
@@ -165,12 +148,12 @@ include '../inc/header.php';
                 
                 for($i = $start_page; $i <= $end_page; $i++) {
                     $active_class = ($i == $page) ? 'activePage' : ''; // Add active class to current page
-                    echo '<a href="UPS.php?page=' . $i . '" class="next ' . $active_class . '">' . $i . '</a>';                  
+                    echo '<a href="Laptop.php?page=' . $i . '" class="next ' . $active_class . '">' . $i . '</a>';                  
                 }  
                 
                 if ($page < $number_of_page) {
-                    echo '<a href="UPS.php?page=' . ($page + 1) . '" class="next">Next</a>';
-                    echo '<a href="UPS.php?page=all" class="next">All</a>';
+                    echo '<a href="Laptop.php?page=' . ($page + 1) . '" class="next">Next</a>';
+                    echo '<a href="Laptop.php?page=all" class="next">All</a>';
                 }
                 echo '</div>';
 

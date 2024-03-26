@@ -25,8 +25,10 @@
         </div>
         <div class="config-buttons sub-config">
             <div class="sub-btn"></div>
-            <div class="sub-btn"><a href="../admin/create_accountability.php" title="Accountability"><img src="../assets/icons/config/daily-tasks.png"></a></div>
-            <div class="sub-btn"><a href="../admin/create_turnover.php" title="Turnover"><img src="../assets/icons/config/turnover.png"></a></div>
+            <!-- <div class="sub-btn"><a href="../admin/create_accountability.php" title="Accountability"><img src="../assets/icons/config/daily-tasks.png"></a></div> -->
+            <div class="sub-btn"><a href="../admin/employeeLists.php" title="Employees"><img src="../assets/icons/config/daily-tasks.png"></a></div>
+            <div class="sub-btn"><a href="../admin/adminConfig.php" title="Settings"><img src="../assets/icons/config/turnover.png"></a></div>
+            <!-- <div class="sub-btn"><a href="../admin/create_turnover.php" title="Turnover"><img src="../assets/icons/config/turnover.png"></a></div> -->
             <div class="sub-btn"><a href="../admin/references.php" title="Reference"><img src="../assets/icons/config/research.png"></a></div>
             <div class="sub-btn"></div>
         </div>

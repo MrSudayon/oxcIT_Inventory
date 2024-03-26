@@ -65,7 +65,7 @@ include '../inc/header.php';
 <div class="content">
     <main class="table" id="customers_table">
         <section class="table__header">
-            <a href="../admin/add-assets.php?id=recordLaptop" class="link-btn">New Record</a>
+            <a href="../admin/add-assets.php?id=recordDesktop" class="link-btn">New Record</a>
             <div class="input-group">
                 <input type="search" placeholder="Search Data...">
                 <img src="../assets/icons/search.png" alt="">
@@ -139,9 +139,9 @@ include '../inc/header.php';
                                 while($results = mysqli_fetch_assoc($sqlSel)) {
                                 if($results['turnoverRef'] != '') { 
                             ?>    
-                                <a href="../update/turnoverUpd.php?id=<?php echo $aId; ?>"><img src="../assets/icons/turnover.png" width="24px"></a>&nbsp;
+                                <a href="../update/turnoverUpd.php?id=<?php echo $aId; ?>"><img src="../assets/icons/turnover.png" width="32px"></a>&nbsp;
                             <?php }} ?>
-                            <a href="../update/remove.php?assetID=<?php echo $aId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+                            <a href="../update/remove.php?assetID=<?php echo $aId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
                             
                         </td>   
                     </tr>

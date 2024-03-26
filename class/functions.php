@@ -17,7 +17,6 @@ class Operations {
         $supplier     = mysqli_real_escape_string($db->conn, $supplier);
         $empId        = mysqli_real_escape_string($db->conn, $empId);
         $lastused     = mysqli_real_escape_string($db->conn, $lastused);
-        $status       = mysqli_real_escape_string($db->conn, $status);
         $dtprchs      = mysqli_real_escape_string($db->conn, $dtprchs);
         $cost         = mysqli_real_escape_string($db->conn, $cost);
         $repair_cost  = mysqli_real_escape_string($db->conn, $repair_cost);
@@ -30,7 +29,7 @@ class Operations {
         $mobile       = mysqli_real_escape_string($db->conn, $mobile);
         $plan         = mysqli_real_escape_string($db->conn, $plan);
         $os           = mysqli_real_escape_string($db->conn, $os);
-        $action           = mysqli_real_escape_string($db->conn, $action);
+        $action       = mysqli_real_escape_string($db->conn, $action);
         // $specification = $cpu . ", " . $ram . ", " . $storage . ", " . $os . ", " . $others;    
         if(isset($empId) && $empId != '') {
             $sql = "SELECT * FROM employee_tbl WHERE id='$empId' AND empStatus=1";
@@ -51,7 +50,7 @@ class Operations {
        
         // $result = mysqli_query($db->conn, $query);
         $query = $db->conn->prepare("INSERT INTO assets_tbl (assettype, assettag, model, serial, supplier, empId, lastused, status, datepurchased, cost, repair_cost, remarks, datedeployed, cpu, memory, storage, dimes, mobile, plan, os) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $query->bind_param("sssssisisiisssssssss", $type, $tag, $mdl, $srl, $supplier, $empId, $lastused, $status, $dtprchs, $cost, $repair_cost, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os);
+        $query->bind_param("sssssisssiisssssssss", $type, $tag, $mdl, $srl, $supplier, $empId, $lastused, $status, $dtprchs, $cost, $repair_cost, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os);
         $result = $query->execute();
 
         if ($result) {

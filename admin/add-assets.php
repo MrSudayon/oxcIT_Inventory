@@ -55,14 +55,20 @@ if(isset($_POST['save'])) {
     <div class="container">
         <div class="add-form">
             <?php 
-                if($id == 'recordLaptop') { 
-                    $url = "../assetLists/Laptop.php";
+                if($id == 'recordDesktop') { 
+                    $url = "../assetLists/Desktop.php";
                 } elseif($id == 'recordLaptop') {
                     $url = "../assetLists/Laptop.php";
-                } elseif($id == 'recordLaptop') {
-                    $url = "../assetLists/Laptop.php";
-                } elseif($id == 'recordLaptop') {
-                    $url = "../assetLists/Laptop.php";
+                } elseif($id == 'recordMonitor') {
+                    $url = "../assetLists/Monitor.php";
+                } elseif($id == 'recordPrinter') {
+                    $url = "../assetLists/Printer.php";
+                } elseif($id == 'recordMobile') {
+                    $url = "../assetLists/Mobile.php";
+                } elseif($id == 'recordSim') {
+                    $url = "../assetLists/SIM.php";
+                } elseif($id == 'recordUps') {
+                    $url = "../assetLists/UPS.php";
                 } else {
                     $url = "../admin/dashboard.php"; // Change name to 'All Assets'
                 }
@@ -78,12 +84,12 @@ if(isset($_POST['save'])) {
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Asset Type</span>                            
                             <select name="asset-type" id="Type" onChange="changetextbox();displaySelectedValue();" required>
-                                <option value='' hidden selected disabled>Please Select</option>
+                                <!-- <option value='' hidden selected disabled>Please Select</option> -->
                                 <?php
                                     $assettype = $operation->getAssets($id);
                                     foreach($assettype as $assets) {
                                 ?>
-                                    <option value="<?=$assets['assetType']?>"><?php echo $assets['assetType']; ?></option>
+                                    <option selected value="<?=$assets['assetType']?>"><?php echo $assets['assetType']; ?></option>
                                 <?php
                                     }
                                 ?>
