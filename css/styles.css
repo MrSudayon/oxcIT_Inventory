@@ -6,6 +6,7 @@
     padding: 0; 
     box-sizing: border-box;
     scroll-behavior: smooth;
+    font-family: sans-serif;
 }
 :root {
     --bg-color: #1F1F29;
@@ -33,30 +34,56 @@ a {
     }
 }
 
+
+body {
+    /* position: absolute; */
+    /* background-color: var(--ter-color); */
+    background: var(--bg-color);
+    color: rgb(255, 246, 246);
+    font-family: "Rubik", sans-serif;
+
+}
+
+header {
+    position: absolute;
+    background-color: white;
+    height: 100px;
+    width: 100%;
+    padding: 0 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
 main.table {   
     position: absolute;
-    margin-top: 100px;
-    width: 99vw;
+    top: 0;
+    min-height: 100dvh;
+    /* margin-top: 100px; */
+    width: 100vw;
     height: calc(90dvh - 1rem);
-    /* max-height: calc(90% - 1rem); */
+    padding: 1em;
+    /* max-height: calc(90dvh - 1rem); */
 
     /* background: rgba(252, 255, 244, 0.333); */
     /* background: none; */
 
-    background: linear-gradient(360deg, var(--ter-color), var(--bg-color));
+    background: linear-gradient(45deg, var(--ter-color), var(--bg-color));
 
     backdrop-filter: blur(7px);
     box-shadow: 0 .4rem .8rem #0005;
-    border-radius: .8rem;
+    /* border-radius: .8rem; */
 
     overflow: hidden;
 }
 
 .table__header {
     width: 100%;
-    height: 10%;
+    margin-top: 90px;
+    height: 7%;
     background-color: transparent;
-    padding: .8rem 1rem;
+    padding: .5rem 1rem;
 
     display: flex;
     justify-content: space-between;
@@ -66,7 +93,7 @@ main.table {
 .table__header .input-group {
     width: 35%;
     height: 100%;
-    background-color: #fff5;
+    background-color: rgba(253, 251, 251, 0.333);
     padding: 0 .8rem;
     border-radius: 2rem;
 
@@ -79,7 +106,7 @@ main.table {
 
 .table__header .input-group:hover {
     width: 45%;
-    background-color: #fff8;
+    background-color: rgba(255, 253, 253, 0.805);
     box-shadow: 0 .1rem .4rem rgba(77, 77, 77, 0.133);
 }
 
@@ -98,10 +125,10 @@ main.table {
 
 .table__body {
     width: 98%;
-    max-height: calc(90% - 1rem);
+    max-height: calc(80% - 1rem);
     background-color: rgba(255, 255, 255, 0.733);
 
-    margin: 0 auto;
+    margin: .8em auto;
     border-radius: .6rem;
 
     overflow: auto;
@@ -129,7 +156,7 @@ table {
     color: white;
     width: 100%;
 }
-
+/* 
 td img {
     width: 36px;
     height: 36px;
@@ -137,7 +164,7 @@ td img {
     border-radius: 50%;
 
     vertical-align: middle;
-}
+} */
 
 table, th, td {
     border-collapse: collapse;
@@ -164,10 +191,11 @@ tbody tr {
     transition: .5s ease-in-out var(--delay), background-color 0s;
 }
 
-/* tbody tr.hide {
+/* each tr animation */
+tbody tr.hide {
     opacity: 0;
     transform: translateX(100%);
-} */
+}
 
 tbody tr:hover {
     background-color: #fff6 !important;
@@ -258,28 +286,6 @@ thead th.active,tbody td.active {
 }
 
 
-
-
-body {
-    /* position: absolute; */
-    /* background-color: var(--ter-color); */
-    background: var(--bg-color);
-    color: rgb(255, 246, 246);
-    font-family: "Rubik", sans-serif;
-
-}
-
-header {
-    position: absolute;
-    background-color: white;
-    height: 100px;
-    width: 100%;
-    padding: 0 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 10;
-}
 .dropbtn {
     /* background-color: var(--sec-color); */
     background: linear-gradient(95deg, var(--ter-color), antiquewhite);
@@ -324,13 +330,13 @@ header {
 
 .content {
     /* position: absolute; */
-    min-height: 100dvh;
+    /* min-height: 100dvh;
     width: 100%;
     top: 0;
     z-index: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     /* padding: 10px 20px; */
 }
  
@@ -377,11 +383,11 @@ th {
     background-color: rgb(94, 94, 94);
     color: white;
 }
-
+*/
 .link-btn {
     background-color: var(--main-color);
-    padding: 5px 25px;
-    border-radius: 15px;
+    padding: .8rem 1.8rem;
+    border-radius: 50px;
     font-size: 12px;
     border: none;
     color: white;
@@ -393,7 +399,7 @@ th {
     border: 1px solid white;
     background-color: var(--bg-color);
     transition: all .3s;
-} */
+}
 
 .count {
     display: flex;
@@ -405,11 +411,11 @@ th {
 }
 
 
-/* Pagination Linkss */
-.pagination-btns {
+/* References Pagination Linkss */
+/* .pagination-btns {
     display: flex;
     align-items: center;
-    padding: 5px 40px;
+    padding: 5px 600px;
     height: 40px;
     width: 100%;
 }
@@ -428,12 +434,16 @@ th {
     border: 1px solid white;
     background-color: var(--bg-color);
     transition: all .3s;
+} */
+.pagination {
+    padding: 0 .8rem;
 }
 .next {
     font-weight: 400;
-    font-size: 12px;
-    padding: 3px 6px 3px;
+    font-size: 14px;
+    padding: .5em;
     border: 1px solid black;
+    border-radius: 5px;
     background-color: #5983FC;
 }
 .next:hover {
@@ -545,7 +555,7 @@ input[type=date] {
     border: none;
 }
 
-.available,
+/* .available,
 .deployed,
 .defect,
 .sell,
@@ -568,7 +578,7 @@ input[type=date] {
 }
 .missing {
     background-color: rgb(255, 158, 231);
-}
+} */
 
 /* 
 .search-container .filter {
@@ -616,9 +626,9 @@ form .button input:hover {
 }
 
 
-/* .active {
-    background-color: #1F1F29;
-} */
+.activePage {
+    background-color: #a8a8a8;
+}
 
 @media (max-width: 584px) {
     .container {

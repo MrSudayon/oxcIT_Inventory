@@ -46,7 +46,7 @@ if(isset($_POST['save'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../assets/logo.jpg">
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/formStyles.css">
     <title>Add Assets</title>
 </head>
 <body>

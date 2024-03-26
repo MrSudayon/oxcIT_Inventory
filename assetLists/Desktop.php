@@ -1,8 +1,21 @@
 <?php 
-include '../inc/auth.php';
-include '../inc/listsHead.php'; 
+include '../inc/auth.php'; 
 include '../inc/header.php'; 
 ?>
+    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/logo.jpg">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script src="../js/addAssets.js"></script>
+    <title>Desktop</title>
+</head>
 <body>
 
 <?php
@@ -10,38 +23,28 @@ include '../inc/header.php';
     $results = mysqli_query($db->conn, $sqlSelectAll);
 
     $results_per_page = 15;
+
     if (!isset ($_GET['page']) ) {  
         $page = 1;  
-    } elseif ($_GET['page'] === 'all') {  
-        $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
-                a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
-                e.id, e.name, e.division, e.location 
-                FROM assets_tbl AS a 
-                LEFT JOIN employee_tbl AS e 
-                ON e.id = a.empId 
-                WHERE a.status!='Archive' AND assettype='Laptop'";
-        $res = mysqli_query($db->conn, $sql);
-        $rowCountPage = $res->num_rows;
-    } else {
+    } else {  
         $page = $_GET['page'];  
-    }
+    }  
     
     $rowCount = $results->num_rows;
     $number_of_page = ceil ($rowCount / $results_per_page);  
     $page_first_result = ($page-1) * $results_per_page;  
 
-    if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
-        $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
-                a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
-                e.id, e.name, e.division, e.location 
-                FROM assets_tbl AS a 
-                LEFT JOIN employee_tbl AS e 
-                ON e.id = a.empId 
-                WHERE a.status!='Archive' AND assettype='Laptop' 
-                LIMIT $page_first_result, $results_per_page";
-        $res = mysqli_query($db->conn, $sql);
-        $rowCountPage = $res->num_rows;
-    }
+    $sql =  
+            "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
+            a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
+            e.id, e.name, e.division, e.location 
+            FROM assets_tbl AS a 
+            LEFT JOIN employee_tbl AS e 
+            ON e.id = a.empId 
+            WHERE a.status!='Archive' AND assettype='Desktop' 
+            LIMIT ". $page_first_result . ',' . $results_per_page;
+    $res = mysqli_query($db->conn, $sql);
+    $rowCountPage = $res->num_rows;
 
     $rows = [];
     while ($row = mysqli_fetch_assoc($res)) {
@@ -65,12 +68,11 @@ include '../inc/header.php';
 <div class="content">
     <main class="table" id="customers_table">
         <section class="table__header">
-            <a href="../admin/add-assets.php?id=recordLaptop" class="link-btn">New Record</a>
             <div class="input-group">
                 <input type="search" placeholder="Search Data...">
                 <img src="../assets/icons/search.png" alt="">
             </div>
-            <p> <b style="color: yellow; font-size: 20px; margin-top: 10px;"><?php echo $rowCountPage; ?></b> result/s.</p>
+            
         </section>
         <section class="table__body">
             <table>
@@ -150,32 +152,7 @@ include '../inc/header.php';
                     ?>
                 </tbody>
             </table>
-           
         </section>
-        <?php 
-            if($rowCountPage != $rowCount) {
-                echo '<div class="pagination">';
-                if ($page > 1) {
-                    echo '<a href="Laptop.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
-                }
-                
-                $max_page_range = 7; // Maximum number of pages to show in pagination
-                $start_page = max(1, $page - floor($max_page_range / 3));
-                $end_page = min($number_of_page, $start_page + $max_page_range - 1);
-                
-                for($i = $start_page; $i <= $end_page; $i++) {
-                    $active_class = ($i == $page) ? 'activePage' : ''; // Add active class to current page
-                    echo '<a href="Laptop.php?page=' . $i . '" class="next ' . $active_class . '">' . $i . '</a>';                  
-                }  
-                
-                if ($page < $number_of_page) {
-                    echo '<a href="Laptop.php?page=' . ($page + 1) . '" class="next">Next</a>';
-                    echo '<a href="Laptop.php?page=all" class="next">All</a>';
-                }
-                echo '</div>';
-
-            }
-        ?>
     </main>
     <script src="../js/sort.js"></script>
 

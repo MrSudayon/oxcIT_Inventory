@@ -1,46 +1,43 @@
 <?php
-require '../php/db_connection.php';
-$asset = new assetsController;
-$assetController = new assetsController;
+include '../inc/auth.php';
 
 if(isset($_POST['update-asset'])) {
     $id = mysqli_real_escape_string($db->conn,$_POST['assetID']);
-    $input = [
-        // 'assettype' => mysqli_real_escape_string($db->conn,$_POST['asset-type']),
-        // 'assettag' => mysqli_real_escape_string($db->conn,$_POST['asset-tag']),
-        'model'        => mysqli_real_escape_string($db->conn,$_POST['model']),
-        'serial'       => mysqli_real_escape_string($db->conn,$_POST['serial']),
-        'mobile'       => mysqli_real_escape_string($db->conn,$_POST['mobile']),
-        'supplier'     => mysqli_real_escape_string($db->conn,$_POST['supplier']),
-        'cost'         => mysqli_real_escape_string($db->conn,$_POST['cost']),
-        'datepurchase' => mysqli_real_escape_string($db->conn,$_POST['dateprchs']),
-        'status'       => mysqli_real_escape_string($db->conn,$_POST['status']),
-        'repair-cost'  => mysqli_real_escape_string($db->conn,$_POST['repair-cost']),
-        'remarks'      => mysqli_real_escape_string($db->conn,$_POST['remarks']),
 
-        'cpu'          => mysqli_real_escape_string($db->conn,$_POST['processor']),
-        'plan'         => mysqli_real_escape_string($db->conn,$_POST['plan']),
-        'dimes'        => mysqli_real_escape_string($db->conn,$_POST['dimes']),
-        'ram'          => mysqli_real_escape_string($db->conn,$_POST['memory']),
-        'storage'      => mysqli_real_escape_string($db->conn,$_POST['storage']),
-        'os'           => mysqli_real_escape_string($db->conn,$_POST['os']),
-        'datedeployed' => mysqli_real_escape_string($db->conn,$_POST['datedeployed']),
-
-        'assigned'     => mysqli_real_escape_string($db->conn,$_POST['assigned']),
-        'lastused'     => mysqli_real_escape_string($db->conn,$_POST['lastused'])
-    ];
+    if(isset($_POST['action']) && $_POST['action'] == 'ComputerUpdate') {
+        $input = [
+            'model'        => mysqli_real_escape_string($db->conn,$_POST['model']),
+            'serial'       => mysqli_real_escape_string($db->conn,$_POST['serial']),
+            'supplier'     => mysqli_real_escape_string($db->conn,$_POST['supplier']),
+            'cost'         => mysqli_real_escape_string($db->conn,$_POST['cost']),
+            'datepurchase' => mysqli_real_escape_string($db->conn,$_POST['dateprchs']),
+            'status'       => mysqli_real_escape_string($db->conn,$_POST['status']),
+            'repair-cost'  => mysqli_real_escape_string($db->conn,$_POST['repair-cost']),
+            'remarks'      => mysqli_real_escape_string($db->conn,$_POST['remarks']),
+    
+            'cpu'          => mysqli_real_escape_string($db->conn,$_POST['processor']),
+            'ram'          => mysqli_real_escape_string($db->conn,$_POST['memory']),
+            'storage'      => mysqli_real_escape_string($db->conn,$_POST['storage']),
+            'os'           => mysqli_real_escape_string($db->conn,$_POST['os']),
+            'datedeployed' => mysqli_real_escape_string($db->conn,$_POST['datedeployed']),
+    
+            'assigned'     => mysqli_real_escape_string($db->conn,$_POST['assigned']),
+            'lastused'     => mysqli_real_escape_string($db->conn,$_POST['lastused'])
+        ];
+    } 
+   
     $result = $assetController->update($input, $id);
 
     if($result) {
         echo "<script>
         alert('✅Update Successful');
-        window.location.href='../admin/dashboard.php';
+        window.history.back();        
         </script>";
         die();
     } else {
         echo "<script>
         alert('⚠️Update Error');
-        window.location.href='../admin/dashboard.php';
+        window.history.back();
         </script>";
         die();
     }

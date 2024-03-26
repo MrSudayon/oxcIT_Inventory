@@ -77,11 +77,13 @@ class assetsController {
             $result = mysqli_query($db->conn, $sqlSelect);
             if($result) {
                 while($row = mysqli_fetch_array($result)) {
-                    $empName = $row["name"];
+                    $empName = $row['name'];
+                    
+                    if($lastused == '') {
+                        $lastused = $empName;
+                    }
                 }
-                if($lastused == '') {
-                    $lastused = $empName;
-                }
+               
             }
         }  
 
