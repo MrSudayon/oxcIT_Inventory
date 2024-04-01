@@ -87,20 +87,15 @@ header {
 .dropdown:hover .dropbtn { color: white;border: 1px solid white; background: linear-gradient(-95deg, var(--ter-color), var(--bg-color));}
 
 .content {
-    min-height: 100dvh;
-    background: linear-gradient(-95deg, var(--ter-color), var(--bg-color));
-    padding: 10px 40px;
+    height: 100dvh;
+    background: linear-gradient(-95deg, var(--ter-color), var(--bg-color)); 
+    margin-top: -50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.title h1 {
-    font-size: 25px;
-    text-align: justify;
-    /* -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: black; */
-}
-.uname {
-    color: rgb(212, 212, 212);
-    font-size: 30px;
-}
+
+/*
 .config-buttons {
     margin-top: 150px;
     display: flex;
@@ -110,33 +105,31 @@ header {
 .config-btn img {
     height: 200px;
     width: auto;
-    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
     transform: scale(0.9);
     transition: ease-in-out .3s;
 }
 .config-btn img:hover {
-    -webkit-filter: grayscale(0); /* Safari 6.0 - 9.0 */
+    -webkit-filter: grayscale(0);
     filter: grayscale(0);
     transform: scale(1);
-}
+} */
 .sub-config {
-    margin-top: 150px;
+    /* margin-top: 150px; */
     display: flex;
-    justify-content: space-evenly;
-    padding: 0 150px;
+
+    gap: 100px;
 }
 .sub-btn img {
     height: 150px;
     width: auto;
-    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-    filter: grayscale(100%);
     transform: scale(0.9);
     transition: ease-in-out .3s;
 }
 .sub-btn img:hover {
-    -webkit-filter: grayscale(0); /* Safari 6.0 - 9.0 */
-    filter: grayscale(0);
+    -webkit-filter: invert(1); 
+    filter: invert(1);
     transform: scale(1);
 }
 
@@ -152,4 +145,115 @@ header {
         max-height: 300px;
         overflow-y: scroll;
     }
+}
+
+li{
+    list-style: none;
+    display: inline-block;
+  }
+  
+/* ----------- MENU -------------- */
+.menu{
+    width: 20em;
+    height: 20em;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+}
+
+.menu__items{
+    position: absolute;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu__item{
+    position: absolute;
+
+    width: 4em;
+    height: 4em;
+    background-color: #fff;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    transition: transform .5s ease;
+}
+
+.menu__item a{
+    color: var(--color);
+    font-size: 2rem;
+}
+
+.menu__wrapper{
+    position: absolute;
+    z-index: 1;
+
+    font-size: 3.5rem;
+    background-color: #fff;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    color: var(--color);
+    box-shadow: 0 0 0.5em rgba(0,0,0, .2);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    transition: transform .5s ease;
+}
+
+.menu__wrapper.active {
+    transform: rotate(225deg);
+}
+
+.menu__wrapper.active ~ .menu__items .menu__item:nth-child(1){ /* Laptop */
+    transform: translate(-10em, -3em);
+}
+.menu__wrapper.active ~ .menu__items .menu__item:nth-child(2){ /* Desktop */
+    transform: translate(-6em, -8em);
+}
+
+.menu__wrapper.active ~ .menu__items .menu__item:nth-child(3){ /* Monitor */
+    transform: translate(.1em, -10em);
+}
+
+.menu__wrapper.active ~ .menu__items .menu__item:nth-child(4){ /* Printer */
+    transform: translate(6em, -8em);
+}
+
+.menu__wrapper.active ~ .menu__items .menu__item:nth-child(5){ /* UPS */
+    transform: translate(10em, -3em);
+}
+
+.menu__wrapper.active ~ .menu__items .menu__item:nth-child(6){ /* Mobile */
+    transform: translate(10em, 3em);
+}
+
+.menu__wrapper.active ~ .menu__items .menu__item:nth-child(7){ /* SIM */
+    transform: translate(6em, 8em);
+}
+
+.menu__wrapper.active ~ .menu__items .menu__item:nth-child(8){ /* SIM */
+    transform: translate(.1em, 10em);
+}
+
+.menu__wrapper.active ~ .menu__items .menu__item:nth-child(9){ /* SIM */
+    transform: translate(-6em, 8em);
+}
+
+.menu__wrapper.active ~ .menu__items .menu__item:nth-child(10){ /* SIM */
+    transform: translate(-10em, 3em);
 }

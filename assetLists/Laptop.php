@@ -73,7 +73,7 @@ include '../inc/header.php';
             <p> <b style="color: yellow; font-size: 20px; margin-top: 10px;"><?php echo $rowCountPage; ?></b> result/s.</p>
         </section>
         <section class="table__body">
-            <table>
+            <table id="myTable2">
                 <thead>
                     <tr>
                         <th> Asset Tag <span class="icon-arrow">&UpArrow;</span></th>
@@ -111,26 +111,8 @@ include '../inc/header.php';
                             ?>
                         </td>
                         <td><?php echo $row['datepurchased']; ?></td>
-                        <td><?php echo "<span class='statusSpan'>".$status."</span>" ?></td>
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                var spans = document.getElementsByClassName("statusSpan");
-                                for (var i = 0; i < spans.length; i++) {
-                                    var span = spans[i];
-                                    if (span.innerHTML === 'Deployed') {
-                                        span.classList.add("status", "delivered");
-                                    } else if (span.innerHTML === 'To be Deploy') {
-                                        span.classList.add("status", "shipped");
-                                    } else if (span.innerHTML === 'Defective' || span.innerHTML === 'For repair') {
-                                        span.classList.add("status", "cancelled");
-                                    } else if (span.innerHTML === 'Sell') {
-                                        span.classList.add("status", "pending");
-                                    } else {
-                                        span.classList.add("status", "missing");
-                                    }
-                                }
-                            });
-                        </script>
+                        <td><?php echo "<span class='statusSpan'>". $status ."</span>" ?></td>
+             
 
                         <td>
                             <!-- <a href="../update/assetUpd.php?id=?php echo $aId; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp; -->
