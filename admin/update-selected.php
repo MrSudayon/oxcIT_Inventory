@@ -15,13 +15,13 @@ if(isset($_POST['update-asset'])) {
             'status'       => mysqli_real_escape_string($db->conn,$_POST['status']),
             'repair-cost'  => mysqli_real_escape_string($db->conn,$_POST['repair-cost']),
             'remarks'      => mysqli_real_escape_string($db->conn,$_POST['remarks']),
-    
+
             'cpu'          => mysqli_real_escape_string($db->conn,$_POST['processor']),
             'ram'          => mysqli_real_escape_string($db->conn,$_POST['memory']),
             'storage'      => mysqli_real_escape_string($db->conn,$_POST['storage']),
             'os'           => mysqli_real_escape_string($db->conn,$_POST['os']),
             'datedeployed' => mysqli_real_escape_string($db->conn,$_POST['datedeployed']),
-    
+
             'assigned'     => mysqli_real_escape_string($db->conn,$_POST['assigned']),
             'lastused'     => mysqli_real_escape_string($db->conn,$_POST['lastused'])
         ];

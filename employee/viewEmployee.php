@@ -36,8 +36,8 @@ include '../inc/header.php';
     <main class="table" id="customers_table">
         <section class="table__header">
             <div class="btn">
-                <button type="submit" formaction="accountability.php" class="link-btn" name="accountability" onclick="return checkPrompt()">Generate Acc</button>
-                <button type="submit" formaction="turnover.php" class="link-btn" name="turnover" onclick="return checkPrompt()">Generate Turnover</button>
+                <button type="submit" formaction="../admin/accountability.php" class="link-btn" name="accountability" onclick="return checkPrompt()">Generate Acc</button>
+                <button type="submit" formaction="../admin/turnover.php" class="link-btn" name="turnover" onclick="return checkPrompt()">Generate Turnover</button>
             </div>
 
             <div class="input-group">
@@ -47,17 +47,22 @@ include '../inc/header.php';
         </section>
             <h1 style='width: 20%; padding: 0 .5em; margin: 0 .4em; border-radius: 1em; background-color: #ddd; color: black; '> </h1>
         <section class="table__body">
+        <form method='post'>
+
             <table>
                 <thead>
-                        <th colspan=2 style='background:white; color: black; pointer-events: none;'>
+                    <tr>
+                        <th colspan=3 style='background:white; color: black; pointer-events: none;'>
                         <strong><?php echo $name; ?></strong><br>
                             <i><?php echo $dept; ?><br>
                             <?php echo $location; ?>
                         </th>
-                        <th colspan=2  style='background:white; color: black; pointer-events: none;'>
+                        <th colspan=2 style='background:white; color: black; pointer-events: none;'>
                         <p><h1 style='color:#2E4583; font-size: 2em;'>~<strong><?php echo $rowCount; ?> </strong></h1>accountabilities</p>
                         </th>
+                    </tr>
                     <tr>
+                        <th width="1%"><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
                         <th width='60%;'> Assets <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Accountability Code <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Turnover Code <span class="icon-arrow">&UpArrow;</span></th>
@@ -71,6 +76,7 @@ include '../inc/header.php';
                             $status = $row['empStatus'];
                     ?>
                     <tr>
+                        <td><input type="checkbox" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
                         <td>
                             <strong><?php echo $row['assettag']; ?></strong><br>
                             <?php echo $row['cpu']; ?><br>
@@ -98,12 +104,12 @@ include '../inc/header.php';
 
                         <td>
                             <!-- <a href="../update/assetUpd.php?id=?php echo $aId; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp; -->
-                            <?php 
-                                if($row['turnoverRef'] != '') { 
-                            ?>    
+                            <?php
+                                if($row['turnoverRef'] != '') {
+                            ?>
                                 <a href="../update/turnoverUpd.php?id=<?php echo $aId; ?>"><img src="../assets/icons/turnover.png" width="32px"></a>&nbsp;
-                            <?php   
-                                } 
+                            <?php
+                                }
                             ?>
                             <a href="../update/remove.php?assetID=<?php echo $aId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
                             
@@ -112,10 +118,10 @@ include '../inc/header.php';
                     <?php } ?>
                 </tbody>
             </table>
+        </form>
            
         </section>
-
-    </main>
+    </main> 
     <script src="../js/sort.js"></script>
 
 </div>

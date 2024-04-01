@@ -1,39 +1,30 @@
-<?php include '../inc/auth.php'; ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="../assets/logo.jpg">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/styles.css">
-    <title>Turnover</title>
-</head>
+<?php include '../inc/auth.php'; include '../inc/formHead.php'; include '../inc/header.php'; ?>
+<!-- 
 <body>
 <header>
     <div class="logo">
-        <a href="../admin/dashboard.php"><img src="../assets/logo.png" width="150px"></img></a>
+        <a href="../admin/configuration.php"><img src="../assets/logo.png" width="150px"></img></a>
     </div>
     <div class="dropdown">
         <button class="dropbtn">Menu</button>
         <div class="dropdown-content">
-            <!-- <a href="../php/add_emp_info.php">Register</a> -->
+            !-- <a href="../php/add_emp_info.php">Register</a> --
             <a href="../php/history.php">History</a>
-            <a href="../php/logout.php?id=<?php echo $id; ?>&name=<?php echo $username; ?>">Logout</a>
+            <a href="../php/logout.php?id=?php echo $id; ?>&name=?php echo $username; ?>">Logout</a>
         </div>
     </div>
-</header>
+</header> -->
 
     <div class="container">
         <div class="add-form">
-        <a href="../admin/dashboard.php" class="return">Back</a>
+        <!-- <a href="../admin/dashboard.php" class="return">Back</a> -->
+        <button onclick="history.back()" class="return">Go Back</button>
             <div class="title">Asset Details</div>
             <?php
             if(isset($_GET['id']))
             {
                 $assetID = mysqli_real_escape_string($db->conn, $_GET['id']);
-                $asset = new assetsController;
-                $result = $asset->edit($assetID);
+                $result = $assetController->edit($assetID);
 
                 if($result) {
                     
@@ -75,7 +66,7 @@
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Status</span>
                             <select style="background-color: #ccc;">
-                                <option value=<?=$result['status']?>><?=$result['status']?></option>
+                                <option value=<?=$result['aStatus']?>><?=$result['aStatus']?></option>
                             
                             </select>
                         </div>
@@ -97,23 +88,19 @@
                     <div class="asset-details">
                         <div class="input-box">
                             <span class="details">Processor</span>
-                            <input type="text" name="processor" style="background-color: #ccc;" readonly value="<?=$result['CPU']?>" id="">
+                            <input type="text" name="processor" style="background-color: #ccc;" readonly value="<?=$result['cpu']?>" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Memory</span>
-                            <input type="text" name="memory" style="background-color: #ccc;" readonly value="<?=$result['MEMORY']?>" id="">
+                            <input type="text" name="memory" style="background-color: #ccc;" readonly value="<?=$result['memory']?>" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Storage</span>
-                            <input type="text" name="storage" style="background-color: #ccc;" readonly value="<?=$result['STORAGE']?>" id="">
+                            <input type="text" name="storage" style="background-color: #ccc;" readonly value="<?=$result['storage']?>" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Operating System</span>
-                            <input type="text" name="os" style="background-color: #ccc;" readonly value="<?=$result['OS']?>" id="">
-                        </div>
-                        <div class="input-box">
-                            <span class="details">Others</span>
-                            <input type="text" name="other" style="background-color: #ccc;" readonly value="<?=$result['Others']?>" id="">
+                            <input type="text" name="os" style="background-color: #ccc;" readonly value="<?=$result['os']?>" id="">
                         </div>
                         <div class="input-box">
                             <span class="details">Date Deployed</span>
@@ -124,11 +111,11 @@
                     <div class="asset-details">
                         <div class="input-box">
                             <span class="details">Turnover Date</span>
-                            <input type="date" name="turnover" value="<?php echo date('Y-m-d'); ?>" style="background-color: #ccc;">
+                            <input type="date" name="turnover" value="<?php echo date('Y-m-d'); ?>" style="background-color: #ccc;" readonly>
                         </div>
                         <div class="input-box">
                             <span class="details">Last Used by:</span>
-                            <input type="text" name="lastused" value="<?=$result['assigned']?>">
+                            <input type="text" name="lastused" value="<?=$result['ename']?>" style="background-color: #ccc;" readonly>
                         </div>
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Reason: </span>
