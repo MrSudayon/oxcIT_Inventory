@@ -5,19 +5,19 @@ if(isset($_GET['select'])) {
 
     $selected = $_GET['select'];
 
-    foreach ($selected as $userID){ 
+    foreach ($selected as $assetID){ // userID replaced to assetID
         $sql = 
         "SELECT DISTINCT a.id AS aId, a.empId AS empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, a.datedeployed, 
         e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.accountabilityRef AS accountabilityRef   
         FROM assets_tbl AS a 
         LEFT JOIN reference_tbl AS r ON r.assetId = a.id
         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-        WHERE a.empId='$userID' AND a.status !='Archive'";
+        WHERE a.id='$assetID' AND a.status !='Archive'";
 
         $res = mysqli_query($db->conn, $sql);
     
         while($row = mysqli_fetch_assoc($res)) {
-            $id = $row['aId'];
+            $aId = $row['aId'];
             $empId = $row['empId'];
 
             $name = $row['ename'];
@@ -84,7 +84,7 @@ else {
 <body>
 <div class="content">
     <div class="logo">
-        <a href="create_accountability.php"><img src="../assets/logo.png" width="150px"></img></a>
+        <a href="employeeLists.php"><img src="../assets/logo.png" width="150px"></img></a>
     </div>
     <br><br><br>
     <center>
@@ -179,19 +179,62 @@ else {
                 <th>Date Deployed</th>
                 <th>Remarks</th>
             </tr>
+            <?php
+            foreach ($selected as $assetID) {
+                $sql = "SELECT * FROM assets_tbl WHERE id='$assetID' AND status !='Archive'";
+                $res = mysqli_query($db->conn, $sql);
 
+                while($row = mysqli_fetch_assoc($res)) {
+                    $assettype = $row['assettype'];
+                    $cpu = $row['cpu'];
+                    $ram = $row['memory'];
+                    $storage = $row['storage'];
+                    $os = $row['os'];
+                    $mobile = $row['mobile'];
+                    $plan = $row['plan'];
+                    
+                    switch($assettype) {
+                        case 'Laptop':
+                        case 'Desktop':
+                                $specs = "CPU: <i>". $cpu .
+                                        "</i><br>Ram: <i>". $ram.
+                                        "</i><br>Storage: <i>". $storage;
+                            break;
+
+                        case 'Monitor':
+                        case 'Printer':
+                        case 'UPS':
+                        case 'AVR':
+                                $specs = "Dimension: <i>". $dimes;
+                            break;
+                        
+                        case 'Mobile':
+                                $specs = "Ram: <i>". $ram.
+                                        "</i><br>Storage: <i>". $storage;
+                            break;
+
+                        case 'SIM':
+                                $specs = "Plan: <i>". $plan;
+                            break;
+
+                        default:
+                                $specs = "<i style='color:#FF6646;'>No details found.";
+                            break;
+                    }
+            ?>
             <tr>
-            
                 <td><?php echo $assettype; ?></td>
-                <td><?php echo $userID; ?></td>
+
+                <!-- Specification If assettype == etc.. else no details.. -->
+                <td><?php echo $specs; ?></td> 
                 <td><?php echo $serial; ?></td>
                 <td><?php echo $datedeployed; ?></td>
                 <td><?php echo $remarks; ?></td>    
- 
-
-            
             </tr>
-
+            <?php
+                }
+            }
+            ?>
         </table>
         <div class="info"><br>
             <h3>Responsibilities</h3>

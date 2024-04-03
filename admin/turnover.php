@@ -4,14 +4,14 @@ include '../inc/auth.php';
 if(isset($_GET['select'])) {
     $selected = $_GET['select'];
     
-    foreach ($selected as $userID){ 
+    foreach ($selected as $assetID){ 
         $sql = 
         "SELECT DISTINCT a.*, 
         e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.turnoverRef  
         FROM assets_tbl AS a 
         LEFT JOIN reference_tbl AS r ON r.assetId = a.id
         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-        WHERE a.id='$userID' AND a.status !='Archive'";
+        WHERE a.id='$assetID' AND a.status !='Archive'";
 
         $res = mysqli_query($db->conn, $sql);
     
@@ -30,38 +30,40 @@ if(isset($_GET['select'])) {
             $remarks = $row['remarks'];
         }
     }
-} elseif(isset($_GET['id'])) {
-    $userID = $_GET['id'];
+} 
+// elseif(isset($_GET['id'])) {
+//     $userID = $_GET['id'];
 
-    $sql = 
-        "SELECT DISTINCT a.id AS aId, a.empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, 
-        e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.turnoverRef  
-        FROM assets_tbl AS a 
-        LEFT JOIN reference_tbl AS r ON r.assetId = a.id
-        LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-        WHERE a.id='$userID' AND a.status !='Archive'";
+//     $sql = 
+//         "SELECT DISTINCT a.id AS aId, a.empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, 
+//         e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.turnoverRef  
+//         FROM assets_tbl AS a 
+//         LEFT JOIN reference_tbl AS r ON r.assetId = a.id
+//         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+//         WHERE a.id='$userID' AND a.status !='Archive'";
 
-        $res = mysqli_query($db->conn, $sql);
+//         $res = mysqli_query($db->conn, $sql);
     
-        while($row = mysqli_fetch_assoc($res)) {
-            $id = $row['aId'];
+//         while($row = mysqli_fetch_assoc($res)) {
+//             $id = $row['aId'];
 
-            $name = $row['ename'];
-            $arrayName[] = $name;
-            $dept = $row['division'];
-            $turnover_ref = $row['turnoverRef'];
+//             $name = $row['ename'];
+//             $arrayName[] = $name;
+//             $dept = $row['division'];
+//             $turnover_ref = $row['turnoverRef'];
 
-            $assettype = $row['assettype'];
-            $assettag = $row['assettag'];
-            $model = $row['model'];
-            $serial = $row['serial'];
-            $remarks = $row['remarks'];
-        }
-} else {
+//             $assettype = $row['assettype'];
+//             $assettag = $row['assettag'];
+//             $model = $row['model'];
+//             $serial = $row['serial'];
+//             $remarks = $row['remarks'];
+//         }
+// } 
+else {
     ?>
         <script>
-            alert('Please select User');
-            window.location.replace('create_turnover.php');
+            alert('Please select asset');
+            window.location.replace('employeeLists.php');
         </script>
     <?php
 } 

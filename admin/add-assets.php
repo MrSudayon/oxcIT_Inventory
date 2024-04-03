@@ -294,6 +294,7 @@ if(isset($_POST['save'])) {
                         case 'recordMonitor':
                         case 'recordUPS':
                         case 'recordPrinter':
+                        case 'recordAVR':
                             ?>
                                 <div class="input-box" id="model">
                                     <span class="details">Model</span>

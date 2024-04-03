@@ -37,7 +37,7 @@ include '../inc/header.php';
 ?>       
 <div class="content">
     <main class="table" id="customers_table">
-    <form method='post'>  
+    <form action="" method="get">
 
         <section class="table__header">
             <div class="btn">
@@ -77,6 +77,7 @@ include '../inc/header.php';
                         foreach ($rows as $row) {
                             $aId = $row['aId'];
                             $status = $row['empStatus'];
+                            $assettype = $row['assettype'];
                     ?>
                     <tr>
                         <td><input type="checkbox" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
