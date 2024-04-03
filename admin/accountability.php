@@ -12,7 +12,7 @@ if(isset($_GET['select'])) {
         FROM assets_tbl AS a 
         LEFT JOIN reference_tbl AS r ON r.assetId = a.id
         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-        WHERE a.id='$userID' AND a.status !='Archive'";
+        WHERE a.empId='$userID' AND a.status !='Archive'";
 
         $res = mysqli_query($db->conn, $sql);
     
@@ -32,39 +32,41 @@ if(isset($_GET['select'])) {
             $remarks = $row['remarks'];
         }
     }
-} elseif(isset($_GET['id'])) {
-    $userID = $_GET['id'];
+} 
+// elseif(isset($_GET['id'])) {
+//     $userID = $_GET['id'];
 
-    $sql = 
-        "SELECT DISTINCT a.id AS aId, a.empId AS empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, a.datedeployed, 
-        e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.accountabilityRef AS accountabilityRef   
-        FROM assets_tbl AS a 
-        LEFT JOIN reference_tbl AS r ON r.assetId = a.id
-        LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-        WHERE a.id='$userID' AND a.status !='Archive'";
+//     $sql = 
+//         "SELECT DISTINCT a.id AS aId, a.empId AS empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, a.datedeployed, 
+//         e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.accountabilityRef AS accountabilityRef   
+//         FROM assets_tbl AS a 
+//         LEFT JOIN reference_tbl AS r ON r.assetId = a.id
+//         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+//         WHERE a.id='$userID' AND a.status !='Archive'";
 
-    $res = mysqli_query($db->conn, $sql);
+//     $res = mysqli_query($db->conn, $sql);
 
-    while($row = mysqli_fetch_assoc($res)) {
-        $id = $row['aId'];
-        $empId = $row['empId'];
+//     while($row = mysqli_fetch_assoc($res)) {
+//         $id = $row['aId'];
+//         $empId = $row['empId'];
 
-        $name = $row['ename'];
-        $arrayName[] = $name;
-        $dept = $row['division'];
-        $acc_ref = $row['accountabilityRef'];
+//         $name = $row['ename'];
+//         $arrayName[] = $name;
+//         $dept = $row['division'];
+//         $acc_ref = $row['accountabilityRef'];
 
-        $assettype = $row['assettype'];
-        $assettag = $row['assettag'];
-        $datedeployed = $row['datedeployed'];
-        $serial = $row['serial'];
-        $remarks = $row['remarks'];
-    }
-} else {
+//         $assettype = $row['assettype'];
+//         $assettag = $row['assettag'];
+//         $datedeployed = $row['datedeployed'];
+//         $serial = $row['serial'];
+//         $remarks = $row['remarks'];
+//     }
+// }
+else {
     ?>
         <script>
-            alert('Please select User');
-            window.location.replace('create_accountability.php');
+            alert('Please select asset');
+            window.location.replace('employeeLists.php');
         </script>
     <?php
 }

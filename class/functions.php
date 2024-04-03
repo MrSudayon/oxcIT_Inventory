@@ -109,26 +109,26 @@ class Operations {
 
         // return $res;
         global $db;
-        $sql = "SELECT * FROM category_tbl WHERE status='1'";
+        $sql = "SELECT * FROM category_tbl WHERE";
     
         switch ($category) {
             case 'recordLaptop':
-                $sql .= " AND assetType='Laptop'";
+                $sql .= " assetType='Laptop'";
                 break;
             case 'recordDesktop':
-                $sql .= " AND assetType='Desktop'";
+                $sql .= " assetType='Desktop'";
                 break;
             case 'recordMonitor':
-                $sql .= " AND assetType='Monitor'";
+                $sql .= " assetType='Monitor'";
                 break;
             case 'recordPrinter':
-                $sql .= " AND assetType='Printer'";
+                $sql .= " assetType='Printer'";
                 break;
             case 'recordMobile':
-                $sql .= " AND assetType='Mobile'";
+                $sql .= " assetType='Mobile'";
                 break;
             case 'recordSim':
-                $sql .= " AND assetType='SIM'";
+                $sql .= " assetType='SIM'";
                 break;
         }
     

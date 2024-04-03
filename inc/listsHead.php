@@ -23,5 +23,5 @@
     <link rel="stylesheet" href="../css/styles.css">
     <script src="../js/dashboard.js"></script>
     <script src="../js/addAssets.js"></script>
-    <title>Asset Lists</title>
+    <title>IT Inventory</title>
 </head>

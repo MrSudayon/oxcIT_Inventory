@@ -17,6 +17,7 @@
             <div class="sub-btn" style="filter: invert(1)";><a href="../php/add_emp_info.php" title="Add Employees"><img src="../assets/icons/config/addemp.png"></a></div>
             <div class="sub-btn" style="filter: invert(1)";><a href="../php/add_location.php" title="Add Location"><img src="../assets/icons/config/addloc.png"></a></a></div>
             <div class="sub-btn" style="filter: invert(1)";><a href="../php/add_division.php" title="Add Department"><img src="../assets/icons/config/department.png"></a></a></div>
+            <!-- <div class="sub-btn" style="filter: invert(1)";><a href="../php/add_division.php" title="Add Department"><img src="../assets/icons/config/department.png"></a></a></div> -->
         </div>
     </div>
 

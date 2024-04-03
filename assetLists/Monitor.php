@@ -79,7 +79,6 @@ include '../inc/header.php';
                         <th> Asset Tag <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Model <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Specification <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Purchase Date <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Status <span class="icon-arrow">&UpArrow;</span></th>
                         <th width='10%'> Action <span class="icon-arrow">&UpArrow;</span></th>
                     </tr>
@@ -110,7 +109,6 @@ include '../inc/header.php';
                                 
                             ?>
                         </td>
-                        <td><?php echo $row['datepurchased']; ?></td>
                         <td><?php echo "<span class='statusSpan'>".$status."</span>" ?></td>
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {

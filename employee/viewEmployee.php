@@ -2,23 +2,26 @@
 include '../inc/auth.php';
 include '../inc/listsHead.php'; 
 include '../inc/header.php'; 
-?>
-<?php
+
     if(isset($_GET['id']) && $_GET['id'] != '') {
         $eid = $_GET['id'];
-        // "SELECT a.id AS aId, a.empId, a.status, a.assettype, a.assettag, a.model, a.remarks, 
-        // e.id, e.name AS ename, e.division, e.location, r.assetId, r.name, r.accountabilityRef AS accountabilityRef 
-        // FROM assets_tbl AS a 
-        // LEFT JOIN employee_tbl AS e ON a.empId = e.id";
 
-        $sql = "SELECT DISTINCT e.name AS ename, a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, a.empId, 
-                a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
-                e.id, e.division, e.location, e.empStatus, 
-                r.assetId, r.accountabilityRef AS accountabilityRef, r.turnoverRef AS turnoverRef 
-                FROM employee_tbl AS e 
-                LEFT JOIN assets_tbl AS a ON a.empId = e.id 
-                LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
-                WHERE a.status!='Archive' AND e.id='$eid'";
+        $sql = "SELECT a.id AS aId, a.empId, a.status, a.assettype, a.assettag, a.model, a.remarks, 
+                a.cpu, a.memory, a.storage, a.dimes, a.mobile, a.plan, a.os, 
+                e.id, e.name AS ename, e.empStatus, e.division, e.location, r.assetId, r.name, 
+                r.accountabilityRef AS accountabilityRef, r.turnoverRef AS turnoverRef 
+                FROM assets_tbl AS a 
+                LEFT JOIN reference_tbl AS r ON r.assetId = a.id
+                LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+                WHERE e.id='$eid' AND a.status!='Archive'";
+        // $sql = "SELECT DISTINCT e.name AS ename, a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, a.empId, 
+        //         a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
+        //         e.id, e.division, e.location, e.empStatus, 
+        //         r.assetId, r.accountabilityRef AS accountabilityRef, r.turnoverRef AS turnoverRef 
+        //         FROM employee_tbl AS e 
+        //         LEFT JOIN assets_tbl AS a ON a.empId = e.id 
+        //         LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+        //         WHERE a.status!='Archive' AND e.id='$eid'";
         $results = mysqli_query($db->conn, $sql);
         $rowCount = $results->num_rows;
         $rows = [];
@@ -34,10 +37,12 @@ include '../inc/header.php';
 ?>       
 <div class="content">
     <main class="table" id="customers_table">
+    <form method='post'>  
+
         <section class="table__header">
             <div class="btn">
-                <button type="submit" formaction="../admin/accountability.php" class="link-btn" name="accountability" onclick="return checkPrompt()">Generate Acc</button>
-                <button type="submit" formaction="../admin/turnover.php" class="link-btn" name="turnover" onclick="return checkPrompt()">Generate Turnover</button>
+                <button type="submit" formaction="../admin/accountability.php" class="link-btn" onclick="return checkPrompt()">Generate Acc</button>
+                <button type="submit" formaction="../admin/turnover.php" class="link-btn" onclick="return checkPrompt()">Generate Turnover</button>
             </div>
 
             <div class="input-group">
@@ -47,8 +52,6 @@ include '../inc/header.php';
         </section>
             <h1 style='width: 20%; padding: 0 .5em; margin: 0 .4em; border-radius: 1em; background-color: #ddd; color: black; '> </h1>
         <section class="table__body">
-        <form method='post'>
-
             <table>
                 <thead>
                     <tr>
@@ -72,7 +75,7 @@ include '../inc/header.php';
                 <tbody>          
                     <?php
                         foreach ($rows as $row) {
-                            $aId = $row['assetId'];
+                            $aId = $row['aId'];
                             $status = $row['empStatus'];
                     ?>
                     <tr>
@@ -118,14 +121,16 @@ include '../inc/header.php';
                     <?php } ?>
                 </tbody>
             </table>
-        </form>
-           
-        </section>
+        <!-- </form> -->
+        </section>      
+    </form>
     </main> 
     <script src="../js/sort.js"></script>
 
 </div>
-<?php } ?>
+<?php } else {
+        header('Location: ../admin/configuration.php');
+} ?>
 
 </body>
 </html>
