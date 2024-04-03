@@ -89,7 +89,7 @@ function changetextbox() {
     var status = document.getElementById("status");
     var repair = document.getElementById("repair-cost");
     var datedeployed = document.getElementById("datedeployed");
-    var assignto = document.getElementById("assigned");
+    var assignto = document.getElementById("assignedto");
     
     if (status.value == "For repair") {
         repair.style.display = "block";

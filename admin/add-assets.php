@@ -102,10 +102,8 @@ if(isset($_POST['save'])) {
 
                     <?php 
                     switch($id) {
-                        case 'recordDesktop' || 'recordLaptop':
-
-                            break;
-                        case 'recordMobile':
+                        case 'recordDesktop':
+                        case 'recordLaptop':
                             ?>
                                 <div class="input-box" id="model">
                                     <span class="details">Model</span>
@@ -116,9 +114,75 @@ if(isset($_POST['save'])) {
                                     <span class="details">Serial no.</span>
                                     <input type="text" name="serial" placeholder="Serial Number" id="">
                                 </div>
-                                <div class="input-box" id="mobile" style="display: none;">
-                                    <span class="details">Mobile no.</span>
-                                    <input type="text" name="mobile" placeholder="Mobile no." id="">
+                                <div class="input-box">
+                                    <span class="details">Supplier</span>
+                                    <input type="text" name="supplier" placeholder="Supplier" id="">
+                                </div>
+                                <div class="input-box">
+                                    <span class="details">Cost</span>
+                                    <input type="text" name="cost" placeholder="Item cost.." id="">
+                                </div>
+                                
+                                <div class="input-box">
+                                    <span class="details">Date Purchased</span>
+                                    <input type="date" name="dateprchs" placeholder="Date Purchased" id="" required>
+                                </div>
+                                <div class="input-box">
+                                    <span class="details" style="margin-bottom: 10px;">Status</span>
+                                    <select name="status" id="status" onChange="changetextbox()" required>
+                                        <option value='' hidden selected disabled>Please select</option>
+                                        <option value="For repair">For repair</option>
+                                        <option value="Deployed">Deployed</option>
+                                        <option value="To be Deploy">To be deploy</option>
+                                        <option value="Defective">Defective</option>
+                                        <option value="Sell">Sell</option>
+                                        <option value="Missing">Missing</option>
+                                    </select>
+                                </div>
+                                <div class="input-box" id="repair-cost" style="display: none;">
+                                    <span class="details">Repair Cost</span>
+                                    <input type="text" name="repair-cost" value="" placeholder="Repair Cost...">
+                                </div>
+                                <div class="input-box">
+                                    <span class="details">Remarks</span>
+                                    <input type="text" name="remarks" placeholder="Remarks" id="">
+                                </div>
+                            
+                            </div>
+                            <div class="title">Specification</div>
+                            <div class="asset-details">
+                                <div class="input-box" id="processor">
+                                    <span class="details">Processor</span>
+                                    <input type="text" name="processor" placeholder="Processor" id="">
+                                </div>
+                                <div class="input-box" id="ram">
+                                    <span class="details">Memory</span>
+                                    <input type="text" name="memory" placeholder="Memory" id="">
+                                </div>
+                                <div class="input-box" id="storage">
+                                    <span class="details">Storage</span>
+                                    <input type="text" name="storage" placeholder="Storage" id="">
+                                </div>
+                                <div class="input-box" id="os">
+                                    <span class="details">Operating System</span>
+                                    <input type="text" name="os" placeholder="Operating System" id="">
+                                </div>
+
+                            </div>
+
+                            <?php
+                            break;
+
+                        case 'recordMobile':
+                            ?>
+                                <div class="input-box" id="model">
+                                    <span class="details">Model</span>
+                                    <input type="text" name="model" placeholder="Model" id="">
+                                </div>
+                                
+                                <div class="input-box" id="serial">
+                                    <span class="details">Serial no.</span>
+                                    <input type="text" name="serial" placeholder="Serial Number" id="">
                                 </div>
 
                                 <div class="input-box">
@@ -167,6 +231,191 @@ if(isset($_POST['save'])) {
                                     <span class="details">Storage</span>
                                     <input type="text" name="storage" placeholder="Storage" id="">
                                 </div>
+
+                            </div>
+
+                            <?php
+                            break;
+                        
+                        case 'recordSim':
+                            ?>
+                                <div class="input-box" id="mobile">
+                                    <span class="details">Mobile no.</span>
+                                    <input type="text" name="mobile" placeholder="Mobile no." id="">
+                                </div>
+
+                                <div class="input-box">
+                                    <span class="details">Supplier</span>
+                                    <input type="text" name="supplier" placeholder="Supplier" id="">
+                                </div>
+                                <div class="input-box">
+                                    <span class="details">Cost</span>
+                                    <input type="text" name="cost" placeholder="Item cost.." id="">
+                                </div>
+                                <div class="input-box">
+                                    <span class="details">Date Purchased</span>
+                                    <input type="date" name="dateprchs" placeholder="Date Purchased" id="" required>
+                                </div>
+                                <div class="input-box">
+                                    <span class="details" style="margin-bottom: 10px;">Status</span>
+                                    <select name="status" id="status" onChange="changetextbox()" required>
+                                        <option value='' hidden selected disabled>Please select</option>
+                                        <option value="For repair">For repair</option>
+                                        <option value="Deployed">Deployed</option>
+                                        <option value="To be Deploy">To be deploy</option>
+                                        <option value="Defective">Defective</option>
+                                        <option value="Sell">Sell</option>
+                                        <option value="Missing">Missing</option>
+                                    </select>
+                                </div>
+                                <div class="input-box" id="repair-cost" style="display: none;">
+                                    <span class="details">Repair Cost</span>
+                                    <input type="text" name="repair-cost" value="" placeholder="Repair Cost...">
+                                </div>
+                                <div class="input-box">
+                                    <span class="details">Remarks</span>
+                                    <input type="text" name="remarks" placeholder="Remarks" id="">
+                                </div>
+                            
+                            </div>
+                            <div class="title">Specification</div>
+                            <div class="asset-details">
+
+                                <div class="input-box" id="plan">
+                                    <span class="details">Plan</span>
+                                    <input type="text" name="plan" placeholder="Plan" id="">
+                                </div>
+                            
+                            </div>
+                            
+                            <?php
+                            break;
+                        
+                        case 'recordMonitor':
+                        case 'recordUPS':
+                        case 'recordPrinter':
+                            ?>
+                                <div class="input-box" id="model">
+                                    <span class="details">Model</span>
+                                    <input type="text" name="model" placeholder="Model" id="">
+                                </div>
+                                <div class="input-box" id="serial">
+                                    <span class="details">Serial no.</span>
+                                    <input type="text" name="serial" placeholder="Serial Number" id="">
+                                </div>
+
+                                <div class="input-box">
+                                    <span class="details">Supplier</span>
+                                    <input type="text" name="supplier" placeholder="Supplier" id="">
+                                </div>
+                                <div class="input-box">
+                                    <span class="details">Cost</span>
+                                    <input type="text" name="cost" placeholder="Item cost.." id="">
+                                </div>
+                                <div class="input-box">
+                                    <span class="details">Date Purchased</span>
+                                    <input type="date" name="dateprchs" placeholder="Date Purchased" id="" required>
+                                </div>
+                                <div class="input-box">
+                                    <span class="details" style="margin-bottom: 10px;">Status</span>
+                                    <select name="status" id="status" onChange="changetextbox()" required>
+                                        <option value='' hidden selected disabled>Please select</option>
+                                        <option value="For repair">For repair</option>
+                                        <option value="Deployed">Deployed</option>
+                                        <option value="To be Deploy">To be deploy</option>
+                                        <option value="Defective">Defective</option>
+                                        <option value="Sell">Sell</option>
+                                        <option value="Missing">Missing</option>
+                                    </select>
+                                </div>
+                                <div class="input-box" id="repair-cost" style="display: none;">
+                                    <span class="details">Repair Cost</span>
+                                    <input type="text" name="repair-cost" value="" placeholder="Repair Cost...">
+                                </div>
+                                <div class="input-box">
+                                    <span class="details">Remarks</span>
+                                    <input type="text" name="remarks" placeholder="Remarks" id="">
+                                </div>
+                            
+                            </div>
+                            <div class="title">Specification</div>
+                            <div class="asset-details">
+
+                                <div class="input-box" id="dimes">
+                                    <span class="details">Dimension</span>
+                                    <input type="text" name="dimes" placeholder="Dimension" id="">
+                                </div>
+
+                            </div> 
+
+                            <?php
+                            break;
+
+                        default:
+                            ?>
+                                <div class="input-box" id="model">
+                                    <span class="details">Model</span>
+                                    <input type="text" name="model" placeholder="Model" id="">
+                                </div>
+                                
+                                <div class="input-box" id="serial">
+                                    <span class="details">Serial no.</span>
+                                    <input type="text" name="serial" placeholder="Serial Number" id="">
+                                </div>
+                                <div class="input-box">
+                                    <span class="details">Supplier</span>
+                                    <input type="text" name="supplier" placeholder="Supplier" id="">
+                                </div>
+                                <div class="input-box">
+                                    <span class="details">Cost</span>
+                                    <input type="text" name="cost" placeholder="Item cost.." id="">
+                                </div>
+                                
+                                <div class="input-box">
+                                    <span class="details">Date Purchased</span>
+                                    <input type="date" name="dateprchs" placeholder="Date Purchased" id="" required>
+                                </div>
+                                <div class="input-box">
+                                    <span class="details" style="margin-bottom: 10px;">Status</span>
+                                    <select name="status" id="status" onChange="changetextbox()" required>
+                                        <option value='' hidden selected disabled>Please select</option>
+                                        <option value="For repair">For repair</option>
+                                        <option value="Deployed">Deployed</option>
+                                        <option value="To be Deploy">To be deploy</option>
+                                        <option value="Defective">Defective</option>
+                                        <option value="Sell">Sell</option>
+                                        <option value="Missing">Missing</option>
+                                    </select>
+                                </div>
+                                <div class="input-box" id="repair-cost" style="display: none;">
+                                    <span class="details">Repair Cost</span>
+                                    <input type="text" name="repair-cost" value="" placeholder="Repair Cost...">
+                                </div>
+                                <div class="input-box">
+                                    <span class="details">Remarks</span>
+                                    <input type="text" name="remarks" placeholder="Remarks" id="">
+                                </div>
+                            
+                            </div>
+                            <div class="title">Specification</div>
+                            <div class="asset-details">
+                                <div class="input-box" id="processor">
+                                    <span class="details">Processor</span>
+                                    <input type="text" name="processor" placeholder="Processor" id="">
+                                </div>
+                                <div class="input-box" id="ram">
+                                    <span class="details">Memory</span>
+                                    <input type="text" name="memory" placeholder="Memory" id="">
+                                </div>
+                                <div class="input-box" id="storage">
+                                    <span class="details">Storage</span>
+                                    <input type="text" name="storage" placeholder="Storage" id="">
+                                </div>
+                                <div class="input-box" id="os">
+                                    <span class="details">Operating System</span>
+                                    <input type="text" name="os" placeholder="Operating System" id="">
+                                </div>
+                            </div> 
 
                             <?php
                             break;
@@ -248,15 +497,16 @@ if(isset($_POST['save'])) {
                             <span class="details">Operating System</span>
                             <input type="text" name="os" placeholder="Operating System" id="">
                         </div> -->
+                        
+
+                    <div class="title">Accountable</div>
+                    <div class="asset-details">
                         <div class="input-box" id="datedeployed" style="display: none;">
                             <span class="details">Date Deployed</span>
                             <input type="date" name="datedeployed" placeholder="Date Deployed" value="" id="">
                         </div>
 
-                    </div> 
-                    <div class="title"></div>
-                    <div class="asset-details">
-                        <div class="input-box">
+                        <div class="input-box" id="assignedto" style="display: none;">
                             <span class="details" style="margin-bottom: 10px;">Assign To</span>
                             <select name="assigned" id="assigned" class="assigned">
                                 <option value='' selected>Please Select</option>
