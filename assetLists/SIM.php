@@ -91,21 +91,17 @@ include '../inc/header.php';
                             $aId = $row['aId'];
                             $assetType = $row['assettype'];
 
-                            $cpu = $row['cpu'];
-                            $ram = $row['memory'];
-                            $storage = $row['storage']
+                            $plan = $row['plan'];
                     ?>            
                     <tr>
                         <td><a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></td></a>
                         <td><?php echo $row['model']; ?></td>
                         <td>
                             <?php 
-                            if($cpu == '' && $ram == '' && $storage == '') {
+                            if($plan == '') {
                                 echo "<i style='color:#FF6646;'>No details found.";
                             } else {
-                                echo "CPU: <i>". $cpu .
-                                "</i><br>Ram: <i>". $ram.
-                                "</i><br>Storage: <i>". $storage;
+                                echo "Plan: <i>". $plan;
                             }
                                 
                             ?>

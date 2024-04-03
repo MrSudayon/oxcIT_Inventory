@@ -92,7 +92,7 @@ include '../inc/header.php';
 
                             $cpu = $row['cpu'];
                             $ram = $row['memory'];
-                            $storage = $row['storage']
+                            $storage = $row['storage'];
                     ?>            
                     <tr>
                         <td><a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></td></a>
