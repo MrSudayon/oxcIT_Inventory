@@ -1,16 +1,10 @@
 <?php
-include ('../php/db_connection.php');
-
-$db = new Connection();
-
-// Get user session for Hist
-$user_sess = $select->selectUserById($_SESSION['id']);
-$name = $user_sess['username'];
+include '../inc/auth.php';
 
 if(isset($_GET['assetID'])) {
     $id = $_GET['assetID'];
-    $user_sess = $select->selectUserById($_SESSION['id']);
-    $name = $user_sess['username'];
+    
+    $name = $user['username'];
     
     $query = mysqli_query($db->conn, "UPDATE assets_tbl SET status='Archive' WHERE id='$id'");
     
