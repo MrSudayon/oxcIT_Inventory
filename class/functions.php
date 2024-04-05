@@ -264,9 +264,19 @@ class Operations {
 
     function getEmp() {
         global $db;
+
         $sql = "SELECT * FROM employee_tbl ";
+        $result = mysqli_query($db->conn, $sql);
        
-        return $sql;
+        return $result;
+    }
+    function getSpecificEmp($id) {
+        global $db;
+
+        $sql = "SELECT * FROM employee_tbl WHERE id='$id'";
+        $result = mysqli_query($db->conn, $sql);
+       
+        return $result;
     }
 
     // Asset List
@@ -347,9 +357,88 @@ class Operations {
                         LEFT JOIN reference_tbl AS r ON r.assetId = a.id
                         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
                         WHERE status!='Archive'";
-        $sql = mysqli_query($db->conn, $sqlSelect);
+        $result = mysqli_query($db->conn, $sqlSelect);
 
-        return $sql;  
+        return $result;  
+    }
+
+    function specificationCondition($assetId) {
+
+        global $db;
+
+        $sql =
+        "SELECT * FROM assets_tbl WHERE id='$assetId' AND status!='Archive'";
+        $result = mysqli_query($db->conn, $sql);
+
+        while($row = mysqli_fetch_assoc($result)) {
+            // $aId = $row['aId'];
+            $assettype = $row['assettype'];
+
+            $cpu = $row['cpu'];
+            $ram = $row['memory'];
+            $storage = $row['storage'];
+            $os = $row['os'];
+            $dimes = $row['dimes'];
+            $plan = $row['plan'];
+            $mobile = $row['mobile'];
+        
+            switch($assettype) {
+                case 'Laptop':
+                case 'Desktop':
+                    if(!empty($cpu) || !empty($ram) || !empty($storage) || !empty($os)) {
+                        $specs = "CPU: <i>". $cpu .
+                                "</i><br>Ram: <i>". $ram.
+                                "</i><br>Storage: <i>". $storage.
+                                "</i><br>OS: <i>". $os;
+                    } else {
+                        $specs = "<i style='color:#FF6666;'><br>No details found.";
+                    }
+                    return $specs;
+                    break;
+
+                case 'Monitor':
+                case 'Printer':
+                case 'UPS':
+                case 'AVR':
+                    if(!empty($dimes)) {
+                        $specs = "Dimension: <i>". $dimes;
+
+                    } else {
+                        $specs = "<i style='color:#FF6646;'>No details found.";
+                    }
+                    return $specs;
+                    break;
+                
+                case 'Mobile':
+                    if(!empty($ram) || !empty($storage)) {
+                        $specs = "Ram: <i>". $ram.
+                                "</i><br>Storage: <i>". $storage;
+                    } else {
+                        $specs = "<i style='color:#FF6646;'>No details found.";
+                    }
+                    return $specs;
+                    break;
+
+                case 'SIM':
+                    if(!empty($plan) || !empty($mobile)) {
+                        $specs = "Plan: <i>". $plan.
+                                "</i><br>Mobile: <i>". $mobile;
+                    } else {
+                        $specs = "<i style='color:#FF6646;'>No details found.";
+                    }
+                    return $specs;
+                    break;
+
+                default:
+                        $specs = "CPU: <i>". $cpu .
+                                "</i><br>Ram: <i>". $ram.
+                                "</i><br>Storage: <i>". $storage;
+                    return $specs;
+                    break;
+                    
+            }
+        }
+
     }
 }
 ?>

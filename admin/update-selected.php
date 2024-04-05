@@ -32,7 +32,7 @@ if(isset($_POST['update-asset'])) {
     if($result) {
         echo "<script>
         alert('✅Update Successful');
-        window.history.back();        
+        window.history.back();
         </script>";
         die();
     } else {

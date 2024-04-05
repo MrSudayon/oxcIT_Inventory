@@ -16,10 +16,9 @@
     --ter-color: #2E4583; /* or 293556 */
 }
 
-h1, h2, p, a, label {
+h1, h2, p, label, button {
     font-weight: 500;
     font-family: "Rubik", sans-serif;
-
 }
 i {
     font-weight: 800;
@@ -28,6 +27,8 @@ a {
     font-family: "Rubik", sans-serif;
     text-decoration: none;
     color: black;
+    font-weight: 500;
+
 }
 
 @media print {

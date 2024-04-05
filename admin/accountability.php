@@ -220,11 +220,10 @@ if(isset($_GET['select'])) {
     $selected = $_GET['select'];
     $existingAccountability = false; // Flag to check if any selected asset already has an accountability code
 
+    print_r($selected);
     // Loop through selected assets
     foreach ($selected as $assetID){
-        // $sql = "SELECT * FROM assets_tbl as a
-        //         LEFT JOIN employee_tbl as e ON e.id = a.empId 
-        //         WHERE a.id='$assetID' AND status !='Archive'";
+
         $sql = 
             "SELECT a.id AS aId, a.empId AS empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, a.datedeployed, 
             e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.accountabilityRef 
@@ -238,10 +237,7 @@ if(isset($_GET['select'])) {
             $assetTags[] = $row['assettag'];
             $acc_ref = $row['accountabilityRef'];
 
-            // Employee details
-            // $name = $row['ename'];
             $empId = $row['empId'];
-            $dept = $row['division'];
         }
     }
 
@@ -256,40 +252,17 @@ if(isset($_GET['select'])) {
         $existingAccountability = true;
     }
 
-    if($existingAccountability) {
-        ?>
-        <script> 
-            alert('Some selected assets already have accountability codes.');
-            window.location.href = 'employeeLists.php';
-        </script> 
-        <?php
-    } else {
+    // if($existingAccountability) {
+    //     ?
+    //     <script> 
+    //         alert('Some selected assets already have accountability codes.');
+    //         window.location.href = 'employeeLists.php';
+    //     </script> 
+    //     <?php
+    // } else {
 
         if ($acc_ref == '') {
-            // echo "<b>Ref#: " .$newCode. "</b>";
-
-            // If assetId is existed in reference tbl
-            // $refSql = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE assetId = ? AND turnoverRef != ''");
-            // mysqli_stmt_bind_param($refSql, "i", $aId);
-            // mysqli_stmt_execute($refSql);
-            // $result = mysqli_stmt_get_result($refSql);
-            
-            //     if (mysqli_num_rows($result) == 0) {
-            //         $refQry = mysqli_prepare($db->conn, "INSERT INTO reference_tbl (assetId, name, accountabilityRef, accountabilityStatus, referenceStatus) VALUES (?, ?, ?, 1, 1)");
-            //         mysqli_stmt_bind_param($refQry, "iss", $aId, $name, $newCode);
-            //         mysqli_stmt_execute($refQry);
-            //     } else {
-            //         $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl SET accountabilityStatus = 1, accountabilityRef = ? WHERE assetId = ?");
-            //         mysqli_stmt_bind_param($refQry, "ss", $newCode, $aId);
-            //         mysqli_stmt_execute($refQry);
-            //     }
         
-            // // Log history
-            // $history = mysqli_prepare($db->conn, "INSERT INTO history_tbl (name, action, date) VALUES (?, ?, NOW())");
-            // $action = "Generated accountability form: $assettag, Last used by: $name";
-            // mysqli_stmt_bind_param($history, "ss", $username, $action);
-            // mysqli_stmt_execute($history);
-
             $n = 4;
             $newCode = getCode($n); // Generate new accountability code for all selected assets
             $acc_ref = $newCode;
@@ -323,11 +296,61 @@ if(isset($_GET['select'])) {
         } else {        
             // Log history
             $history = mysqli_prepare($db->conn, "INSERT INTO history_tbl (name, action, date) VALUES (?, ?, NOW())");
-            $action = "Viewed accountability form for: $assettag";
+            $action = "Viewed accountability form for: " . implode(", ", $assetTags);
             mysqli_stmt_bind_param($history, "ss", $username, $action);
             mysqli_stmt_execute($history);
         }
+    // }
+} elseif(isset($_GET['id'])) {
+    $assetID = $_GET['id'];
+    $selected = $assetID;
+    $sql =    
+        "SELECT a.id AS aId, a.empId AS empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, a.datedeployed, 
+        e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.accountabilityRef 
+        FROM assets_tbl AS a 
+        LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+        LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+        WHERE r.assetId='$assetID' AND a.status !='Archive'";
+
+
+        // "SELECT a.id AS aId, a.empId AS empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, a.datedeployed, 
+        // e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.accountabilityRef 
+        // FROM assets_tbl AS a 
+        // LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+        // LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+        // WHERE r.assetId='$assetID' AND a.status !='Archive'";
+
+        // "SELECT DISTINCT a.id AS aId, a.empId AS empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, a.datedeployed, 
+        // e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.accountabilityRef AS accountabilityRef   
+        // FROM assets_tbl AS a 
+        // LEFT JOIN reference_tbl AS r ON r.assetId = a.id
+        // LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+        // WHERE a.id='$assetID' AND a.status !='Archive'";
+
+    $res = mysqli_query($db->conn, $sql);
+
+    while($row = mysqli_fetch_assoc($res)) {
+        $assetTags[] = $row['assettag'];
+        $acc_ref = $row['accountabilityRef'];
+
+        $empId = $row['empId'];
     }
+
+    // while($row = mysqli_fetch_assoc($res)) {
+    //     // $aId = $row['aId'];
+    //     $empId = $row['empId'];
+
+    //     $name = $row['ename'];
+    //     $arrayName[] = $name;
+    //     $dept = $row['division'];
+    //     $acc_ref = $row['accountabilityRef'];
+
+    //     $assettype = $row['assettype'];
+    //     $assettag = $row['assettag'];
+    //     $datedeployed = $row['datedeployed'];
+    //     $serial = $row['serial'];
+    //     $remarks = $row['remarks'];
+    // }
 } else {
     ?>
     <script>
@@ -343,8 +366,8 @@ if(isset($_GET['select'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../assets/logo.jpg">
     <link rel="stylesheet" href="../css/accountability.css">
+    <link rel="icon" href="../assets/logo.jpg">
     <title>Accountability Form</title>
 </head>
 <body>
@@ -358,6 +381,8 @@ if(isset($_GET['select'])) {
     </center>
     <div class="reference-code" align="right">
     <?php 
+
+
         // Generating Reference Code
     // $n=4;
     // function getCode($n) {
@@ -431,7 +456,6 @@ if(isset($_GET['select'])) {
     // } else {
     //     die();
     // }
-        
         echo "<b>Ref#: " . $acc_ref . "</b>";
         
     ?>
@@ -446,95 +470,49 @@ if(isset($_GET['select'])) {
                 <th>Remarks</th>
             </tr>
             <?php
-            foreach ($selected as $assetID) {
-                $sql = "SELECT * FROM assets_tbl WHERE id='$assetID' AND status !='Archive'";
-                $res = mysqli_query($db->conn, $sql);
+            if(empty($selected)) {
 
-                while($row = mysqli_fetch_assoc($res)) {
-                    $assettype = $row['assettype'];
-
-                    $cpu = $row['cpu'];
-                    $ram = $row['memory'];
-                    $storage = $row['storage'];
-                    $os = $row['os'];
-                    $mobile = $row['mobile'];
-                    $plan = $row['plan'];
-                    $dimes = $row['dimes'];
-
-                    $serial = $row['serial'];
-                    $datedeployed = $row['datedeployed'];
-                    $remarks = $row['remarks'];
-
-                    switch($assettype) {
-                        case 'Laptop':
-                        case 'Desktop':
-                            if(!empty($cpu) || !empty($os)) {
-                                $specs = "CPU: <i>". $cpu .
-                                        "</i><br>Ram: <i>". $ram.
-                                        "</i><br>Storage: <i>". $storage.
-                                        "</i><br>OS: <i>". $os;
-                            } else {
-                                $specs = "<i style='color:#FF6646;'>No details found.";
-                            }
-                            break;
-
-                        case 'Monitor':
-                        case 'Printer':
-                        case 'UPS':
-                        case 'AVR':
-                            if(!empty($dimes)) {
-                                $specs = "Dimension: <i>". $dimes;
-
-                            } else {
-                                $specs = "<i style='color:#FF6646;'>No details found.";
-                            }
-                            break;
-                        
-                        case 'Mobile':
-                            if(!empty($ram) || !empty($storage)) {
-                                $specs = "Ram: <i>". $ram.
-                                        "</i><br>Storage: <i>". $storage;
-                            } else {
-                                $specs = "<i style='color:#FF6646;'>No details found.";
-                            }
-                            break;
-
-                        case 'SIM':
-                            if(!empty($plan) || !empty($mobile)) {
-                                $specs = "Plan: <i>". $plan.
-                                        "</i><br>Mobile: <i>". $mobile;
-                            } else {
-                                $specs = "<i style='color:#FF6646;'>No details found.";
-                            }
-                            break;
-
-                        default:
-                                $specs = "CPU: <i>". $cpu .
-                                        "</i><br>Ram: <i>". $ram.
-                                        "</i><br>Storage: <i>". $storage;
-                            break;
+            } else {
+                foreach ($selected as $assetID) {
+                    $sql = "SELECT * FROM assets_tbl WHERE id='$assetID' AND status !='Archive'";
+                    $res = mysqli_query($db->conn, $sql);
+    
+                    while($row = mysqli_fetch_assoc($res)) {
+                        $aId = $row['id'];
+                        $assettype = $row['assettype'];
+    
+                        $serial = $row['serial'];
+                        $datedeployed = $row['datedeployed'];
+                        $remarks = $row['remarks'];
+    
+                        $specification = $operation->specificationCondition($aId);   
+                ?>
+                <tr>
+                    <td><?php echo $assettype; ?></td>
+    
+                    <!-- Specification If assettype == etc.. else no details.. -->
+                    <td><?php echo $specification; ?></td> 
+                    <td><?php echo $serial; ?></td>
+                    <td><?php echo $datedeployed; ?></td>
+                    <td><?php echo $remarks; ?></td>    
+                </tr>
+                <?php
                     }
-                
-                    
-            ?>
-            <tr>
-                <td><?php echo $assettype; ?></td>
+                } 
+            }
+            
+            $result = $operation->getSpecificEmp($empId);
 
-                <!-- Specification If assettype == etc.. else no details.. -->
-                <td><?php echo $specs; ?></td> 
-                <td><?php echo $serial; ?></td>
-                <td><?php echo $datedeployed; ?></td>
-                <td><?php echo $remarks; ?></td>    
-            </tr>
-            <?php
-                }
+            while($row = mysqli_fetch_assoc($result)) {
+                $empName = $row['name'];
+                $dept = $row['division'];
             }
             ?>
         </table>
         <div class="info"><br>
             <h3>Responsibilities</h3>
             <p>
-            &nbsp;&nbsp; &nbsp;&nbsp;I, <b><?php echo $name; ?></b>, acknowledge that the above-mentioned asset has been issued to me for the purpose of performing my job responsibilities. I understand and agree to the following responsibilities:
+            &nbsp;&nbsp; &nbsp;&nbsp;I, <b><?php echo $empName; ?></b>, acknowledge that the above-mentioned asset has been issued to me for the purpose of performing my job responsibilities. I understand and agree to the following responsibilities:
             <br><br></p>
             <p style="font-weight: 600;">
             1. I am responsible for the proper use and care of the assigned asset.

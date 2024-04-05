@@ -6,6 +6,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../assets/logo.jpg">
+    <link rel="stylesheet" href="../css/formStyles.css">
+    <title>Update</title>
+</head>
+<body>
+<?php include '../inc/header.php'; ?>
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/logo.jpg">
     <link rel="stylesheet" href="../css/styles.css">
     <title>Update</title>
 </head>
@@ -18,10 +30,10 @@
         <button class="dropbtn">Menu</button>
         <div class="dropdown-content">
             <a href="../php/history.php">History</a>
-            <a href="../php/logout.php?id=<?php echo $id; ?>&name=<?php echo $username; ?>">Logout</a>
+            <a href="../php/logout.php?id=?php echo $id; ?>&name=?php echo $username; ?>">Logout</a>
         </div>
     </div>
-</header>
+</header> -->
 
     <div class="container">
         <div class="add-form">
@@ -32,8 +44,7 @@
             if(isset($_GET['id']))
             {
                 $refId = mysqli_real_escape_string($db->conn, $_GET['id']); // assetId from reference tbl
-                $ref = new assetsController;
-                $result = $ref->editReference($refId);
+                $result = $assetController->editReference($refId);
 
                 if($result) {
                     

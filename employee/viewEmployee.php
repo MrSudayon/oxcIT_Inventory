@@ -5,61 +5,51 @@ include '../inc/header.php';
 
 if(isset($_GET['id']) && $_GET['id'] != '') {
     $eid = $_GET['id'];
+    $rows = [];
 
     // Separate selected Employee
     $sqlSelectEmp = "SELECT * FROM employee_tbl WHERE id='$eid' AND empStatus='1'";
     $sqlResult = mysqli_query($db->conn, $sqlSelectEmp);
     if($sqlResult) {
         while($row = mysqli_fetch_assoc($sqlResult)) {
+            $rows[] = $row;
+        }
+        foreach($rows as $row) {
+            $empId = $row['id'];
             $name = $row['name'];
             $dept = $row['division'];
             $location = $row['location'];
         }
     } else {
-        $name = '';
-        $dept = '';
-        $location = '';
+        echo 'no selected. where the employee?';
+        die();
     }
 
-    // $sql = "SELECT DISTINCT a.id AS aId, a.empId, a.status, a.assettype, a.assettag, a.model, a.remarks, 
-    //         a.cpu, a.memory, a.storage, a.dimes, a.mobile, a.plan, a.os, 
-    //         e.id, e.name AS ename, e.empStatus, e.division, e.location, r.assetId, r.name, 
-    //         r.accountabilityRef AS accountabilityRef, r.turnoverRef AS turnoverRef 
-    //         FROM assets_tbl AS a 
-    //         LEFT JOIN reference_tbl AS r ON r.assetId = a.id
-    //         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-    //         WHERE a.empId='$eid' AND a.status!='Archive'";
-    // $sql = "SELECT * FROM assets_tbl WHERE empId='$eid' AND status!='Archive'";
-    $sql = "SELECT DISTINCT a.id AS aId, a.*, e.id, e.name AS ename, e.empStatus, e.division, e.location, r.assetId, r.name, 
-                r.accountabilityRef AS accountabilityRef, r.turnoverRef AS turnoverRef 
-                FROM assets_tbl AS a 
-                INNER JOIN reference_tbl AS r ON r.assetId = a.id 
-                -- INNER JOIN employee_tbl AS e ON r.name = e.id 
-                WHERE a.empId='$eid' AND a.status!='Archive'";
+    $sql =
+        "SELECT DISTINCT a.id AS aId, a.empId, a.assettype, a.assettag, a.status, 
+        a.cpu, a.memory, a.storage, a.os, a.dimes, a.plan, a.mobile, 
+        r.name, r.accountabilityRef, r.turnoverRef 
+        FROM assets_tbl AS a 
+        LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+        WHERE a.empId='1' AND a.status!='Archive'"; 
+
     $results = mysqli_query($db->conn, $sql);
     $rowCount = $results->num_rows;
-
-    $rows = [];
-    
-    while ($row = mysqli_fetch_assoc($results)) {
-        $rows[] = $row;
-    }
-
 }
 ?>       
 <div class="content">
 <form method="get">
     <main class="table" id="customers_table">
-        <!-- <form method="post" action="../generateCode/generate.php"> -->
             <section class="table__header">
                 <div class="btn">
+                <a href="../admin/employeeLists.php" class="link-btn">Back</a>
                 <button type="submit" formaction="../admin/accountability.php" class="link-btn" onclick="return checkPrompt()">Generate Acc</button>
                     <!--<button type="submit" class="link-btn" name="generateAcc" onclick="return checkPrompt()">Generate Acc</button>
                     <button type="submit" class="link-btn" name="generateTurnover" onclick="return checkPrompt()">Generate Turnover</button> -->
                 </div>
 
                 <div class="input-group">
-                    <input type="search" placeholder="Search Data..." style="height:100%;">
+                    <input type="search" placeholder="Search Data...">
                     <img src="../assets/icons/search.png" alt="">
                 </div>
             </section>
@@ -70,7 +60,7 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
                     <thead>
                         <tr>
                             <th colspan=3 style='background:white; color: black; pointer-events: none;'>
-                                <strong><?php echo asd; ?></strong><br>
+                                <strong><?php echo $name; ?></strong><br>
                                 <i><?php echo $dept; ?><br>
                                 <?php echo $location; ?>
                             </th>
@@ -88,31 +78,45 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
                     </thead>
                     <tbody>          
                         <?php
-                        foreach ($rows as $row) {
-                            $aId = $row['aId'];
+                            while ($row = mysqli_fetch_assoc($results)) {
+
+                                $aId = $row['aId'];
+                                $assettype = $row['assettype'];
+                                $assettag = $row['assettag'];
+                                
+                                $cpu = $row['cpu'];
+                                $ram = $row['memory'];
+                                $storage = $row['storage'];
+                                $os = $row['os'];
+                                $dimes = $row['dimes'];
+                                $plan = $row['plan'];
+                                $mobile = $row['mobile'];
+
+                                $accountabilityRef = $row['accountabilityRef'];
+                                $turnoverRef = $row['turnoverRef'];
                         ?>
-                        <tr>
-                            <td><input type="checkbox" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
-                            <td>
-                                <strong><?php echo $row['assettag']; ?></strong><br>
-                                <?php echo $row['cpu']; ?><br>
-                                <?php echo $row['memory']; ?><br>
-                                <?php echo $row['storage']; ?><br>
-                                <?php echo $row['dimes']; ?>
-                            </td>
-                            <td><?php echo $row['accountabilityRef']; ?></td>
-                            <td><?php echo $row['turnoverRef']; ?></td>
-                            <td>
-                                <?php
-                                if($row['turnoverRef'] != '') {
-                                ?>
-                                    <a href="../update/turnoverUpd.php?id=<?php echo $aId; ?>"><img src="../assets/icons/turnover.png" width="32px"></a>&nbsp;
-                                <?php
-                                }
-                                ?>
-                                <a href="../update/remove.php?assetID=<?php echo $aId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
-                            </td>   
-                        </tr>
+                            <tr>
+                                <td><input type="checkbox" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
+                                <td>
+                                    <strong><?php echo $assettag; ?></strong><br>
+                                    <?php 
+                                        $specification = $operation->specificationCondition($aId);
+                                        echo $specification;
+                                    ?>
+                                </td>
+                                <td><?php echo $accountabilityRef; ?></td>
+                                <td><?php echo $turnoverRef; ?></td>
+                                <td>
+                                    <?php
+                                    if($turnoverRef != '') {
+                                    ?>
+                                        <a href="../update/turnoverUpd.php?id=<?php echo $aId; ?>"><img src="../assets/icons/turnover.png" width="32px"></a>&nbsp;
+                                    <?php
+                                    }
+                                    ?>
+                                    <a href="../update/remove.php?assetID=<?php echo $aId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
+                                </td>   
+                            </tr>
                         <?php } ?>
                     </tbody>
                 </table>

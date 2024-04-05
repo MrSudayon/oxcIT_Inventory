@@ -16,20 +16,13 @@
     --ter-color: #2E4583; /* or 293556 */
 }
 
-h1, h2, h3, p {
-    font-family: "Rubik", sans-serif;
-    font-weight: 500;
-}
-
-h4 {
-    font-family: "Rubik", sans-serif;
+h1, h2, h3, p, h4 {
     font-weight: 500;
 }
 p {
     font-weight: 400;
     margin-top: 5px;
     text-wrap: wrap;
-    font-family: "Rubik", sans-serif;
 }
 
 body {
