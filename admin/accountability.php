@@ -199,9 +199,6 @@
 //         $remarks = $row['remarks'];
 //     }
 // }
-
-
-
 include '../inc/auth.php';
 
 function getCode($n) {
@@ -220,7 +217,6 @@ if(isset($_GET['select'])) {
     $selected = $_GET['select'];
     $existingAccountability = false; // Flag to check if any selected asset already has an accountability code
 
-    print_r($selected);
     // Loop through selected assets
     foreach ($selected as $assetID){
 
@@ -252,14 +248,14 @@ if(isset($_GET['select'])) {
         $existingAccountability = true;
     }
 
-    // if($existingAccountability) {
-    //     ?
-    //     <script> 
-    //         alert('Some selected assets already have accountability codes.');
-    //         window.location.href = 'employeeLists.php';
-    //     </script> 
-    //     <?php
-    // } else {
+    if($existingAccountability) {
+        ?>
+        <script> 
+            alert('Some selected assets already have accountability codes.');
+            window.location.href = 'employeeLists.php';
+        </script> 
+        <?php
+    } else {
 
         if ($acc_ref == '') {
         
@@ -268,12 +264,18 @@ if(isset($_GET['select'])) {
             $acc_ref = $newCode;
 
             // If assetId is existed in reference tbl
-            $refSql = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE assetId = ? AND turnoverRef != ''");
+            $refSql = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE assetId = ? AND accountabilityRef!=''");
             mysqli_stmt_bind_param($refSql, "i", $aId);
             mysqli_stmt_execute($refSql);
             $result = mysqli_stmt_get_result($refSql);
             
-            if (mysqli_num_rows($result) == 0) {
+            if (mysqli_num_rows($result) > 0) {
+
+                $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl SET accountabilityStatus = 1, accountabilityRef = ? WHERE assetId = ?");
+                mysqli_stmt_bind_param($refQry, "si", $newCode, $assetID);
+                mysqli_stmt_execute($refQry);
+                
+            } else {
 
                 foreach ($selected as $assetID) {
                     // Insert new accountability reference for each asset
@@ -281,11 +283,6 @@ if(isset($_GET['select'])) {
                     mysqli_stmt_bind_param($refQry, "iss", $assetID, $empId, $newCode);
                     mysqli_stmt_execute($refQry);
                 }
-            } else {
-
-                $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl SET accountabilityStatus = 1, accountabilityRef = ? WHERE assetId = ?");
-                mysqli_stmt_bind_param($refQry, "si", $newCode, $assetID);
-                mysqli_stmt_execute($refQry);
 
             }
             // Log history for generated accountability code
@@ -300,7 +297,7 @@ if(isset($_GET['select'])) {
             mysqli_stmt_bind_param($history, "ss", $username, $action);
             mysqli_stmt_execute($history);
         }
-    // }
+    }
 } elseif(isset($_GET['id'])) {
     $assetID = $_GET['id'];
     $selected = $assetID;
@@ -336,21 +333,6 @@ if(isset($_GET['select'])) {
         $empId = $row['empId'];
     }
 
-    // while($row = mysqli_fetch_assoc($res)) {
-    //     // $aId = $row['aId'];
-    //     $empId = $row['empId'];
-
-    //     $name = $row['ename'];
-    //     $arrayName[] = $name;
-    //     $dept = $row['division'];
-    //     $acc_ref = $row['accountabilityRef'];
-
-    //     $assettype = $row['assettype'];
-    //     $assettag = $row['assettag'];
-    //     $datedeployed = $row['datedeployed'];
-    //     $serial = $row['serial'];
-    //     $remarks = $row['remarks'];
-    // }
 } else {
     ?>
     <script>
@@ -380,10 +362,8 @@ if(isset($_GET['select'])) {
     <h2>Accountability Form</h2><br>
     </center>
     <div class="reference-code" align="right">
-    <?php 
-
-
-        // Generating Reference Code
+    
+    <?php // Generating Reference Code
     // $n=4;
     // function getCode($n) {
     //     $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -455,10 +435,8 @@ if(isset($_GET['select'])) {
     //     }
     // } else {
     //     die();
-    // }
-        echo "<b>Ref#: " . $acc_ref . "</b>";
-        
-    ?>
+    // } ?>
+    <?php echo "<b>Ref#: " . $acc_ref . "</b>"; ?>
     </div>
         <table class="assets-table">
             <tr>
@@ -471,7 +449,6 @@ if(isset($_GET['select'])) {
             </tr>
             <?php
             if(empty($selected)) {
-
             } else {
                 foreach ($selected as $assetID) {
                     $sql = "SELECT * FROM assets_tbl WHERE id='$assetID' AND status !='Archive'";
@@ -480,17 +457,15 @@ if(isset($_GET['select'])) {
                     while($row = mysqli_fetch_assoc($res)) {
                         $aId = $row['id'];
                         $assettype = $row['assettype'];
-    
+
                         $serial = $row['serial'];
                         $datedeployed = $row['datedeployed'];
                         $remarks = $row['remarks'];
     
-                        $specification = $operation->specificationCondition($aId);   
+                        $specification = $operation->specificationCondition($aId);
                 ?>
                 <tr>
                     <td><?php echo $assettype; ?></td>
-    
-                    <!-- Specification If assettype == etc.. else no details.. -->
                     <td><?php echo $specification; ?></td> 
                     <td><?php echo $serial; ?></td>
                     <td><?php echo $datedeployed; ?></td>
@@ -500,7 +475,7 @@ if(isset($_GET['select'])) {
                     }
                 } 
             }
-            
+
             $result = $operation->getSpecificEmp($empId);
 
             while($row = mysqli_fetch_assoc($result)) {

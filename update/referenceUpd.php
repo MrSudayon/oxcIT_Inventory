@@ -48,8 +48,8 @@
 
                 if($result) {
                     
-                    $trnStatus = $result['trnStatus'];
-                    $accStatus = $result['acctStatus'];
+                    $trnStatus = $result['turnoverStatus'];
+                    $accStatus = $result['accountabilityStatus'];
                     
                     $sql = "SELECT * FROM assets_tbl WHERE id='$refId'";
                     $res = mysqli_query($db->conn, $sql);
@@ -66,7 +66,7 @@
                         </div>
                         <div class="input-box">
                             <span class="details">Accountability Code</span>
-                            <input type="text" value="<?=$data['accountability_ref'] ?>"  style="background-color: #ccc;" readonly>
+                            <input type="text" value="<?=$data['accountabilityRef'] ?>"  style="background-color: #ccc;" readonly>
                         </div>
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Status</span>
@@ -77,7 +77,7 @@
                                 case 1:
                                     $accStatus = 'On Process';
                                     ?>
-                                        <option value="<?=$result['acctStatus']?>"><?php echo $accStatus; ?></option>
+                                        <option value="<?=$result['accountabilityStatus']?>"><?php echo $accStatus; ?></option>
                                         <option value="2">Signed</option>
                                         <option value="0">N/A</option>
                                     <?php
@@ -85,7 +85,7 @@
                                 case 2:
                                     $accStatus = 'Signed';
                                     ?>
-                                        <option value="<?=$result['acctStatus']?>"><?php echo $accStatus; ?></option>
+                                        <option value="<?=$result['accountabilityStatus']?>"><?php echo $accStatus; ?></option>
                                         <option value="1">On Process</option>
                                         <option value="0">N/A</option>
                                     <?php
@@ -93,7 +93,7 @@
                                 default:
                                     $accStatus = 'N/A';
                                     ?>
-                                        <option value="<?=$result['acctStatus']?>"><?php echo $accStatus; ?></option>
+                                        <option value="<?=$result['accountabilityStatus']?>"><?php echo $accStatus; ?></option>
                                         <option value="1">On Process</option>
                                         <option value="2">Signed</option>
                                     <?php
@@ -105,18 +105,18 @@
                         </div>
                         <div class="input-box">
                             <span class="details">Accountability File</span>
-                            <input type="file" name="acctfile" id="acctfile" accept="files/*" value="<?=$result['acctFile']?>">
+                            <input type="file" name="acctfile" id="acctfile" accept="files/*" value="<?=$result['accountabilityFile']?>">
                         </div>
                         <div class="input-box">
                             <span class="details">Date</span>
-                            <input type="date" name="acctDate" id="acctDate" value="<?=$result['acctDate']?>">
+                            <input type="date" name="acctDate" id="acctDate" value="<?=$result['accountabilityDate']?>">
                         </div>
 
                 </div>
                 <div class="asset-details">
                         <div class="input-box">
                             <span class="details">Turnover Code</span>
-                            <input type="text" value="<?=$data['turnover_ref'] ?>"  style="background-color: #ccc;" readonly>
+                            <input type="text" value="<?=$data['turnoverRef'] ?>"  style="background-color: #ccc;" readonly>
                         </div>
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Status</span>
@@ -127,7 +127,7 @@
                                 case 1:
                                     $trnStatus = 'On Process';
                                     ?>
-                                        <option value="<?=$result['trnStatus']?>"><?php echo $trnStatus; ?></option>
+                                        <option value="<?=$result['turnoverStatus']?>"><?php echo $trnStatus; ?></option>
                                         <option value="2">Signed</option>
                                         <option value="0">N/A</option>
                                     <?php
@@ -135,7 +135,7 @@
                                 case 2:
                                     $trnStatus = 'Signed';
                                     ?>
-                                        <option value="<?=$result['trnStatus']?>"><?php echo $trnStatus; ?></option>
+                                        <option value="<?=$result['turnoverStatus']?>"><?php echo $trnStatus; ?></option>
                                         <option value="1">On Process</option>
                                         <option value="0">N/A</option>
                                     <?php
@@ -143,7 +143,7 @@
                                 default:
                                     $trnStatus = 'N/A';
                                     ?>
-                                        <option value="<?=$result['trnStatus']?>"><?php echo $trnStatus; ?></option>
+                                        <option value="<?=$result['turnoverStatus']?>"><?php echo $trnStatus; ?></option>
                                         <option value="1">On Process</option>
                                         <option value="2">Signed</option>
                                     <?php
@@ -154,11 +154,11 @@
                         </div>
                         <div class="input-box">
                             <span class="details">Turnover File</span>
-                            <input type="file" name="trnfile" accept="files/*" value="<?=$result['trnFile']?>">
+                            <input type="file" name="trnfile" accept="files/*" value="<?=$result['turnoverFile']?>">
                         </div>
                         <div class="input-box">
                             <span class="details">Date</span>
-                            <input type="date" name="trnDate" id="trnDate" value="<?=$result['trnDate']?>">
+                            <input type="date" name="trnDate" id="trnDate" value="<?=$result['turnoverDate']?>">
                         </div>
                     </div>
             <?php 

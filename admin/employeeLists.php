@@ -3,10 +3,11 @@ include '../inc/auth.php';
 include '../inc/listsHead.php'; 
 include '../inc/header.php'; 
 
-    $sqlSelectAll = "SELECT * FROM employee_tbl";
+    $sqlSelectAll = "SELECT * FROM employee_tbl WHERE empStatus=1";
     $results = mysqli_query($db->conn, $sqlSelectAll);
 
     $results_per_page = 15;
+
     if (!isset ($_GET['page']) ) {  
         $page = 1;  
     } elseif ($_GET['page'] === 'all') {  
@@ -17,8 +18,7 @@ include '../inc/header.php';
         //         LEFT JOIN employee_tbl AS e 
         //         ON e.id = a.empId 
         //         WHERE a.status!='Archive' AND assettype='Laptop'";
-        $sql = "SELECT * FROM employee_tbl 
-                ORDER BY empStatus DESC";
+        $sql = "SELECT * FROM employee_tbl WHERE empStatus=1";
         $res = mysqli_query($db->conn, $sql);
         $rowCountPage = $res->num_rows;
     } else {
@@ -38,8 +38,7 @@ include '../inc/header.php';
         //         ON e.id = a.empId 
         //         WHERE a.status!='Archive' AND assettype='Laptop' 
         //         LIMIT $page_first_result, $results_per_page";
-        $sql = "SELECT * FROM employee_tbl 
-                ORDER BY empStatus DESC 
+        $sql = "SELECT * FROM employee_tbl WHERE empStatus=1 
                 LIMIT $page_first_result, $results_per_page";
 
         $res = mysqli_query($db->conn, $sql);
@@ -68,7 +67,7 @@ include '../inc/header.php';
 <div class="content">
     <main class="table" id="customers_table">
         <section class="table__header">
-            <a href="../admin/add-assets.php?id=recordLaptop" class="link-btn">New Record</a>
+            <!-- <a href="../admin/add-assets.php?id=recordLaptop" class="link-btn">New Record</a> -->
             <div class="input-group">
                 <input type="search" placeholder="Search Data...">
                 <img src="../assets/icons/search.png" alt="">

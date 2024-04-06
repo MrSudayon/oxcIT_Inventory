@@ -440,5 +440,14 @@ class Operations {
         }
 
     }
+
+    function ifEmptyReference($acctRef, $turnoverRef, $acctFile, $turnoverFile) {
+        if(empty($acctRef)) { $acctRef = 'N/A'; return $acctRef; }
+        if(empty($turnoverRef)) { $turnoverRef = 'N/A'; return $turnoverRef; }
+        if(empty($acctFile)) { 
+            $acctFile = 'N/A'; 
+            return;  }
+        if(empty($turnoverFile)) { $turnoverFile = 'N/A'; return $turnoverFile; }
+    }
 }
 ?>

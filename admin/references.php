@@ -6,7 +6,7 @@ $referenceTbl = $operation->getReferenceTable();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../assets/logo.jpg">
     <link rel="stylesheet" href="../css/styles.css">
@@ -15,26 +15,26 @@ $referenceTbl = $operation->getReferenceTable();
     <link rel="icon" href="../assets/logo.jpg">
     <title>Reference</title>
 </head>
-<style>
-span.disable-btn {
-    cursor: not-allowed;
-    pointer-events: none;
-    filter: grayscale(1);
-}
-span.disable-acctRef {
-    pointer-events: all;
-    filter: grayscale(0);
-}
-.link {
-    color: black;
-    font-weight: 600;
-}
-.link:hover {
-    color: blue;
-    transition: ease-in-out .2s;
-    text-decoration: underline;
-}
-</style>
+    <style>
+        span.disable-btn {
+            cursor: not-allowed;
+            pointer-events: none;
+            filter: grayscale(1);
+        }
+        span.disable-acctRef {
+            pointer-events: all;
+            filter: grayscale(0);
+        }
+        .link {
+            color: black;
+            font-weight: 600;
+        }
+        .link:hover {
+            color: blue;
+            transition: ease-in-out .2s;
+            text-decoration: underline;
+        }
+    </style>
 <?php include '../inc/header.php'; ?>
 <body>
 
@@ -48,20 +48,16 @@ span.disable-acctRef {
             </div>
         </section>
         <section class="table__body">
-        
-
             <table>
                 <thead>
                     <tr>
                         <th width="15%">User</th>
-                        <!-- <th width="5%">Asset Type</th> -->
                         <th>Accountability Ref</th>
                         <th width="10%">File</th>
                         <th width="5%">Status</th>
                         <th width="5%">Date</th>
                         <th width="2%"></th>
 
-                        <!-- <th width="5%">Asset Type</th> -->
                         <th>Turnover Ref</th>
                         <th width="10%">File</th>
                         <th width="5%">Status</th>
@@ -70,7 +66,7 @@ span.disable-acctRef {
                     </tr>
                 </thead>
                 <tbody>
-                <?php 
+                    <?php 
                     while($row = mysqli_fetch_assoc($referenceTbl)) {
                         $rid = $row['rid'];
                         $assetId = $row['assetId'];
@@ -85,7 +81,6 @@ span.disable-acctRef {
                         $turnoverFile = $row['turnoverFile'];
                         $empId = $row['rname']; 
 
-                        echo $acctFile;
                         $qrySelect = "SELECT * FROM employee_tbl WHERE id='$empId'";
                         $result = mysqli_query($db->conn, $qrySelect);
 
@@ -93,9 +88,7 @@ span.disable-acctRef {
                             $empName = $row['name'];
                         }
                         if($acctRef != '' || $turnoverRef != '') {
-                            // 0 N/A
-                            // 1 Process
-                            // 2 Signed
+
                             switch($acctStatus) {
                                 case 1:
                                     $acctStatus = 'On Process';
@@ -117,23 +110,13 @@ span.disable-acctRef {
                                 default:
                                     $turnoverStatus = 'None';
                             }
+
+                            $operation->ifEmptyReference($acctRef, $turnoverRef, $acctFile, $turnoverFile);
+
+                            
                     ?> 
-                        <tr>
-                            <td><?php echo $empName; ?></td>
-
-                            <?php 
-                            if($acctRef == '') {
-                                
-                                // echo "<td style='font-weight:600;'>N/A</td>";
-                                echo "<td style='font-weight:600;'>N/A</td>";
-                                echo "<td style='font-weight:600;'>N/A</td>";
-                                echo "<td>" . $acctStatus;"</td>";
-                                echo "<td>" . $acctDate;"</td>";
-                                echo "<td><span class='disable-btn'><img src='../assets/icons/remove.png' width='24px'></span></td>";
-                            } else {               
-                            ?>
-
-                                <!-- <td>?php echo $assettag;?></td> -->
+                            <tr>
+                                <td><?php echo $empName; ?></td>
                                 <td><a class="link" href="accountability.php?id=<?php echo $rid; ?>"><?php echo $acctRef;?></a></td>
                                 <td width="10%;"><a class="link" href="../files/download.php?acctRef_id=<?php echo $rid; ?>" target="_blank"><?php echo $acctFile; ?></td>
                                 <td><?php echo $acctStatus; ?></td>
@@ -147,25 +130,7 @@ span.disable-acctRef {
                                         <?php } ?>
                                     </center>
                                 </td>
-                            <?php
-                            }
-                            ?>
-                            
-                            <?php
-                            if ($turnoverRef == '') {
-                                // echo "<td style='font-weight:600;'>N/A</td>";
-                                echo "<td style='font-weight:600;'>N/A</td>";   
-                                echo "<td style='font-weight:600;'>N/A</td>";   
-                                echo "<td>" . $turnoverStatus;"</td>";
-                                echo "<td>" . $turnoverDate;"</td>";   
-                                if($turnoverStatus == 'Signed') {              
-                                    echo "<td><center><span class='disable-btn'><a href='../update/referenceUpd.php?id=" . $rid . "'><img src='../assets/icons/update.png' width='24px'></a></span></center></td>";
-                                } else {
-                                    echo "<td><center><a href='../update/referenceUpd.php?id=" . $rid . "'><img src='../assets/icons/update.png' width='24px'></a></center></td>";
-                                }
-                            } else {
-                            ?>
-                                <!-- <td>?php echo $assettag;?></td> -->
+
                                 <td><a class="link" href="turnover.php?id=<?php echo $rid; ?>"><?php echo $turnoverRef;?></a></td>
                                 <td width="10%;"><a class="link" href="../files/download.php?trnRef_id=<?php echo $row['id']; ?>" target="_blank"><?php echo $turnoverFile; ?></td>
                                 <td><?php echo $turnoverStatus; ?></td>
@@ -186,15 +151,13 @@ span.disable-acctRef {
                                         
                                     </center>
                                 </td> 
-                        </tr>          
-                            <?php
-                            }
+                            </tr>       
+                    <?php
                         }
-                    }
-                ?>           
+                        } 
+                    ?>           
                 </tbody>             
-                        
-                </table>
+            </table>
         </section>
     </main>
 
