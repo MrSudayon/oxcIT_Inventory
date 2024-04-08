@@ -369,7 +369,6 @@ class Operations {
         if(is_array($assetIds)) {
             $specs = [];
             foreach($assetIds as $assetId) {
-                print_r($assetId);
                 $sql =
                 "SELECT a.*, r.* 
                 -- a.id AS aId, a.empId AS empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, a.datedeployed, 

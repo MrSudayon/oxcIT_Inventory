@@ -127,13 +127,28 @@ main.table {
     outline: none;
 }
 
+.table__userdata {
+    width: 98%;
+    height: 8%;
+    background-color: white;
+    
+    color: black;
+    padding: 0 3em;
+
+    border-radius: .6rem .6rem 0 0;
+    margin: 0 .8em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .table__body {
     width: 98%;
     max-height: calc(80% - 1rem);
     background-color: rgba(255, 255, 255, 0.733);
 
-    margin: .8em auto;
-    border-radius: .6rem;
+    margin: 0 .8em;
+    border-radius: 0 0 .6rem .6rem;
 
     overflow: auto;
     overflow: overlay;
@@ -363,31 +378,7 @@ thead th.active,tbody td.active {
     color: black;
     transition: all .3s;
 }
-/* 
-.table-nav {
-    display: flex;
-    justify-content: space-evenly;
-}
 
-.assets-table, table {
-    background-color: #e4e4e4;
-    color: black;
-    font-size: 12px;
-    width: 100%;
-    border-collapse: collapse;
-}
-th, td {
-    border: 1px solid black;
-    text-align: left;
-    padding: 4px 8px 2px 8px;
-}
-th {
-    font-weight: 600;
-    padding: 8px;
-    background-color: rgb(94, 94, 94);
-    color: white;
-}
-*/
 .link-btn {
     background-color: var(--main-color);
     padding: .8rem 1.8rem;
