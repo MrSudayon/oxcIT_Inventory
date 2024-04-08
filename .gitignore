@@ -1,10 +1,10 @@
 # Added Removes
-/aarchives
+
 aarchives
-aarchives/
-files/accountability
-files/turnover
+archives
 .txt
+files/accountability/
+files/turnover/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

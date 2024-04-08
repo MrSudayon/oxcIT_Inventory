@@ -57,8 +57,7 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
         <section class="table__userdata">
             <div class="userData">
             <strong style="font-size: 1.5em; color: #2E4583;"><?php echo $name; ?></strong><br>
-                <p><?php echo $dept; ?><br>
-                <?php echo $location; ?></p>
+                <p><?php echo $dept . " - " . $location; ?></p>
             </div>
             <div class="rowCount">
                 <p><h1 style='color:#2E4583; font-size: 2em;'>~<strong><?php echo $rowCount; ?></strong></h1>Accountabilities</p>
@@ -101,7 +100,7 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
                         <tr>
                             <td><input type="checkbox" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
                             <td>
-                                <strong><?php echo $assettag; ?></strong><br><br>
+                                <strong><?php echo $assettag; ?></strong><br>~<br>
                                 <?php echo $specification; ?>
                             </td>
                             <td><?php echo $accountabilityRef; ?></td>

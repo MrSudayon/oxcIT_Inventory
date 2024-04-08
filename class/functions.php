@@ -380,7 +380,7 @@ class Operations {
                 
                 while($row = mysqli_fetch_assoc($result)) {
                     $assettype = $row['assettype'];
-        
+                    
                     $cpu = $row['cpu'];
                     $ram = $row['memory'];
                     $storage = $row['storage'];
@@ -393,10 +393,10 @@ class Operations {
                         case 'Laptop':
                         case 'Desktop':
                             if(!empty($cpu) || !empty($ram) || !empty($storage) || !empty($os)) {
-                                $specs = "CPU: <i>". $cpu .
-                                        "</i><br>Ram: <i>". $ram.
-                                        "</i><br>Storage: <i>". $storage.
-                                        "</i><br>OS: <i>". $os;
+                                $specs =  $cpu .
+                                        "<br>". $ram.
+                                        "<br>". $storage.
+                                        "<br>". $os;
                             } else {
                                 $specs = "<i style='color:#FF6666;'>No details found.";
                             }
@@ -408,7 +408,8 @@ class Operations {
                         case 'UPS':
                         case 'AVR':
                             if(!empty($dimes)) {
-                                $specs = "Dimension: <i>". $dimes;
+                                // $specs = "Dimension: <i>". $dimes;
+                                $specs = $dimes;
                             } else {
                                 $specs = "<i style='color:#FF6646;'>No details found.";
                             }
@@ -417,9 +418,12 @@ class Operations {
                         
                         case 'Mobile':
                             if(!empty($ram) || !empty($storage)) {
-                                $specs = "Ram: <i>". $ram .
-                                        "</i><br>Storage: <i>". $storage .
-                                        "</i><br>Plan: <i>". $plan;
+                                // $specs = "Ram: <i>". $ram .
+                                //         "</i><br>Storage: <i>". $storage .
+                                //         "</i><br>Plan: <i>". $plan;
+                                $specs = $ram .
+                                        "<br>" . $storage .
+                                        "<br>" . $plan;
                             } else {
                                 $specs = "<i style='color:#FF6646;'>No details found.";
                             }
@@ -428,8 +432,10 @@ class Operations {
         
                         case 'SIM':
                             if(!empty($plan) || !empty($mobile)) {
-                                $specs = "Plan: <i>". $plan.
-                                        "</i><br>Mobile: <i>". $mobile;
+                                // $specs = "Plan: <i>". $plan.
+                                //         "</i><br>Mobile: <i>". $mobile;
+                                $specs = $plan .
+                                        "<br>" . $mobile;
                             } else {
                                 $specs = "<i style='color:#FF6646;'>No details found.";
                             }
@@ -437,9 +443,10 @@ class Operations {
                             break;
         
                         default:
-                                $specs = "CPU: <i>". $cpu .
-                                        "</i><br>Ram: <i>". $ram.
-                                        "</i><br>Storage: <i>". $storage;
+                            $specs =  $cpu .
+                                "<br>". $ram.
+                                "<br>". $storage.
+                                "<br>". $os;
                             return $specs;
                             break;
                             
@@ -466,12 +473,16 @@ class Operations {
                     case 'Laptop':
                     case 'Desktop':
                         if(!empty($cpu) || !empty($ram) || !empty($storage) || !empty($os)) {
-                            $specs = "CPU: <i>". $cpu .
-                                    "</i><br>Ram: <i>". $ram.
-                                    "</i><br>Storage: <i>". $storage.
-                                    "</i><br>OS: <i>". $os;
+                            $specs =  $cpu .
+                                        "<br>". $ram.
+                                        "<br>". $storage.
+                                        "<br>". $os;
                         } else {
                             $specs = "<i style='color:#FF6666;'>No details found.";
+                            // $specs = "-
+                            //         <br>-
+                            //         <br>-
+                            //         <br>-";
                         }
                         return $specs;
                         break;
@@ -481,8 +492,7 @@ class Operations {
                     case 'UPS':
                     case 'AVR':
                         if(!empty($dimes)) {
-                            $specs = "Dimension: <i>". $dimes;
-    
+                            $specs = $dimes;
                         } else {
                             $specs = "<i style='color:#FF6646;'>No details found.";
                         }
@@ -491,8 +501,9 @@ class Operations {
                     
                     case 'Mobile':
                         if(!empty($ram) || !empty($storage)) {
-                            $specs = "Ram: <i>". $ram.
-                                    "</i><br>Storage: <i>". $storage;
+                            $specs = $ram .
+                                "<br>" . $storage .
+                                "<br>" . $plan;
                         } else {
                             $specs = "<i style='color:#FF6646;'>No details found.";
                         }
@@ -501,8 +512,8 @@ class Operations {
     
                     case 'SIM':
                         if(!empty($plan) || !empty($mobile)) {
-                            $specs = "Plan: <i>". $plan.
-                                    "</i><br>Mobile: <i>". $mobile;
+                            $specs = $plan .
+                                    "<br>" . $mobile;
                         } else {
                             $specs = "<i style='color:#FF6646;'>No details found.";
                         }
@@ -510,9 +521,10 @@ class Operations {
                         break;
     
                     default:
-                            $specs = "CPU: <i>". $cpu .
-                                    "</i><br>Ram: <i>". $ram.
-                                    "</i><br>Storage: <i>". $storage;
+                        $specs =  $cpu .
+                            "<br>". $ram.
+                            "<br>". $storage.
+                            "<br>". $os;
                         return $specs;
                         break;
                         
