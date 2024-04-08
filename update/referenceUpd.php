@@ -11,29 +11,6 @@
 </head>
 <body>
 <?php include '../inc/header.php'; ?>
-<!-- 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../assets/logo.jpg">
-    <link rel="stylesheet" href="../css/styles.css">
-    <title>Update</title>
-</head>
-<body>
-<header>
-    <div class="logo">
-        <a href="../admin/configuration.php"><img src="../assets/logo.png" width="150px"></img></a>
-    </div>
-    <div class="dropdown">
-        <button class="dropbtn">Menu</button>
-        <div class="dropdown-content">
-            <a href="../php/history.php">History</a>
-            <a href="../php/logout.php?id=?php echo $id; ?>&name=?php echo $username; ?>">Logout</a>
-        </div>
-    </div>
-</header> -->
 
     <div class="container">
         <div class="add-form">
@@ -50,11 +27,7 @@
                     
                     $trnStatus = $result['turnoverStatus'];
                     $accStatus = $result['accountabilityStatus'];
-                    
-                    $sql = "SELECT * FROM assets_tbl WHERE id='$refId'";
-                    $res = mysqli_query($db->conn, $sql);
-                    $data = $res->fetch_assoc();
-    
+
             ?>
                 <form action="../admin/update-selected.php" method="POST" enctype="multipart/form-data">
                     <div class="asset-details">
@@ -66,7 +39,7 @@
                         </div>
                         <div class="input-box">
                             <span class="details">Accountability Code</span>
-                            <input type="text" value="<?=$data['accountabilityRef'] ?>"  style="background-color: #ccc;" readonly>
+                            <input type="text" value="<?=$result['accountabilityRef'] ?>" style="background-color: #ccc;" readonly>
                         </div>
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Status</span>
@@ -116,7 +89,7 @@
                 <div class="asset-details">
                         <div class="input-box">
                             <span class="details">Turnover Code</span>
-                            <input type="text" value="<?=$data['turnoverRef'] ?>"  style="background-color: #ccc;" readonly>
+                            <input type="text" value="<?=$result['turnoverRef'] ?>"  style="background-color: #ccc;" readonly>
                         </div>
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Status</span>

@@ -340,7 +340,13 @@ class assetsController {
         global $db;
 
         $refId = mysqli_real_escape_string($db->conn, $id);
-        $sql = "SELECT * FROM reference_tbl WHERE id='$refId'";
+        $sql = "SELECT a.id, 
+                r.assetId, r.id, r.name, 
+                r.accountabilityRef, r.accountabilityStatus, r.accountabilityFile, r.accountabilityDate,
+                r.turnoverRef, r.turnoverStatus, r.turnoverFile, r.turnoverDate 
+                FROM assets_tbl AS a 
+                INNER JOIN reference_tbl AS r ON r.assetId = a.id 
+                WHERE r.id='$refId'";
         $res = mysqli_query($db->conn, $sql);
         if($res->num_rows == 1){
             $data = $res->fetch_assoc();
@@ -353,24 +359,28 @@ class assetsController {
         global $db;
         global $session;
 
-        $refName = $input['name'];
+        $empId = $input['name']; // returns employee Id
         $acctStatus = $input['acctStatus'];
         $acctDate = $input['acctDate'];
+        $acctFile = $input['acctFile'];
+
         $trnStatus = $input['trnStatus'];
         $trnDate = $input['trnDate'];
-        $acctFile = $input['acctFile'];
         $trnFile = $input['trnFile'];
      
         $refId = mysqli_real_escape_string($db->conn, $id);
         
 
-        $sql = "UPDATE reference_tbl SET acctStatus = '$acctStatus', acctFile='$acctFile', acctDate = '$acctDate', trnStatus = '$trnStatus', trnFile = '$trnFile', trnDate = '$trnDate' WHERE id = '$refId'";
+        $sql = "UPDATE reference_tbl 
+                SET accountabilityStatus = '$acctStatus', accountabilityDate = '$acctDate', accountabilityFile = '$acctFile',
+                turnoverStatus = '$trnStatus', turnoverDate = '$trnDate', turnoverFile = '$trnFile' 
+                WHERE id='$refId'";
         $result = $db->conn->query($sql);
 
         $name = $session['username'];
         if($result) {
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-            VALUES('', '$name', 'Updated reference ID: $refId. Name: $refName' , NOW())");
+            VALUES('', '$name', 'Updated reference id: $refId' , NOW())");
 
             return true;
         } else {

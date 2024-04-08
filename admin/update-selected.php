@@ -177,63 +177,66 @@ if(isset($_POST['update-reference'])) {
     if (isset($_FILES['acctfile']) && $_FILES['acctfile']['error'] === UPLOAD_ERR_OK) {
 
         // uploaded file details
-        $fileTmpPath = $_FILES["acctfile"]['tmp_name'];
+        $accFileTmpPath = $_FILES["acctfile"]['tmp_name'];
 
         $accFileName = basename($_FILES["acctfile"]['name']);
         
-        $fileSize = $_FILES['acctfile']['size'];
+        $accFileSize = $_FILES['acctfile']['size'];
     
-        $fileType = $_FILES['acctfile']['type'];
+        $accFileType = $_FILES['acctfile']['type'];
     
-        $fileNameCmps = explode(".", $accFileName);
+        $accFileNameCmps = explode(".", $accFileName);
     
-        $fileExtension = strtolower(end($fileNameCmps));
+        $accFileExtension = strtolower(end($accFileNameCmps));
         
-        $uploaddir = '../files/accountability/' . $_FILES['acctfile']['name'];
+        $accUploaddir = '../files/accountability/' . $_FILES['acctfile']['name'];
     
         // file extensions allowed
-        $allowedfileExtensions = array('zip', 'pdf', 'jpg', 'pdf');
+        $allowedfileExtensions = array('pdf','docx','pptx','xlsx','jpg','png');
     
-        if (in_array($fileExtension, $allowedfileExtensions)) {
-            if($fileSize > 2000000) {
+        if (in_array($accFileExtension, $allowedfileExtensions)) {
+            if($accFileSize > 2000000) {
                 echo "<script> alert('File too large'); window.history.back();</script>";
+                // die();
             } else {
-                move_uploaded_file($fileTmpPath, $uploaddir);
+                move_uploaded_file($accFileTmpPath, $accUploaddir);
             }
         } else {
-            echo "<script> alert('Upload failed as the file type is not acceptable. The allowed file types are:' . implode(',', $allowedfileExtensions)'); window.history.back();</script>";
+            $message = 'Upload failed as the file type is not acceptable. The allowed file types are:' . implode(',', $allowedfileExtensions);
         }
     }
 
     if (isset($_FILES['trnfile']) && $_FILES['trnfile']['error'] === UPLOAD_ERR_OK) {
 
         // uploaded file details
-        $fileTmpPath = $_FILES["acctfile"]['tmp_name'];
+        $trnFileTmpPath = $_FILES["trnfile"]['tmp_name'];
 
-        $accFileName = basename($_FILES["acctfile"]['name']);
+        $trnFileName = basename($_FILES["trnfile"]['name']);
         
-        $fileSize = $_FILES['acctfile']['size'];
+        $trnFileSize = $_FILES['trnfile']['size'];
     
-        $fileType = $_FILES['acctfile']['type'];
+        $trnFileType = $_FILES['trnfile']['type'];
     
-        $fileNameCmps = explode(".", $accFileName);
+        $trnFileNameCmps = explode(".", $trnFileName);
     
-        $fileExtension = strtolower(end($fileNameCmps));
+        $trnFileExtension = strtolower(end($trnFileNameCmps));
         
-        $uploaddir = '../files/accountability/' . $_FILES['acctfile']['name'];
+        $trnUploaddir = '../files/turnover/' . $_FILES['trnfile']['name'];
     
         // file extensions allowed
-        $allowedfileExtensions = array('zip', 'pdf', 'jpg', 'pdf');
+        $allowedfileExtensions = array('pdf','docx','pptx','xlsx','jpg','png');
     
-        if (in_array($fileExtension, $allowedfileExtensions)) {
-            if($fileSize > 2000000) {
+        if (in_array($trnFileExtension, $allowedfileExtensions)) {
+            if($trnFileSize > 2000000) {
                 echo "<script> alert('File too large'); window.history.back();</script>";
+                // die();
             } else {
-                move_uploaded_file($fileTmpPath, $uploaddir);
+                move_uploaded_file($trnFileTmpPath, $trnUploaddir);
             }
         } else {
-            echo "<script> alert('Upload failed as the file type is not acceptable. The allowed file types are:' . implode(',', $allowedfileExtensions)'); window.history.back();</script>";
+            $message = 'Upload failed as the file type is not acceptable. The allowed file types are:' . implode(',', $allowedfileExtensions);
         }
+
     }
     
 
