@@ -1,4 +1,9 @@
+# Added Removes
 -archives
+files/accountability
+files/turnover
+.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
