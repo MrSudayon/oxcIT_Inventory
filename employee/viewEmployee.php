@@ -38,12 +38,15 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
 }
 ?>       
 <div class="content">
-<form method="get">
+<form method="get" action="../generateCode/generate.php">
     <main class="table" id="customers_table">
             <section class="table__header">
                 <div class="btn">
                 <a href="../admin/employeeLists.php" class="link-btn">Back</a>
-                <button type="submit" formaction="../admin/accountability.php" class="link-btn" onclick="return checkPrompt()">Generate Acc</button>
+                <!-- <button type="submit" formaction="../admin/accountability.php" class="link-btn" onclick="return checkPrompt()">Generate Acc</button> -->
+                <button type="submit" name="generateAcc" class="link-btn" onclick="return checkPrompt()">Generate Accountability</button>
+                <button type="submit" name="generateTrn" class="link-btn" onclick="return checkPrompt()">Generate Turnover</button>
+
                     <!--<button type="submit" class="link-btn" name="generateAcc" onclick="return checkPrompt()">Generate Acc</button>
                     <button type="submit" class="link-btn" name="generateTurnover" onclick="return checkPrompt()">Generate Turnover</button> -->
                 </div>
@@ -94,15 +97,15 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
 
                                 $accountabilityRef = $row['accountabilityRef'];
                                 $turnoverRef = $row['turnoverRef'];
+
+                                $specification = $operation->specificationCondition($aId);
+
                         ?>
                             <tr>
                                 <td><input type="checkbox" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
                                 <td>
-                                    <strong><?php echo $assettag; ?></strong><br>
-                                    <?php 
-                                        $specification = $operation->specificationCondition($aId);
-                                        echo $specification;
-                                    ?>
+                                    <strong><?php echo $assettag; ?></strong><br><br>
+                                    <?php echo $specification; ?>
                                 </td>
                                 <td><?php echo $accountabilityRef; ?></td>
                                 <td><?php echo $turnoverRef; ?></td>

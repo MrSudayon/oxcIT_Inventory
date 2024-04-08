@@ -24,75 +24,67 @@ include '../inc/header.php';
                 <div class="asset-details">
                     <input type="hidden" name="assetID" value="<?=$result['aId']?>">
 
-                    <div class="input-box">
-                        <span class="details">Asset Type</span>
-                        <!-- <input type="text" name="asset-type" value="" id="" required> -->
-                        <select id="Type" onChange="changetextbox(); displaySelectedValue();" style="background-color: #ccc;" readonly>
-                            <option value="<?=$result['assettype']?>"><?=$result['assettype']?></option>
-                            
-                        </select>
-                    </div>
-                    <div class="input-box">
+                    <div class="input-box" style="width:100%;">
                         <span class="details">Asset Tag</span>
-                        <div class="asset-tag" id="tag" style="background-color: #ccc;"><?=$result['assettag']?></div>
-                        <input type="text" id="asset-tag" hidden>
+                        <!-- <div class="asset-tag" id="tag" hidden> -->
+                        <input type="text" id="asset-tag" style="background-color: #ccc; text-align: center; font-weight: 600; cursor: default;" readonly value="<?=$result['assettag']?>">
                     </div>
 
                                             
                         <?php if($assetType == 'Laptop' || $assetType == 'Desktop' ) { ?>
                             
-                            <div class="input-box" id="model">
-                                <span class="details">Model</span>
-                                <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
-                            </div>
-                            
-                            <div class="input-box" id="serial">
-                                <span class="details">Serial no.</span>
-                                <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
-                            </div>
+                                <div class="input-box" id="model">
+                                    <span class="details">Model</span>
+                                    <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
+                                </div>
+                                
+                                <div class="input-box" id="serial">
+                                    <span class="details">Serial no.</span>
+                                    <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
+                                </div>
 
                         <?php } elseif($assetType == 'Mobile') { ?>
 
-                            <div class="input-box" id="model">
-                                <span class="details">Model</span>
-                                <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
-                            </div>
-                            
-                            <div class="input-box" id="serial">
-                                <span class="details">Serial no.</span>
-                                <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
-                            </div>
+                                <div class="input-box" id="model">
+                                    <span class="details">Model</span>
+                                    <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
+                                </div>
+                                
+                                <div class="input-box" id="serial">
+                                    <span class="details">Serial no.</span>
+                                    <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
+                                </div>
                             
                         <?php } elseif($assetType == 'Monitor' || $assetType == 'UPS' || $assetType == 'Printer' || $assetType == 'AVR') { ?>
 
-                            <div class="input-box" id="model">
-                                <span class="details">Model</span>
-                                <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
-                            </div>
-                            
-                            <div class="input-box" id="serial">
-                                <span class="details">Serial no.</span>
-                                <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
-                            </div>
+                                <div class="input-box" id="model">
+                                    <span class="details">Model</span>
+                                    <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
+                                </div>
+                                
+                                <div class="input-box" id="serial">
+                                    <span class="details">Serial no.</span>
+                                    <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
+                                </div>
 
-                        <?php } elseif($assetType == 'SIM') { ?>
+                            <?php } elseif($assetType == 'SIM') { ?>
 
-                            <div class="input-box" id="mobile">
-                                <span class="details">Mobile no.</span>
-                                <input type="text" name="mobile" value="<?=$result['serial']?>" placeholder="Mobile no." id="">
-                            </div>
+                                <div class="input-box" id="mobile">
+                                    <span class="details">Mobile no.</span>
+                                    <input type="text" name="mobile" value="<?=$result['serial']?>" placeholder="Mobile no." id="">
+                                </div>
 
                         <?php } else { ?>
 
-                            <div class="input-box" id="model">
-                                <span class="details">Model</span>
-                                <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
-                            </div>
-                            
-                            <div class="input-box" id="serial">
-                                <span class="details">Serial no.</span>
-                                <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
-                            </div>
+                                <div class="input-box" id="model">
+                                    <span class="details">Model</span>
+                                    <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
+                                </div>
+                                
+                                <div class="input-box" id="serial">
+                                    <span class="details">Serial no.</span>
+                                    <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
+                                </div>
 
                         <?php } ?>
 
@@ -163,6 +155,25 @@ include '../inc/header.php';
                             <span class="details">Storage</span>
                             <input type="text" name="storage" value="<?=$result['storage']?>" placeholder="Storage" id="">
                         </div>
+                        <div class="input-box" id="plan">
+                            <span class="details">Plan</span>
+                            <select name="plan" id="plan" class="assigned">
+                                <?php
+                                    $plan = $result['plan'];
+                                    if($plan == 'Purchase') {
+                                ?>
+                                    <option value="<?=$result['plan']?>"><?=$result['plan']?></option>
+                                    <option value="Postpaid">Postpaid</option>
+                                <?php
+                                    } else { 
+                                ?> 
+                                    <option value="<?=$result['plan']?>"><?=$result['plan']?></option>
+                                    <option value="Purchase">Purchase</option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
+                        </div>
 
                     <?php } elseif($assetType == 'Monitor' || $assetType == 'UPS' || $assetType == 'Printer' || $assetType == 'AVR') { ?>
 
@@ -175,7 +186,22 @@ include '../inc/header.php';
 
                         <div class="input-box" id="plan">
                             <span class="details">Plan</span>
-                            <input type="text" name="plan" value="<?=$result['plan']?>" placeholder="Plan" id="">
+                            <select name="plan" id="plan" class="assigned">
+                                <?php
+                                    $plan = $result['plan'];
+                                    if($plan == 'Prepaid') {
+                                ?>
+                                    <option value="<?=$result['plan']?>"><?=$result['plan']?></option>
+                                    <option value="Postpaid">Postpaid</option>
+                                <?php
+                                    } else { 
+                                ?> 
+                                    <option value="<?=$result['plan']?>"><?=$result['plan']?></option>
+                                    <option value="Prepaid">Prepaid</option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
                         </div>
 
                     <?php } else { ?>
@@ -199,16 +225,12 @@ include '../inc/header.php';
                         
                     <?php } ?>
 
-                    <!-- <div class="input-box">
-                        <span class="details">Others</span>
-                        <input type="text" name="other" placeholder="Others" id="">
-                    </div> -->
                     <div class="input-box" id="datedeployed" style="display: none;">
                         <span class="details">Date Deployed</span>
                         <input type="date" name="datedeployed" placeholder="Date Deployed" value="<?=$result['datedeployed']?>" id="">
                     </div>
                 </div>
-                <div class="title"></div>
+                <div class="title">Accountable</div>
                 <div class="asset-details">
                     <div class="input-box">
                     <span class="details" style="margin-bottom: 10px;">Assigned To</span>

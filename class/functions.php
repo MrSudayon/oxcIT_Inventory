@@ -362,83 +362,166 @@ class Operations {
         return $result;  
     }
 
-    function specificationCondition($assetId) {
+    function specificationCondition($assetIds) {
 
         global $db;
 
-        $sql =
-        "SELECT * FROM assets_tbl WHERE id='$assetId' AND status!='Archive'";
-        $result = mysqli_query($db->conn, $sql);
-
-        while($row = mysqli_fetch_assoc($result)) {
-            // $aId = $row['aId'];
-            $assettype = $row['assettype'];
-
-            $cpu = $row['cpu'];
-            $ram = $row['memory'];
-            $storage = $row['storage'];
-            $os = $row['os'];
-            $dimes = $row['dimes'];
-            $plan = $row['plan'];
-            $mobile = $row['mobile'];
-        
-            switch($assettype) {
-                case 'Laptop':
-                case 'Desktop':
-                    if(!empty($cpu) || !empty($ram) || !empty($storage) || !empty($os)) {
-                        $specs = "CPU: <i>". $cpu .
-                                "</i><br>Ram: <i>". $ram.
-                                "</i><br>Storage: <i>". $storage.
-                                "</i><br>OS: <i>". $os;
-                    } else {
-                        $specs = "<i style='color:#FF6666;'><br>No details found.";
-                    }
-                    return $specs;
-                    break;
-
-                case 'Monitor':
-                case 'Printer':
-                case 'UPS':
-                case 'AVR':
-                    if(!empty($dimes)) {
-                        $specs = "Dimension: <i>". $dimes;
-
-                    } else {
-                        $specs = "<i style='color:#FF6646;'>No details found.";
-                    }
-                    return $specs;
-                    break;
+        if(is_array($assetIds)) {
+            $specs = [];
+            foreach($assetIds as $assetId) {
+                print_r($assetId);
+                $sql =
+                "SELECT a.*, r.* 
+                -- a.id AS aId, a.empId AS empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, a.datedeployed, 
+                -- e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.accountabilityRef, r.turnoverRef 
+                FROM assets_tbl AS a 
+                LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+                WHERE r.assetId = '$assetId'";
+                $result = mysqli_query($db->conn, $sql);
                 
-                case 'Mobile':
-                    if(!empty($ram) || !empty($storage)) {
-                        $specs = "Ram: <i>". $ram.
-                                "</i><br>Storage: <i>". $storage;
-                    } else {
-                        $specs = "<i style='color:#FF6646;'>No details found.";
+                while($row = mysqli_fetch_assoc($result)) {
+                    $assettype = $row['assettype'];
+        
+                    $cpu = $row['cpu'];
+                    $ram = $row['memory'];
+                    $storage = $row['storage'];
+                    $os = $row['os'];
+                    $dimes = $row['dimes'];
+                    $plan = $row['plan'];
+                    $mobile = $row['mobile'];
+                
+                    switch($assettype) {
+                        case 'Laptop':
+                        case 'Desktop':
+                            if(!empty($cpu) || !empty($ram) || !empty($storage) || !empty($os)) {
+                                $specs = "CPU: <i>". $cpu .
+                                        "</i><br>Ram: <i>". $ram.
+                                        "</i><br>Storage: <i>". $storage.
+                                        "</i><br>OS: <i>". $os;
+                            } else {
+                                $specs = "<i style='color:#FF6666;'>No details found.";
+                            }
+                            return $specs;
+                            break;
+        
+                        case 'Monitor':
+                        case 'Printer':
+                        case 'UPS':
+                        case 'AVR':
+                            if(!empty($dimes)) {
+                                $specs = "Dimension: <i>". $dimes;
+                            } else {
+                                $specs = "<i style='color:#FF6646;'>No details found.";
+                            }
+                            return $specs;
+                            break;
+                        
+                        case 'Mobile':
+                            if(!empty($ram) || !empty($storage)) {
+                                $specs = "Ram: <i>". $ram .
+                                        "</i><br>Storage: <i>". $storage .
+                                        "</i><br>Plan: <i>". $plan;
+                            } else {
+                                $specs = "<i style='color:#FF6646;'>No details found.";
+                            }
+                            return $specs;
+                            break;
+        
+                        case 'SIM':
+                            if(!empty($plan) || !empty($mobile)) {
+                                $specs = "Plan: <i>". $plan.
+                                        "</i><br>Mobile: <i>". $mobile;
+                            } else {
+                                $specs = "<i style='color:#FF6646;'>No details found.";
+                            }
+                            return $specs;
+                            break;
+        
+                        default:
+                                $specs = "CPU: <i>". $cpu .
+                                        "</i><br>Ram: <i>". $ram.
+                                        "</i><br>Storage: <i>". $storage;
+                            return $specs;
+                            break;
+                            
                     }
-                    return $specs;
-                    break;
-
-                case 'SIM':
-                    if(!empty($plan) || !empty($mobile)) {
-                        $specs = "Plan: <i>". $plan.
-                                "</i><br>Mobile: <i>". $mobile;
-                    } else {
-                        $specs = "<i style='color:#FF6646;'>No details found.";
-                    }
-                    return $specs;
-                    break;
-
-                default:
-                        $specs = "CPU: <i>". $cpu .
-                                "</i><br>Ram: <i>". $ram.
-                                "</i><br>Storage: <i>". $storage;
-                    return $specs;
-                    break;
-                    
+                }
             }
-        }
-
+        } else {
+            $sql =
+            "SELECT * FROM assets_tbl WHERE id='$assetIds' AND status!='Archive'";
+            $result = mysqli_query($db->conn, $sql);
+    
+            while($row = mysqli_fetch_assoc($result)) {
+                $assettype = $row['assettype'];
+    
+                $cpu = $row['cpu'];
+                $ram = $row['memory'];
+                $storage = $row['storage'];
+                $os = $row['os'];
+                $dimes = $row['dimes'];
+                $plan = $row['plan'];
+                $mobile = $row['mobile'];
+            
+                switch($assettype) {
+                    case 'Laptop':
+                    case 'Desktop':
+                        if(!empty($cpu) || !empty($ram) || !empty($storage) || !empty($os)) {
+                            $specs = "CPU: <i>". $cpu .
+                                    "</i><br>Ram: <i>". $ram.
+                                    "</i><br>Storage: <i>". $storage.
+                                    "</i><br>OS: <i>". $os;
+                        } else {
+                            $specs = "<i style='color:#FF6666;'>No details found.";
+                        }
+                        return $specs;
+                        break;
+    
+                    case 'Monitor':
+                    case 'Printer':
+                    case 'UPS':
+                    case 'AVR':
+                        if(!empty($dimes)) {
+                            $specs = "Dimension: <i>". $dimes;
+    
+                        } else {
+                            $specs = "<i style='color:#FF6646;'>No details found.";
+                        }
+                        return $specs;
+                        break;
+                    
+                    case 'Mobile':
+                        if(!empty($ram) || !empty($storage)) {
+                            $specs = "Ram: <i>". $ram.
+                                    "</i><br>Storage: <i>". $storage;
+                        } else {
+                            $specs = "<i style='color:#FF6646;'>No details found.";
+                        }
+                        return $specs;
+                        break;
+    
+                    case 'SIM':
+                        if(!empty($plan) || !empty($mobile)) {
+                            $specs = "Plan: <i>". $plan.
+                                    "</i><br>Mobile: <i>". $mobile;
+                        } else {
+                            $specs = "<i style='color:#FF6646;'>No details found.";
+                        }
+                        return $specs;
+                        break;
+    
+                    default:
+                            $specs = "CPU: <i>". $cpu .
+                                    "</i><br>Ram: <i>". $ram.
+                                    "</i><br>Storage: <i>". $storage;
+                        return $specs;
+                        break;
+                        
+                }
+            }
+        }        
+        return;
+       
     }
 
     function ifEmptyReference($acctRef, $turnoverRef, $acctFile, $turnoverFile) {
@@ -448,6 +531,28 @@ class Operations {
             $acctFile = 'N/A'; 
             return;  }
         if(empty($turnoverFile)) { $turnoverFile = 'N/A'; return $turnoverFile; }
+    }
+
+    function getAllSameCodes($id) {
+
+        global $db;
+
+        $query = "SELECT a.id AS aId, a.empId AS empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, a.datedeployed, 
+                e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.accountabilityRef, r.turnoverRef 
+                FROM assets_tbl AS a 
+                LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+                LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+                WHERE r.accountabilityRef = '$id' OR r.turnoverRef = '$id'";
+                
+        $result = mysqli_query($db->conn, $query);
+
+        return $result;
+
+        // $queryAll = "SELECT a.id as aId, a.assettype, a.serial, a.remarks, a.datedeployed, r.* 
+        //             FROM assets_tbl AS a 
+        //             LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+        //             WHERE r.accountabilityRef = '$accRef' OR r.turnoverRef = '$trnRef'";
+        // return mysqli_query($db->conn, $queryAll);
     }
 }
 ?>

@@ -79,26 +79,39 @@ if(isset($_POST['save'])) {
                     <div class="title">Asset Details</div>
                     <div class="asset-details">
 
-                        <div class="input-box">
+                                    
+                        <!-- <div class="input-box" hidden>
                             <span class="details" style="margin-bottom: 10px;">Asset Type</span>                            
                             <select name="asset-type" id="Type" onChange="changetextbox();displaySelectedValue();" required>
-                                <?php
+                                ?php
                                     $assettype = $operation->getAssets($id);
                                     foreach($assettype as $assets) {
-
                                 ?>
-                                    <option selected value="<?=$assets['assetType']?>"><?php echo $assets['assetType']; ?></option>
-                                <?php
+                                    <option selected value="?=$assets['assetType']?>">?php echo $assets['assetType']; ?></option>
+                                ?php
                                     }
                                 ?>
                             </select>
-                        </div>
-                        <div class="input-box" hidden>
+                        </div> -->
+
+                        <div class="input-box" style="width: 100%;">
+                            <span class="details">Asset Type</span>       
+                                <?php
+                                    $assettype = $operation->getAssets($id);
+                                    foreach($assettype as $assets) {
+                                ?>
+                                    <!-- <input type="text" name="" style="background-color: #ccc; width: 100%;" value="?=$assets['assetType']?>"> -->
+                                    <input type="text" style="background-color: #ccc; text-align: center; font-weight: 600; cursor: default;" readonly value="<?=$assets['assetType']?>">
+                                <?php
+                                    }
+                                ?>
+                        </div>   
+                        <!-- <div class="input-box" hidden>
                             <span class="details" style="margin-bottom: 10px;">Asset Tag</span>
                             <div class="asset-tag" id="tag" style="background-color: #ccc;"></div>
                             <input type="text" name="asset-tag" id="asset-tag" hidden>
-                            <!-- <input type="text" name="asset-tag" placeholder="Asset Tag" id="Tag" > -->
-                        </div>
+                        </div> -->
+                             
 
                     <?php 
                     switch($id) {
@@ -231,6 +244,15 @@ if(isset($_POST['save'])) {
                                     <span class="details">Storage</span>
                                     <input type="text" name="storage" placeholder="Storage" id="">
                                 </div>
+                                <div class="input-box">
+                                    <span class="details" style="margin-bottom: 10px;">Plan</span>
+                                    <select name="plan" id="plan" required>
+                                        <option value='' hidden selected disabled>Please select</option>
+                                        <option value="Purchase">Purchase</option>
+                                        <option value="Postpaid">Postpaid</option>
+                                    </select>
+                                    </span>
+                                </div>
 
                             </div>
 
@@ -239,11 +261,7 @@ if(isset($_POST['save'])) {
                         
                         case 'recordSim':
                             ?>
-                                <div class="input-box" id="mobile">
-                                    <span class="details">Mobile no.</span>
-                                    <input type="text" name="mobile" placeholder="Mobile no." id="">
-                                </div>
-
+                                
                                 <div class="input-box">
                                     <span class="details">Supplier</span>
                                     <input type="text" name="supplier" placeholder="Supplier" id="">
@@ -282,8 +300,17 @@ if(isset($_POST['save'])) {
                             <div class="asset-details">
 
                                 <div class="input-box" id="plan">
-                                    <span class="details">Plan</span>
-                                    <input type="text" name="plan" placeholder="Plan" id="">
+                                    <span class="details" style="margin-bottom: 10px;">Plan</span>
+                                    <select name="plan" id="plan" required>
+                                        <option value='' hidden selected disabled>Please select</option>
+                                        <option value="Prepaid">Prepaid</option>
+                                        <option value="Postpaid">Postpaid</option>
+                                    </select>
+                                </div>
+
+                                <div class="input-box" id="mobile">
+                                    <span class="details">Mobile no.</span>
+                                    <input type="text" name="mobile" placeholder="Mobile no." id="">
                                 </div>
                             
                             </div>

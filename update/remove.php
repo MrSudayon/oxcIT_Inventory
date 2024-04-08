@@ -22,18 +22,29 @@ if(isset($_GET['assetID'])) {
 if(isset($_GET['Acct_id'])) {
     $id = $_GET['Acct_id'];
 
-    // $query = mysqli_query($db->conn, "UPDATE assets_tbl SET accountability_ref='',  WHERE id='$id'");
-    $query = mysqli_query($db->conn, "UPDATE reference_tbl 
+    $query = "SELECT a.id, a.assettag, r.assetId, r.turnoverRef, r.accountabilityRef 
+              FROM assets_tbl AS a 
+              LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+              WHERE r.id='$id'";
+    $result =  mysqli_query($db->conn, $query);
+    
+    while($row = mysqli_fetch_assoc($result)) {
+        $accountabilityRef = $row['accountabilityRef'];
+        $turnoverRef = $row['turnoverRef'];
+        $assetTag = $row['assettag'];
+    }
+
+    if($accountabilityRef !=='' && $turnoverRef !== '') {
+        $query = mysqli_query($db->conn, "UPDATE reference_tbl 
                                         SET accountabilityRef='',
                                             accountabilityFile='',
                                             accountabilityStatus=0,
                                             accountabilityDate='' 
                                         WHERE id = '$id'");
-
-    $sql_All = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $id");
-    while($row = $sql_All->fetch_assoc()) {
-        $assetTag = $row['assettag'];
+    } else {
+        $query = mysqli_query($db->conn, "DELETE FROM reference_tbl WHERE id = '$id'");
     }
+    
     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                             VALUES ('', '$name', 'Deleted turnover reference code for Asset Tag: $assetTag', NOW())");
 

@@ -112,12 +112,10 @@ $referenceTbl = $operation->getReferenceTable();
                             }
 
                             $operation->ifEmptyReference($acctRef, $turnoverRef, $acctFile, $turnoverFile);
-
-                            
                     ?> 
                             <tr>
                                 <td><?php echo $empName; ?></td>
-                                <td><a class="link" href="accountability.php?id=<?php echo $rid; ?>"><?php echo $acctRef;?></a></td>
+                                <td><a class="link" href="accountability.php?id=<?php echo $acctRef; ?>"><?php echo $acctRef;?></a></td>
                                 <td width="10%;"><a class="link" href="../files/download.php?acctRef_id=<?php echo $rid; ?>" target="_blank"><?php echo $acctFile; ?></td>
                                 <td><?php echo $acctStatus; ?></td>
                                 <td><?php echo $acctDate; ?></td>
