@@ -94,7 +94,7 @@ include '../inc/header.php';
                     </div>
                     <div class="input-box">
                         <span class="details">Cost</span>
-                        <input type="text" name="cost" value="<?=$result['cost']?>" id="">
+                        <input type="text" name="cost" style="background-color: #ccc; font-weight: 600;" value="<?=$result['cost']; ?>" id="">
                     </div>
                     
                     <div class="input-box">
@@ -107,15 +107,15 @@ include '../inc/header.php';
                             <option value="<?=$result['aStatus']?>"><?=$result['aStatus']?></option>
                             <option value="For repair">For repair</option>
                             <option value="Deployed">Deployed</option>
-                            <option value="To be Deploy">To be deploy</option>
+                            <option value="To be deploy">To be deploy</option>
                             <option value="Defective">Defective</option>
                             <option value="Sell">Sell</option>
                             <option value="Missing">Missing</option>
                         </select>
                     </div>
-                    <div class="input-box" id="repair-cost" style="display: none;">
+                    <div class="input-box" id="repair-cost">
                         <span class="details">Repair Cost</span>
-                        <input type="text" name="repair-cost" value="<?=$result['repair_cost']?>" value="">
+                        <input type="text" name="repair-cost" style="background-color: #ccc; font-weight: 600;" readonly value="<?=$result['repair_cost']; ?>" value="">
                     </div>
                     <div class="input-box">
                         <span class="details">Remarks</span>
@@ -225,17 +225,14 @@ include '../inc/header.php';
                         
                     <?php } ?>
 
-                    <div class="input-box" id="datedeployed" style="display: none;">
-                        <span class="details">Date Deployed</span>
-                        <input type="date" name="datedeployed" placeholder="Date Deployed" value="<?=$result['datedeployed']?>" id="">
-                    </div>
+                    
                 </div>
                 <div class="title">Accountable</div>
                 <div class="asset-details">
                     <div class="input-box">
                     <span class="details" style="margin-bottom: 10px;">Assigned To</span>
                         <select name="assigned" id="assigned" class="assigned">
-                            <option value="<?=$result['empName']?>"><?=$result['empName']?></option>
+                            <option value="<?=$result['assignedId']?>"><?=$result['empName']?></option>
                             <option value=''>Clear</option>
                             <?php
                                     $user = $getAllUser->selectAllEmp();
@@ -250,11 +247,16 @@ include '../inc/header.php';
                         </select>
                     </div>
 
+                    <div class="input-box" id="datedeployed">
+                        <span class="details">Date Deployed</span>
+                        <input type="date" name="datedeployed" placeholder="Date Deployed" value="<?=$result['datedeployed']?>" id="">
+                    </div>
+
                     <div class="input-box">
                         <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
                         <!-- <input type="text" name="lastused" value=""> -->
                             <select name="lastused" id="lastused" class="assigned">
-                                <option value="<?=$result['lastUsedName']?>"><?=$result['lastUsedName']?></option>
+                                <option value="<?=$result['lastUsedId']?>"><?=$result['lastUsedName']?></option>
                                 <option value=''>Clear</option>
                                 <?php
                                     foreach($user as $row) {

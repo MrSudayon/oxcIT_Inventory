@@ -11,8 +11,12 @@ if(isset($_POST['save'])) {
     $operation->checkAssetCount($_POST['asset-type']);  
 
     $result = $operation->recordAssetData($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], 
-    $_POST['assigned'], $_POST['lastused'], $_POST['status'], $_POST['dateprchs'], $_POST['cost'], $_POST['repair-cost'], $_POST['remarks'], $_POST['datedeployed'], 
-    isset($_POST['cpu']) ? mysqli_real_escape_string($db->conn, $_POST['processor']) : '', isset($_POST['memory']) ? mysqli_real_escape_string($db->conn, $_POST['memory']) : '',
+    isset($_POST['assigned']) ? $_POST['assigned'] : '', isset($_POST['lastused']) ? $_POST['lastused'] : '', 
+    $_POST['status'], $_POST['dateprchs'], 
+    isset($_POST['cost']) ? mysqli_real_escape_string($db->conn, str_replace(',', '', $_POST['cost'])) : '', 
+    isset($_POST['repair-cost']) ? mysqli_real_escape_string($db->conn, str_replace(',', '', $_POST['repair-cost'])) : '', 
+    $_POST['remarks'], $_POST['datedeployed'], 
+    isset($_POST['processor']) ? mysqli_real_escape_string($db->conn, $_POST['processor']) : '', isset($_POST['memory']) ? mysqli_real_escape_string($db->conn, $_POST['memory']) : '',
     isset($_POST['storage']) ? mysqli_real_escape_string($db->conn, $_POST['storage']) : '', isset($_POST['dimes']) ? mysqli_real_escape_string($db->conn, $_POST['dimes']) : '',
     isset($_POST['mobile']) ? mysqli_real_escape_string($db->conn, $_POST['mobile']) : '', isset($_POST['plan']) ? mysqli_real_escape_string($db->conn, $_POST['plan']) : '',
     isset($_POST['os']) ? mysqli_real_escape_string($db->conn, $_POST['os']) : '', $_POST['action']);
@@ -33,16 +37,16 @@ if(isset($_POST['save'])) {
         echo "<script> alert('Data Stored successfully!'); </script>";
         header("Refresh:0; url= $url");
 
-        $db->conn->close();
+        // $db->conn->close();
     } elseif ($result == 8) {
         echo "<script> alert('Data Stored successfully!'); </script>";
         header("Refresh:0; url= dashboard.php");
 
-        $db->conn->close();
+        // $db->conn->close();
     } elseif ($result == 100) {
         echo "<script> alert('Failed'); </script>";
 
-        die();
+        // die();
     }           
 }
 ?>
@@ -155,7 +159,7 @@ if(isset($_POST['save'])) {
                                         <option value='' hidden selected disabled>Please select</option>
                                         <option value="For repair">For repair</option>
                                         <option value="Deployed">Deployed</option>
-                                        <option value="To be Deploy">To be deploy</option>
+                                        <option value="To be deploy">To be deploy</option>
                                         <option value="Defective">Defective</option>
                                         <option value="Sell">Sell</option>
                                         <option value="Missing">Missing</option>
@@ -226,7 +230,7 @@ if(isset($_POST['save'])) {
                                         <option value='' hidden selected disabled>Please select</option>
                                         <option value="For repair">For repair</option>
                                         <option value="Deployed">Deployed</option>
-                                        <option value="To be Deploy">To be deploy</option>
+                                        <option value="To be deploy">To be deploy</option>
                                         <option value="Defective">Defective</option>
                                         <option value="Sell">Sell</option>
                                         <option value="Missing">Missing</option>
@@ -289,7 +293,7 @@ if(isset($_POST['save'])) {
                                         <option value='' hidden selected disabled>Please select</option>
                                         <option value="For repair">For repair</option>
                                         <option value="Deployed">Deployed</option>
-                                        <option value="To be Deploy">To be deploy</option>
+                                        <option value="To be deploy">To be deploy</option>
                                         <option value="Defective">Defective</option>
                                         <option value="Sell">Sell</option>
                                         <option value="Missing">Missing</option>
@@ -359,7 +363,7 @@ if(isset($_POST['save'])) {
                                         <option value='' hidden selected disabled>Please select</option>
                                         <option value="For repair">For repair</option>
                                         <option value="Deployed">Deployed</option>
-                                        <option value="To be Deploy">To be deploy</option>
+                                        <option value="To be deploy">To be deploy</option>
                                         <option value="Defective">Defective</option>
                                         <option value="Sell">Sell</option>
                                         <option value="Missing">Missing</option>
@@ -418,7 +422,7 @@ if(isset($_POST['save'])) {
                                         <option value='' hidden selected disabled>Please select</option>
                                         <option value="For repair">For repair</option>
                                         <option value="Deployed">Deployed</option>
-                                        <option value="To be Deploy">To be deploy</option>
+                                        <option value="To be deploy">To be deploy</option>
                                         <option value="Defective">Defective</option>
                                         <option value="Sell">Sell</option>
                                         <option value="Missing">Missing</option>
@@ -489,7 +493,6 @@ if(isset($_POST['save'])) {
                             <select name="lastused" id="lastused" class="assigned">
                                 <option value='' selected>Please Select</option>
                                 <?php
-                                        $user = $getAllUser->selectAllEmp();
                                         foreach($user as $row) {
                                 ?>
                                 <option value="<?php echo $row['id']; ?>">

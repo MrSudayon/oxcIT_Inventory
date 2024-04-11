@@ -101,32 +101,13 @@ include '../inc/header.php';
                             if($plan == '') {
                                 echo "<i style='color:#FF6646;'>No details found.";
                             } else {
-                                echo "Plan: <i>". $plan;
+                                echo $plan;
                             }
                                 
                             ?>
                         </td>
                         <td><?php echo $row['datepurchased']; ?></td>
-                        <td><?php echo "<span class='statusSpan'>".$status."</span>" ?></td>
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                var spans = document.getElementsByClassName("statusSpan");
-                                for (var i = 0; i < spans.length; i++) {
-                                    var span = spans[i];
-                                    if (span.innerHTML === 'Deployed') {
-                                        span.classList.add("status", "delivered");
-                                    } else if (span.innerHTML === 'To be Deploy') {
-                                        span.classList.add("status", "shipped");
-                                    } else if (span.innerHTML === 'Defective' || span.innerHTML === 'For repair') {
-                                        span.classList.add("status", "cancelled");
-                                    } else if (span.innerHTML === 'Sell') {
-                                        span.classList.add("status", "pending");
-                                    } else {
-                                        span.classList.add("status", "missing");
-                                    }
-                                }
-                            });
-                        </script>
+                        <td><?php echo "<span class='statusSpan'>". $status ."</span>" ?></td>
 
                         <td>
                             <a href="../update/remove.php?assetID=<?php echo $aId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>

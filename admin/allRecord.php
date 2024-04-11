@@ -43,7 +43,7 @@ include '../inc/header.php';
             FROM assets_tbl AS a 
             LEFT JOIN employee_tbl AS e 
             ON e.id = a.empId 
-            WHERE a.status!='Archive' AND assettype='Laptop' 
+            WHERE a.status!='Archive' 
             LIMIT ". $page_first_result . ',' . $results_per_page;
     $res = mysqli_query($db->conn, $sql);
     $rowCountPage = $res->num_rows;
@@ -118,26 +118,8 @@ include '../inc/header.php';
                                 
                             ?>
                         </td>
-                        <td><?php echo "<span class='statusSpan'>".$status."</span>" ?></td>
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                var spans = document.getElementsByClassName("statusSpan");
-                                for (var i = 0; i < spans.length; i++) {
-                                    var span = spans[i];
-                                    if (span.innerHTML === 'Deployed') {
-                                        span.classList.add("status", "delivered");
-                                    } else if (span.innerHTML === 'To be Deploy') {
-                                        span.classList.add("status", "shipped");
-                                    } else if (span.innerHTML === 'Defective' || span.innerHTML === 'For repair') {
-                                        span.classList.add("status", "cancelled");
-                                    } else if (span.innerHTML === 'Sell') {
-                                        span.classList.add("status", "pending");
-                                    } else {
-                                        span.classList.add("status", "missing");
-                                    }
-                                }
-                            });
-                        </script>
+                        <?php include '../inc/statuses.php'; ?>
+
                     </tr>
                     <?php
                         }

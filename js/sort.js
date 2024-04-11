@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var span = spans[i];
         if (span.innerHTML === 'Deployed') {
             span.classList.add("status", "delivered");
-        } else if (span.innerHTML === 'To be Deploy') {
+        } else if (span.innerHTML === 'To be deploy') {
             span.classList.add("status", "shipped");
         } else if (span.innerHTML === 'Defective' || span.innerHTML === 'For repair') {
             span.classList.add("status", "cancelled");

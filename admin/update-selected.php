@@ -7,13 +7,13 @@ if(isset($_POST['update-asset'])) {
     // if(isset($_POST['action']) && $_POST['action'] == 'ComputerUpdate') {
     //     $action = mysqli_real_escape_string($db->conn,$_POST['action']);
     $input = [
-        'model'        => isset($_POST['model']) ? mysqli_real_escape_string($db->conn,$_POST['model']) : '',
+        'model'        => mysqli_real_escape_string($db->conn,$_POST['model']),
         'serial'       => isset($_POST['serial']) ? mysqli_real_escape_string($db->conn,$_POST['serial']) : '',
         'supplier'     => isset($_POST['supplier']) ? mysqli_real_escape_string($db->conn,$_POST['supplier']) : '',
-        'cost'         => isset($_POST['cost']) ? mysqli_real_escape_string($db->conn,$_POST['cost']) : '',
         'datepurchase' => isset($_POST['dateprchs']) ? mysqli_real_escape_string($db->conn,$_POST['dateprchs']) : '',
         'status'       => isset($_POST['status']) ? mysqli_real_escape_string($db->conn,$_POST['status']) : '',
-        'repair-cost'  => isset($_POST['repair-cost']) ? mysqli_real_escape_string($db->conn,$_POST['repair-cost']) : '',
+        'cost'         => isset($_POST['cost']) ? mysqli_real_escape_string($db->conn, str_replace(',', '', $_POST['cost'])) : '',
+        'repair-cost'  => isset($_POST['repair']) ? mysqli_real_escape_string($db->conn, str_replace(',', '', $_POST['repair'])) : '',
         'remarks'      => isset($_POST['remarks']) ? mysqli_real_escape_string($db->conn,$_POST['remarks']) : '',
 
         'cpu'          => isset($_POST['processor']) ? mysqli_real_escape_string($db->conn,$_POST['processor']) : '',
@@ -57,21 +57,21 @@ if(isset($_POST['turnover-asset'])) {
     $input = [
         'turnover' => mysqli_real_escape_string($db->conn,$_POST['turnover']),
         'lastused' => mysqli_real_escape_string($db->conn,$_POST['lastused']),
-        // 'reason' => mysqli_real_escape_string($db->conn,$_POST['reason']),
-        'ref_code' => mysqli_real_escape_string($db->conn,$_POST['ref_code']),
+        'reason'   => mysqli_real_escape_string($db->conn,$_POST['reason']),
+        'ref_code' => mysqli_real_escape_string($db->conn,$_POST['ref_code'])
     ];
     $result = $assetController->assetTurnover($input, $id);
 
     if ($result == 1) {
         echo "<script>
                 alert('✅Turnover Successful');
-                window.location.href='../admin/dashboard.php';
+                window.location.href='../admin/configuration.php';
                 </script>";
         die();
     } elseif($result == 100) {
         echo "<script>
                 alert('⚠️Wrong reference code');
-                window.location.href='../admin/dashboard.php';
+                window.location.href='../admin/configuration.php';
                 </script>";
         die();
     } 
@@ -178,8 +178,10 @@ if(isset($_POST['updateLocation'])) {
 // Reference update
 if(isset($_POST['update-reference'])) {
     $id = mysqli_real_escape_string($db->conn,$_POST['id']);
-    $trnFileName = '';
-    $accFileName = '';
+
+    $accFileName = mysqli_real_escape_string($db->conn,$_POST['accountabilityFile']);
+    $trnFileName = mysqli_real_escape_string($db->conn,$_POST['turnoverFile']);
+
     if (isset($_FILES['acctfile']) && $_FILES['acctfile']['error'] === UPLOAD_ERR_OK) {
 
         // uploaded file details

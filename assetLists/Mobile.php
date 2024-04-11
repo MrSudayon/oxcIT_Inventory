@@ -94,40 +94,20 @@ include '../inc/header.php';
                             $storage = $row['storage'];
                     ?>            
                     <tr>
-                        <td><a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></td></a>
+                        <td><a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></a></td>
                         <td><?php echo $row['model']; ?></td>
                         <td>
                             <?php 
                             if($ram == '' && $storage == '') {
                                 echo "<i style='color:#FF6646;'>No details found.";
                             } else {
-                                echo "Ram: <i>". $ram.
-                                "</i><br>Storage: <i>". $storage;
+                                echo $ram.
+                                "<br>". $storage;
                             }
                                 
                             ?>
                         </td>
-                        <td><?php echo "<span class='statusSpan'>".$status."</span>" ?></td>
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                var spans = document.getElementsByClassName("statusSpan");
-                                for (var i = 0; i < spans.length; i++) {
-                                    var span = spans[i];
-                                    if (span.innerHTML === 'Deployed') {
-                                        span.classList.add("status", "delivered");
-                                    } else if (span.innerHTML === 'To be Deploy') {
-                                        span.classList.add("status", "shipped");
-                                    } else if (span.innerHTML === 'Defective' || span.innerHTML === 'For repair') {
-                                        span.classList.add("status", "cancelled");
-                                    } else if (span.innerHTML === 'Sell') {
-                                        span.classList.add("status", "pending");
-                                    } else {
-                                        span.classList.add("status", "missing");
-                                    }
-                                }
-                            });
-                        </script>
-
+                        <td><?php echo "<span class='statusSpan'>". $status ."</span>" ?></td>
                         <td>
                             <a href="../update/remove.php?assetID=<?php echo $aId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                         </td>   

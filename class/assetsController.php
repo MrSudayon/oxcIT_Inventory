@@ -15,8 +15,8 @@ class assetsController {
                                 a.serial, a.supplier, a.cost, a.repair_cost, a.datepurchased, a.remarks, 
                                 a.datedeployed, a.empId, a.lastused, 
                                 a.cpu, a.memory, a.storage, a.os, a.dimes, a.mobile, a.plan, 
-                                e1.id, e1.name AS empName, e1.division AS empDivision, e1.location AS empLocation,
-                                e2.id AS lastUsedId, e2.name AS lastUsedName, e2.division AS lastUsedDivision, e2.location AS lastUsedLocation
+                                e1.id AS assignedId, e1.name AS empName, e1.division AS empDivision, e1.location AS empLocation, 
+                                e2.id AS lastUsedId, e2.name AS lastUsedName, e2.division AS lastUsedDivision, e2.location AS lastUsedLocation 
                         FROM assets_tbl AS a 
                         LEFT JOIN employee_tbl AS e1 ON e1.id = a.empId 
                         LEFT JOIN employee_tbl AS e2 ON e2.id = a.lastused
@@ -71,9 +71,12 @@ class assetsController {
         $datedeployed = $input['datedeployed'];
 
         $empId = $input['assigned'];
-        $lastused = $input['lastused'];
 
-
+        if((!empty($empId)) || ($empId != '') && ($lastused = '') || empty($lastused)) {
+            $lastused = $empId;
+        } else {
+            $lastused = $input['lastused'];
+        }
        
         if(isset($empId) || $empId != '') {
             $sqlSelect = "SELECT * FROM employee_tbl WHERE id='$empId' AND empStatus=1";
@@ -119,19 +122,30 @@ class assetsController {
         
 
         // get id of selected asset ($assetID)
-        $sql = "SELECT * FROM assets_tbl WHERE id = $assetID AND status != 'Archive'";
+        // $sql = "SELECT * FROM assets_tbl WHERE id='$assetID' AND status != 'Archive'";
+        $sql = "SELECT a.id AS aId, a.assettype, a.assettag, a.model, a.status as aStatus, 
+                a.serial, a.supplier, a.cost, a.repair_cost, a.datepurchased, a.remarks, 
+                a.datedeployed, a.empId, a.lastused, 
+                a.cpu, a.memory, a.storage, a.os, a.dimes, a.mobile, a.plan, 
+                r.assetId, r.turnoverRef, 
+                e.id, e.name AS empName, e.division, e.location 
+                FROM assets_tbl AS a 
+                LEFT JOIN employee_tbl AS e ON e.id = a.empId 
+                LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+                WHERE a.id = '$assetID' AND a.status != 'Archive'";
         $res = mysqli_query($db->conn,$sql);
         while($row = $res->fetch_assoc()) {
-            $assetName = $row['assettype'];
-            $turnover_ref = $row['turnover_ref'];
-            $assigned = $row['assigned'];
+            $assettag = $row['assettag'];
+            $turnover_ref = $row['turnoverRef'];
+            $assigned = $row['empId'];
+            $empName = $row['empName'];
         }
         
         
         // validation of Turnover reference code
         if($ref_Code == $turnover_ref) {
             
-            if($lastused != '') {
+            if($lastused == '') {
                 $lastusedby = $assigned;
             } else {
                 $lastusedby = $lastused;
@@ -146,10 +160,10 @@ class assetsController {
                 $newStatus = 'Outdated';
             }
 
-            $db->conn->query("UPDATE assets_tbl SET assigned='', department='', location='', lastused='$lastusedby', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1");
+            mysqli_query($db->conn, "UPDATE assets_tbl SET empId='', lastused='$lastusedby', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1");
             
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                                VALUES('', '$sess_name', 'Turnover asset: $assetName ID: $assetID' , NOW())");
+                                VALUES('', '$sess_name', 'Turnover asset: $assettag, last used by: $empName' , NOW())");
             
             return 1; // Turnover success
            

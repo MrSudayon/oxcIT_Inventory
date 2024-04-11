@@ -102,18 +102,18 @@ include '../inc/header.php';
                             if($cpu == '' && $ram == '' && $storage == '') {
                                 echo "<i style='color:#AC1E00;'>No details found.";
                             } else {
-                                echo "CPU: <i>". $cpu .
-                                "</i><br>Ram: <i>". $ram.
-                                "</i><br>Storage: <i>". $storage;
+                                echo $cpu .
+                                "<br>" . $ram.
+                                "<br>" . $storage.
+                                "<br>" . $os;
                             }
                                 
                             ?>
                         </td>
                         <td><?php echo "<span class='statusSpan'>". $status ."</span>" ?></td>
-             
-
                         <td>
                             <a href="../update/remove.php?assetID=<?php echo $aId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
+
                         </td>   
                     </tr>
                     <?php

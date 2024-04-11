@@ -16,7 +16,7 @@
             ?>
                 <form action="../admin/update-selected.php" method="POST">
                     <div class="asset-details">
-                        <input type="hidden" name="assetID" value="<?=$result['id']?>">
+                        <input type="hidden" name="assetID" value="<?=$assetID?>">
 
                         <div class="input-box">
                             <span class="details">Asset Type</span>

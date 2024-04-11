@@ -16,10 +16,10 @@ class Operations {
         $supplier     = mysqli_real_escape_string($db->conn, $supplier);
         $empId        = mysqli_real_escape_string($db->conn, $empId);
         $lastused     = mysqli_real_escape_string($db->conn, $lastused);
+        $status       = mysqli_real_escape_string($db->conn, $status);
         $dtprchs      = mysqli_real_escape_string($db->conn, $dtprchs);
-        $cost         = mysqli_real_escape_string($db->conn, $cost);
-        $repair_cost  = mysqli_real_escape_string($db->conn, $repair_cost);
-        $lastused     = mysqli_real_escape_string($db->conn, $remarks);
+        $cost         = !empty($cost) ? mysqli_real_escape_string($db->conn, $cost) : '';
+        $repair_cost  = !empty($repair_cost) ? mysqli_real_escape_string($db->conn, $repair_cost) : '';
         $remarks      = mysqli_real_escape_string($db->conn, $remarks);
         $datedeployed = mysqli_real_escape_string($db->conn, $datedeployed);
         $cpu          = mysqli_real_escape_string($db->conn, $cpu);
@@ -44,14 +44,11 @@ class Operations {
                 while($row = mysqli_fetch_array($result)) {
                     $empName = $row['name'];
                 }
-                if($lastused == '') {
-                    $lastused = $empName;
-                }
             }
         }
-      
+                                                                                                                     //7
         $query = $db->conn->prepare("INSERT INTO assets_tbl (assettype, assettag, model, serial, supplier, empId, lastused, status, datepurchased, cost, repair_cost, remarks, datedeployed, cpu, memory, storage, dimes, mobile, plan, os) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $query->bind_param("sssssisssiisssssssss", $type, $tag, $mdl, $srl, $supplier, $empId, $lastused, $status, $dtprchs, $cost, $repair_cost, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os);
+                            $query->bind_param("sssssiissiisssssssss", $type, $tag, $mdl, $srl, $supplier, $empId, $lastused, $status, $dtprchs, $cost, $repair_cost, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os);
         $result = $query->execute();
 
         if ($result) {
@@ -92,24 +89,11 @@ class Operations {
         
     }
 
-    // function getAllData() {
-    //     global $db;
-
-    //     $query = "SELECT * FROM assets_tbl WHERE status!='Archive'";
-    //     $res = mysqli_query($db->conn, $query);
-
-    //     return $res;
-
-    //     $db->conn->close();
-    // }
-
     function getAssets($category) {
         global $db;
-        // $sql = "SELECT * FROM category_tbl WHERE status='1'";
-        // $res = mysqli_query($db->conn, $sql);
+
 
         // return $res;
-        global $db;
         $sql = "SELECT * FROM category_tbl WHERE";
     
         switch ($category) {
@@ -136,42 +120,6 @@ class Operations {
         $result = $db->conn->query($sql);
         return $result;
     }
-
-    // function searchDataPagination() {
-    //     global $db;
-    //     global $res;
-        
-    //     if(isset($_POST['search']) && $_POST['search'] != "") {
-    //         $search = $_POST['search'];
-    //         $sql = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assigned LIKE '$search%' OR assigned LIKE '%$search' OR assigned LIKE '%$search%' OR department LIKE '%$search%'
-    //         OR assettype LIKE '%$search%' OR status LIKE '%$search%' OR location LIKE '%$search%'
-    //         OR assettag LIKE '%$search%' OR model LIKE '%$search%' OR CPU LIKE '%$search%' OR MEMORY LIKE '%$search%' OR STORAGE LIKE '%$search%'
-    //          OR remarks LIKE '%$search%' OR Others LIKE '%$search%')";
-    //         $res = mysqli_query($db->conn, $sql);
-        
-    //         return $res;
-    //     }
-    
-
-    //     $db->conn->close();
-    // }
-
-    // function searchHistory() {
-    //     global $db;
-
-    //     if(isset($_POST['search'])) {
-    //         $search = $_POST['search'];
-    //         $sql = "SELECT * FROM history_tbl WHERE name LIKE '%$search%' OR action LIKE '%$search%' OR date LIKE '%$search%' ";
-    //         $res = mysqli_query($db->conn, $sql);
-        
-    //         return $res;
-    //     } else {
-    //         $sql = "SELECT * FROM history_tbl";
-    //         $res = mysqli_query($db->conn, $sql);
-
-    //         return $res;
-    //     }
-    // }
 
     function getHistory() {
         global $db;

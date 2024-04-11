@@ -28,7 +28,7 @@
                     $trnStatus = $result['turnoverStatus'];
                     $accStatus = $result['accountabilityStatus'];
                     $acctFile = $result['accountabilityFile'];
-
+                    $trnoFile = $result['turnoverFile'];
             ?>
                 <form action="../admin/update-selected.php" method="POST" enctype="multipart/form-data">
                     <div class="asset-details">
@@ -78,8 +78,9 @@
                             </select>
                         </div>
                         <div class="input-box">
-                            <span class="details">Accountability File</span>
-                            <input type="file" name="acctfile" id="acctfile" accept="files/*" value="<?php echo $acctFile; ?>">
+                            <span class="details" style="margin-bottom: 10px;">Accountability File</span>
+                            <!-- <input type="file" name="acctfile" id="acctfile" accept="files/*" value="?=$result['accountabilityFile']?>"> -->
+                            <input type="file" name="acctfile" id="acctfile" accept="files/*">
                         </div>
                         <div class="input-box">
                             <span class="details">Date</span>
@@ -127,7 +128,7 @@
                             </select>
                         </div>
                         <div class="input-box">
-                            <span class="details">Turnover File</span>
+                            <span class="details" style="margin-bottom: 10px;">Turnover File</span>
                             <input type="file" name="trnfile" accept="files/*" value="<?=$result['turnoverFile']?>">
                         </div>
                         <div class="input-box">
@@ -140,6 +141,8 @@
             }
             ?>
                     <div class="button">
+                        <input type="hidden" name="accountabilityFile" id="" value="<?=$acctFile?>">
+                        <input type="hidden" name="turnoverFile" id="" value="<?=$trnoFile?>">
                         <input type="submit" onclick="passValue()" value="Save" name="update-reference"/>
                     </div>
                 </form>
