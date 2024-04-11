@@ -235,7 +235,7 @@ include '../inc/header.php';
                     <div class="input-box">
                     <span class="details" style="margin-bottom: 10px;">Assigned To</span>
                         <select name="assigned" id="assigned" class="assigned">
-                            <option value="<?=$result['ename']?>"><?=$result['ename']?></option>
+                            <option value="<?=$result['empName']?>"><?=$result['empName']?></option>
                             <option value=''>Clear</option>
                             <?php
                                     $user = $getAllUser->selectAllEmp();
@@ -254,7 +254,7 @@ include '../inc/header.php';
                         <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
                         <!-- <input type="text" name="lastused" value=""> -->
                             <select name="lastused" id="lastused" class="assigned">
-                                <option value="<?=$result['lastused']?>"><?=$result['lastused']?></option>
+                                <option value="<?=$result['lastUsedName']?>"><?=$result['lastUsedName']?></option>
                                 <option value=''>Clear</option>
                                 <?php
                                     foreach($user as $row) {

@@ -4,30 +4,36 @@ include '../inc/auth.php';
 if(isset($_POST['update-asset'])) {
     $id = mysqli_real_escape_string($db->conn,$_POST['assetID']);
 
-    if(isset($_POST['action']) && $_POST['action'] == 'ComputerUpdate') {
-        $action = mysqli_real_escape_string($db->conn,$_POST['action']);
-        $input = [
-            'model'        => mysqli_real_escape_string($db->conn,$_POST['model']),
-            'serial'       => mysqli_real_escape_string($db->conn,$_POST['serial']),
-            'supplier'     => mysqli_real_escape_string($db->conn,$_POST['supplier']),
-            'cost'         => mysqli_real_escape_string($db->conn,$_POST['cost']),
-            'datepurchase' => mysqli_real_escape_string($db->conn,$_POST['dateprchs']),
-            'status'       => mysqli_real_escape_string($db->conn,$_POST['status']),
-            'repair-cost'  => mysqli_real_escape_string($db->conn,$_POST['repair-cost']),
-            'remarks'      => mysqli_real_escape_string($db->conn,$_POST['remarks']),
+    // if(isset($_POST['action']) && $_POST['action'] == 'ComputerUpdate') {
+    //     $action = mysqli_real_escape_string($db->conn,$_POST['action']);
+    $input = [
+        'model'        => isset($_POST['model']) ? mysqli_real_escape_string($db->conn,$_POST['model']) : '',
+        'serial'       => isset($_POST['serial']) ? mysqli_real_escape_string($db->conn,$_POST['serial']) : '',
+        'supplier'     => isset($_POST['supplier']) ? mysqli_real_escape_string($db->conn,$_POST['supplier']) : '',
+        'cost'         => isset($_POST['cost']) ? mysqli_real_escape_string($db->conn,$_POST['cost']) : '',
+        'datepurchase' => isset($_POST['dateprchs']) ? mysqli_real_escape_string($db->conn,$_POST['dateprchs']) : '',
+        'status'       => isset($_POST['status']) ? mysqli_real_escape_string($db->conn,$_POST['status']) : '',
+        'repair-cost'  => isset($_POST['repair-cost']) ? mysqli_real_escape_string($db->conn,$_POST['repair-cost']) : '',
+        'remarks'      => isset($_POST['remarks']) ? mysqli_real_escape_string($db->conn,$_POST['remarks']) : '',
 
-            'cpu'          => mysqli_real_escape_string($db->conn,$_POST['processor']),
-            'ram'          => mysqli_real_escape_string($db->conn,$_POST['memory']),
-            'storage'      => mysqli_real_escape_string($db->conn,$_POST['storage']),
-            'os'           => mysqli_real_escape_string($db->conn,$_POST['os']),
-            'datedeployed' => mysqli_real_escape_string($db->conn,$_POST['datedeployed']),
+        'cpu'          => isset($_POST['processor']) ? mysqli_real_escape_string($db->conn,$_POST['processor']) : '',
+        'ram'          => isset($_POST['memory']) ? mysqli_real_escape_string($db->conn,$_POST['memory']) : '',
+        'storage'      => isset($_POST['storage']) ? mysqli_real_escape_string($db->conn,$_POST['storage']) : '',
+        'os'           => isset($_POST['os']) ? mysqli_real_escape_string($db->conn,$_POST['os']) : '',
 
-            'assigned'     => mysqli_real_escape_string($db->conn,$_POST['assigned']),
-            'lastused'     => mysqli_real_escape_string($db->conn,$_POST['lastused'])
-        ];
-    } 
+        'dimes'        => isset($_POST['dimes']) ? $_POST['dimes'] : '',
+        'plan'         => isset($_POST['plan']) ? mysqli_real_escape_string($db->conn,$_POST['plan']) : '',
+        'mobile'       => isset($_POST['mobile']) ? mysqli_real_escape_string($db->conn,$_POST['mobile']) : '',
+
+        'datedeployed' => isset($_POST['datedeployed']) ? mysqli_real_escape_string($db->conn,$_POST['datedeployed']) : '',
+
+        'assigned'     => isset($_POST['assigned']) ? mysqli_real_escape_string($db->conn,$_POST['assigned']) : '',
+        'lastused'     => isset($_POST['lastused']) ? mysqli_real_escape_string($db->conn,$_POST['lastused']) : ''
+    ];
+    // } 
    
-    $result = $assetController->update($action, $input, $id);
+    $result = $assetController->update($input, $id);
+    // $result = $assetController->update($action, $input, $id);
 
     if($result) {
         echo "<script>

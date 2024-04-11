@@ -11,17 +11,27 @@ class assetsController {
         global $db;
         
         $assetID = mysqli_real_escape_string($db->conn, $id);
-        // $assetQuery = "SELECT * FROM assets_tbl WHERE id='$assetID' AND status!='Archive'";
-        $assetQuery = "SELECT a.id AS aId, a.assettype, a.assettag, a.model, a.status as aStatus, 
-                        a.serial, a.supplier, a.cost, a.repair_cost, a.datepurchased, a.remarks, 
-                        a.datedeployed, a.lastused, 
-                        a.cpu, a.memory, a.storage, a.os, a.dimes, a.mobile, a.plan, 
-                        e.id, e.name AS ename, e.division, e.location  
-                        -- r.assetId, r.turnoverDate AS turnoverDate 
+        $assetQuery = "SELECT a.id AS aId, a.assettype, a.assettag, a.model, a.status AS aStatus, 
+                                a.serial, a.supplier, a.cost, a.repair_cost, a.datepurchased, a.remarks, 
+                                a.datedeployed, a.empId, a.lastused, 
+                                a.cpu, a.memory, a.storage, a.os, a.dimes, a.mobile, a.plan, 
+                                e1.id, e1.name AS empName, e1.division AS empDivision, e1.location AS empLocation,
+                                e2.id AS lastUsedId, e2.name AS lastUsedName, e2.division AS lastUsedDivision, e2.location AS lastUsedLocation
                         FROM assets_tbl AS a 
-                        LEFT JOIN employee_tbl AS e ON e.id = a.empId 
-                        -- LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+                        LEFT JOIN employee_tbl AS e1 ON e1.id = a.empId 
+                        LEFT JOIN employee_tbl AS e2 ON e2.id = a.lastused
                         WHERE a.id = '$assetID' AND a.status != 'Archive'";
+        // $assetQuery = "SELECT a.id AS aId, a.assettype, a.assettag, a.model, a.status as aStatus, 
+        //                 a.serial, a.supplier, a.cost, a.repair_cost, a.datepurchased, a.remarks, 
+        //                 a.datedeployed, a.lastused, 
+        //                 a.cpu, a.memory, a.storage, a.os, a.dimes, a.mobile, a.plan, 
+        //                 e.id, e.name AS ename, e.division, e.location  
+        //                 -- r.assetId, r.turnoverDate AS turnoverDate 
+        //                 FROM assets_tbl AS a 
+        //                 LEFT JOIN employee_tbl AS e ON e.id = a.empId 
+        //                 AND e.id = a.lastused 
+        //                 -- LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+        //                 WHERE a.id = '$assetID' AND a.status != 'Archive'";
         $res = mysqli_query($db->conn, $assetQuery);
 
         if($res->num_rows == 1){
@@ -31,13 +41,11 @@ class assetsController {
             return false;
         }
     }
-    public function update($action, $input, $id) {
+    public function update($input, $id) {
         global $db;
         global $sess_name;
 
         $assetID = mysqli_real_escape_string($db->conn, $id);
-        // $assetType = $input['assettype'];
-        // $assetTag = $input['assettag'];
 
         $model = $input['model'];
         $serial = $input['serial'];
@@ -45,48 +53,17 @@ class assetsController {
         $status = $input['status'];
         $cost = $input['cost'];
         $repair = $input['repair-cost'];
-        if($action == 'ComputerUpdate') {
-            $cpu = $input['cpu'];
-            $ram = $input['ram'];
-            $storage = $input['storage'];
-            $os = $input['os'];
 
-            $mobile = '';
-            $plan = '';
-            $dimes = '';
-        } 
-        elseif($action == 'SIM') {
-            $cpu = '';
-            $ram = '';
-            $storage = '';
-            $os = '';
-            // SIM, Mobile
-            $mobile = $input['mobile'];
-            $plan = $input['plan'];
+        $cpu = $input['cpu'];
+        $ram = $input['ram'];
+        $storage = $input['storage'];
+        $os = $input['os'];
 
-            $dimes = '';
-        } 
-        elseif($action == 'Monitor' || $action == 'Printer' || $action == 'UPS') {
-            $cpu = '';
-            $ram = '';
-            $storage = '';
-            $os = '';
-            // Monitor, UPS etc..
-            $dimes = $input['dimes'];
+        // SIM, Mobile
+        $dimes = $input['dimes'];
 
-            $mobile = '';
-            $plan = '';
-        } 
-        elseif($action == 'Mobile') {
-            $cpu = '';
-            $ram = $input['ram'];
-            $storage = $input['storage'];
-            $os = '';
-
-            $mobile = '';
-            $plan = '';
-            $dimes = '';
-        }
+        $mobile = $input['mobile'];
+        $plan = $input['plan'];
 
         $dateprchs = $input['datepurchase'];
         $remarks = $input['remarks'];
@@ -96,11 +73,7 @@ class assetsController {
         $empId = $input['assigned'];
         $lastused = $input['lastused'];
 
-        // further logic; clear reason upon accounting to other employee
-        // $reason = '';
-        // if(isset($input['reason'])) {
-        //     $reason = $input['reason'];
-        // }
+
        
         if(isset($empId) || $empId != '') {
             $sqlSelect = "SELECT * FROM employee_tbl WHERE id='$empId' AND empStatus=1";
@@ -122,9 +95,10 @@ class assetsController {
 
 
         $tag = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $assetID");
-            while($row = $tag->fetch_assoc()) {
-                $assettag = $row['assettag'];
-            }
+        while($row = $tag->fetch_assoc()) {
+            $assettag = $row['assettag'];
+        }
+
         if($result) {
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                                 VALUES('', '$sess_name', 'Updated item: $assettag, ID: $assetID from Assets Record' , NOW())");

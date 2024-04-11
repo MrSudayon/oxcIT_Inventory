@@ -100,7 +100,7 @@
                         </div>
                         <div class="input-box">
                             <span class="details">Last Used by:</span>
-                            <input type="text" name="lastused" value="<?=$result['ename']?>" style="background-color: #ccc;" readonly>
+                            <input type="text" name="lastused" value="<?=$result['lastUsedName']?>" style="background-color: #ccc;" readonly>
                         </div>
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Reason: </span>

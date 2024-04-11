@@ -43,12 +43,7 @@ class Operations {
                 }
             }
         }
-        // further logic; clear reason upon accounting to other employee
-
-        // $query = "INSERT INTO assets_tbl (assettype, assettag, model, serial, supplier, empId, lastused, status, datepurchased, cost, repair_cost, remarks, datedeployed, cpu, memory, storage, dimes, mobile, plan, os)
-        //                             VALUES ('$type','$tag','$mdl','$srl','$supplier','$empId','$lastused','$status','$dtprchs', '$cost', '$repair_cost','$remarks','$datedeployed','$cpu','$ram','$storage','$dimes','$mobile','$plan','$os')";
-       
-        // $result = mysqli_query($db->conn, $query);
+      
         $query = $db->conn->prepare("INSERT INTO assets_tbl (assettype, assettag, model, serial, supplier, empId, lastused, status, datepurchased, cost, repair_cost, remarks, datedeployed, cpu, memory, storage, dimes, mobile, plan, os) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $query->bind_param("sssssisssiisssssssss", $type, $tag, $mdl, $srl, $supplier, $empId, $lastused, $status, $dtprchs, $cost, $repair_cost, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os);
         $result = $query->execute();
