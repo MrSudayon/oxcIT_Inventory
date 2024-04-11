@@ -260,7 +260,6 @@ if(isset($_POST['update-reference'])) {
         window.location.href='../admin/references.php';
         </script>";
         die();
-
     } else {
         echo "<script>
         alert('⚠️Update Error');

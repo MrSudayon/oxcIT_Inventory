@@ -126,16 +126,7 @@ include '../inc/header.php';
                         </script>       
                        
                         <td>
-                            <!-- <a href="../update/assetUpd.php?id=?php echo $aId; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp; -->
-                            <?php 
-                                $sqlSel = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $id"); 
-                                while($results = mysqli_fetch_assoc($sqlSel)) {
-                                if($results['turnoverRef'] != '') { 
-                            ?>    
-                                <a href="../update/turnoverUpd.php?id=<?php echo $aId; ?>"><img src="../assets/icons/turnover.png" width="32px"></a>&nbsp;
-                            <?php }} ?>
                             <a href="../update/remove.php?assetID=<?php echo $aId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
-                            
                         </td>   
                     </tr>
                     <?php

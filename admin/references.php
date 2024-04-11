@@ -130,7 +130,7 @@ $referenceTbl = $operation->getReferenceTable();
                                 </td>
 
                                 <td><a class="link" href="turnover.php?id=<?php echo $turnoverRef; ?>"><?php echo $turnoverRef;?></a></td>
-                                <td width="10%;"><a class="link" href="../files/download.php?trnRef_id=<?php echo $row['id']; ?>" target="_blank"><?php echo $turnoverFile; ?></td>
+                                <td width="10%;"><a class="link" href="../files/download.php?trnRef_id=<?php echo $rid; ?>" target="_blank"><?php echo $turnoverFile; ?></td>
                                 <td><?php echo $turnoverStatus; ?></td>
                                 <td><?php echo $turnoverDate; ?></td>
                                 <td>

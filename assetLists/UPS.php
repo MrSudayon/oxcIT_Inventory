@@ -37,7 +37,7 @@ include '../inc/header.php';
                 FROM assets_tbl AS a 
                 LEFT JOIN employee_tbl AS e 
                 ON e.id = a.empId 
-                WHERE a.status!='Archive' AND (assettype='UPS' OR assettype='AVR')' 
+                WHERE a.status!='Archive' AND (assettype='UPS' OR assettype='AVR') 
                 LIMIT $page_first_result, $results_per_page";
         $res = mysqli_query($db->conn, $sql);
         $rowCountPage = $res->num_rows;
@@ -128,14 +128,13 @@ include '../inc/header.php';
                         </script>
 
                         <td>
-                            <!-- <a href="../update/assetUpd.php?id=?php echo $aId; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp; -->
-                            <?php 
+                            <!-- ?php 
                                 $sqlSel = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $id"); 
                                 while($results = mysqli_fetch_assoc($sqlSel)) {
                                 if($results['turnoverRef'] != '') { 
                             ?>    
-                                <a href="../update/turnoverUpd.php?id=<?php echo $aId; ?>"><img src="../assets/icons/turnover.png" width="24px"></a>&nbsp;
-                            <?php }} ?>
+                                <a href="../update/turnoverUpd.php?id=<php echo $aId; ?>"><img src="../assets/icons/turnover.png" width="24px"></a>&nbsp;
+                            ?php }} ?> -->
                             <a href="../update/remove.php?assetID=<?php echo $aId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>
                             
                         </td>   

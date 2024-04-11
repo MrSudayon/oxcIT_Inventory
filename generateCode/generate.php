@@ -29,6 +29,7 @@ if(isset($_GET['generateAcc'])) {
                 LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
                 LEFT JOIN employee_tbl AS e ON a.empId = e.id 
                 WHERE a.id='$assetID' AND a.status !='Archive'";
+
             $res = mysqli_query($db->conn, $sql);
         
             while($row = mysqli_fetch_assoc($res)) {
@@ -74,7 +75,7 @@ if(isset($_GET['generateAcc'])) {
                 if (mysqli_num_rows($result) > 0) {
     
                     $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl SET accountabilityStatus = 1, accountabilityRef = ? WHERE assetId = ?");
-                    mysqli_stmt_bind_param($refQry, "si", $newCode, $assetID);
+                    mysqli_stmt_bind_param($refQry, "si", $acc_ref, $assetID);
                     mysqli_stmt_execute($refQry);
                     
                 } else {
@@ -82,7 +83,7 @@ if(isset($_GET['generateAcc'])) {
                     foreach ($selected as $assetID) {
                         // Insert new accountability reference for each asset
                         $refQry = mysqli_prepare($db->conn, "INSERT INTO reference_tbl (assetId, name, accountabilityRef, accountabilityStatus, referenceStatus) VALUES (?, ?, ?, 1, 1)");
-                        mysqli_stmt_bind_param($refQry, "iss", $assetID, $empId, $newCode);
+                        mysqli_stmt_bind_param($refQry, "iss", $assetID, $empId, $acc_ref);
                         mysqli_stmt_execute($refQry);
                     }
     
@@ -210,7 +211,7 @@ if(isset($_GET['generateTrn'])) {
 
     if(isset($_GET['select'])) {
         $selected = $_GET['select'];
-        $exisitingTurnover = false; // Flag to check if any selected asset already has an accountability code
+        $existingTurnover = false; // Flag to check if any selected asset already has an accountability code
     
         // Loop through selected assets
         foreach ($selected as $assetID){
@@ -232,18 +233,22 @@ if(isset($_GET['generateTrn'])) {
             }
         }
     
-        // Check if any of the selected assets already have an accountability code
-        $existingCodeQuery = mysqli_prepare($db->conn, "SELECT turnoverRef FROM reference_tbl WHERE assetId IN (?) AND turnoverRef != ''");
+        // Check if any of the selected assets already have an turnover code
+        // $existingCodeQuery = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE turnoverRef != '' AND assetId IN (?)");
         $selectedImploded = implode(",", $selected);
-        mysqli_stmt_bind_param($existingCodeQuery, "s", $selectedImploded);
+        // mysqli_stmt_bind_param($existingCodeQuery, "s", $selectedImploded);
+        // mysqli_stmt_execute($existingCodeQuery);
+        // $existingCodeResult = mysqli_stmt_get_result($existingCodeQuery);
+        $existingCodeQuery = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE turnoverRef != '' AND assetId IN ($selectedImploded)");
         mysqli_stmt_execute($existingCodeQuery);
         $existingCodeResult = mysqli_stmt_get_result($existingCodeQuery);
+
     
         if (mysqli_num_rows($existingCodeResult) > 0) {
-            $exisitingTurnover = true;
+            $existingTurnover = true;
         }
     
-        if($exisitingTurnover) {
+        if($existingTurnover) {
             ?>
             <script> 
                 alert('Some selected assets already have turnover codes.');
@@ -256,7 +261,7 @@ if(isset($_GET['generateTrn'])) {
             
                 $n = 5;
                 $newCode = getCode($n); // Generate new turnover code for all selected assets
-                $trn_ref = "ACCT-" . $newCode;
+                $trn_ref = "TRNO-" . $newCode;
     
                 // If assetId is existed in reference tbl
                 $refSql = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE assetId = ? AND (turnoverRef!='' OR accountabilityRef!='')");
@@ -267,7 +272,7 @@ if(isset($_GET['generateTrn'])) {
                 if (mysqli_num_rows($result) > 0) {
     
                     $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl SET turnoverStatus = 1, turnoverRef = ? WHERE assetId = ?");
-                    mysqli_stmt_bind_param($refQry, "si", $newCode, $assetID);
+                    mysqli_stmt_bind_param($refQry, "si", $trn_ref, $assetID);
                     mysqli_stmt_execute($refQry);
                     
                 } else {
@@ -275,7 +280,7 @@ if(isset($_GET['generateTrn'])) {
                     foreach ($selected as $assetID) {
                         // Insert new turnover reference for each asset
                         $refQry = mysqli_prepare($db->conn, "INSERT INTO reference_tbl (assetId, name, turnoverRef, turnoverStatus, referenceStatus) VALUES (?, ?, ?, 1, 1)");
-                        mysqli_stmt_bind_param($refQry, "iss", $assetID, $empId, $newCode);
+                        mysqli_stmt_bind_param($refQry, "iss", $assetID, $empId, $trn_ref);
                         mysqli_stmt_execute($refQry);
                     }
     

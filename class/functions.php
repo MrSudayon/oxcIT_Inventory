@@ -351,12 +351,12 @@ class Operations {
                         e.id, e.name AS ename, e.division, e.location, 
                         r.id AS rid, r.assetId AS assetId, r.name AS rname, r.turnoverRef AS turnoverRef, r.accountabilityRef AS accountabilityRef, 
                         r.turnoverStatus AS turnoverStatus, r.accountabilityStatus AS accountabilityStatus, 
-                        r.turnoverDate AS turnoverDate, r.accountabilityDate AS accountabilityDate,
-                        r.turnoverFile AS turnoverFile, r.accountabilityFile AS accountabilityFile, r.referenceStatus  
+                        r.turnoverDate AS turnoverDate, r.accountabilityDate AS accountabilityDate, 
+                        r.turnoverFile AS turnoverFile, r.accountabilityFile AS accountabilityFile, r.referenceStatus 
                         FROM assets_tbl AS a 
-                        LEFT JOIN reference_tbl AS r ON r.assetId = a.id
+                        LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
                         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                        WHERE status!='Archive'";
+                        WHERE status!='Archive' ORDER BY referenceStatus DESC";
         $result = mysqli_query($db->conn, $sqlSelect);
 
         return $result;  

@@ -20,13 +20,14 @@
             <?php
             if(isset($_GET['id']))
             {
-                $refId = mysqli_real_escape_string($db->conn, $_GET['id']); // assetId from reference tbl
+                $refId = mysqli_real_escape_string($db->conn, $_GET['id']); // refId from reference tbl
                 $result = $assetController->editReference($refId);
 
                 if($result) {
                     
                     $trnStatus = $result['turnoverStatus'];
                     $accStatus = $result['accountabilityStatus'];
+                    $acctFile = $result['accountabilityFile'];
 
             ?>
                 <form action="../admin/update-selected.php" method="POST" enctype="multipart/form-data">
@@ -78,7 +79,7 @@
                         </div>
                         <div class="input-box">
                             <span class="details">Accountability File</span>
-                            <input type="file" name="acctfile" id="acctfile" accept="files/*" value="<?=$result['accountabilityFile']?>">
+                            <input type="file" name="acctfile" id="acctfile" accept="files/*" value="<?php echo $acctFile; ?>">
                         </div>
                         <div class="input-box">
                             <span class="details">Date</span>

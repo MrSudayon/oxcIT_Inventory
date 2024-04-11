@@ -342,8 +342,8 @@ class assetsController {
         $refId = mysqli_real_escape_string($db->conn, $id);
         $sql = "SELECT a.id, 
                 r.assetId, r.id, r.name, 
-                r.accountabilityRef, r.accountabilityStatus, r.accountabilityFile, r.accountabilityDate,
-                r.turnoverRef, r.turnoverStatus, r.turnoverFile, r.turnoverDate 
+                r.accountabilityRef, r.accountabilityStatus, r.accountabilityFile AS accountabilityFile, r.accountabilityDate,
+                r.turnoverRef, r.turnoverStatus, r.turnoverFile AS turnoverFile, r.turnoverDate 
                 FROM assets_tbl AS a 
                 INNER JOIN reference_tbl AS r ON r.assetId = a.id 
                 WHERE r.id='$refId'";
@@ -359,6 +359,7 @@ class assetsController {
         global $db;
         global $session;
 
+        $refStatus = 1;
         $empId = $input['name']; // returns employee Id
         $acctStatus = $input['acctStatus'];
         $acctDate = $input['acctDate'];
@@ -367,13 +368,17 @@ class assetsController {
         $trnStatus = $input['trnStatus'];
         $trnDate = $input['trnDate'];
         $trnFile = $input['trnFile'];
+
+        if($acctStatus == 2 && $trnFile == 2) {
+            $refStatus = 0;
+        }
      
         $refId = mysqli_real_escape_string($db->conn, $id);
         
 
         $sql = "UPDATE reference_tbl 
-                SET accountabilityStatus = '$acctStatus', accountabilityDate = '$acctDate', accountabilityFile = '$acctFile',
-                turnoverStatus = '$trnStatus', turnoverDate = '$trnDate', turnoverFile = '$trnFile' 
+                SET accountabilityStatus = '$acctStatus', accountabilityDate = '$acctDate', accountabilityFile = '$acctFile', 
+                turnoverStatus = '$trnStatus', turnoverDate = '$trnDate', turnoverFile = '$trnFile', referenceStatus = '$refStatus' 
                 WHERE id='$refId'";
         $result = $db->conn->query($sql);
 
