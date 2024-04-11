@@ -21,6 +21,7 @@
             if(isset($_GET['id']))
             {
                 $refId = mysqli_real_escape_string($db->conn, $_GET['id']); // refId from reference tbl
+                $empName = mysqli_real_escape_string($db->conn, $_GET['name']);
                 $result = $assetController->editReference($refId);
 
                 if($result) {
@@ -35,8 +36,8 @@
                         <input type="hidden" name="id" value="<?=$result['id']?>">
 
                         <div class="input-box" style="width: 100%;">
-                            <span class="details">Name</span>
-                            <input type="text" name="name" value="<?=$result['name']?>" style="background-color: #ccc;" readonly>
+                            <span class="details">Assigned to: </span>
+                            <input type="text" name="name" value="<?=$empName?>" style="background-color: #ccc; font-weight: 600; text-align: center;" readonly>
                         </div>
                         <div class="input-box">
                             <span class="details">Accountability Code</span>

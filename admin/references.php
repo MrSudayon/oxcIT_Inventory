@@ -138,7 +138,7 @@ $referenceTbl = $operation->getReferenceTable();
                                         <?php if($turnoverStatus == 'Signed' && $acctStatus == 'Signed') { ?>
                                             <span class="disable-btn"><a href="../update/referenceUpd.php?id=<?php echo $rid; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;</span>
                                         <?php } else { ?>
-                                            <a href="../update/referenceUpd.php?id=<?php echo $rid; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
+                                            <a href="../update/referenceUpd.php?id=<?php echo $rid; ?>&name=<?php echo $empName; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp;
                                         <?php } ?>
 
                                         <?php if($turnoverStatus == 'Signed') { ?>

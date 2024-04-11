@@ -116,6 +116,7 @@ class assetsController {
         global $sess_name;
 
         $assetID = mysqli_real_escape_string($db->conn, $id);
+        $turnover = $input['turnover'];
         $lastused = $input['lastused'];
         $reason = $input['reason'];
         $ref_Code = $input['ref_code'];
@@ -160,7 +161,7 @@ class assetsController {
                 $newStatus = 'Outdated';
             }
 
-            mysqli_query($db->conn, "UPDATE assets_tbl SET empId='', lastused='$lastusedby', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1");
+            mysqli_query($db->conn, "UPDATE assets_tbl SET empId='', turnoverdate=NOW(), lastused='$lastusedby', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1");
             
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                                 VALUES('', '$sess_name', 'Turnover asset: $assettag, last used by: $empName' , NOW())");
@@ -331,9 +332,11 @@ class assetsController {
         $sql = "SELECT a.id, 
                 r.assetId, r.id, r.name, 
                 r.accountabilityRef, r.accountabilityStatus, r.accountabilityFile AS accountabilityFile, r.accountabilityDate,
-                r.turnoverRef, r.turnoverStatus, r.turnoverFile AS turnoverFile, r.turnoverDate 
+                r.turnoverRef, r.turnoverStatus, r.turnoverFile AS turnoverFile, r.turnoverDate, 
+                e.id, e.name AS empName 
                 FROM assets_tbl AS a 
-                INNER JOIN reference_tbl AS r ON r.assetId = a.id 
+                LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+                LEFT JOIN employee_tbl AS e ON e.id = a.empId 
                 WHERE r.id='$refId'";
         $res = mysqli_query($db->conn, $sql);
         if($res->num_rows == 1){

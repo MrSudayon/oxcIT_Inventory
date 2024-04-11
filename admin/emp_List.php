@@ -74,7 +74,7 @@ include '../inc/header.php';
 <div class="content">
     <main class="table" id="customers_table">
         <section class="table__header">
-            <!-- <a href="../admin/add-assets.php?id=recordLaptop" class="link-btn">New Record</a> -->
+            <a href="../php/add_emp_info.php" class="link-btn">New Record</a>
             <div class="input-group">
                 <input type="search" placeholder="Search Data...">
                 <img src="../assets/icons/search.png" alt="">

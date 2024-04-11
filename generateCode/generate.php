@@ -218,7 +218,7 @@ if(isset($_GET['generateTrn'])) {
     
             $sql = 
                 "SELECT a.id AS aId, a.empId AS empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, a.datedeployed, 
-                e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.turnoverRef 
+                e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.turnoverRef, r.accountabilityRef  
                 FROM assets_tbl AS a 
                 LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
                 LEFT JOIN employee_tbl AS e ON a.empId = e.id 
@@ -228,75 +228,84 @@ if(isset($_GET['generateTrn'])) {
             while($row = mysqli_fetch_assoc($res)) {
                 $assetTags[] = $row['assettag'];
                 $trn_ref = $row['turnoverRef'];
+                $acc_ref = $row['accountabilityRef'];
     
                 $empId = $row['empId'];
             }
         }
-    
-        // Check if any of the selected assets already have an turnover code
-        // $existingCodeQuery = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE turnoverRef != '' AND assetId IN (?)");
-        $selectedImploded = implode(",", $selected);
-        // mysqli_stmt_bind_param($existingCodeQuery, "s", $selectedImploded);
-        // mysqli_stmt_execute($existingCodeQuery);
-        // $existingCodeResult = mysqli_stmt_get_result($existingCodeQuery);
-        $existingCodeQuery = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE turnoverRef != '' AND assetId IN ($selectedImploded)");
-        mysqli_stmt_execute($existingCodeQuery);
-        $existingCodeResult = mysqli_stmt_get_result($existingCodeQuery);
+        if(!empty($acc_ref) || $acc_ref != '') {
+            // Check if any of the selected assets already have an turnover code
+            // $existingCodeQuery = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE turnoverRef != '' AND assetId IN (?)");
+            $selectedImploded = implode(",", $selected);
+            // mysqli_stmt_bind_param($existingCodeQuery, "s", $selectedImploded);
+            // mysqli_stmt_execute($existingCodeQuery);
+            // $existingCodeResult = mysqli_stmt_get_result($existingCodeQuery);
+            $existingCodeQuery = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE turnoverRef != '' AND assetId IN ($selectedImploded)");
+            mysqli_stmt_execute($existingCodeQuery);
+            $existingCodeResult = mysqli_stmt_get_result($existingCodeQuery);
 
-    
-        if (mysqli_num_rows($existingCodeResult) > 0) {
-            $existingTurnover = true;
-        }
-    
-        if($existingTurnover) {
-            ?>
-            <script> 
-                alert('Some selected assets already have turnover codes.');
-                window.location.href = '../admin/employeeLists.php';
-            </script> 
-            <?php
-        } else {
-    
-            if ($trn_ref == '') {
-            
-                $n = 5;
-                $newCode = getCode($n); // Generate new turnover code for all selected assets
-                $trn_ref = "TRNO-" . $newCode;
-    
-                // If assetId is existed in reference tbl
-                $refSql = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE assetId = ? AND (turnoverRef!='' OR accountabilityRef!='')");
-                mysqli_stmt_bind_param($refSql, "i", $assetID);
-                mysqli_stmt_execute($refSql);
-                $result = mysqli_stmt_get_result($refSql);
-                
-                if (mysqli_num_rows($result) > 0) {
-    
-                    $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl SET turnoverStatus = 1, turnoverRef = ? WHERE assetId = ?");
-                    mysqli_stmt_bind_param($refQry, "si", $trn_ref, $assetID);
-                    mysqli_stmt_execute($refQry);
-                    
-                } else {
-    
-                    foreach ($selected as $assetID) {
-                        // Insert new turnover reference for each asset
-                        $refQry = mysqli_prepare($db->conn, "INSERT INTO reference_tbl (assetId, name, turnoverRef, turnoverStatus, referenceStatus) VALUES (?, ?, ?, 1, 1)");
-                        mysqli_stmt_bind_param($refQry, "iss", $assetID, $empId, $trn_ref);
-                        mysqli_stmt_execute($refQry);
-                    }
-    
-                }
-                // Log history for generated turnover code
-                $history = mysqli_prepare($db->conn, "INSERT INTO history_tbl (name, action, date) VALUES (?, ?, NOW())");
-                $action = "Generated turnover form for multiple assets: " . implode(", ", $assetTags);
-                mysqli_stmt_bind_param($history, "ss", $username, $action);
-                mysqli_stmt_execute($history);
-            } else {        
-                // Log history
-                $history = mysqli_prepare($db->conn, "INSERT INTO history_tbl (name, action, date) VALUES (?, ?, NOW())");
-                $action = "Viewed turnover form for: " . implode(", ", $assetTags);
-                mysqli_stmt_bind_param($history, "ss", $username, $action);
-                mysqli_stmt_execute($history);
+        
+            if (mysqli_num_rows($existingCodeResult) > 0) {
+                $existingTurnover = true;
             }
+        
+            if($existingTurnover) {
+                ?>
+                <script> 
+                    alert('Some selected assets already have turnover codes.');
+                    window.location.href = '../admin/employeeLists.php';
+                </script> 
+                <?php
+            } else {
+        
+                if ($trn_ref == '') {
+                
+                    $n = 5;
+                    $newCode = getCode($n); // Generate new turnover code for all selected assets
+                    $trn_ref = "TRNO-" . $newCode;
+        
+                    // If assetId is existed in reference tbl
+                    $refSql = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE assetId = ? AND (turnoverRef!='' OR accountabilityRef!='')");
+                    mysqli_stmt_bind_param($refSql, "i", $assetID);
+                    mysqli_stmt_execute($refSql);
+                    $result = mysqli_stmt_get_result($refSql);
+                    
+                    if (mysqli_num_rows($result) > 0) {
+        
+                        $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl SET turnoverStatus = 1, turnoverRef = ? WHERE assetId = ?");
+                        mysqli_stmt_bind_param($refQry, "si", $trn_ref, $assetID);
+                        mysqli_stmt_execute($refQry);
+                        
+                    } else {
+        
+                        foreach ($selected as $assetID) {
+                            // Insert new turnover reference for each asset
+                            $refQry = mysqli_prepare($db->conn, "INSERT INTO reference_tbl (assetId, name, turnoverRef, turnoverStatus, referenceStatus) VALUES (?, ?, ?, 1, 1)");
+                            mysqli_stmt_bind_param($refQry, "iss", $assetID, $empId, $trn_ref);
+                            mysqli_stmt_execute($refQry);
+                        }
+        
+                    }
+                    // Log history for generated turnover code
+                    $history = mysqli_prepare($db->conn, "INSERT INTO history_tbl (name, action, date) VALUES (?, ?, NOW())");
+                    $action = "Generated turnover form for multiple assets: " . implode(", ", $assetTags);
+                    mysqli_stmt_bind_param($history, "ss", $username, $action);
+                    mysqli_stmt_execute($history);
+                } else {        
+                    // Log history
+                    $history = mysqli_prepare($db->conn, "INSERT INTO history_tbl (name, action, date) VALUES (?, ?, NOW())");
+                    $action = "Viewed turnover form for: " . implode(", ", $assetTags);
+                    mysqli_stmt_bind_param($history, "ss", $username, $action);
+                    mysqli_stmt_execute($history);
+                }
+            }
+        } else {
+            ?>
+            <script>
+                alert('This asset is not deployed yet!');
+                window.location.replace('../admin/employeeLists.php');
+            </script>
+            <?php
         }
 
     } else {
