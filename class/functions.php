@@ -6,12 +6,11 @@ if(isset($_SESSION['id'])) {
     $sess_name = $session['username'];
 }
 class Operations {
-    function record_Data($type, $tag, $mdl, $srl, $supplier, $empId, $lastused, $status, $dtprchs, $cost, $repair_cost, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os, $action) {
+    function recordAssetData($type, $tag, $mdl, $srl, $supplier, $empId, $lastused, $status, $dtprchs, $cost, $repair_cost, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os, $action) {
         global $db;
         global $sess_name;
 
         $type         = mysqli_real_escape_string($db->conn, $type);
-        $tag          = mysqli_real_escape_string($db->conn, $tag);
         $mdl          = mysqli_real_escape_string($db->conn, $mdl);
         $srl          = mysqli_real_escape_string($db->conn, $srl);
         $supplier     = mysqli_real_escape_string($db->conn, $supplier);
@@ -24,12 +23,19 @@ class Operations {
         $remarks      = mysqli_real_escape_string($db->conn, $remarks);
         $datedeployed = mysqli_real_escape_string($db->conn, $datedeployed);
         $cpu          = mysqli_real_escape_string($db->conn, $cpu);
+        $ram          = mysqli_real_escape_string($db->conn, $ram);
         $storage      = mysqli_real_escape_string($db->conn, $storage);
         $dimes        = mysqli_real_escape_string($db->conn, $dimes);
         $mobile       = mysqli_real_escape_string($db->conn, $mobile);
         $plan         = mysqli_real_escape_string($db->conn, $plan);
         $os           = mysqli_real_escape_string($db->conn, $os);
         $action       = mysqli_real_escape_string($db->conn, $action);
+        // $cpu          = isset($_POST['cpu']) ? mysqli_real_escape_string($db->conn, $_POST['cpu']) : '';
+        // $storage      = isset($_POST['storage']) ? mysqli_real_escape_string($db->conn, $_POST['storage']) : '';
+        // $dimes        = isset($_POST['dimes']) ? mysqli_real_escape_string($db->conn, $_POST['dimes']) : '';
+        // $mobile       = isset($_POST['mobile']) ? mysqli_real_escape_string($db->conn, $_POST['mobile']) : '';
+        // $plan         = isset($_POST['plan']) ? mysqli_real_escape_string($db->conn, $_POST['plan']) : '';
+        // $os           = isset($_POST['os']) ? mysqli_real_escape_string($db->conn, $_POST['os']) : '';
         // $specification = $cpu . ", " . $ram . ", " . $storage . ", " . $os . ", " . $others;    
         if(isset($empId) && $empId != '') {
             $sql = "SELECT * FROM employee_tbl WHERE id='$empId' AND empStatus=1";
@@ -260,11 +266,12 @@ class Operations {
     function getEmp() {
         global $db;
 
-        $sql = "SELECT * FROM employee_tbl ";
+        $sql = "SELECT * FROM employee_tbl";
         $result = mysqli_query($db->conn, $sql);
        
         return $result;
     }
+
     function getSpecificEmp($id) {
         global $db;
 

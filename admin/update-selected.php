@@ -21,7 +21,7 @@ if(isset($_POST['update-asset'])) {
         'storage'      => isset($_POST['storage']) ? mysqli_real_escape_string($db->conn,$_POST['storage']) : '',
         'os'           => isset($_POST['os']) ? mysqli_real_escape_string($db->conn,$_POST['os']) : '',
 
-        'dimes'        => isset($_POST['dimes']) ? $_POST['dimes'] : '',
+        'dimes'        => isset($_POST['dimes']) ? mysqli_real_escape_string($db->conn,$_POST['dimes']) : '',
         'plan'         => isset($_POST['plan']) ? mysqli_real_escape_string($db->conn,$_POST['plan']) : '',
         'mobile'       => isset($_POST['mobile']) ? mysqli_real_escape_string($db->conn,$_POST['mobile']) : '',
 

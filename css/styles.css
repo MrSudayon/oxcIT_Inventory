@@ -87,7 +87,7 @@ main.table {
     margin-top: 90px;
     height: 7%;
     background-color: transparent;
-    padding: .5rem 1rem;
+    padding: .4rem 1rem;
 
     display: flex;
     justify-content: space-between;
@@ -144,10 +144,10 @@ main.table {
 
 .table__body {
     width: 98%;
-    max-height: calc(80% - 1rem);
+    max-height: calc(75% - 1rem);
     background-color: rgba(255, 255, 255, 0.733);
 
-    margin: 0 .8em;
+    margin: 0 .8em .8em .8em;
     border-radius: 0 0 .6rem .6rem;
 
     overflow: auto;
@@ -286,6 +286,7 @@ thead th span.icon-arrow {
 
 thead th:hover span.icon-arrow{
     border: 1.4px solid white;
+    cursor: pointer;
    
 }
 thead th:hover {
@@ -381,7 +382,8 @@ thead th.active,tbody td.active {
 
 .link-btn {
     background-color: var(--main-color);
-    padding: .8rem 1.8rem;
+    padding: .5rem 1rem;
+
     border-radius: 50px;
     font-size: 12px;
     border: none;
@@ -513,10 +515,10 @@ form .asset-details .input-box {
     display: flex;
     justify-content: space-between;
 }
-.search-container {
+/* .search-container {
     font-size: 5px;
     margin-bottom: 10px;
-}
+} */
 
 input[type=text],
 input[type=date] {
@@ -529,7 +531,7 @@ input[type=date] {
     width: 233px;
 }
 
-.search-container button,
+/* .search-container button, */
 .filter button {
     border-radius: 0 5px 5px 0;
 
@@ -629,9 +631,16 @@ form .button input:hover {
     .container {
         max-width: 100%;
     }
+    .link-btn {
+        padding: .4rem 1rem;
+    }
     form .asset-details .input-box {
         margin-bottom: 10px;
         width: 100%;
+    }
+    .table__body {
+        max-height: calc(85% - 1rem);
+        margin: 0 .8em 4em .8em;
     }
     .add-form form .asset-details {
         max-height: 300px;
