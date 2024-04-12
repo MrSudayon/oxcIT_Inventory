@@ -120,8 +120,44 @@ class Operations {
         $query = $db->conn->prepare("INSERT INTO assets_tbl (assettype, assettag, model, serial, supplier, empId, lastused, status, datepurchased, cost, repair_cost, remarks, datedeployed, cpu, memory, storage, dimes, mobile, plan, os) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $query->bind_param("sssssiissiisssssssss", $type, $tag, $mdl, $srl, $supplier, $empId, $lastused, $status, $dtprchs, $cost, $repair_cost, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os);
         $result = $query->execute();
-    
-        if ($result) {
+        
+        if($result) {
+            $actionMessage = '';
+            switch ($action) {
+                case 'recordLaptop':
+                    $actionMessage = "Added Laptop record: $tag";
+                    break;
+                case 'recordDesktop':
+                    $actionMessage = "Added Desktop record: $tag";
+                    break;
+                case 'recordMonitor':
+                    $actionMessage = "Added Monitor record: $tag";
+                    break;
+                case 'recordPrinter':
+                    $actionMessage = "Added Printer record: $tag";
+                    break;
+                case 'recordUPS':
+                    $actionMessage = "Added UPS record: $tag";
+                    break;
+                case 'recordMobile':
+                    $actionMessage = "Added Phone record: $tag";
+                    break;
+                case 'recordSim':
+                    $actionMessage = "Added SIM record: $tag";
+                    break;
+                default:
+                    $actionMessage = "Added asset record: $tag";
+                    return 8;
+            }
+        
+            mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date) VALUES('', '$sess_name', '$actionMessage', NOW())");
+
+            return array_search($action, ['recordLaptop', 'recordDesktop', 'recordMonitor', 'recordPrinter', 'recordUPS', 'recordMobile', 'recordSim']) + 1;
+        } else {
+            return 100; // Store Failed
+        }
+        if ($result && isset($empId)) {
+            
             $assetId = $db->conn->insert_id;
             $sql = "SELECT * FROM reference_tbl WHERE assetId='$assetId' AND name='$empId' AND referenceStatus!='0'";
             $results = $db->conn->query($sql);
@@ -134,9 +170,8 @@ class Operations {
         
                 if ($referenceResult) {
                     // Both inserts successful, log the action and return success
-                    $actionMessage = "Added asset record: $tag";
-                    mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date) VALUES('', '$sess_name', '$actionMessage', NOW())");
-                    return 1; // Success
+                    
+
                 } else {
                     // Insert into reference_tbl failed, rollback assets_tbl insert
                     mysqli_query($db->conn, "DELETE FROM assets_tbl WHERE id='$assetId'");
@@ -146,7 +181,7 @@ class Operations {
                 echo 'Reference already exists';
             }
         } else {
-            return 100; // Store Failed
+            echo "Reference Data Not inserted";
         }
     }
     

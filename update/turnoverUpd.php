@@ -39,12 +39,12 @@
                             
                                 <div class="input-box" id="model">
                                     <span class="details">Model</span>
-                                    <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
+                                    <input type="text" name="model" placeholder="Model" style="background-color: #ccc;" readonly value="<?=$result['model']?>" id="">
                                 </div>
                                 
                                 <div class="input-box" id="serial">
                                     <span class="details">Serial no.</span>
-                                    <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
+                                    <input type="text" name="serial" style="background-color: #ccc;" readonly value="<?=$result['serial']?>" placeholder="Serial Number" id="">
                                 </div>
 
                             <?php 
@@ -55,12 +55,12 @@
 
                                 <div class="input-box" id="model">
                                     <span class="details">Model</span>
-                                    <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
+                                    <input type="text" name="model" placeholder="Model" style="background-color: #ccc;" readonly value="<?=$result['model']?>" id="">
                                 </div>
                                 
                                 <div class="input-box" id="serial">
                                     <span class="details">Serial no.</span>
-                                    <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
+                                    <input type="text" name="serial" style="background-color: #ccc;" readonly value="<?=$result['serial']?>" placeholder="Serial Number" id="">
                                 </div>
                             
                             <?php 
@@ -74,12 +74,12 @@
 
                                 <div class="input-box" id="model">
                                     <span class="details">Model</span>
-                                    <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
+                                    <input type="text" name="model" placeholder="Model" style="background-color: #ccc;" readonly value="<?=$result['model']?>" id="">
                                 </div>
                                 
                                 <div class="input-box" id="serial">
                                     <span class="details">Serial no.</span>
-                                    <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
+                                    <input type="text" name="serial" style="background-color: #ccc;" readonly value="<?=$result['serial']?>" placeholder="Serial Number" id="">
                                 </div>
 
                             <?php 

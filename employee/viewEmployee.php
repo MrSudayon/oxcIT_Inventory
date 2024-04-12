@@ -37,7 +37,7 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
         r.assetId, r.name AS rName, r.accountabilityRef, r.turnoverRef, r.referenceStatus 
         FROM assets_tbl AS a 
         LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
-        WHERE a.empId='$eid' AND a.status = 'Deployed'"; 
+        WHERE a.empId='$eid' AND r.name='$eid' AND a.status = 'Deployed'"; 
         
     $results = mysqli_query($db->conn, $sql);
     $rowCount = $results->num_rows;
@@ -100,16 +100,8 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
                             $accountabilityRef = $row['accountabilityRef'];
                             $turnoverRef = $row['turnoverRef'];
                             $referenceStatus = $row['referenceStatus'];
-                            if($referenceStatus != '0' || empty($referenceStatus)) {
-                                if(!empty($accountabilityRef) ) {
-                                    $accountabilityRef = '';
-                                } 
-                                if(!empty($turnoverRef)) {
-                                    $turnoverRef = '';
-                                }
-                            }
-                            $specification = $operation->specificationCondition($aId);
 
+                            $specification = $operation->specificationCondition($aId);
                     ?>
                         <tr>
                             <td><input type="checkbox" id="select" name="select[]" value="<?php echo $aId; ?>"></td>

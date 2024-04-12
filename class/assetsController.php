@@ -371,8 +371,8 @@ class assetsController {
         //         echo "required";
         //     }
         // } 
-        
-        if($acctStatus == 2 && $trnStatus == 2) {
+        $refStatus = 1;
+        if($trnStatus == 2) {
             $refStatus = 0;
         }
         
