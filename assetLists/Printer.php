@@ -97,7 +97,7 @@ include '../inc/header.php';
                         <td><?php echo $row['model']; ?></td>
                         <td>
                             <?php 
-                            if($dimes == '') {
+                            if($dimes == '') { //type
                                 echo "<i style='color:#FF6646;'>No details found.";
                             } else {
                                 echo $dimes;

@@ -139,18 +139,13 @@ class assetsController {
             $assettag = $row['assettag'];
             $turnover_ref = $row['turnoverRef'];
             $assigned = $row['empId'];
-            $empName = $row['empName'];
         }
         
         
         // validation of Turnover reference code
         if($ref_Code == $turnover_ref) {
             
-            if($lastused == '') {
-                $lastusedby = $assigned;
-            } else {
-                $lastusedby = $lastused;
-            }
+            $lastusedby = $assigned;
 
             // Change Asset data based on Reason of Turnover
             if ($reason == 'Resign') {

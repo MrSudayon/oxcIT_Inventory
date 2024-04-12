@@ -65,15 +65,13 @@ if(isset($_POST['turnover-asset'])) {
     if ($result == 1) {
         echo "<script>
                 alert('✅Turnover Successful');
-                window.location.href='../admin/configuration.php';
+                window.location.href='../admin/employeeLists.php';
                 </script>";
-        die();
     } elseif($result == 100) {
         echo "<script>
                 alert('⚠️Wrong reference code');
-                window.location.href='../admin/configuration.php';
+                window.location.href='../admin/employeeLists.php';
                 </script>";
-        die();
     } 
 }
 

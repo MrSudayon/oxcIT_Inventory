@@ -29,7 +29,7 @@ include '../inc/header.php';
                         <!-- <div class="asset-tag" id="tag" hidden> -->
                         <input type="text" id="asset-tag" style="background-color: #ccc; text-align: center; font-weight: 600; cursor: default;" readonly value="<?=$result['assettag']?>">
                     </div>
-
+                
                                             
                         <?php if($assetType == 'Laptop' || $assetType == 'Desktop' ) { ?>
                             
@@ -56,25 +56,6 @@ include '../inc/header.php';
                                 </div>
                             
                         <?php } elseif($assetType == 'Monitor' || $assetType == 'UPS' || $assetType == 'Printer' || $assetType == 'AVR') { ?>
-
-                                <div class="input-box" id="model">
-                                    <span class="details">Model</span>
-                                    <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
-                                </div>
-                                
-                                <div class="input-box" id="serial">
-                                    <span class="details">Serial no.</span>
-                                    <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
-                                </div>
-
-                            <?php } elseif($assetType == 'SIM') { ?>
-
-                                <div class="input-box" id="mobile">
-                                    <span class="details">Mobile no.</span>
-                                    <input type="text" name="mobile" value="<?=$result['serial']?>" placeholder="Mobile no." id="">
-                                </div>
-
-                        <?php } else { ?>
 
                                 <div class="input-box" id="model">
                                     <span class="details">Model</span>
@@ -126,8 +107,11 @@ include '../inc/header.php';
                 <div class="title">Specification</div>
                 <div class="asset-details">
 
-                    <?php if($assetType == 'Laptop' || $assetType == 'Desktop' ) { ?>
-
+                <?php 
+                switch($assetType) {
+                    case 'Laptop':
+                    case 'Desktop':
+                    ?>
                         <div class="input-box" id="processor">
                             <span class="details">Processor</span>
                             <input type="text" name="processor" value="<?=$result['cpu']?>" placeholder="Processor" id="">
@@ -145,7 +129,11 @@ include '../inc/header.php';
                             <input type="text" name="os" value="<?=$result['os']?>" placeholder="Operating System" id="">
                         </div>
 
-                    <?php } elseif($assetType == 'Mobile') { ?>
+                    <?php 
+                    break;
+                    
+                    case 'Mobile': 
+                    ?>
 
                         <div class="input-box" id="ram">
                             <span class="details">Memory</span>
@@ -175,17 +163,28 @@ include '../inc/header.php';
                             </select>
                         </div>
 
-                    <?php } elseif($assetType == 'Monitor' || $assetType == 'UPS' || $assetType == 'Printer' || $assetType == 'AVR') { ?>
+                    <?php 
+                    break;
+                    
+                    case 'Monitor':
+                    case 'UPS':
+                    case 'Printer':
+                    case 'AVR':
+                    ?>
 
                         <div class="input-box" id="dimes">
                             <span class="details">Dimension</span>
                             <input type="text" name="dimes" value="<?=$result['dimes']?>" placeholder="Dimension" id="">
                         </div>
 
-                    <?php } elseif($assetType == 'SIM') { ?>
+                    <?php 
+                    break;
+
+                    case 'SIM': 
+                    ?>
 
                         <div class="input-box" id="plan">
-                            <span class="details">Plan</span>
+                            <span class="details" style="margin-bottom: 10px;">Plan</span>
                             <select name="plan" id="plan" class="assigned">
                                 <?php
                                     $plan = $result['plan'];
@@ -203,8 +202,16 @@ include '../inc/header.php';
                                 ?>
                             </select>
                         </div>
+                        <div class="input-box" id="mobile">
+                            <span class="details">Mobile no.</span>
+                            <input type="text" name="mobile" value="<?=$result['mobile']?>" placeholder="Mobile no." id="">
+                        </div>
 
-                    <?php } else { ?>
+                    <?php 
+                    break;
+
+                    default: 
+                    ?>
                     
                         <div class="input-box" id="processor">
                             <span class="details">Processor</span>
@@ -223,17 +230,18 @@ include '../inc/header.php';
                             <input type="text" name="os" value="<?=$result['os']?>" placeholder="Operating System" id="">
                         </div>
                         
-                    <?php } ?>
-
+                    <?php 
+                    break;
+                } ?>
                     
                 </div>
                 <div class="title">Accountable</div>
                 <div class="asset-details">
                     <div class="input-box">
                     <span class="details" style="margin-bottom: 10px;">Assigned To</span>
-                        <select name="assigned" id="assigned" class="assigned">
+                        <select name="assigned" id="assigned" class="assigned" style="background-color: #ccc; font-weight: 600;">
                             <option value="<?=$result['assignedId']?>"><?=$result['empName']?></option>
-                            <option value=''>Clear</option>
+                            <option value=''>None</option>
                             <?php
                                     $user = $getAllUser->selectAllEmp();
                                     foreach($user as $row) {
@@ -254,19 +262,20 @@ include '../inc/header.php';
 
                     <div class="input-box">
                         <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
-                        <!-- <input type="text" name="lastused" value=""> -->
-                            <select name="lastused" id="lastused" class="assigned">
-                                <option value="<?=$result['lastUsedId']?>"><?=$result['lastUsedName']?></option>
+                        <input type="text" name="lastused" style="background-color: #ccc; font-weight: 600;" value="<?=$result['lastUsedName']?>" readonly>
+
+                            <!-- <select name="lastused" id="lastused" >
+                                <option value="?=$result['lastUsedId']?>"></option>
                                 <option value=''>Clear</option>
-                                <?php
+                                ?php
                                     foreach($user as $row) {
                                 ?>
-                                <option value="<?php echo $row['id']; ?>">
-                                    <?php echo $row['name']; ?>
+                                <option value="?php echo $row['id']; ?>">
+                                    ?php echo $row['name']; ?>
                                 </option>
-                                <?php
+                                ?php
                                     }
-                                ?>
+                                ?> -->
                             </select>
                     </div>
                 </div>

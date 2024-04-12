@@ -72,7 +72,7 @@ class Operations {
                 case 'recordMobile':
                     $actionMessage = "Added Phone record: $tag";
                     break;
-                case 'recordSIM':
+                case 'recordSim':
                     $actionMessage = "Added SIM record: $tag";
                     break;
                 default:
@@ -82,7 +82,7 @@ class Operations {
         
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date) VALUES('', '$sess_name', '$actionMessage', NOW())");
 
-            return array_search($action, ['recordLaptop', 'recordDesktop', 'recordMonitor', 'recordPrinter', 'recordUPS', 'recordMobile', 'recordSIM']) + 1;
+            return array_search($action, ['recordLaptop', 'recordDesktop', 'recordMonitor', 'recordPrinter', 'recordUPS', 'recordMobile', 'recordSim']) + 1;
         } else {
             return 100; // Store Failed
         }
@@ -115,9 +115,15 @@ class Operations {
             case 'recordSim':
                 $sql .= " assetType='SIM'";
                 break;
+            case 'recordUps':
+                $sql .= " assetType='UPS'";
+                break;
+            default:
+                $sql .= " assetType='Laptop'";
+                break;
         }
     
-        $result = $db->conn->query($sql);
+        $result = mysqli_query($db->conn, $sql);
         return $result;
     }
 
@@ -160,7 +166,7 @@ class Operations {
 
         function removeVowelsAndToUpper($str) {
             // Remove vowels
-            $strWithoutVowels = str_replace(['a', 'e', 'i', 'o', 'u', 'E', 'I'], '', $str);
+            $strWithoutVowels = str_replace(['a', 'e', 'i', 'o', 'u', 'E'], '', $str);
             
             // Convert to uppercase
             $strToUpper = strtoupper($strWithoutVowels);

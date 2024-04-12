@@ -3,7 +3,7 @@ include '../inc/auth.php';
 
 if(isset($_GET['assetID'])) {
     $id = $_GET['assetID'];
-    
+
     $name = $user['username'];
     
     $query = mysqli_query($db->conn, "UPDATE assets_tbl SET status='Archive' WHERE id='$id'");
@@ -11,11 +11,30 @@ if(isset($_GET['assetID'])) {
     $tag = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $id");
     while($row = $tag->fetch_assoc()) {
         $assettag = $row['assettag'];
+        $assettype = $row['assettype'];
     }
     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                             VALUES ('', '$name', 'Deleted Tag: $assettag from Assets Record', NOW())");
     
-    header("Location: ../admin/dashboard.php");
+    if($assettype == 'Desktop') { 
+        $url = "../assetLists/Desktop.php";
+    } elseif($assettype == 'Laptop') {
+        $url = "../assetLists/Laptop.php";
+    } elseif($assettype == 'Monitor') {
+        $url = "../assetLists/Monitor.php";
+    } elseif($assettype == 'Printer') {
+        $url = "../assetLists/Printer.php";
+    } elseif($assettype == 'Mobile') {
+        $url = "../assetLists/Mobile.php";
+    } elseif($assettype == 'SIM') {
+        $url = "../assetLists/SIM.php";
+    } elseif($assettype == 'UPS') {
+        $url = "../assetLists/UPS.php";
+    } else {
+        $url = "../admin/configuration.php"; // Change name to 'All Assets'
+    }
+
+    header("Location: \"$url\"");
 }
 
 // Accountability Ref Deletion

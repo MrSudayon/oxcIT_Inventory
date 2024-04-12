@@ -81,7 +81,7 @@ include '../inc/header.php';
             if($rowCountPage != $rowCount) {
                 echo '<div class="pagination">';
                 if ($page > 1) {
-                    echo '<a href="emp_List.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
+                    echo '<a href="location_List.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
                 }
                 
                 $max_page_range = 7; // Maximum number of pages to show in pagination
@@ -90,12 +90,12 @@ include '../inc/header.php';
                 
                 for($i = $start_page; $i <= $end_page; $i++) {
                     $active_class = ($i == $page) ? 'activePage' : ''; // Add active class to current page
-                    echo '<a href="emp_List.php?page=' . $i . '" class="next ' . $active_class . '">' . $i . '</a>';                  
+                    echo '<a href="location_List.php?page=' . $i . '" class="next ' . $active_class . '">' . $i . '</a>';                  
                 }  
                 
                 if ($page < $number_of_page) {
-                    echo '<a href="emp_List.php?page=' . ($page + 1) . '" class="next">Next</a>';
-                    echo '<a href="emp_List.php?page=all" class="next">All</a>';
+                    echo '<a href="location_List.php?page=' . ($page + 1) . '" class="next">Next</a>';
+                    echo '<a href="location_List.php?page=all" class="next">All</a>';
                 }
                 echo '</div>';
 

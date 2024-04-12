@@ -1,80 +1,109 @@
-<?php include '../inc/auth.php'; ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../assets/logo.jpg">
-    <link rel="stylesheet" href="../css/formStyles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Division List</title>
-</head>
-<style>
-
-</style>
-<body>
-    <?php include '../inc/header.php'; ?>
+<?php 
+include '../inc/auth.php'; 
+include '../inc/listsHead.php'; 
+include '../inc/header.php'; 
     
-        <div class="content">
-            <div class="title">
-                <h1> CONFIGURATION </h1>
-                <div class="search-container">
-                <form action="" method="POST">
-                    <input type="text" placeholder="Search.." name="search">
-                    <button type="submit"><i class="fa fa-search"></i></button>
-                </form>
-                </div>
-            </div>
-            <div class="table-nav">
-                <div class="link-btns">
-                    <a href="../admin/adminConfig.php" class="link-btn" >Back</a>
-                    <a href="../php/add_division.php" class="link-btn">Add Division</a>
-                </div>
+    $results = $operation->getEmpLoc();
+    $results_per_page = 15;
 
-                <?php
-                    $List = $operation->searchDept();
-                    $rowCount = $List->num_rows;
-                ?>
-                <div class="count">
-                    <p>Division count: <b style="color: yellow; font-size: 20px;"><?php echo $rowCount; ?></b></p>
-                </div>
+    if (!isset ($_GET['page']) ) {  
+        $page = 1;  
+    } elseif ($_GET['page'] === 'all') {  
+
+        $sql = "SELECT * FROM loc_tbl ORDER BY status DESC";
+        $res = mysqli_query($db->conn, $sql);
+        $rowCountPage = $res->num_rows;
+    } else {
+        $page = $_GET['page'];  
+    }
+    
+    $rowCount = $results->num_rows;
+    $number_of_page = ceil ($rowCount / $results_per_page);  
+    $page_first_result = ($page-1) * $results_per_page;  
+
+    if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
+    
+        $sql = "SELECT * FROM loc_tbl ORDER BY status DESC 
+                LIMIT $page_first_result, $results_per_page";
+
+        $res = mysqli_query($db->conn, $sql);
+        $rowCountPage = $res->num_rows;
+    }
+
+    $rows = [];
+    while ($row = mysqli_fetch_assoc($res)) {
+        $rows[] = $row;
+    }
+    
+?>       
+
+<div class="content">
+    <main class="table" id="customers_table">
+        <section class="table__header">
+            <a href="../php/add_location.php" class="link-btn">New Record</a>
+            <div class="input-group">
+                <input type="search" placeholder="Search Data...">
+                <img src="../assets/icons/search.png" alt="">
             </div>
-            <form action="" method="get">
-                
-                <table class="assets-table">
+            <p><b style="color: yellow; font-size: 20px; margin-top: 10px;"><?php echo $rowCountPage; ?></b> result/s.</p>
+        </section>
+        <section class="table__body">
+            <table>
+                <thead>
                     <tr>
-                        <th>Name</th>
-                        <th colspan="2" width="8%">Action</th>
+                        <th> Location <span class="icon-arrow">&UpArrow;</span></th>
+                        <th colspan="2" width='10%' style="pointer-events: none;"> Action </th>
                     </tr>
-                    <?php 
-                        while($row = mysqli_fetch_assoc($List)) {
-                                 
-                            $status = $row['status'];
-                            if($status==0) {
-                                echo "<tr style='background-color: pink'>";
-                            } else {
-                                echo "<tr>";
-                            }
-                    ?> 
-                        <td><?php echo $row['name']; ?></td>
-                        <td>
-                        <center>
-                            <a href="../update/deptUpd.php?deptID=<?php echo $row['id']; ?>"><img src="../assets/icons/update.png" width="24px"></a>
-                            <!-- <a href="remove?deptID=" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a> -->
-                        </center>
-                        </td>    
-                    </tr>
-                    <?php
+                </thead>
+                <tbody>      
+                <?php
+                    foreach ($rows as $row) {
+                        $status = $row['status'];
+                        if($status==0) {
+                            echo "<tr style='background-color: pink'>";
+                        } else {
+                            echo "<tr>";
                         }
-                    ?>
-                </table>
+                        
+                        $eid = $row['id'];
+                ?>     
+                        <td><a href="../update/locUpd.php?empID=<?php echo $eid; ?>"><strong><?php echo $row['name']; ?></strong></a></td>
+                        <td>
+                            <a href="../update/remove.php?assetID=<?php echo $eid; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
+                        </td>   
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+           
+        </section>
+        <?php 
+            if($rowCountPage != $rowCount) {
+                echo '<div class="pagination">';
+                if ($page > 1) {
+                    echo '<a href="dept_List.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
+                }
                 
+                $max_page_range = 7; // Maximum number of pages to show in pagination
+                $start_page = max(1, $page - floor($max_page_range / 3));
+                $end_page = min($number_of_page, $start_page + $max_page_range - 1);
                 
-            </form>
-            
-        </div>
+                for($i = $start_page; $i <= $end_page; $i++) {
+                    $active_class = ($i == $page) ? 'activePage' : ''; // Add active class to current page
+                    echo '<a href="dept_List.php?page=' . $i . '" class="next ' . $active_class . '">' . $i . '</a>';                  
+                }  
+                
+                if ($page < $number_of_page) {
+                    echo '<a href="dept_List.php?page=' . ($page + 1) . '" class="next">Next</a>';
+                    echo '<a href="dept_List.php?page=all" class="next">All</a>';
+                }
+                echo '</div>';
 
-        <script src="../js/dashboard.js"></script>
+            }
+        ?>
+    </main>
+    <script src="../js/sort.js"></script>
+
+</div>
 </body>
 </html>

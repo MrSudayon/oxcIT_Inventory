@@ -10,7 +10,8 @@ if(isset($_GET['id'])) {
 if(isset($_POST['save'])) {
     $operation->checkAssetCount($_POST['asset-type']);  
 
-    $result = $operation->recordAssetData($_POST['asset-type'], $_POST['asset-tag'], $_POST['model'], $_POST['serial'], $_POST['supplier'], 
+    $result = $operation->recordAssetData($_POST['asset-type'], $_POST['asset-tag'], 
+    isset($_POST['model']) ? $_POST['model'] : '', isset($_POST['serial']) ? $_POST['serial'] : '', $_POST['supplier'], 
     isset($_POST['assigned']) ? $_POST['assigned'] : '', isset($_POST['lastused']) ? $_POST['lastused'] : '', 
     $_POST['status'], $_POST['dateprchs'], 
     isset($_POST['cost']) ? mysqli_real_escape_string($db->conn, str_replace(',', '', $_POST['cost'])) : '', 
@@ -21,7 +22,7 @@ if(isset($_POST['save'])) {
     isset($_POST['mobile']) ? mysqli_real_escape_string($db->conn, $_POST['mobile']) : '', isset($_POST['plan']) ? mysqli_real_escape_string($db->conn, $_POST['plan']) : '',
     isset($_POST['os']) ? mysqli_real_escape_string($db->conn, $_POST['os']) : '', $_POST['action']);
     
-    if ($result >= 1 && $result <= 7) {
+    if ($result >= 1 && $result <= 8) {
         $urls = [
             1 => "../assetLists/Laptop.php",
             2 => "../assetLists/Desktop.php",
@@ -30,6 +31,7 @@ if(isset($_POST['save'])) {
             5 => "../assetLists/UPS.php",
             6 => "../assetLists/Mobile.php",
             7 => "../assetLists/SIM.php",
+            8 => "../assetLists/Laptop.php",
         ];
     
         $url = $urls[$result];
@@ -37,12 +39,6 @@ if(isset($_POST['save'])) {
         echo "<script> alert('Data Stored successfully!'); </script>";
         header("Refresh:0; url= $url");
 
-        // $db->conn->close();
-    } elseif ($result == 8) {
-        echo "<script> alert('Data Stored successfully!'); </script>";
-        header("Refresh:0; url= dashboard.php");
-
-        // $db->conn->close();
     } elseif ($result == 100) {
         echo "<script> alert('Failed'); </script>";
 
@@ -112,6 +108,7 @@ if(isset($_POST['save'])) {
                                 <?php
                                     $assettype = $operation->getAssets($id);
                                     foreach($assettype as $assets) {
+                                        $assetType = $assets['assetType'];
                                 ?>
                                     <!-- <input type="text" name="" style="background-color: #ccc; width: 100%;" value="?=$assets['assetType']?>"> -->
                                     <input type="text" name="asset-type" style="background-color: #ccc; text-align: center; font-weight: 600; cursor: default;" readonly value="<?=$assets['assetType']?>">
@@ -333,8 +330,8 @@ if(isset($_POST['save'])) {
                         
                         case 'recordMonitor':
                         case 'recordUPS':
-                        case 'recordPrinter':
                         case 'recordAVR':
+                        case 'recordPrinter':
                             ?>
                                 <div class="input-box" id="model">
                                     <span class="details">Model</span>
@@ -383,15 +380,20 @@ if(isset($_POST['save'])) {
                             <div class="asset-details">
 
                                 <div class="input-box" id="dimes">
-                                    <span class="details">Dimension</span>
-                                    <input type="text" name="dimes" placeholder="Dimension" id="">
+                                    <?php if($assetType == 'Printer') { ?>
+                                        <span class="details">Type</span>
+                                        <input type="text" name="dimes" placeholder="Type" id="">
+                                    <?php } else { ?>
+                                        <span class="details">Dimension</span>
+                                        <input type="text" name="dimes" placeholder="Dimension" id="">
+                                    <?php } ?>
+
                                 </div>
 
                             </div> 
 
                             <?php
-                            break;
-
+                        break;
                         default:
                             ?>
                                 <div class="input-box" id="model">
@@ -419,7 +421,7 @@ if(isset($_POST['save'])) {
                                 <div class="input-box">
                                     <span class="details" style="margin-bottom: 10px;">Status</span>
                                     <select name="status" id="status" onChange="changetextbox()" required>
-                                        <option value='' hidden selected disabled>Please select</option>
+                                        <option value='' selected disabled>Please select</option>
                                         <option value="For repair">For repair</option>
                                         <option value="Deployed">Deployed</option>
                                         <option value="To be deploy">To be deploy</option>
@@ -487,9 +489,10 @@ if(isset($_POST['save'])) {
                                 ?>
                             </select>
                         </div>
-
+                        <?php if($role == 'admin' || $role == 'Admin') { ?>
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
+                            <!-- <input type="text" name="lastused" placeholder="Last used by.." style="background-color: #ccc; font-weight: 600;" value="?=$result['']?>" readonly id=""> -->
                             <select name="lastused" id="lastused" class="assigned">
                                 <option value='' selected>Please Select</option>
                                 <?php
@@ -504,7 +507,10 @@ if(isset($_POST['save'])) {
                                 ?>
                             </select>
                         </div>
+                        <?php } ?>
+
                     </div>
+
                     <div class="button">
                         <input type="hidden" name="action" value="<?php echo $id; ?>"/>
                         <input type="submit" onclick="passValue()" value="Save" name="save"/>

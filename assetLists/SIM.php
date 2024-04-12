@@ -2,64 +2,61 @@
 include '../inc/auth.php';
 include '../inc/listsHead.php'; 
 include '../inc/header.php'; 
-?>
-<body>
 
-<?php
-    $sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive' AND assettype='SIM'";
-    $results = mysqli_query($db->conn, $sqlSelectAll);
+$sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive' AND assettype='SIM'";
+$results = mysqli_query($db->conn, $sqlSelectAll);
 
-    $results_per_page = 15;
-    if (!isset ($_GET['page']) ) {  
-        $page = 1;  
-    } elseif ($_GET['page'] === 'all') {  
-        $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
-                a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
-                e.id, e.name, e.division, e.location 
-                FROM assets_tbl AS a 
-                LEFT JOIN employee_tbl AS e 
-                ON e.id = a.empId 
-                WHERE a.status!='Archive' AND assettype='SIM'";
-        $res = mysqli_query($db->conn, $sql);
-        $rowCountPage = $res->num_rows;
-    } else {
-        $page = $_GET['page'];  
+$results_per_page = 15;
+if (!isset ($_GET['page']) ) {  
+    $page = 1;  
+} elseif ($_GET['page'] === 'all') {  
+    $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
+            a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
+            e.id, e.name, e.division, e.location 
+            FROM assets_tbl AS a 
+            LEFT JOIN employee_tbl AS e 
+            ON e.id = a.empId 
+            WHERE a.status!='Archive' AND assettype='SIM'";
+    $res = mysqli_query($db->conn, $sql);
+    $rowCountPage = $res->num_rows;
+} else {
+    $page = $_GET['page'];  
+}
+
+$rowCount = $results->num_rows;
+$number_of_page = ceil ($rowCount / $results_per_page);  
+$page_first_result = ($page-1) * $results_per_page;  
+
+if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
+    $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
+            a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
+            e.id, e.name, e.division, e.location 
+            FROM assets_tbl AS a 
+            LEFT JOIN employee_tbl AS e 
+            ON e.id = a.empId 
+            WHERE a.status!='Archive' AND assettype='SIM' 
+            LIMIT $page_first_result, $results_per_page";
+    $res = mysqli_query($db->conn, $sql);
+    $rowCountPage = $res->num_rows;
+}
+
+$rows = [];
+while ($row = mysqli_fetch_assoc($res)) {
+    $rows[] = $row;
+}
+
+// Sort the result array by assettag
+usort($rows, function($a, $b) {
+    preg_match('/\d+$/', $a['assettag'], $aMatches);
+    preg_match('/\d+$/', $b['assettag'], $bMatches);
+    $aNum = intval($aMatches[0] ?? 0);
+    $bNum = intval($bMatches[0] ?? 0);
+
+    if ($aNum == $bNum) {
+        return strcmp($a['assettag'], $b['assettag']);
     }
-    
-    $rowCount = $results->num_rows;
-    $number_of_page = ceil ($rowCount / $results_per_page);  
-    $page_first_result = ($page-1) * $results_per_page;  
-
-    if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
-        $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
-                a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
-                e.id, e.name, e.division, e.location 
-                FROM assets_tbl AS a 
-                LEFT JOIN employee_tbl AS e 
-                ON e.id = a.empId 
-                WHERE a.status!='Archive' AND assettype='SIM' 
-                LIMIT $page_first_result, $results_per_page";
-        $res = mysqli_query($db->conn, $sql);
-        $rowCountPage = $res->num_rows;
-    }
-
-    $rows = [];
-    while ($row = mysqli_fetch_assoc($res)) {
-        $rows[] = $row;
-    }
-    
-    // Sort the result array by assettag
-    usort($rows, function($a, $b) {
-        preg_match('/\d+$/', $a['assettag'], $aMatches);
-        preg_match('/\d+$/', $b['assettag'], $bMatches);
-        $aNum = intval($aMatches[0] ?? 0);
-        $bNum = intval($bMatches[0] ?? 0);
-
-        if ($aNum == $bNum) {
-            return strcmp($a['assettag'], $b['assettag']);
-        }
-        return ($aNum < $bNum) ? -1 : 1;
-    });  
+    return ($aNum < $bNum) ? -1 : 1;
+});  
 ?>       
 
 <div class="content">
@@ -77,11 +74,9 @@ include '../inc/header.php';
                 <thead>
                     <tr>
                         <th> Asset Tag <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Model <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Specification <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Purchase Date <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Status <span class="icon-arrow">&UpArrow;</span></th>
-                        <th width='10%'> Action <span class="icon-arrow">&UpArrow;</span></th>
+                        <th width='10%'> Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -95,7 +90,6 @@ include '../inc/header.php';
                     ?>            
                     <tr>
                         <td><a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></td></a>
-                        <td><?php echo $row['model']; ?></td>
                         <td>
                             <?php 
                             if($plan == '') {
@@ -106,7 +100,6 @@ include '../inc/header.php';
                                 
                             ?>
                         </td>
-                        <td><?php echo $row['datepurchased']; ?></td>
                         <td><?php echo "<span class='statusSpan'>". $status ."</span>" ?></td>
 
                         <td>
