@@ -30,9 +30,8 @@ include '../inc/header.php';
         <?php
         if(isset($_GET['empID'])) {
             $empID = mysqli_real_escape_string($db->conn, $_GET['empID']);
-            $asset = new assetsController;
             $getData = new Operations;
-            $result = $asset->empEdit($empID);
+            $result = $assetController->empEdit($empID);
 
             if($result) {
         ?>
@@ -50,7 +49,7 @@ include '../inc/header.php';
                             <option value="<?=$result['division']?>"><?=$result['division']?></option>
                             <?php
                                 
-                                $emp = $getData->getEmpDiv();
+                                $emp = $operation->getEmpDiv();
 
                                 foreach($emp as $empDiv) {
                             ?>
@@ -65,8 +64,6 @@ include '../inc/header.php';
                         <select name="location">
                             <option value="<?=$result['location']?>"><?=$result['location']?></option>
                             <?php
-                                $emp = $getData->getEmpLoc();
-
                                 foreach($emp as $empLoc) {
                             ?>
                                 <option value="<?=$empLoc['name']?>"><?php echo $empLoc['name']; ?></option>
@@ -79,15 +76,15 @@ include '../inc/header.php';
                         <span class="details" style="margin-bottom: 10px;">Status</span>
                         <select name="status">
                         <?php
-                            $status = $result['status'];
+                            $status = $result['empStatus'];
                             if($status == 1) {
                         ?>
-                            <option value="<?=$result['status']?>">Active</option>
+                            <option value="<?=$result['empStatus']?>">Active</option>
                             <option value="0">Inactive</option>
                         <?php
                             } else { 
                         ?> 
-                            <option value="<?=$result['status']?>">Inactive</option>
+                            <option value="<?=$result['empStatus']?>">Inactive</option>
                             <option value="1">Active</option>
                         <?php
                             }

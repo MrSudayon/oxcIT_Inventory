@@ -41,7 +41,7 @@ if(isset($_POST['submit'])) {
                 <div class="asset-details">
                     <div class="input-box">
                         <span class="details">Name:</span>
-                        <input type="text" name="name"/>
+                        <input type="text" name="name" placeholder="Enter fullname"/>
                     </div>
 
                     <!-- Link to dbase dept table -->

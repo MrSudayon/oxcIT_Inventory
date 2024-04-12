@@ -1,14 +1,6 @@
 <?php 
 include '../inc/auth.php'; 
 include '../inc/listsHead.php'; 
-?>
-
-<style>
-th {
-  cursor: pointer;
-}
-</style>
-<?php 
 include '../inc/header.php';
     
     
@@ -18,13 +10,6 @@ include '../inc/header.php';
     if (!isset ($_GET['page']) ) {  
         $page = 1;  
     } elseif ($_GET['page'] === 'all') {  
-        // $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
-        //         a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
-        //         e.id, e.name, e.division, e.location 
-        //         FROM assets_tbl AS a 
-        //         LEFT JOIN employee_tbl AS e 
-        //         ON e.id = a.empId 
-        //         WHERE a.status!='Archive' AND assettype='Laptop'";
         $sql = "SELECT * FROM employee_tbl ORDER BY empStatus DESC";
         $res = mysqli_query($db->conn, $sql);
         $rowCountPage = $res->num_rows;
@@ -37,14 +22,6 @@ include '../inc/header.php';
     $page_first_result = ($page-1) * $results_per_page;  
 
     if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
-        // $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
-        //         a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
-        //         e.id, e.name, e.division, e.location 
-        //         FROM assets_tbl AS a 
-        //         LEFT JOIN employee_tbl AS e 
-        //         ON e.id = a.empId 
-        //         WHERE a.status!='Archive' AND assettype='Laptop' 
-        //         LIMIT $page_first_result, $results_per_page";
         $sql = "SELECT * FROM employee_tbl ORDER BY empStatus DESC 
                 LIMIT $page_first_result, $results_per_page";
 
@@ -57,18 +34,6 @@ include '../inc/header.php';
         $rows[] = $row;
     }
     
-    // Sort the result array by assettag
-    usort($rows, function($a, $b) {
-        preg_match('/\d+$/', $a['assettag'], $aMatches);
-        preg_match('/\d+$/', $b['assettag'], $bMatches);
-        $aNum = intval($aMatches[0] ?? 0);
-        $bNum = intval($bMatches[0] ?? 0);
-
-        if ($aNum == $bNum) {
-            return strcmp($a['assettag'], $b['assettag']);
-        }
-        return ($aNum < $bNum) ? -1 : 1;
-    });  
 ?>       
 
 <div class="content">
@@ -88,7 +53,7 @@ include '../inc/header.php';
                         <th> Name <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Location <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Division <span class="icon-arrow">&UpArrow;</span></th>
-                        <th colspan="2" width='10%'> Action <span class="icon-arrow">&UpArrow;</span></th>
+                        <th colspan="2" width='10%' style="pointer-events: none;"> Action</th>
                     </tr>
                 </thead>
                 <tbody>      
