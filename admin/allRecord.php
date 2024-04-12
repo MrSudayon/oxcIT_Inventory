@@ -8,8 +8,8 @@ include '../inc/header.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="../css/assetStyle.css"> -->
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/status.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../js/dashboard.js"></script>
@@ -100,7 +100,8 @@ include '../inc/header.php';
 
                             $cpu = $row['cpu'];
                             $ram = $row['memory'];
-                            $storage = $row['storage']
+                            $storage = $row['storage'];
+                            $os = $row['os'];
                     ?>            
                     <tr>
                         <td><input type="checkbox" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
@@ -108,17 +109,18 @@ include '../inc/header.php';
                         <td><?php echo $row['model']; ?></td>
                         <td>
                             <?php 
-                            if($cpu == '' || $ram == '' || $storage == '') {
+                            if($cpu == '' && $ram == '' && $storage == '' && $os == '') {
                                 echo "<i style='color:#FF6646;'>No details found.";
                             } else {
-                                echo "CPU: ". $cpu .
-                                "<br>MEMORY: ". $ram.
-                                "<br>STORAGE: ". $storage;
+                                echo $cpu .
+                                "<br>". $ram.
+                                "<br>". $storage . 
+                                "<br>". $os;
                             }
                                 
                             ?>
                         </td>
-                        <?php include '../inc/statuses.php'; ?>
+                        <td><?php echo "<span class='statusSpan'>". $status ."</span>" ?></td>
 
                     </tr>
                     <?php

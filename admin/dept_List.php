@@ -3,14 +3,14 @@ include '../inc/auth.php';
 include '../inc/listsHead.php'; 
 include '../inc/header.php'; 
     
-    $results = $operation->getEmpLoc();
+    $results = $operation->getEmpDiv();
     $results_per_page = 15;
 
     if (!isset ($_GET['page']) ) {  
         $page = 1;  
     } elseif ($_GET['page'] === 'all') {  
 
-        $sql = "SELECT * FROM loc_tbl ORDER BY status DESC";
+        $sql = "SELECT * FROM dept_tbl ORDER BY status DESC";
         $res = mysqli_query($db->conn, $sql);
         $rowCountPage = $res->num_rows;
     } else {
@@ -23,7 +23,7 @@ include '../inc/header.php';
 
     if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
     
-        $sql = "SELECT * FROM loc_tbl ORDER BY status DESC 
+        $sql = "SELECT * FROM dept_tbl ORDER BY status DESC 
                 LIMIT $page_first_result, $results_per_page";
 
         $res = mysqli_query($db->conn, $sql);
@@ -51,7 +51,7 @@ include '../inc/header.php';
             <table>
                 <thead>
                     <tr>
-                        <th> Location <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Division <span class="icon-arrow">&UpArrow;</span></th>
                         <th colspan="2" width='10%' style="pointer-events: none;"> Action </th>
                     </tr>
                 </thead>

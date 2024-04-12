@@ -79,6 +79,7 @@ $referenceTbl = $operation->getReferenceTable();
                         $turnoverStatus = $row['turnoverStatus']; 
                         $turnoverDate = $row['turnoverDate'];
                         $turnoverFile = $row['turnoverFile'];
+                        $referenceStatus = $row['referenceStatus'];
                         $empId = $row['rname']; 
 
                         $qrySelect = "SELECT * FROM employee_tbl WHERE id='$empId'";
@@ -112,8 +113,13 @@ $referenceTbl = $operation->getReferenceTable();
                             }
 
                             $operation->ifEmptyReference($acctRef, $turnoverRef, $acctFile, $turnoverFile);
+
+                            if($referenceStatus == 0) {
+                                echo "<tr style='background-color: #fecfcc;'>";
+                            } else {
+                                echo "<tr>";
+                            }
                     ?> 
-                            <tr>
                                 <td><?php echo $empName; ?></td>
                                 <td><a class="link" href="accountability.php?id=<?php echo $acctRef; ?>"><?php echo $acctRef;?></a></td>
                                 <td width="10%;"><a class="link" href="../files/download.php?acctRef_id=<?php echo $rid; ?>" target="_blank"><?php echo $acctFile; ?></td>

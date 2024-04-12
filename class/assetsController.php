@@ -71,27 +71,7 @@ class assetsController {
         $datedeployed = $input['datedeployed'];
 
         $empId = $input['assigned'];
-
-        if((!empty($empId)) || ($empId != '') && ($lastused = '') || empty($lastused)) {
-            $lastused = $empId;
-        } else {
-            $lastused = $input['lastused'];
-        }
-       
-        if(isset($empId) || $empId != '') {
-            $sqlSelect = "SELECT * FROM employee_tbl WHERE id='$empId' AND empStatus=1";
-            $result = mysqli_query($db->conn, $sqlSelect);
-            if($result) {
-                while($row = mysqli_fetch_array($result)) {
-                    $empName = $row['name'];
-                    
-                    if($lastused == '') {
-                        $lastused = $empName;
-                    }
-                }
-               
-            }
-        }  
+        $lastused = $input['lastused'];
 
         $qry = "UPDATE assets_tbl SET model='$model', serial='$serial', supplier='$supplier', empId='$empId', lastused='$lastused', status='$status', datepurchased='$dateprchs', cost='$cost', repair_cost='$repair', remarks='$remarks', datedeployed='$datedeployed', cpu='$cpu', memory='$ram', storage='$storage', dimes='$dimes', mobile='$mobile', plan='$plan', os='$os' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
         $result = $db->conn->query($qry);
@@ -139,12 +119,11 @@ class assetsController {
             $assettag = $row['assettag'];
             $turnover_ref = $row['turnoverRef'];
             $assigned = $row['empId'];
+            $empName = $row['empName'];
         }
-        
         
         // validation of Turnover reference code
         if($ref_Code == $turnover_ref) {
-            
             $lastusedby = $assigned;
 
             // Change Asset data based on Reason of Turnover
@@ -156,8 +135,26 @@ class assetsController {
                 $newStatus = 'Outdated';
             }
 
-            mysqli_query($db->conn, "UPDATE assets_tbl SET empId='', turnoverdate=NOW(), lastused='$lastusedby', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1");
-            
+            // mysqli_query($db->conn, "UPDATE assets_tbl SET empId='', datedeployed='', turnoverdate=NOW(), lastused='$lastusedby', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1");
+        mysqli_begin_transaction($db->conn);
+
+            try {
+                // Update assets_tbl
+                $assetUpdateQuery = "UPDATE assets_tbl SET empId='', datedeployed='', turnoverdate=NOW(), lastused='$lastusedby', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
+                mysqli_query($db->conn, $assetUpdateQuery);
+
+                // Update reference_tbl
+                $referenceUpdateQuery = "UPDATE reference_tbl SET turnoverReason='$reason' WHERE assetId='$assetID' AND referenceStatus !='0'";
+                mysqli_query($db->conn, $referenceUpdateQuery);
+
+                // Commit the transaction
+                mysqli_commit($db->conn);
+            } catch (Exception $e) {
+                // An error occurred, rollback the transaction
+                mysqli_rollback($db->conn);
+                echo "Error updating database: " . $e->getMessage();
+                die();
+            }
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                                 VALUES('', '$sess_name', 'Turnover asset: $assettag, last used by: $empName' , NOW())");
             
@@ -211,6 +208,7 @@ class assetsController {
     // Asset Item
     public function assetItemEdit($id) {
         global $db;
+        
         $assetItemID = mysqli_real_escape_string($db->conn, $id);
         $assetQuery = "SELECT * FROM category_tbl WHERE id='$assetItemID'";
         $res = mysqli_query($db->conn, $assetQuery);
@@ -223,14 +221,11 @@ class assetsController {
     }
     public function assetItemUpdate($input, $id) {
         global $db;
-        global $session;
+        global $sess_name;
 
         $assetItemID = mysqli_real_escape_string($db->conn, $id);
         $assetname = $input['name'];
         $status = $input['status'];
-        
-        // Get current user for History record....
-        $name = $session['username'];
 
         // validation of Turnover reference code
         $qry = "UPDATE category_tbl SET assetType='$assetname', status='$status' WHERE id='$assetItemID' LIMIT 1";
@@ -238,7 +233,7 @@ class assetsController {
 
         if($result) {
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-            VALUES('', '$name', 'Updated asset item: $assetname ID: $assetItemID' , NOW())");
+            VALUES('', '$sess_name', 'Updated asset item: $assetname ID: $assetItemID' , NOW())");
 
             return true;
         } else {
@@ -325,7 +320,7 @@ class assetsController {
 
         $refId = mysqli_real_escape_string($db->conn, $id);
         $sql = "SELECT a.id, 
-                r.assetId, r.id, r.name, 
+                r.assetId, r.id AS refId, r.name, 
                 r.accountabilityRef, r.accountabilityStatus, r.accountabilityFile AS accountabilityFile, r.accountabilityDate,
                 r.turnoverRef, r.turnoverStatus, r.turnoverFile AS turnoverFile, r.turnoverDate, 
                 e.id, e.name AS empName 
@@ -343,9 +338,9 @@ class assetsController {
     }
     public function updateReference($input, $id) {
         global $db;
-        global $session;
+        global $sess_name;
+        $refId = mysqli_real_escape_string($db->conn, $id);
 
-        $refStatus = 1;
         $empId = $input['name']; // returns employee Id
         $acctStatus = $input['acctStatus'];
         $acctDate = $input['acctDate'];
@@ -355,23 +350,41 @@ class assetsController {
         $trnDate = $input['trnDate'];
         $trnFile = $input['trnFile'];
 
-        if($acctStatus == 2 && $trnFile == 2) {
+        // if(!empty($acctFile) || $acctFile != '') {
+        //     if($acctStatus != 0) {
+        //         if(!empty($acctDate) || $acctDate != '') {
+        //             $acctStatus = 2;
+        //         } else {
+        //             $acctStatus = 2;
+        //             $acctDate = date("Y/m/d");
+        //         }
+    
+        //         if(!empty($trnFile) || $trnFile != '') {
+        //             if(!empty($trnDate) || $trnDate != '') {
+        //                 $trnStatus = 2;
+        //             } else {
+        //                 $trnStatus = 2;
+        //                 $trnDate = date("Y/m/d");
+        //             }
+        //         } 
+        //     } else {
+        //         echo "required";
+        //     }
+        // } 
+        
+        if($acctStatus == 2 && $trnStatus == 2) {
             $refStatus = 0;
         }
-     
-        $refId = mysqli_real_escape_string($db->conn, $id);
         
-
         $sql = "UPDATE reference_tbl 
                 SET accountabilityStatus = '$acctStatus', accountabilityDate = '$acctDate', accountabilityFile = '$acctFile', 
                 turnoverStatus = '$trnStatus', turnoverDate = '$trnDate', turnoverFile = '$trnFile', referenceStatus = '$refStatus' 
                 WHERE id='$refId'";
         $result = $db->conn->query($sql);
 
-        $name = $session['username'];
         if($result) {
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-            VALUES('', '$name', 'Updated reference id: $refId' , NOW())");
+            VALUES('', '$sess_name', 'Updated reference id: $refId' , NOW())");
 
             return true;
         } else {

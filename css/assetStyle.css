@@ -321,7 +321,7 @@ input[type=date] {
     font-size: 14px;
     border: none;
 }
-
+/* 
 .available,
 .deployed,
 .defect,
@@ -345,7 +345,7 @@ input[type=date] {
 }
 .missing {
     background-color: rgb(255, 158, 231);
-}
+} */
 
 /* 
 .search-container .filter {

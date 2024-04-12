@@ -6,88 +6,150 @@ if(isset($_SESSION['id'])) {
     $sess_name = $session['username'];
 }
 class Operations {
+    // function recordAssetData($type, $tag, $mdl, $srl, $supplier, $empId, $lastused, $status, $dtprchs, $cost, $repair_cost, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os, $action) {
+    //     global $db;
+    //     global $sess_name;
+
+    //     $type         = mysqli_real_escape_string($db->conn, $type);
+    //     $mdl          = mysqli_real_escape_string($db->conn, $mdl);
+    //     $srl          = mysqli_real_escape_string($db->conn, $srl);
+    //     $supplier     = mysqli_real_escape_string($db->conn, $supplier);
+    //     $empId        = mysqli_real_escape_string($db->conn, $empId);
+    //     $lastused     = mysqli_real_escape_string($db->conn, $lastused);
+    //     $status       = mysqli_real_escape_string($db->conn, $status);
+    //     $dtprchs      = mysqli_real_escape_string($db->conn, $dtprchs);
+    //     $cost         = !empty($cost) ? mysqli_real_escape_string($db->conn, $cost) : '';
+    //     $repair_cost  = !empty($repair_cost) ? mysqli_real_escape_string($db->conn, $repair_cost) : '';
+    //     $remarks      = mysqli_real_escape_string($db->conn, $remarks);
+    //     $datedeployed = mysqli_real_escape_string($db->conn, $datedeployed);
+    //     $cpu          = mysqli_real_escape_string($db->conn, $cpu);
+    //     $ram          = mysqli_real_escape_string($db->conn, $ram);
+    //     $storage      = mysqli_real_escape_string($db->conn, $storage);
+    //     $dimes        = mysqli_real_escape_string($db->conn, $dimes);
+    //     $mobile       = mysqli_real_escape_string($db->conn, $mobile);
+    //     $plan         = mysqli_real_escape_string($db->conn, $plan);
+    //     $os           = mysqli_real_escape_string($db->conn, $os);
+    //     $action       = mysqli_real_escape_string($db->conn, $action);
+    //     // $cpu          = isset($_POST['cpu']) ? mysqli_real_escape_string($db->conn, $_POST['cpu']) : '';
+    //     // $storage      = isset($_POST['storage']) ? mysqli_real_escape_string($db->conn, $_POST['storage']) : '';
+    //     // $dimes        = isset($_POST['dimes']) ? mysqli_real_escape_string($db->conn, $_POST['dimes']) : '';
+    //     // $mobile       = isset($_POST['mobile']) ? mysqli_real_escape_string($db->conn, $_POST['mobile']) : '';
+    //     // $plan         = isset($_POST['plan']) ? mysqli_real_escape_string($db->conn, $_POST['plan']) : '';
+    //     // $os           = isset($_POST['os']) ? mysqli_real_escape_string($db->conn, $_POST['os']) : '';
+    //     // $specification = $cpu . ", " . $ram . ", " . $storage . ", " . $os . ", " . $others;    
+    //     if(isset($empId) && $empId != '') {
+    //         $sql = "SELECT * FROM employee_tbl WHERE id='$empId' AND empStatus=1";
+    //         $result = mysqli_query($db->conn, $sql);
+    //         if($result) {
+    //             while($row = mysqli_fetch_array($result)) {
+    //                 $empName = $row['name'];
+    //             }
+    //         }
+    //     }
+    //                                                                                                                  //7
+    //     $query = $db->conn->prepare("INSERT INTO assets_tbl (assettype, assettag, model, serial, supplier, empId, lastused, status, datepurchased, cost, repair_cost, remarks, datedeployed, cpu, memory, storage, dimes, mobile, plan, os) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    //                         $query->bind_param("sssssiissiisssssssss", $type, $tag, $mdl, $srl, $supplier, $empId, $lastused, $status, $dtprchs, $cost, $repair_cost, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os);
+    //     $result = $query->execute();
+
+    //     if ($result) {
+    //         $actionMessage = '';
+    //         switch ($action) {
+    //             case 'recordLaptop':
+    //                 $actionMessage = "Added Laptop record: $tag";
+    //                 break;
+    //             case 'recordDesktop':
+    //                 $actionMessage = "Added Desktop record: $tag";
+    //                 break;
+    //             case 'recordMonitor':
+    //                 $actionMessage = "Added Monitor record: $tag";
+    //                 break;
+    //             case 'recordPrinter':
+    //                 $actionMessage = "Added Printer record: $tag";
+    //                 break;
+    //             case 'recordUPS':
+    //                 $actionMessage = "Added UPS record: $tag";
+    //                 break;
+    //             case 'recordMobile':
+    //                 $actionMessage = "Added Phone record: $tag";
+    //                 break;
+    //             case 'recordSim':
+    //                 $actionMessage = "Added SIM record: $tag";
+    //                 break;
+    //             default:
+    //                 $actionMessage = "Added asset record: $tag";
+    //                 return 8;
+    //         }
+        
+    //         mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date) VALUES('', '$sess_name', '$actionMessage', NOW())");
+
+    //         return array_search($action, ['recordLaptop', 'recordDesktop', 'recordMonitor', 'recordPrinter', 'recordUPS', 'recordMobile', 'recordSim']) + 1;
+    //     } else {
+    //         return 100; // Store Failed
+    //     }
+        
+    // }
     function recordAssetData($type, $tag, $mdl, $srl, $supplier, $empId, $lastused, $status, $dtprchs, $cost, $repair_cost, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os, $action) {
         global $db;
         global $sess_name;
-
-        $type         = mysqli_real_escape_string($db->conn, $type);
-        $mdl          = mysqli_real_escape_string($db->conn, $mdl);
-        $srl          = mysqli_real_escape_string($db->conn, $srl);
-        $supplier     = mysqli_real_escape_string($db->conn, $supplier);
-        $empId        = mysqli_real_escape_string($db->conn, $empId);
-        $lastused     = mysqli_real_escape_string($db->conn, $lastused);
-        $status       = mysqli_real_escape_string($db->conn, $status);
-        $dtprchs      = mysqli_real_escape_string($db->conn, $dtprchs);
-        $cost         = !empty($cost) ? mysqli_real_escape_string($db->conn, $cost) : '';
-        $repair_cost  = !empty($repair_cost) ? mysqli_real_escape_string($db->conn, $repair_cost) : '';
-        $remarks      = mysqli_real_escape_string($db->conn, $remarks);
+    
+        // Escape input values to prevent SQL injection
+        $type = mysqli_real_escape_string($db->conn, $type);
+        $mdl = mysqli_real_escape_string($db->conn, $mdl);
+        $srl = mysqli_real_escape_string($db->conn, $srl);
+        $supplier = mysqli_real_escape_string($db->conn, $supplier);
+        $empId = mysqli_real_escape_string($db->conn, $empId);
+        $lastused = mysqli_real_escape_string($db->conn, $lastused);
+        $status = mysqli_real_escape_string($db->conn, $status);
+        $dtprchs = mysqli_real_escape_string($db->conn, $dtprchs);
+        $cost = !empty($cost) ? mysqli_real_escape_string($db->conn, $cost) : '';
+        $repair_cost = !empty($repair_cost) ? mysqli_real_escape_string($db->conn, $repair_cost) : '';
+        $remarks = mysqli_real_escape_string($db->conn, $remarks);
         $datedeployed = mysqli_real_escape_string($db->conn, $datedeployed);
-        $cpu          = mysqli_real_escape_string($db->conn, $cpu);
-        $ram          = mysqli_real_escape_string($db->conn, $ram);
-        $storage      = mysqli_real_escape_string($db->conn, $storage);
-        $dimes        = mysqli_real_escape_string($db->conn, $dimes);
-        $mobile       = mysqli_real_escape_string($db->conn, $mobile);
-        $plan         = mysqli_real_escape_string($db->conn, $plan);
-        $os           = mysqli_real_escape_string($db->conn, $os);
-        $action       = mysqli_real_escape_string($db->conn, $action);
-        // $cpu          = isset($_POST['cpu']) ? mysqli_real_escape_string($db->conn, $_POST['cpu']) : '';
-        // $storage      = isset($_POST['storage']) ? mysqli_real_escape_string($db->conn, $_POST['storage']) : '';
-        // $dimes        = isset($_POST['dimes']) ? mysqli_real_escape_string($db->conn, $_POST['dimes']) : '';
-        // $mobile       = isset($_POST['mobile']) ? mysqli_real_escape_string($db->conn, $_POST['mobile']) : '';
-        // $plan         = isset($_POST['plan']) ? mysqli_real_escape_string($db->conn, $_POST['plan']) : '';
-        // $os           = isset($_POST['os']) ? mysqli_real_escape_string($db->conn, $_POST['os']) : '';
-        // $specification = $cpu . ", " . $ram . ", " . $storage . ", " . $os . ", " . $others;    
-        if(isset($empId) && $empId != '') {
-            $sql = "SELECT * FROM employee_tbl WHERE id='$empId' AND empStatus=1";
-            $result = mysqli_query($db->conn, $sql);
-            if($result) {
-                while($row = mysqli_fetch_array($result)) {
-                    $empName = $row['name'];
-                }
-            }
-        }
-                                                                                                                     //7
+        $cpu = mysqli_real_escape_string($db->conn, $cpu);
+        $ram = mysqli_real_escape_string($db->conn, $ram);
+        $storage = mysqli_real_escape_string($db->conn, $storage);
+        $dimes = mysqli_real_escape_string($db->conn, $dimes);
+        $mobile = mysqli_real_escape_string($db->conn, $mobile);
+        $plan = mysqli_real_escape_string($db->conn, $plan);
+        $os = mysqli_real_escape_string($db->conn, $os);
+        $action = mysqli_real_escape_string($db->conn, $action);
+    
+      
+    
+        // Prepare and execute the insert query for assets_tbl
         $query = $db->conn->prepare("INSERT INTO assets_tbl (assettype, assettag, model, serial, supplier, empId, lastused, status, datepurchased, cost, repair_cost, remarks, datedeployed, cpu, memory, storage, dimes, mobile, plan, os) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                            $query->bind_param("sssssiissiisssssssss", $type, $tag, $mdl, $srl, $supplier, $empId, $lastused, $status, $dtprchs, $cost, $repair_cost, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os);
+        $query->bind_param("sssssiissiisssssssss", $type, $tag, $mdl, $srl, $supplier, $empId, $lastused, $status, $dtprchs, $cost, $repair_cost, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os);
         $result = $query->execute();
-
+    
         if ($result) {
-            $actionMessage = '';
-            switch ($action) {
-                case 'recordLaptop':
-                    $actionMessage = "Added Laptop record: $tag";
-                    break;
-                case 'recordDesktop':
-                    $actionMessage = "Added Desktop record: $tag";
-                    break;
-                case 'recordMonitor':
-                    $actionMessage = "Added Monitor record: $tag";
-                    break;
-                case 'recordPrinter':
-                    $actionMessage = "Added Printer record: $tag";
-                    break;
-                case 'recordUPS':
-                    $actionMessage = "Added UPS record: $tag";
-                    break;
-                case 'recordMobile':
-                    $actionMessage = "Added Phone record: $tag";
-                    break;
-                case 'recordSim':
-                    $actionMessage = "Added SIM record: $tag";
-                    break;
-                default:
-                    $actionMessage = "Added asset record: $tag";
-                    return 8;
-            }
+            $assetId = $db->conn->insert_id;
+            $sql = "SELECT * FROM reference_tbl WHERE assetId='$assetId' AND name='$empId' AND referenceStatus!='0'";
+            $results = $db->conn->query($sql);
         
-            mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date) VALUES('', '$sess_name', '$actionMessage', NOW())");
-
-            return array_search($action, ['recordLaptop', 'recordDesktop', 'recordMonitor', 'recordPrinter', 'recordUPS', 'recordMobile', 'recordSim']) + 1;
+            if (!$results || $results->num_rows == 0) {
+                // Insert successful, prepare and execute the insert query for reference_tbl
+                $referenceQuery = $db->conn->prepare("INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 1)");
+                $referenceQuery->bind_param("is", $assetId, $empId);
+                $referenceResult = $referenceQuery->execute();
+        
+                if ($referenceResult) {
+                    // Both inserts successful, log the action and return success
+                    $actionMessage = "Added asset record: $tag";
+                    mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date) VALUES('', '$sess_name', '$actionMessage', NOW())");
+                    return 1; // Success
+                } else {
+                    // Insert into reference_tbl failed, rollback assets_tbl insert
+                    mysqli_query($db->conn, "DELETE FROM assets_tbl WHERE id='$assetId'");
+                    return 100; // Store Failed
+                }
+            } else {
+                echo 'Reference already exists';
+            }
         } else {
             return 100; // Store Failed
         }
-        
     }
+    
 
     function getAssets($category) {
         global $db;

@@ -83,25 +83,9 @@ if(isset($_POST['save'])) {
                 echo "<a href=\"$url\" class=\"return\">Back</a>";
             ?>
 
-            <!-- <button onclick="history.back()" class="return">Go Back</button> -->
                 <form action="" method="POST">
                     <div class="title">Asset Details</div>
                     <div class="asset-details">
-
-                                    
-                        <!-- <div class="input-box" hidden>
-                            <span class="details" style="margin-bottom: 10px;">Asset Type</span>                            
-                            <select name="asset-type" id="Type" onChange="changetextbox();displaySelectedValue();" required>
-                                ?php
-                                    $assettype = $operation->getAssets($id);
-                                    foreach($assettype as $assets) {
-                                ?>
-                                    <option selected value="?=$assets['assetType']?>">?php echo $assets['assetType']; ?></option>
-                                ?php
-                                    }
-                                ?>
-                            </select>
-                        </div> -->
 
                         <div class="input-box" style="width: 100%;">
                             <span class="details">Asset Type</span>       
@@ -461,7 +445,7 @@ if(isset($_POST['save'])) {
                             </div> 
 
                             <?php
-                            break;
+                        break;
                     } 
                     ?>
 

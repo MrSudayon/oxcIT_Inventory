@@ -87,6 +87,7 @@ usort($rows, function($a, $b) {
                             $assetType = $row['assettype'];
 
                             $plan = $row['plan'];
+                            $mobile = $row['mobile'];
                     ?>            
                     <tr>
                         <td><a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></td></a>
@@ -95,7 +96,8 @@ usort($rows, function($a, $b) {
                             if($plan == '') {
                                 echo "<i style='color:#FF6646;'>No details found.";
                             } else {
-                                echo $plan;
+                                echo $plan . 
+                                    "<br>- " . $mobile;
                             }
                                 
                             ?>

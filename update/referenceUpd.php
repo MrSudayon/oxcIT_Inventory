@@ -33,7 +33,7 @@
             ?>
                 <form action="../admin/update-selected.php" method="POST" enctype="multipart/form-data">
                     <div class="asset-details">
-                        <input type="hidden" name="id" value="<?=$result['id']?>">
+                        <input type="hidden" name="id" value="<?=$result['refId']?>">
 
                         <div class="input-box" style="width: 100%;">
                             <span class="details">Assigned to: </span>
@@ -80,7 +80,6 @@
                         </div>
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Accountability File</span>
-                            <!-- <input type="file" name="acctfile" id="acctfile" accept="files/*" value="?=$result['accountabilityFile']?>"> -->
                             <input type="file" name="acctfile" id="acctfile" accept="files/*">
                         </div>
                         <div class="input-box">
@@ -130,7 +129,7 @@
                         </div>
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Turnover File</span>
-                            <input type="file" name="trnfile" accept="files/*" value="<?=$result['turnoverFile']?>">
+                            <input type="file" name="trnfile" accept="files/*">
                         </div>
                         <div class="input-box">
                             <span class="details">Date</span>

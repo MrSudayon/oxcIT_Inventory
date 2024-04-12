@@ -111,17 +111,12 @@ document.addEventListener('DOMContentLoaded', function() {
     var spans = document.getElementsByClassName("statusSpan");
     for (var i = 0; i < spans.length; i++) {
         var span = spans[i];
-        if (span.innerHTML === 'Deployed') {
-            span.classList.add("status", "delivered");
-        } else if (span.innerHTML === 'To be deploy') {
-            span.classList.add("status", "shipped");
-        } else if (span.innerHTML === 'Defective' || span.innerHTML === 'For repair') {
-            span.classList.add("status", "cancelled");
-        } else if (span.innerHTML === 'Sell') {
-            span.classList.add("status", "pending");
-        } else {
-            span.classList.add("status", "missing");
-        }
+        if (span.innerHTML === 'Deployed') { span.classList.add("status", "deployed"); } 
+        else if (span.innerHTML === 'To be deploy') { span.classList.add("status", "tobedeploy"); } 
+        else if (span.innerHTML === 'Outdated') { span.classList.add("status", "outdated"); } 
+        else if (span.innerHTML === 'For repair') { span.classList.add("status", "repair"); } 
+        else if (span.innerHTML === 'Sell' || span.innerHTML === 'Defective') { span.classList.add("status", "replace"); } 
+        else { span.classList.add("status", "missing"); }
     }
 });
 

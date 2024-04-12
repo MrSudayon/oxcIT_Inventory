@@ -25,14 +25,20 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
         die();
     }
 
+        // "SELECT DISTINCT a.id AS aId, a.empId, a.assettype, a.assettag, a.status, 
+        // a.cpu, a.memory, a.storage, a.os, a.dimes, a.plan, a.mobile, 
+        // r.name, r.accountabilityRef, r.turnoverRef, r.referenceStatus 
+        // FROM assets_tbl AS a 
+        // LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+        // WHERE a.empId='$eid' AND r.referenceStatus!=0"; 
     $sql =
         "SELECT DISTINCT a.id AS aId, a.empId, a.assettype, a.assettag, a.status, 
         a.cpu, a.memory, a.storage, a.os, a.dimes, a.plan, a.mobile, 
-        r.name, r.accountabilityRef, r.turnoverRef 
+        r.assetId, r.name AS rName, r.accountabilityRef, r.turnoverRef, r.referenceStatus 
         FROM assets_tbl AS a 
         LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
-        WHERE a.empId='$eid' AND a.status!='Archive'"; 
-
+        WHERE a.empId='$eid' AND a.status = 'Deployed'"; 
+        
     $results = mysqli_query($db->conn, $sql);
     $rowCount = $results->num_rows;
 }
@@ -90,10 +96,18 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
                             $dimes = $row['dimes'];
                             $plan = $row['plan'];
                             $mobile = $row['mobile'];
-
+                            
                             $accountabilityRef = $row['accountabilityRef'];
                             $turnoverRef = $row['turnoverRef'];
-
+                            $referenceStatus = $row['referenceStatus'];
+                            if($referenceStatus != '0' || empty($referenceStatus)) {
+                                if(!empty($accountabilityRef) ) {
+                                    $accountabilityRef = '';
+                                } 
+                                if(!empty($turnoverRef)) {
+                                    $turnoverRef = '';
+                                }
+                            }
                             $specification = $operation->specificationCondition($aId);
 
                     ?>

@@ -31,7 +31,11 @@ include '../inc/header.php';
                     </div>
                 
                                             
-                        <?php if($assetType == 'Laptop' || $assetType == 'Desktop' ) { ?>
+                        <?php 
+                        switch($assetType) { 
+                            case 'Laptop':
+                            case 'Desktop':
+                            ?>
                             
                                 <div class="input-box" id="model">
                                     <span class="details">Model</span>
@@ -43,7 +47,11 @@ include '../inc/header.php';
                                     <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
                                 </div>
 
-                        <?php } elseif($assetType == 'Mobile') { ?>
+                            <?php 
+                            break;
+
+                            case 'Mobile': 
+                            ?>
 
                                 <div class="input-box" id="model">
                                     <span class="details">Model</span>
@@ -55,7 +63,14 @@ include '../inc/header.php';
                                     <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
                                 </div>
                             
-                        <?php } elseif($assetType == 'Monitor' || $assetType == 'UPS' || $assetType == 'Printer' || $assetType == 'AVR') { ?>
+                            <?php 
+                            break;
+
+                            case 'Monitor': 
+                            case 'AVR': 
+                            case 'UPS': 
+                            case 'Printer': 
+                            ?>    
 
                                 <div class="input-box" id="model">
                                     <span class="details">Model</span>
@@ -67,7 +82,10 @@ include '../inc/header.php';
                                     <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
                                 </div>
 
-                        <?php } ?>
+                            <?php 
+                            break; 
+                        }
+                        ?>
 
                     <div class="input-box">
                         <span class="details">Supplier</span>
@@ -108,7 +126,7 @@ include '../inc/header.php';
                 <div class="asset-details">
 
                 <?php 
-                switch($assetType) {
+                switch($assetType) { 
                     case 'Laptop':
                     case 'Desktop':
                     ?>
@@ -131,7 +149,7 @@ include '../inc/header.php';
 
                     <?php 
                     break;
-                    
+
                     case 'Mobile': 
                     ?>
 
@@ -261,8 +279,8 @@ include '../inc/header.php';
                     </div>
 
                     <div class="input-box">
-                        <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
-                        <input type="text" name="lastused" style="background-color: #ccc; font-weight: 600;" value="<?=$result['lastUsedName']?>" readonly>
+                        <span class="details">Last Used by:</span>
+                        <input type="text" name="lastused" style="background-color: #ccc;" value="<?=$result['lastUsedName']?>" readonly>
 
                             <!-- <select name="lastused" id="lastused" >
                                 <option value="?=$result['lastUsedId']?>"></option>

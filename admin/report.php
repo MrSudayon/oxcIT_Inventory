@@ -74,14 +74,39 @@ if(isset($_GET['select'])) {
                 //     $res = mysqli_query($db->conn, $sql);
                 
                 while($row = mysqli_fetch_assoc($res)) {
+                    $assettype = $row['assettype'];
+
                     $cpu = $row['cpu'];
                     $ram = $row['memory'];
                     $storage = $row['storage'];
-                    $specs = 'CPU: ' . $cpu . '<br>MEMORY: ' . $ram . '<br>STORAGE: ' . $storage;
+                    $os = $row['os'];
+                    $dimes = $row['dimes'];
+                    $plan = $row['plan'];
+                    $mobile = $row['mobile'];
+                    switch($assettype) {
+                        case 'Desktop':
+                        case 'Laptop':
+                            $specs = $cpu . '<br>' . $ram . '<br>' . $storage . '<br>' . $os;
+                        break;
+
+                        case 'Monitor':
+                        case 'Printer':
+                        case 'AVR':
+                        case 'UPS':
+                            $specs = $dimes;
+                        break;
+
+                        case 'SIM':
+                            $specs = $plan . '<br>' . $mobile;
+                        break;
+                        
+                        case 'Mobile':
+                            $specs = $ram . '<br>' . $storage . '<br>' . $plan;
+                    } 
             ?>
             <tr>
                 <td><?php echo $row['ename']; ?></td>
-                <td><?php echo $row['assettype']; ?></td>
+                <td><?php echo $assettype; ?></td>
                 <td><?php echo $specs; ?></td>
                 <td><?php echo $row['serial']; ?></td>
                 <td><?php echo $row['remarks']; ?></td>    

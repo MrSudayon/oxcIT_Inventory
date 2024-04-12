@@ -17,18 +17,18 @@ if(isset($_GET['generateAcc'])) {
     
     if(isset($_GET['select'])) {
         $selected = $_GET['select'];
+    
         $existingAccountability = false; // Flag to check if any selected asset already has an accountability code
     
         // Loop through selected assets
-        foreach ($selected as $assetID){
-    
+        foreach ($selected as $assetID) {
             $sql = 
                 "SELECT a.id AS aId, a.empId AS empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, a.datedeployed, 
                 e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.accountabilityRef 
                 FROM assets_tbl AS a 
                 LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
                 LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                WHERE a.id='$assetID' AND a.status !='Archive'";
+                WHERE a.id='$assetID' AND a.status = 'Deployed'";
 
             $res = mysqli_query($db->conn, $sql);
         
@@ -41,7 +41,7 @@ if(isset($_GET['generateAcc'])) {
         }
     
         // Check if any of the selected assets already have an accountability code
-        $existingCodeQuery = mysqli_prepare($db->conn, "SELECT accountabilityRef FROM reference_tbl WHERE assetId IN (?) AND accountabilityRef != ''");
+        $existingCodeQuery = mysqli_prepare($db->conn, "SELECT accountabilityRef FROM reference_tbl WHERE assetId IN (?) AND name='$empId' AND accountabilityRef != '' AND referenceStatus!='0'");
         $selectedImploded = implode(",", $selected);
         mysqli_stmt_bind_param($existingCodeQuery, "s", $selectedImploded);
         mysqli_stmt_execute($existingCodeQuery);
@@ -50,7 +50,6 @@ if(isset($_GET['generateAcc'])) {
         if (mysqli_num_rows($existingCodeResult) > 0) {
             $existingAccountability = true;
         }
-    
         if($existingAccountability) {
             ?>
             <script> 
@@ -59,7 +58,6 @@ if(isset($_GET['generateAcc'])) {
             </script> 
             <?php
         } else {
-    
             if ($acc_ref == '') {
             
                 $n = 5;
@@ -67,26 +65,26 @@ if(isset($_GET['generateAcc'])) {
                 $acc_ref = "ACCT-" . $newCode;
     
                 // If assetId is existed in reference tbl
-                $refSql = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE assetId = ? AND (turnoverRef!='' OR accountabilityRef!='')");
+                $refSql = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE assetId = ? AND accountabilityRef!=''");
                 mysqli_stmt_bind_param($refSql, "i", $assetID);
                 mysqli_stmt_execute($refSql);
                 $result = mysqli_stmt_get_result($refSql);
                 
                 if (mysqli_num_rows($result) > 0) {
     
-                    $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl SET accountabilityStatus = 1, accountabilityRef = ? WHERE assetId = ?");
+                    $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl SET accountabilityStatus = 1, accountabilityRef = ? WHERE assetId = ? AND referenceStatus!='0'");
                     mysqli_stmt_bind_param($refQry, "si", $acc_ref, $assetID);
                     mysqli_stmt_execute($refQry);
                     
                 } else {
-    
+
                     foreach ($selected as $assetID) {
                         // Insert new accountability reference for each asset
                         $refQry = mysqli_prepare($db->conn, "INSERT INTO reference_tbl (assetId, name, accountabilityRef, accountabilityStatus, referenceStatus) VALUES (?, ?, ?, 1, 1)");
                         mysqli_stmt_bind_param($refQry, "iss", $assetID, $empId, $acc_ref);
                         mysqli_stmt_execute($refQry);
                     }
-    
+
                 }
                 // Log history for generated accountability code
                 $history = mysqli_prepare($db->conn, "INSERT INTO history_tbl (name, action, date) VALUES (?, ?, NOW())");
@@ -218,7 +216,7 @@ if(isset($_GET['generateTrn'])) {
     
             $sql = 
                 "SELECT a.id AS aId, a.empId AS empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, a.datedeployed, 
-                e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.turnoverRef, r.accountabilityRef  
+                e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.turnoverRef, r.accountabilityRef, r.accountabilityStatus 
                 FROM assets_tbl AS a 
                 LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
                 LEFT JOIN employee_tbl AS e ON a.empId = e.id 
@@ -229,18 +227,23 @@ if(isset($_GET['generateTrn'])) {
                 $assetTags[] = $row['assettag'];
                 $trn_ref = $row['turnoverRef'];
                 $acc_ref = $row['accountabilityRef'];
-    
+                $acc_status = $row['accountabilityStatus'];
                 $empId = $row['empId'];
             }
         }
-        if(!empty($acc_ref) || $acc_ref != '') {
+        if(empty($acc_ref) || $acc_ref == '' || $acc_status != '2') {
+            echo "<script>
+                alert ('Failed: Make a signed accountability first');
+                window.location.replace('../admin/employeeLists.php');
+                </script>";
+        } else {
             // Check if any of the selected assets already have an turnover code
             // $existingCodeQuery = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE turnoverRef != '' AND assetId IN (?)");
             $selectedImploded = implode(",", $selected);
             // mysqli_stmt_bind_param($existingCodeQuery, "s", $selectedImploded);
             // mysqli_stmt_execute($existingCodeQuery);
             // $existingCodeResult = mysqli_stmt_get_result($existingCodeQuery);
-            $existingCodeQuery = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE turnoverRef != '' AND assetId IN ($selectedImploded)");
+            $existingCodeQuery = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE turnoverRef != '' AND assetId IN ($selectedImploded) AND referenceStatus!='0'");
             mysqli_stmt_execute($existingCodeQuery);
             $existingCodeResult = mysqli_stmt_get_result($existingCodeQuery);
 
@@ -265,7 +268,7 @@ if(isset($_GET['generateTrn'])) {
                     $trn_ref = "TRNO-" . $newCode;
         
                     // If assetId is existed in reference tbl
-                    $refSql = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE assetId = ? AND (turnoverRef!='' OR accountabilityRef!='')");
+                    $refSql = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE assetId = ? AND accountabilityRef!='' AND referenceStatus != '0'");
                     mysqli_stmt_bind_param($refSql, "i", $assetID);
                     mysqli_stmt_execute($refSql);
                     $result = mysqli_stmt_get_result($refSql);
@@ -299,13 +302,6 @@ if(isset($_GET['generateTrn'])) {
                     mysqli_stmt_execute($history);
                 }
             }
-        } else {
-            ?>
-            <script>
-                alert('This asset is not deployed yet!');
-                window.location.replace('../admin/employeeLists.php');
-            </script>
-            <?php
         }
 
     } else {
