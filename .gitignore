@@ -1,12 +1,11 @@
 # Added Removes
 aarchives
 /aarchives
-archives
 *.txt
 /*.txt
 /files/accountability/*
 /files/turnover/*
-
+db_oxychem.sql
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
