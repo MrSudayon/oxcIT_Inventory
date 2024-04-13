@@ -7,7 +7,7 @@ if(isset($_GET['id'])) {
 
     $sql =  
         "SELECT a.id AS aId, a.empId AS empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, a.datedeployed, 
-        e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.accountabilityRef, r.turnoverRef 
+            e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.accountabilityRef, r.turnoverRef 
         FROM assets_tbl AS a 
         LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
@@ -48,18 +48,20 @@ if(isset($_GET['id'])) {
         </div>
             <table class="assets-table">
                 <tr>
-                    <th>Asset Type</th>
+                    <th>Asset Tag</th>
+                    <th>Model</th>
                     <th>Specification</th>
                     <th>Serial no.</th>
                     <th>Date Deployed</th>
                     <th>Remarks</th>
                 </tr>
                 <?php
-                    // Function for getting all same reference codes
+                // Function for getting all same reference codes
                 $getAll = $operation->getAllSameCodes($selectedReferenceCode);
                 while($row = mysqli_fetch_assoc($getAll)) {
-                    $assettype = $row['assettype'];
-                
+                    $assettag = $row['assettag'];
+                    $model = $row['model'];
+
                     $serial = $row['serial'];
                     $datedeployed = $row['datedeployed'];
                     $remarks = $row['remarks'];
@@ -67,7 +69,8 @@ if(isset($_GET['id'])) {
                     $specifications = $operation->specificationCondition([$row['aId']]);
                 ?>
                     <tr>
-                        <td><?php echo $assettype; ?></td>
+                        <td><?php echo $assettag; ?></td>
+                        <td><?php echo $model; ?></td>
                         <td><?php echo $specifications; ?></td>
                         <td><?php echo $serial; ?></td>
                         <td><?php echo $datedeployed; ?></td>

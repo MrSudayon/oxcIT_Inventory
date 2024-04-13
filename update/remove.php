@@ -53,17 +53,13 @@ if(isset($_GET['Acct_id'])) {
         $assetTag = $row['assettag'];
     }
 
-    if($accountabilityRef !=='' && $turnoverRef !== '') {
-        $query = mysqli_query($db->conn, "UPDATE reference_tbl 
-                                        SET accountabilityRef='',
-                                            accountabilityFile='',
-                                            accountabilityStatus=0,
-                                            accountabilityDate='' 
-                                        WHERE id = '$id'");
-    } else {
-        $query = mysqli_query($db->conn, "DELETE FROM reference_tbl WHERE id = '$id'");
-    }
-    
+    $query = mysqli_query($db->conn, "UPDATE reference_tbl 
+                                    SET accountabilityRef='',
+                                        accountabilityFile='',
+                                        accountabilityStatus=0,
+                                        accountabilityDate='' 
+                                    WHERE id = '$id'");
+
     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                             VALUES ('', '$name', 'Deleted turnover reference code for Asset Tag: $assetTag', NOW())");
 

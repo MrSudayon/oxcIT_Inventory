@@ -96,7 +96,7 @@ usort($rows, function($a, $b) {
                             if($plan == '') {
                                 echo "<i style='color:#FF6646;'>No details found.";
                             } else {
-                                echo $plan . 
+                                echo $plan . " - " 
                                     "<br>- " . $mobile;
                             }
                                 

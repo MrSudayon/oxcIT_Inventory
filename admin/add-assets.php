@@ -255,7 +255,10 @@ if(isset($_POST['save'])) {
                         
                         case 'recordSim':
                             ?>
-                                
+                                <div class="input-box" id="model">
+                                    <span class="details">Model</span>
+                                    <input type="text" name="model" placeholder="Model" id="">
+                                </div>
                                 <div class="input-box">
                                     <span class="details">Supplier</span>
                                     <input type="text" name="supplier" placeholder="Supplier" id="">
@@ -313,7 +316,7 @@ if(isset($_POST['save'])) {
                             break;
                         
                         case 'recordMonitor':
-                        case 'recordUPS':
+                        case 'recordUps':
                         case 'recordAVR':
                         case 'recordPrinter':
                             ?>
@@ -367,17 +370,20 @@ if(isset($_POST['save'])) {
                                     <?php if($assetType == 'Printer') { ?>
                                         <span class="details">Type</span>
                                         <input type="text" name="dimes" placeholder="Type" id="">
+                                    <?php } elseif($assetType == 'UPS') { ?>
+                                        <span class="details">Volt-Amp</span>
+                                        <input type="text" name="dimes" placeholder="Volt-Amphere" id="">
                                     <?php } else { ?>
                                         <span class="details">Dimension</span>
                                         <input type="text" name="dimes" placeholder="Dimension" id="">
                                     <?php } ?>
 
                                 </div>
-
                             </div> 
 
                             <?php
                         break;
+
                         default:
                             ?>
                                 <div class="input-box" id="model">

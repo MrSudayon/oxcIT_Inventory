@@ -92,6 +92,7 @@ include '../inc/header.php';
 
                             $ram = $row['memory'];
                             $storage = $row['storage'];
+                            $plan = $row['plan'];
                     ?>            
                     <tr>
                         <td><a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></a></td>
@@ -102,7 +103,8 @@ include '../inc/header.php';
                                 echo "<i style='color:#FF6646;'>No details found.";
                             } else {
                                 echo $ram.
-                                "<br>". $storage;
+                                "<br>" . $storage .
+                                "<br>" . $plan;
                             }
                                 
                             ?>

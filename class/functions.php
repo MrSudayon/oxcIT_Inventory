@@ -108,7 +108,7 @@ class Operations {
         $cpu = mysqli_real_escape_string($db->conn, $cpu);
         $ram = mysqli_real_escape_string($db->conn, $ram);
         $storage = mysqli_real_escape_string($db->conn, $storage);
-        $dimes = mysqli_real_escape_string($db->conn, $dimes);
+        // $dimes = mysqli_real_escape_string($db->conn, $dimes);
         $mobile = mysqli_real_escape_string($db->conn, $mobile);
         $plan = mysqli_real_escape_string($db->conn, $plan);
         $os = mysqli_real_escape_string($db->conn, $os);
@@ -180,7 +180,7 @@ class Operations {
         
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date) VALUES('', '$sess_name', '$actionMessage', NOW())");
 
-            return array_search($action, ['recordLaptop', 'recordDesktop', 'recordMonitor', 'recordPrinter', 'recordUPS', 'recordMobile', 'recordSim']) + 1;
+            return array_search($action, ['recordLaptop', 'recordDesktop', 'recordMonitor', 'recordPrinter', 'recordUps', 'recordMobile', 'recordSim']) + 1;
         } else {
             return 100; // Store Failed
         }
@@ -190,7 +190,6 @@ class Operations {
 
     function getAssets($category) {
         global $db;
-
 
         // return $res;
         $sql = "SELECT * FROM category_tbl WHERE";
@@ -443,6 +442,8 @@ class Operations {
                     $dimes = $row['dimes'];
                     $plan = $row['plan'];
                     $mobile = $row['mobile'];
+
+                    $cost = $row['cost'];
                 
                     switch($assettype) {
                         case 'Laptop':
@@ -489,7 +490,7 @@ class Operations {
                             if(!empty($plan) || !empty($mobile)) {
                                 // $specs = "Plan: <i>". $plan.
                                 //         "</i><br>Mobile: <i>". $mobile;
-                                $specs = $plan .
+                                $specs = $plan . "<br>" . $cost . 
                                         "<br>" . $mobile;
                             } else {
                                 $specs = "<i style='color:#FF6646;'>No details found.";

@@ -28,12 +28,11 @@ if(isset($_POST['update-asset'])) {
         'datedeployed' => isset($_POST['datedeployed']) ? mysqli_real_escape_string($db->conn,$_POST['datedeployed']) : '',
 
         'assigned'     => isset($_POST['assigned']) ? mysqli_real_escape_string($db->conn,$_POST['assigned']) : '',
-        'lastused'     => isset($_POST['lastused']) ? mysqli_real_escape_string($db->conn,$_POST['lastused']) : ''
+        'lastused'     => mysqli_real_escape_string($db->conn,$_POST['lastused'])
     ];
     // } 
    
     $result = $assetController->update($input, $id);
-    // $result = $assetController->update($action, $input, $id);
 
     if($result) {
         echo "<script>

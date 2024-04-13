@@ -71,10 +71,11 @@ if(isset($_GET['generateAcc'])) {
                 // $result = mysqli_stmt_get_result($refSql);
                 
                 // if (mysqli_num_rows($result) > 0) {
-    
-                $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl SET accountabilityStatus = 1, accountabilityRef = ? WHERE assetId = ? AND referenceStatus!='0'");
-                mysqli_stmt_bind_param($refQry, "si", $acc_ref, $assetID);
-                mysqli_stmt_execute($refQry);
+                foreach ($selected as $assetID) {
+                    $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl SET accountabilityStatus = 1, accountabilityRef = ? WHERE assetId = ? AND referenceStatus!='0'");
+                    mysqli_stmt_bind_param($refQry, "si", $acc_ref, $assetID);
+                    mysqli_stmt_execute($refQry);
+                }
                     
                 // } else {
 
@@ -132,7 +133,8 @@ if(isset($_GET['generateAcc'])) {
         </div>
             <table class="assets-table">
                 <tr>
-                    <th>Asset Type</th>
+                    <th>Asset Tag</th>
+                    <th>Model</th>
                     <th>Specification</th>
                     <th>Serial no.</th>
                     <th>Date Deployed</th>
@@ -147,7 +149,8 @@ if(isset($_GET['generateAcc'])) {
         
                         while($row = mysqli_fetch_assoc($res)) {
                             $aId = $row['id'];
-                            $assettype = $row['assettype'];
+                            $assettag = $row['assettag'];
+                            $model = $row['model'];
     
                             $serial = $row['serial'];
                             $datedeployed = $row['datedeployed'];
@@ -156,7 +159,8 @@ if(isset($_GET['generateAcc'])) {
                             $specification = $operation->specificationCondition($aId);
                     ?>
                     <tr>
-                        <td><?php echo $assettype; ?></td>
+                        <td><?php echo $assettag; ?></td>
+                        <td><?php echo $model; ?></td> 
                         <td><?php echo $specification; ?></td> 
                         <td><?php echo $serial; ?></td>
                         <td><?php echo $datedeployed; ?></td>
@@ -268,27 +272,28 @@ if(isset($_GET['generateTrn'])) {
                     $trn_ref = "TRNO-" . $newCode;
         
                     // If assetId is existed in reference tbl
-                    $refSql = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE assetId = ? AND accountabilityRef!='' AND referenceStatus != '0'");
-                    mysqli_stmt_bind_param($refSql, "i", $assetID);
-                    mysqli_stmt_execute($refSql);
-                    $result = mysqli_stmt_get_result($refSql);
+                    // $refSql = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE assetId = ? AND accountabilityRef!='' AND referenceStatus != '0'");
+                    // mysqli_stmt_bind_param($refSql, "i", $assetID);
+                    // mysqli_stmt_execute($refSql);
+                    // $result = mysqli_stmt_get_result($refSql);
                     
-                    if (mysqli_num_rows($result) > 0) {
-        
-                        $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl SET turnoverStatus = 1, turnoverRef = ? WHERE assetId = ?");
+                    // if (mysqli_num_rows($result) > 0) {
+
+                    foreach ($selected as $assetID) {
+                        $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl SET turnoverStatus = 1, turnoverRef = ? WHERE assetId = ? AND referenceStatus!='0'");
                         mysqli_stmt_bind_param($refQry, "si", $trn_ref, $assetID);
                         mysqli_stmt_execute($refQry);
-                        
-                    } else {
-        
-                        foreach ($selected as $assetID) {
-                            // Insert new turnover reference for each asset
-                            $refQry = mysqli_prepare($db->conn, "INSERT INTO reference_tbl (assetId, name, turnoverRef, turnoverStatus, referenceStatus) VALUES (?, ?, ?, 1, 1)");
-                            mysqli_stmt_bind_param($refQry, "iss", $assetID, $empId, $trn_ref);
-                            mysqli_stmt_execute($refQry);
-                        }
-        
                     }
+                    // } else {
+        
+                    //     foreach ($selected as $assetID) {
+                    //         // Insert new turnover reference for each asset
+                    //         $refQry = mysqli_prepare($db->conn, "INSERT INTO reference_tbl (assetId, name, turnoverRef, turnoverStatus, referenceStatus) VALUES (?, ?, ?, 1, 1)");
+                    //         mysqli_stmt_bind_param($refQry, "iss", $assetID, $empId, $trn_ref);
+                    //         mysqli_stmt_execute($refQry);
+                    //     }
+        
+                    // }
                     // Log history for generated turnover code
                     $history = mysqli_prepare($db->conn, "INSERT INTO history_tbl (name, action, date) VALUES (?, ?, NOW())");
                     $action = "Generated turnover form for multiple assets: " . implode(", ", $assetTags);
@@ -337,7 +342,8 @@ if(isset($_GET['generateTrn'])) {
         </div>
             <table class="assets-table">
                 <tr>
-                    <th>Asset Type</th>
+                    <th>Asset Tag</th>
+                    <th>Model</th>
                     <th>Specification</th>
                     <th>Serial no.</th>
                     <th>Date Deployed</th>
@@ -352,7 +358,8 @@ if(isset($_GET['generateTrn'])) {
         
                         while($row = mysqli_fetch_assoc($res)) {
                             $aId = $row['id'];
-                            $assettype = $row['assettype'];
+                            $assettag = $row['assettag'];
+                            $model = $row['model'];
     
                             $serial = $row['serial'];
                             $datedeployed = $row['datedeployed'];
@@ -361,7 +368,8 @@ if(isset($_GET['generateTrn'])) {
                             $specification = $operation->specificationCondition($aId);
                     ?>
                     <tr>
-                        <td><?php echo $assettype; ?></td>
+                        <td><?php echo $assettag; ?></td>
+                        <td><?php echo $model; ?></td>
                         <td><?php echo $specification; ?></td> 
                         <td><?php echo $serial; ?></td>
                         <td><?php echo $datedeployed; ?></td>

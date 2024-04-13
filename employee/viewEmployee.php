@@ -34,10 +34,10 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
     $sql =
         "SELECT DISTINCT a.id AS aId, a.empId, a.assettype, a.assettag, a.status, 
         a.cpu, a.memory, a.storage, a.os, a.dimes, a.plan, a.mobile, 
-        r.assetId, r.name AS rName, r.accountabilityRef, r.turnoverRef, r.referenceStatus 
+        r.assetId, r.name AS rName, r.accountabilityRef, r.turnoverRef, r.turnoverStatus, r.referenceStatus 
         FROM assets_tbl AS a 
         LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
-        WHERE a.empId='$eid' AND r.name='$eid' AND a.status = 'Deployed'"; 
+        WHERE a.empId='$eid' AND r.name='$eid' AND a.status = 'Deployed' AND referenceStatus!='0'"; 
         
     $results = mysqli_query($db->conn, $sql);
     $rowCount = $results->num_rows;
@@ -99,6 +99,7 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
                             
                             $accountabilityRef = $row['accountabilityRef'];
                             $turnoverRef = $row['turnoverRef'];
+                            $turnoverStatus = $row['turnoverStatus'];
                             $referenceStatus = $row['referenceStatus'];
 
                             $specification = $operation->specificationCondition($aId);
@@ -113,7 +114,7 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
                             <td><?php echo $turnoverRef; ?></td>
                             <td>
                                 <?php
-                                if($turnoverRef != '') {
+                                if($turnoverRef != '' && $turnoverStatus == '2' && $referenceStatus != '0') {
                                 ?>
                                     <a href="../update/turnoverUpd.php?id=<?php echo $aId; ?>"><img src="../assets/icons/turnover.png" width="32px"></a>&nbsp;
                                 <?php

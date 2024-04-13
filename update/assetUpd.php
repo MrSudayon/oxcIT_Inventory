@@ -3,9 +3,6 @@ include '../inc/auth.php';
 include '../inc/formHead.php'; 
 include '../inc/header.php'; 
 ?>
-
-
-
 <div class="container">
     <div class="add-form">
     <!-- <a href="../admin/dashboard.php" class="return">Back</a> -->
@@ -257,20 +254,20 @@ include '../inc/header.php';
                 <div class="asset-details">
                     <div class="input-box">
                     <span class="details" style="margin-bottom: 10px;">Assigned To</span>
-                        <select name="assigned" id="assigned" class="assigned" style="background-color: #ccc; font-weight: 600;">
-                            <option value="<?=$result['assignedId']?>"><?=$result['empName']?></option>
-                            <option value=''>None</option>
-                            <?php
-                                    $user = $getAllUser->selectAllEmp();
-                                    foreach($user as $row) {
-                            ?>
-                            <option value="<?php echo $row['id']; ?>">
-                                <?php echo $row['name']; ?>
-                            </option>
-                            <?php
-                                }
-                            ?>
-                        </select>
+                    <select name="assigned" id="assigned" class="assigned" style="background-color: #ccc; font-weight: 600;">
+                        <option value="<?=$result['assignedId']?>"><?=$result['empName']?></option>
+                        <option value=''>None</option>
+                        <?php
+                                $user = $getAllUser->selectAllEmp();
+                                foreach($user as $row) {
+                        ?>
+                        <option value="<?php echo $row['id']; ?>">
+                            <?php echo $row['name']; ?>
+                        </option>
+                        <?php
+                            }
+                        ?>
+                    </select>
                     </div>
 
                     <div class="input-box" id="datedeployed">
@@ -279,22 +276,10 @@ include '../inc/header.php';
                     </div>
 
                     <div class="input-box">
-                        <span class="details">Last Used by:</span>
-                        <input type="text" name="lastused" style="background-color: #ccc;" value="<?=$result['lastUsedName']?>" readonly>
-
-                            <!-- <select name="lastused" id="lastused" >
-                                <option value="?=$result['lastUsedId']?>"></option>
-                                <option value=''>Clear</option>
-                                ?php
-                                    foreach($user as $row) {
-                                ?>
-                                <option value="?php echo $row['id']; ?>">
-                                    ?php echo $row['name']; ?>
-                                </option>
-                                ?php
-                                    }
-                                ?>
-                            </select> -->
+                        <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
+                        <select name="lastused" id="lastused" style="background-color: #ccc; font-weight: 600;">
+                            <option value="<?=$result['lastUsedId']?>"><?=$result['lastUsedName']?></option>
+                        </select>
                     </div>
                 </div>
                 

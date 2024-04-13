@@ -95,38 +95,10 @@ include '../inc/header.php';
                     <tr>
                         <td><a href="../employee/viewEmployee.php?id=<?php echo $eid; ?>"><strong><?php echo $row['name']; ?></strong></td></a>
                         <td><?php echo $row['location']; ?></td>
-                       
                         <td><?php echo $row['division']; ?></td>
                         <td><?php echo "<span class='statusSpan'>".$status."</span>" ?></td>
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                var spans = document.getElementsByClassName("statusSpan");
-                                for (var i = 0; i < spans.length; i++) {
-                                    var span = spans[i];
-                                    if (span.innerHTML === '1') {
-                                        span.innerText = 'Active'; // Use innerText or textContent to update the text
-                                        span.classList.add("status", "delivered");
-                                    } else if (span.innerHTML === '0') {
-                                        span.innerText = 'Inactive';
-                                        span.classList.add("status", "cancelled");
-                                    }
-                                }
-                            });
-                        </script>
-
                         <td>
-                            <!-- <a href="../update/assetUpd.php?id=?php echo $aId; ?>"><img src="../assets/icons/update.png" width="24px"></a>&nbsp; -->
-                            <?php 
-                                $sqlSel = mysqli_query($db->conn, "SELECT * FROM reference_tbl WHERE assetId = $id"); 
-                                while($results = mysqli_fetch_assoc($sqlSel)) {
-                                    if($results['turnoverRef'] != '') { 
-                            ?>    
-                                <a href="../update/turnoverUpd.php?id=<?php echo $eid; ?>"><img src="../assets/icons/turnover.png" width="24px"></a>&nbsp;
-                            <?php   }
-                                } 
-                            ?>
                             <a href="../update/remove.php?assetID=<?php echo $eid; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
-                            
                         </td>   
                     </tr>
                     <?php } ?>

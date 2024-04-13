@@ -73,9 +73,8 @@ class assetsController {
         $empId = $input['assigned'];
         $lastused = $input['lastused'];
 
-        $qry = "UPDATE assets_tbl SET model='$model', serial='$serial', supplier='$supplier', empId='$empId', lastused='$lastused', status='$status', datepurchased='$dateprchs', cost='$cost', repair_cost='$repair', remarks='$remarks', datedeployed='$datedeployed', cpu='$cpu', memory='$ram', storage='$storage', dimes='$dimes', mobile='$mobile', plan='$plan', os='$os' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
+        $qry = "UPDATE assets_tbl SET model='$model', serial='$serial', supplier='$supplier', empId='$empId', status='$status', datepurchased='$dateprchs', cost='$cost', repair_cost='$repair', remarks='$remarks', datedeployed='$datedeployed', cpu='$cpu', memory='$ram', storage='$storage', dimes='$dimes', mobile='$mobile', plan='$plan', os='$os' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
         $result = $db->conn->query($qry);
-
 
         $tag = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $assetID");
         while($row = $tag->fetch_assoc()) {
@@ -83,8 +82,25 @@ class assetsController {
         }
 
         if($result) {
+            if (isset($empId)) {
+            
+                $sql = "SELECT * FROM reference_tbl WHERE assetId='$assetID' AND name='$empId' AND referenceStatus!='0'";
+                $results = $db->conn->query($sql);
+            
+                if (!$results || $results->num_rows == 0) {
+                    // Insert successful, prepare and execute the insert query for reference_tbl
+                    $referenceQuery = $db->conn->prepare("INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 1)");
+                    $referenceQuery->bind_param("is", $assetID, $empId);
+                    $referenceResult = $referenceQuery->execute();
+                } else {
+                    echo 'Reference already exists';
+                }
+            } else {
+                echo "Reference Data Not inserted";
+            }
+
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                                VALUES('', '$sess_name', 'Updated item: $assettag, ID: $assetID from Assets Record' , NOW())");
+                VALUES('', '$sess_name', 'Updated item: $assettag, ID: $assetID from Assets Record', NOW())");
             return true;
         } else {
             return false;
@@ -100,7 +116,6 @@ class assetsController {
         $lastused = $input['lastused'];
         $reason = $input['reason'];
         $ref_Code = $input['ref_code'];
-        
 
         // get id of selected asset ($assetID)
         // $sql = "SELECT * FROM assets_tbl WHERE id='$assetID' AND status != 'Archive'";
@@ -136,15 +151,14 @@ class assetsController {
             }
 
             // mysqli_query($db->conn, "UPDATE assets_tbl SET empId='', datedeployed='', turnoverdate=NOW(), lastused='$lastusedby', reason='$reason', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1");
-        mysqli_begin_transaction($db->conn);
-
+            mysqli_begin_transaction($db->conn);
             try {
                 // Update assets_tbl
                 $assetUpdateQuery = "UPDATE assets_tbl SET empId='', datedeployed='', turnoverdate=NOW(), lastused='$lastusedby', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
                 mysqli_query($db->conn, $assetUpdateQuery);
 
                 // Update reference_tbl
-                $referenceUpdateQuery = "UPDATE reference_tbl SET turnoverReason='$reason' WHERE assetId='$assetID' AND referenceStatus !='0'";
+                $referenceUpdateQuery = "UPDATE reference_tbl SET turnoverReason='$reason', referenceStatus='0' WHERE assetId='$assetID' AND referenceStatus !='0'";
                 mysqli_query($db->conn, $referenceUpdateQuery);
 
                 // Commit the transaction
@@ -371,14 +385,10 @@ class assetsController {
         //         echo "required";
         //     }
         // } 
-        $refStatus = 1;
-        if($trnStatus == 2) {
-            $refStatus = 0;
-        }
         
         $sql = "UPDATE reference_tbl 
                 SET accountabilityStatus = '$acctStatus', accountabilityDate = '$acctDate', accountabilityFile = '$acctFile', 
-                turnoverStatus = '$trnStatus', turnoverDate = '$trnDate', turnoverFile = '$trnFile', referenceStatus = '$refStatus' 
+                turnoverStatus = '$trnStatus', turnoverDate = '$trnDate', turnoverFile = '$trnFile' 
                 WHERE id='$refId'";
         $result = $db->conn->query($sql);
 
