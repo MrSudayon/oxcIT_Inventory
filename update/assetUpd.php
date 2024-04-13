@@ -186,12 +186,19 @@ include '../inc/header.php';
                     case 'Printer':
                     case 'AVR':
                     ?>
-
                         <div class="input-box" id="dimes">
-                            <span class="details">Dimension</span>
-                            <input type="text" name="dimes" value="<?=$result['dimes']?>" placeholder="Dimension" id="">
-                        </div>
+                            <?php if($assetType == 'Printer') { ?>
+                                <span class="details">Type</span>
+                                <input type="text" name="dimes" placeholder="Type" id="">
+                            <?php } elseif($assetType == 'UPS') { ?>
+                                <span class="details">Volt-Amp</span>
+                                <input type="text" name="dimes" placeholder="Volt-Amphere" id="">
+                            <?php } else { ?>
+                                <span class="details">Dimension</span>
+                                <input type="text" name="dimes" placeholder="Dimension" id="">
+                            <?php } ?>
 
+                        </div>
                     <?php 
                     break;
 

@@ -14,11 +14,13 @@ include '../inc/header.php';
         $page = 1;  
     } elseif ($_GET['page'] === 'all') {  
         $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
-                a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
-                e.id, e.name, e.division, e.location 
+                    a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
+                    e.id, e.name, e.division, e.location 
+                    e1.id AS assignedId, e1.name AS empName, e1.division AS empDivision, e1.location AS empLocation, 
+                    e2.id AS lastUsedId, e2.name AS lastUsedName, e2.division AS lastUsedDivision, e2.location AS lastUsedLocation 
                 FROM assets_tbl AS a 
-                LEFT JOIN employee_tbl AS e 
-                ON e.id = a.empId 
+                LEFT JOIN employee_tbl AS e1 ON e1.id = a.empId 
+                LEFT JOIN employee_tbl AS e2 ON e2.id = a.lastused 
                 WHERE a.status!='Archive' AND assettype='Mobile'";
         $res = mysqli_query($db->conn, $sql);
         $rowCountPage = $res->num_rows;
@@ -32,11 +34,13 @@ include '../inc/header.php';
 
     if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
         $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
-                a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
-                e.id, e.name, e.division, e.location 
+                    a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
+                    e.id, e.name, e.division, e.location 
+                    e1.id AS assignedId, e1.name AS empName, e1.division AS empDivision, e1.location AS empLocation, 
+                    e2.id AS lastUsedId, e2.name AS lastUsedName, e2.division AS lastUsedDivision, e2.location AS lastUsedLocation 
                 FROM assets_tbl AS a 
-                LEFT JOIN employee_tbl AS e 
-                ON e.id = a.empId 
+                LEFT JOIN employee_tbl AS e1 ON e1.id = a.empId 
+                LEFT JOIN employee_tbl AS e2 ON e2.id = a.lastused 
                 WHERE a.status!='Archive' AND assettype='Mobile' 
                 LIMIT $page_first_result, $results_per_page";
         $res = mysqli_query($db->conn, $sql);
@@ -79,6 +83,8 @@ include '../inc/header.php';
                         <th> Asset Tag <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Model <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Specification <span class="icon-arrow">&UpArrow;</span></th>
+                        <th hidden> Assigned </th>
+                        <th hidden> Lastused </th>
                         <th> Status <span class="icon-arrow">&UpArrow;</span></th>
                         <th width='10%' style="pointer-events: none;"> Action </th>
                     </tr>
@@ -109,6 +115,8 @@ include '../inc/header.php';
                                 
                             ?>
                         </td>
+                        <td hidden><?php echo $row['empName']; ?></td>
+                        <td hidden><?php echo $row['lastUsedName']; ?></td>
                         <td><?php echo "<span class='statusSpan'>". $status ."</span>" ?></td>
                         <td>
                             <a href="../update/remove.php?assetID=<?php echo $aId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="24px"></a>

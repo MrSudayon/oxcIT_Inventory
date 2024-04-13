@@ -477,9 +477,9 @@ class Operations {
                                 // $specs = "Ram: <i>". $ram .
                                 //         "</i><br>Storage: <i>". $storage .
                                 //         "</i><br>Plan: <i>". $plan;
-                                $specs = $ram .
+                                $specs = $plan .
                                         "<br>" . $storage .
-                                        "<br>" . $plan;
+                                        "<br>" . $ram;
                             } else {
                                 $specs = "<i style='color:#FF6646;'>No details found.";
                             }
@@ -490,7 +490,7 @@ class Operations {
                             if(!empty($plan) || !empty($mobile)) {
                                 // $specs = "Plan: <i>". $plan.
                                 //         "</i><br>Mobile: <i>". $mobile;
-                                $specs = $plan . "<br>" . $cost . 
+                                $specs = $plan . "<br>₱" . $cost . 
                                         "<br>" . $mobile;
                             } else {
                                 $specs = "<i style='color:#FF6646;'>No details found.";
