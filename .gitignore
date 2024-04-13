@@ -5,7 +5,9 @@ archives
 *.txt
 /*.txt
 /files/accountability/*
+/files/accountability/
 /files/turnover/*
+/files/turnover/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
