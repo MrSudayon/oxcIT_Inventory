@@ -84,7 +84,7 @@ include '../inc/header.php';
                         <!-- For searching purpose -->
                         <th hidden> Lastused </th>
                         <th> Status <span class="icon-arrow">&UpArrow;</span></th>
-                        <th width='10%'> Action <span class="icon-arrow">&UpArrow;</span></th>
+                        <th width='10%' style="pointer-events: none;"> Action </th>
                     </tr>
                 </thead>
                 <tbody>

@@ -83,7 +83,7 @@ include '../inc/header.php';
                         <th> Division <span class="icon-arrow">&UpArrow;</span></th>
                         <!-- <th>  <span class="icon-arrow">&UpArrow;</span></th> -->
                         <th> Status <span class="icon-arrow">&UpArrow;</span></th>
-                        <th width='10%'> Action <span class="icon-arrow">&UpArrow;</span></th>
+                        <th width='10%' style="pointer-events: none;"> Action </th>
                     </tr>
                 </thead>
                 <tbody>          
