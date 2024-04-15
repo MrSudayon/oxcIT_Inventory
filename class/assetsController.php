@@ -99,7 +99,7 @@ class assetsController {
             $assettag = $tagRow['assettag'];
         
             // Check if reference exists
-            $refQuery = "SELECT * FROM reference_tbl WHERE assetId=? AND name='' AND referenceStatus='0'";
+            $refQuery = "SELECT * FROM reference_tbl WHERE assetId=? AND name='' AND referenceStatus='1'";
             $refStmt = $db->conn->prepare($refQuery);
             $refStmt->bind_param("i", $assetID);
             $refStmt->execute();
@@ -374,20 +374,53 @@ class assetsController {
             return false;
         }
     }
-    public function updateReference($input, $id) {
+    public function updateReference($input, $id, $action) {
         global $db;
         global $sess_name;
+
         $refId = mysqli_real_escape_string($db->conn, $id);
 
-        $empId = $input['name']; // returns employee Id
-        $acctStatus = $input['acctStatus'];
-        $acctDate = $input['acctDate'];
-        $acctFile = $input['acctFile'];
+        if($action == 'AccountabilityRef') {
 
-        $trnStatus = $input['trnStatus'];
-        $trnDate = $input['trnDate'];
-        $trnFile = $input['trnFile'];
+            $acctStatus = $input['acctStatus'];
+            $acctDate = $input['acctDate'];
+            $acctFile = $input['acctFile'];
 
+            $sql = "UPDATE reference_tbl 
+                    SET accountabilityStatus = '$acctStatus', accountabilityDate = '$acctDate', accountabilityFile = '$acctFile' 
+                    WHERE id='$refId'";
+            $result = $db->conn->query($sql);
+
+            if($result) {
+                mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                VALUES('', '$sess_name', 'Updated reference id: $refId' , NOW())");
+
+                return true;
+            } else {
+                return false;
+            } 
+        }
+        elseif($action == 'TurnoverRef') {
+
+            $trnStatus = $input['trnStatus'];
+            $trnDate = $input['trnDate'];
+            $trnFile = $input['trnFile'];
+
+            $sql = "UPDATE reference_tbl 
+                    SET turnoverStatus = '$trnStatus', turnoverDate = '$trnDate', turnoverFile = '$trnFile' 
+                    WHERE id='$refId'";
+            $result = $db->conn->query($sql);
+
+            if($result) {
+                mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                VALUES('', '$sess_name', 'Updated reference id: $refId' , NOW())");
+
+                return true;
+            } else {
+                return false;
+            } 
+        }
+        
         // if(!empty($acctFile) || $acctFile != '') {
         //     if($acctStatus != 0) {
         //         if(!empty($acctDate) || $acctDate != '') {
@@ -410,20 +443,20 @@ class assetsController {
         //     }
         // } 
         
-        $sql = "UPDATE reference_tbl 
-                SET accountabilityStatus = '$acctStatus', accountabilityDate = '$acctDate', accountabilityFile = '$acctFile', 
-                turnoverStatus = '$trnStatus', turnoverDate = '$trnDate', turnoverFile = '$trnFile' 
-                WHERE id='$refId'";
-        $result = $db->conn->query($sql);
+        // $sql = "UPDATE reference_tbl 
+        //         SET accountabilityStatus = '$acctStatus', accountabilityDate = '$acctDate', accountabilityFile = '$acctFile', 
+        //         turnoverStatus = '$trnStatus', turnoverDate = '$trnDate', turnoverFile = '$trnFile' 
+        //         WHERE id='$refId'";
+        // $result = $db->conn->query($sql);
 
-        if($result) {
-            mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-            VALUES('', '$sess_name', 'Updated reference id: $refId' , NOW())");
+        // if($result) {
+        //     mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+        //     VALUES('', '$sess_name', 'Updated reference id: $refId' , NOW())");
 
-            return true;
-        } else {
-            return false;
-        } 
+        //     return true;
+        // } else {
+        //     return false;
+        // } 
     }
 }
 

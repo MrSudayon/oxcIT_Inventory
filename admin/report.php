@@ -62,12 +62,11 @@ if(isset($_GET['select'])) {
             <?php 
             foreach ($selected as $userID){ 
                 // $sql = "SELECT DISTINCT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
-                $sql = "SELECT DISTINCT a.*, e.id, e.name AS ename, 
-                        r.assetId, r.turnoverDate 
+                $sql = "SELECT DISTINCT a.*, e.id, e.name AS ename, e1.name AS lastusedName 
                         FROM assets_tbl AS a 
-                        LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
                         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                        WHERE a.id='$userID' AND a.status !='Archive'";
+                        LEFT JOIN employee_tbl AS e1 ON a.lastused = e1.id 
+                        WHERE a.id='$userID' AND a.status!='Archive'";
                 $res = mysqli_query($db->conn, $sql);
                 // foreach ($selected as $userID) { 
                 //     $sql = "SELECT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
@@ -111,8 +110,8 @@ if(isset($_GET['select'])) {
                 <td><?php echo $row['serial']; ?></td>
                 <td><?php echo $row['remarks']; ?></td>    
                 <td><?php echo $row['datedeployed']; ?></td>    
-                <td><?php echo $row['turnoverDate']; ?></td>    
-                <td><?php echo $row['lastused']; ?></td>    
+                <td><?php echo $row['turnoverdate']; ?></td>    
+                <td><?php echo $row['lastusedName']; ?></td>    
             </tr>
             <?php
                 }

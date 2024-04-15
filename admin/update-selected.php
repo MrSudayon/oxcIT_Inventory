@@ -173,11 +173,111 @@ if(isset($_POST['updateLocation'])) {
 }
 
 // Reference update
-if(isset($_POST['update-reference'])) {
+// if(isset($_POST['update-reference'])) {
+//     $id = mysqli_real_escape_string($db->conn,$_POST['id']);
+
+//     $accFileName = mysqli_real_escape_string($db->conn,$_POST['accountabilityFile']);
+//     $trnFileName = mysqli_real_escape_string($db->conn,$_POST['turnoverFile']);
+
+//     if (isset($_FILES['acctfile']) && $_FILES['acctfile']['error'] === UPLOAD_ERR_OK) {
+
+//         // uploaded file details
+//         $accFileTmpPath = $_FILES["acctfile"]['tmp_name'];
+
+//         $accFileName = basename($_FILES["acctfile"]['name']);
+        
+//         $accFileSize = $_FILES['acctfile']['size'];
+    
+//         $accFileType = $_FILES['acctfile']['type'];
+    
+//         $accFileNameCmps = explode(".", $accFileName);
+    
+//         $accFileExtension = strtolower(end($accFileNameCmps));
+        
+//         $accUploaddir = '../files/accountability/' . $_FILES['acctfile']['name'];
+    
+//         // file extensions allowed
+//         $allowedfileExtensions = array('pdf','docx','pptx','xlsx','jpg','png');
+    
+//         if (in_array($accFileExtension, $allowedfileExtensions)) {
+//             if($accFileSize > 2000000) {
+//                 echo "<script> alert('File too large'); window.history.back();</script>";
+//                 // die();
+//             } else {
+//                 move_uploaded_file($accFileTmpPath, $accUploaddir);
+//             }
+//         } else {
+//             $message = 'Upload failed as the file type is not acceptable. The allowed file types are:' . implode(',', $allowedfileExtensions);
+//         }
+//     }
+
+//     if (isset($_FILES['trnfile']) && $_FILES['trnfile']['error'] === UPLOAD_ERR_OK) {
+
+//         // uploaded file details
+//         $trnFileTmpPath = $_FILES["trnfile"]['tmp_name'];
+
+//         $trnFileName = basename($_FILES["trnfile"]['name']);
+        
+//         $trnFileSize = $_FILES['trnfile']['size'];
+    
+//         $trnFileType = $_FILES['trnfile']['type'];
+    
+//         $trnFileNameCmps = explode(".", $trnFileName);
+    
+//         $trnFileExtension = strtolower(end($trnFileNameCmps));
+        
+//         $trnUploaddir = '../files/turnover/' . $_FILES['trnfile']['name'];
+    
+//         // file extensions allowed
+//         $allowedfileExtensions = array('pdf','docx','pptx','xlsx','jpg','png');
+    
+//         if (in_array($trnFileExtension, $allowedfileExtensions)) {
+//             if($trnFileSize > 2000000) {
+//                 echo "<script> alert('File too large'); window.history.back();</script>";
+//                 // die();
+//             } else {
+//                 move_uploaded_file($trnFileTmpPath, $trnUploaddir);
+//             }
+//         } else {
+//             $message = 'Upload failed as the file type is not acceptable. The allowed file types are:' . implode(',', $allowedfileExtensions);
+//         }
+
+//     }
+    
+
+//     $input = [
+//         'name' => mysqli_real_escape_string($db->conn,$_POST['name']),
+//         'acctStatus' => mysqli_real_escape_string($db->conn,$_POST['acctStatus']),
+//         'acctDate' => mysqli_real_escape_string($db->conn,$_POST['acctDate']),
+//         'acctFile' => mysqli_real_escape_string($db->conn,$accFileName),
+
+//         'trnStatus' => mysqli_real_escape_string($db->conn,$_POST['trnStatus']),
+//         'trnDate' => mysqli_real_escape_string($db->conn,$_POST['trnDate']),
+//         'trnFile' => mysqli_real_escape_string($db->conn,$trnFileName),
+//     ];
+
+   
+//     $result = $assetController->updateReference($input, $id);
+
+//     if($result) {
+//         echo "<script>
+//         alert('✅Update Successful');
+//         window.location.href='../admin/references.php';
+//         </script>";
+//         die();
+//     } else {
+//         echo "<script>
+//         alert('⚠️Update Error');
+//         window.location.href='../admin/references.php';
+//         </script>";
+//         die();
+//     }
+// }
+
+if(isset($_POST['update-acctRef'])) {
     $id = mysqli_real_escape_string($db->conn,$_POST['id']);
 
     $accFileName = mysqli_real_escape_string($db->conn,$_POST['accountabilityFile']);
-    $trnFileName = mysqli_real_escape_string($db->conn,$_POST['turnoverFile']);
 
     if (isset($_FILES['acctfile']) && $_FILES['acctfile']['error'] === UPLOAD_ERR_OK) {
 
@@ -211,6 +311,37 @@ if(isset($_POST['update-reference'])) {
         }
     }
 
+    $input = [
+        'name' => mysqli_real_escape_string($db->conn,$_POST['name']),
+        'acctStatus' => mysqli_real_escape_string($db->conn,$_POST['acctStatus']),
+        'acctDate' => mysqli_real_escape_string($db->conn,$_POST['acctDate']),
+        'acctFile' => mysqli_real_escape_string($db->conn,$accFileName),
+    ];
+
+    $action = mysqli_real_escape_string($db->conn,$_POST['action']);
+   
+    $result = $assetController->updateReference($input, $id, $action);
+
+    if($result) {
+        echo "<script>
+        alert('✅Update Successful');
+        window.location.href='../admin/reference.php';
+        </script>";
+        die();
+    } else {
+        echo "<script>
+        alert('⚠️Update Error');
+        window.location.href='../admin/reference.php';
+        </script>";
+        die();
+    }
+}
+
+if(isset($_POST['update-trnRef'])) {
+    $id = mysqli_real_escape_string($db->conn,$_POST['id']);
+
+    $trnFileName = mysqli_real_escape_string($db->conn,$_POST['turnoverFile']);
+
     if (isset($_FILES['trnfile']) && $_FILES['trnfile']['error'] === UPLOAD_ERR_OK) {
 
         // uploaded file details
@@ -243,32 +374,27 @@ if(isset($_POST['update-reference'])) {
         }
 
     }
-    
 
     $input = [
-        'name' => mysqli_real_escape_string($db->conn,$_POST['name']),
-        'acctStatus' => mysqli_real_escape_string($db->conn,$_POST['acctStatus']),
-        'acctDate' => mysqli_real_escape_string($db->conn,$_POST['acctDate']),
-        'acctFile' => mysqli_real_escape_string($db->conn,$accFileName),
-
         'trnStatus' => mysqli_real_escape_string($db->conn,$_POST['trnStatus']),
         'trnDate' => mysqli_real_escape_string($db->conn,$_POST['trnDate']),
         'trnFile' => mysqli_real_escape_string($db->conn,$trnFileName),
     ];
 
-   
-    $result = $assetController->updateReference($input, $id);
+    $action = mysqli_real_escape_string($db->conn,$_POST['action']);
+    
+    $result = $assetController->updateReference($input, $id, $action);
 
     if($result) {
         echo "<script>
         alert('✅Update Successful');
-        window.location.href='../admin/references.php';
+        window.location.href='../admin/reference.php';
         </script>";
         die();
     } else {
         echo "<script>
         alert('⚠️Update Error');
-        window.location.href='../admin/references.php';
+        window.location.href='../admin/reference.php';
         </script>";
         die();
     }

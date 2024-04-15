@@ -14,22 +14,22 @@
 
     <div class="container">
         <div class="add-form">
-            <a href="../admin/references.php" class="return">Back</a>
+            <a href="../admin/reference.php" class="return">Back</a>
 
             <div class="title">Reference Details</div>
             <?php
-            if(isset($_GET['id']))
+            if(isset($_GET['Acct_id']))
             {
-                $refId = mysqli_real_escape_string($db->conn, $_GET['id']); // refId from reference tbl
+                $refId = mysqli_real_escape_string($db->conn, $_GET['Acct_id']); // refId from reference tbl
                 $empName = mysqli_real_escape_string($db->conn, $_GET['name']);
                 $result = $assetController->editReference($refId);
 
                 if($result) {
                     
-                    $trnStatus = $result['turnoverStatus'];
+                    // $trnStatus = $result['turnoverStatus'];
+                    // $trnoFile = $result['turnoverFile'];
                     $accStatus = $result['accountabilityStatus'];
                     $acctFile = $result['accountabilityFile'];
-                    $trnoFile = $result['turnoverFile'];
             ?>
                 <form action="../admin/update-selected.php" method="POST" enctype="multipart/form-data">
                     <div class="asset-details">
@@ -86,9 +86,33 @@
                             <span class="details">Date</span>
                             <input type="date" name="acctDate" id="acctDate" value="<?=$result['accountabilityDate']?>">
                         </div>
+                    </div>
+                    <div class="button">
+                        <input type="hidden" name="accountabilityFile" id="" value="<?=$acctFile?>">
+                        <input type="hidden" name="action" id="" value="AccountabilityRef">
+                        <input type="submit" onclick="passValue()" value="Save" name="update-acctRef"/>
+                    </div>
+                </form>
+            <?php 
+                } 
+            }
+            
+            elseif(isset($_GET['Turnover_id']))
+            {
+                $refId = mysqli_real_escape_string($db->conn, $_GET['Turnover_id']); // refId from reference tbl
+                $empName = mysqli_real_escape_string($db->conn, $_GET['name']);
+                $result = $assetController->editReference($refId);
 
-                </div>
-                <div class="asset-details">
+                if($result) {
+                    
+                    $trnStatus = $result['turnoverStatus'];
+                    $trnoFile = $result['turnoverFile'];
+
+            ?>
+                <form action="../admin/update-selected.php" method="POST" enctype="multipart/form-data">
+                    <div class="asset-details">
+                        <input type="hidden" name="id" value="<?=$result['refId']?>">
+                        
                         <div class="input-box">
                             <span class="details">Turnover Code</span>
                             <input type="text" value="<?=$result['turnoverRef'] ?>"  style="background-color: #ccc;" readonly>
@@ -136,16 +160,18 @@
                             <input type="date" name="trnDate" id="trnDate" value="<?=$result['turnoverDate']?>">
                         </div>
                     </div>
+                    
+                    <div class="button">
+                        <input type="hidden" name="turnoverFile" id="" value="<?=$trnoFile?>">
+                        <input type="hidden" name="action" id="" value="TurnoverRef">
+                        <input type="submit" onclick="passValue()" value="Save" name="update-trnRef"/>
+                    </div>
+                </form>
             <?php 
                 } 
             }
             ?>
-                    <div class="button">
-                        <input type="hidden" name="accountabilityFile" id="" value="<?=$acctFile?>">
-                        <input type="hidden" name="turnoverFile" id="" value="<?=$trnoFile?>">
-                        <input type="submit" onclick="passValue()" value="Save" name="update-reference"/>
-                    </div>
-                </form>
+                    
         </div>
     </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

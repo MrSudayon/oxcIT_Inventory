@@ -269,7 +269,7 @@ if(isset($_GET['generateTrn'])) {
         
 
                     foreach ($selected as $assetID) {
-                        $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl SET turnoverStatus = 1, turnoverRef = ? WHERE assetId = ?, name=?");
+                        $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl SET turnoverStatus='1', turnoverRef = ? WHERE assetId = ? AND name=?");
                         mysqli_stmt_bind_param($refQry, "sis", $trn_ref, $assetID, $empId);
                         mysqli_stmt_execute($refQry);
                     }
