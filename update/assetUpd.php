@@ -30,26 +30,18 @@ include '../inc/header.php';
                                             
                         <?php 
                         switch($assetType) { 
-                            case 'Laptop':
-                            case 'Desktop':
-                            ?>
                             
+                            case 'SIM': 
+                            ?>
                                 <div class="input-box" id="model">
                                     <span class="details">Model</span>
                                     <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
                                 </div>
-                                
-                                <div class="input-box" id="serial">
-                                    <span class="details">Serial no.</span>
-                                    <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
-                                </div>
-
-                            <?php 
+                            <?php
                             break;
 
-                            case 'Mobile': 
+                            default:
                             ?>
-
                                 <div class="input-box" id="model">
                                     <span class="details">Model</span>
                                     <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
@@ -59,28 +51,7 @@ include '../inc/header.php';
                                     <span class="details">Serial no.</span>
                                     <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
                                 </div>
-                            
-                            <?php 
-                            break;
-
-                            case 'Monitor': 
-                            case 'AVR': 
-                            case 'UPS': 
-                            case 'Printer': 
-                            ?>    
-
-                                <div class="input-box" id="model">
-                                    <span class="details">Model</span>
-                                    <input type="text" name="model" placeholder="Model" value="<?=$result['model']?>" id="">
-                                </div>
-                                
-                                <div class="input-box" id="serial">
-                                    <span class="details">Serial no.</span>
-                                    <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
-                                </div>
-
-                            <?php 
-                            break; 
+                            <?php
                         }
                         ?>
 
@@ -189,13 +160,13 @@ include '../inc/header.php';
                         <div class="input-box" id="dimes">
                             <?php if($assetType == 'Printer') { ?>
                                 <span class="details">Type</span>
-                                <input type="text" name="dimes" placeholder="Type" id="">
+                                <input type="text" name="dimes" placeholder="Type" value="<?=$result['dimes']?>">
                             <?php } elseif($assetType == 'UPS') { ?>
                                 <span class="details">Volt-Amp</span>
-                                <input type="text" name="dimes" placeholder="Volt-Amphere" id="">
+                                <input type="text" name="dimes" placeholder="Volt-Amphere" value="<?=$result['dimes']?>">
                             <?php } else { ?>
                                 <span class="details">Dimension</span>
-                                <input type="text" name="dimes" placeholder="Dimension" id="">
+                                <input type="text" name="dimes" placeholder="Dimension" value="<?=$result['dimes']?>">
                             <?php } ?>
 
                         </div>

@@ -178,7 +178,7 @@ if(isset($_POST['save'])) {
                             </div>
 
                             <?php
-                            break;
+                        break;
 
                         case 'recordMobile':
                             ?>
@@ -251,7 +251,7 @@ if(isset($_POST['save'])) {
                             </div>
 
                             <?php
-                            break;
+                        break;
                         
                         case 'recordSim':
                             ?>
@@ -313,7 +313,7 @@ if(isset($_POST['save'])) {
                             </div>
                             
                             <?php
-                            break;
+                        break;
                         
                         case 'recordMonitor':
                         case 'recordUps':

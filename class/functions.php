@@ -122,13 +122,13 @@ class Operations {
         
         if($result) {
 
-            if (isset($empId)) {
+            if ($empId!='') {
             
                 $assetId = $db->conn->insert_id;
                 $sql = "SELECT * FROM reference_tbl WHERE assetId='$assetId' AND name='$empId' AND referenceStatus!='0'";
                 $results = $db->conn->query($sql);
             
-                if (!$results || $results->num_rows == 0) {
+                if ($results->num_rows == 0) {
                     // Insert successful, prepare and execute the insert query for reference_tbl
                     $referenceQuery = $db->conn->prepare("INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 1)");
                     $referenceQuery->bind_param("is", $assetId, $empId);
@@ -146,8 +146,6 @@ class Operations {
                 } else {
                     echo 'Reference already exists';
                 }
-            } else {
-                echo "Reference Data Not inserted";
             }
 
             $actionMessage = '';
