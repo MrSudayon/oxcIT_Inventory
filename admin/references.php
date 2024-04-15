@@ -36,7 +36,6 @@ $referenceTbl = $operation->getReferenceTable();
         }
     </style>
 <?php include '../inc/header.php'; ?>
-<body>
 
 <div class="content">
     <main class="table" id="customers_table">
@@ -166,7 +165,6 @@ $referenceTbl = $operation->getReferenceTable();
     </main>
 
 <script src="../js/sort.js"></script>
-
 </div>
         
 </body>

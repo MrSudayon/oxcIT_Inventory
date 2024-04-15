@@ -49,7 +49,8 @@
           <a href="../admin/adminConfig.php"><i class="fa-solid fa-gears"></i></a>
         </li>
         <li class="menu__item">
-          <a href="../admin/references.php"><i class="fa-solid fa-asterisk"></i></a>
+          <a href="../admin/reference.php"><i class="fa-solid fa-asterisk"></i></a>
+          <!-- <a href="../admin/references.php"><i class="fa-solid fa-asterisk"></i></a> -->
         </li>
       </ul>
     </div>
