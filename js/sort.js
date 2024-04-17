@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
         else if (span.innerHTML === 'For repair') { span.classList.add("status", "repair"); } 
         else if (span.innerHTML === 'Sell' || span.innerHTML === 'Defective') { span.classList.add("status", "replace"); } 
         else if (span.innerHTML === '1') { span.innerText = 'Active'; span.classList.add("status", "tobedeploy"); }
-        else if (span.innerHTML === '0') {span.innerText = 'Inactive'; span.classList.add("status", "missing"); }
+        else if (span.innerHTML === '0') { span.innerText = 'Inactive'; span.classList.add("status", "missing"); }
         else { span.classList.add("status", "missing"); }
     }
 });

@@ -229,38 +229,57 @@ include '../inc/header.php';
                     
                 </div>
                 <div class="title">Accountable</div>
-                <div class="asset-details">
-                    <div class="input-box">
-                    <span class="details" style="margin-bottom: 10px;">Assigned To</span>
-                    <select name="assigned" id="assigned" class="assigned" style="background-color: #ccc; font-weight: 600;">
-                        <option value="<?=$result['assignedId']?>"><?=$result['empName']?></option>
-                        <option value=''>None</option>
-                        <?php
-                                $user = $getAllUser->selectAllEmp();
-                                foreach($user as $row) {
-                        ?>
-                        <option value="<?php echo $row['id']; ?>">
-                            <?php echo $row['name']; ?>
-                        </option>
-                        <?php
-                            }
-                        ?>
-                    </select>
-                    </div>
+                    <div class="asset-details">
+                <?php 
+                    $status = $result['aStatus']; 
 
-                    <div class="input-box" id="datedeployed">
-                        <span class="details">Date Deployed</span>
-                        <input type="date" name="datedeployed" placeholder="Date Deployed" value="<?=$result['datedeployed']?>" id="">
-                    </div>
+                    switch($status) {
 
-                    <div class="input-box">
-                        <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
-                        <select name="lastused" id="lastused" style="background-color: #ccc; font-weight: 600;">
-                            <option value="<?=$result['lastUsedId']?>"><?=$result['lastUsedName']?></option>
-                        </select>
+                        case 'Deployed':
+                ?>
+                        <div class="input-box">
+                        <span class="details" style="margin-bottom: 10px;">Assigned To</span>
+                            <select name="assigned" id="assigned" class="assigned" style="background-color: #ccc; font-weight: 600;">
+                                <option value="<?=$result['assignedId']?>"><?=$result['empName']?></option>
+                                <option value=''>None</option>
+                                <?php
+                                    $user = $getAllUser->selectAllEmp();
+                                    foreach($user as $row) {
+                                ?>
+                                <option value="<?php echo $row['id']; ?>">
+                                    <?php echo $row['name']; ?>
+                                </option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
+                        </div>              
+
+                        <div class="input-box" id="datedeployed">
+                            <span class="details">Date Deployed</span>
+                            <input type="date" name="datedeployed" placeholder="Date Deployed" value="<?=$result['datedeployed']?>" id="">
+                        </div>
+                        <div class="input-box">
+                            <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
+                            <select name="lastused" id="lastused" style="background-color: #ccc; font-weight: 600;">
+                                <option value="<?=$result['lastUsedId']?>"><?=$result['lastUsedName']?></option>
+                            </select>
+                        </div>
+                    <?php
+                        break; 
+                        default:
+                    ?>
+                        <div class="input-box">
+                            <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
+                            <select name="lastused" id="lastused" style="background-color: #ccc; font-weight: 600;">
+                                <option value="<?=$result['lastUsedId']?>"><?=$result['lastUsedName']?></option>
+                            </select>
+                        </div>
+                    <?php 
+                        break;
+                    }
+                    ?>
                     </div>
-                </div>
-                
                 <div class="button">
                     <input type="hidden" value="ComputerUpdate" name="action"/>
                     <input type="submit" onclick="passValue()" value="Save" name="update-asset"/>
