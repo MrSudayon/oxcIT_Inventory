@@ -99,9 +99,9 @@ class assetsController {
             $assettag = $tagRow['assettag'];
         
             // Check if reference exists
-            $refQuery = "SELECT * FROM reference_tbl WHERE assetId=? AND name='' AND referenceStatus='1'";
+            $refQuery = "SELECT * FROM reference_tbl WHERE assetId=? AND name=? AND referenceStatus='1'";
             $refStmt = $db->conn->prepare($refQuery);
-            $refStmt->bind_param("i", $assetID);
+            $refStmt->bind_param("is", $assetID, $empId);
             $refStmt->execute();
             $refResult = $refStmt->get_result();
         
@@ -182,7 +182,8 @@ class assetsController {
                 mysqli_query($db->conn, $assetUpdateQuery);
 
                 // Update reference_tbl
-                $referenceUpdateQuery = "UPDATE reference_tbl SET turnoverReason='$reason', referenceStatus='0' WHERE assetId='$assetID' AND referenceStatus !='0'";
+                // $referenceUpdateQuery = "UPDATE reference_tbl SET turnoverReason='$reason', referenceStatus='0' WHERE assetId='$assetID' AND referenceStatus !='0'";
+                $referenceUpdateQuery = "UPDATE reference_tbl SET referenceStatus='0' WHERE assetId='$assetID' AND referenceStatus !='0'";
                 mysqli_query($db->conn, $referenceUpdateQuery);
 
                 // Commit the transaction
