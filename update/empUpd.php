@@ -3,24 +3,6 @@ include '../inc/auth.php';
 include '../inc/formHead.php'; 
 include '../inc/header.php'; 
 ?>
-<style>
-.return {
-    transition: all .3s;
-    border: 1px solid white;
-    padding: 5px 20px;
-    border-radius: 15px;
-    background-color: var(--sec-color);
-    font-weight: 700;
-}
-.return:hover {
-    background-color: white;
-    border: 1px solid black;
-    color: var(--main-color);
-    transition: all .3s;
-}
-
-</style>
-
 
 <div class="container">
     <div class="add-form">

@@ -23,7 +23,7 @@ if(isset($_GET['select'])) {
     ?>
         <script>
             alert('Please select User');
-            window.location.replace('dashboard.php');
+            window.location.replace('allRecord.php');
         </script>
     <?php
 }

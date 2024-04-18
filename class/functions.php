@@ -589,6 +589,171 @@ class Operations {
        
     }
 
+    function reportSpecificationCondition($assetIds) {
+
+        global $db;
+
+        if(is_array($assetIds)) {
+            $specs = [];
+            foreach($assetIds as $assetId) {
+                $sql =
+                "SELECT * 
+                FROM assets_tbl 
+                WHERE id = '$assetId'";
+                $result = mysqli_query($db->conn, $sql);
+                
+                while($row = mysqli_fetch_assoc($result)) {
+                    $assettype = $row['assettype'];
+                    
+                    $cpu = $row['cpu'];
+                    $ram = $row['memory'];
+                    $storage = $row['storage'];
+                    $os = $row['os'];
+                    $dimes = $row['dimes'];
+                    $plan = $row['plan'];
+                    $mobile = $row['mobile'];
+                
+                    switch($assettype) {
+                        case 'Laptop':
+                        case 'Desktop':
+                            if(!empty($cpu) || !empty($ram) || !empty($storage) || !empty($os)) {
+                                $specs =  $cpu .
+                                        "<br>". $ram.
+                                        "<br>". $storage.
+                                        "<br>". $os;
+                            } else {
+                                $specs = "<i style='color:#FF6666;'>No details found.";
+                            }
+                            return $specs;
+                            break;
+        
+                        case 'Monitor':
+                        case 'Printer':
+                        case 'UPS':
+                        case 'AVR':
+                            if(!empty($dimes)) {
+                                // $specs = "Dimension: <i>". $dimes;
+                                $specs = $dimes;
+                            } else {
+                                $specs = "<i style='color:#FF6646;'>No details found.";
+                            }
+                            return $specs;
+                            break;
+                        
+                        case 'Mobile':
+                            if(!empty($ram) || !empty($storage)) {
+                                $specs = $plan .
+                                        "<br>" . $storage .
+                                        "<br>" . $ram;
+                            } else {
+                                $specs = "<i style='color:#FF6646;'>No details found.";
+                            }
+                            return $specs;
+                            break;
+        
+                        case 'SIM':
+                            if(!empty($plan) || !empty($mobile)) {
+                                $specs = $plan .
+                                        "<br>" . $mobile;
+                            } else {
+                                $specs = "<i style='color:#FF6646;'>No details found.";
+                            }
+                            return $specs;
+                            break;
+        
+                        default:
+                            $specs =  $cpu .
+                                "<br>". $ram.
+                                "<br>". $storage.
+                                "<br>". $os;
+                            return $specs;
+                            break;
+                            
+                    }
+                }
+            }
+        } else {
+            $sql =
+            "SELECT * FROM assets_tbl WHERE id='$assetIds' AND status!='Archive'";
+            $result = mysqli_query($db->conn, $sql);
+    
+            while($row = mysqli_fetch_assoc($result)) {
+                $assettype = $row['assettype'];
+    
+                $cpu = $row['cpu'];
+                $ram = $row['memory'];
+                $storage = $row['storage'];
+                $os = $row['os'];
+                $dimes = $row['dimes'];
+                $plan = $row['plan'];
+                $mobile = $row['mobile'];
+            
+                switch($assettype) {
+                    case 'Laptop':
+                    case 'Desktop':
+                        if(!empty($cpu) || !empty($ram) || !empty($storage) || !empty($os)) {
+                            $specs =  $cpu .
+                                        "<br>". $ram.
+                                        "<br>". $storage.
+                                        "<br>". $os;
+                        } else {
+                            $specs = "<i style='color:#FF6666;'>No details found.";
+                            // $specs = "-
+                            //         <br>-
+                            //         <br>-
+                            //         <br>-";
+                        }
+                        return $specs;
+                        break;
+    
+                    case 'Monitor':
+                    case 'Printer':
+                    case 'UPS':
+                    case 'AVR':
+                        if(!empty($dimes)) {
+                            $specs = $dimes;
+                        } else {
+                            $specs = "<i style='color:#FF6646;'>No details found.";
+                        }
+                        return $specs;
+                        break;
+                    
+                    case 'Mobile':
+                        if(!empty($ram) || !empty($storage)) {
+                            $specs = $ram .
+                                "<br>" . $storage .
+                                "<br>" . $plan;
+                        } else {
+                            $specs = "<i style='color:#FF6646;'>No details found.";
+                        }
+                        return $specs;
+                        break;
+    
+                    case 'SIM':
+                        if(!empty($plan) || !empty($mobile)) {
+                            $specs = $plan .
+                                    "<br>" . $mobile;
+                        } else {
+                            $specs = "<i style='color:#FF6646;'>No details found.";
+                        }
+                        return $specs;
+                        break;
+    
+                    default:
+                        $specs =  $cpu .
+                            "<br>". $ram.
+                            "<br>". $storage.
+                            "<br>". $os;
+                        return $specs;
+                        break;
+                        
+                }
+            }
+        }        
+        return;
+       
+    }
+
     function ifEmptyReference($acctRef, $turnoverRef, $acctFile, $turnoverFile) {
         if(empty($acctRef)) { $acctRef = 'N/A'; return $acctRef; }
         if(empty($turnoverRef)) { $turnoverRef = 'N/A'; return $turnoverRef; }

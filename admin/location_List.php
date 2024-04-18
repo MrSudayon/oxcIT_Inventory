@@ -67,9 +67,9 @@ include '../inc/header.php';
                         
                         $eid = $row['id'];
                 ?>     
-                        <td><a href="../update/locUpd.php?empID=<?php echo $eid; ?>"><strong><?php echo $row['name']; ?></strong></a></td>
+                        <td><a href="../update/locUpd.php?locID=<?php echo $eid; ?>"><strong><?php echo $row['name']; ?></strong></a></td>
                         <td>
-                            <a href="../update/remove.php?assetID=<?php echo $eid; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
+                            <a href="../update/remove.php?locID=<?php echo $eid; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
                         </td>   
                     </tr>
                     <?php } ?>

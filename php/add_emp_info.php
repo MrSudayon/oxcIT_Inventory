@@ -75,15 +75,16 @@ if(isset($_POST['submit'])) {
                             <option value="<?php echo $row['name']; ?>">
                                 <?php echo $row['name']; ?>
                             </option>
-                            <!-- <option value="Pasig">Pasig HO</option>
-                            <option value="Mandaluyong">Mandaluyong</option>
-                            <option value="Laguna">Laguna</option>
-                            <option value="Cebu">Cebu</option>
-                            <option value="Boracay">Boracay</option>
-                            <option value="Davao">Davao</option> -->
                         <?php
                             }
                         ?>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <span class="details" style="margin-bottom: 10px;">Status</span>
+                        <select name="status">
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
                         </select>
                     </div>
                 </div>

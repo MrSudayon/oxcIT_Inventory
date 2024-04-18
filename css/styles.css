@@ -150,8 +150,9 @@ main.table {
     margin: 0 .8em .8em .8em;
     border-radius: 0 0 .6rem .6rem;
 
-    overflow: auto;
     overflow: overlay;
+    overflow: auto;
+    overflow-x: hidden;
 }
 
 
@@ -281,7 +282,7 @@ span.disable-acctRef {
     margin: 0 .8em .8em .8em;
     border-radius: 0 0 .6rem .6rem;
 
-    overflow: auto;
+    overflow-x: hidden;
     overflow: overlay;
 }
 
@@ -328,6 +329,7 @@ thead th {
     background-color: var(--ter-color);
     cursor: pointer;
     text-transform: capitalize;
+    z-index: 10;
 }
 
 tbody tr:nth-child(even) {
@@ -336,13 +338,15 @@ tbody tr:nth-child(even) {
 
 tbody tr {
     color: black;
-    --delay: .1s;
-    transition: .5s ease-in-out var(--delay), background-color 0s;
+    --delay: 0s;
+    transition: .3s ease-in-out var(--delay), background-color 0s;
 }
 
 /* each tr animation */
-tbody tr.hide {
+tbody tr.hide,
+tbody tr.hide td .select {
     opacity: 0;
+    padding: 0;
     transform: translateX(100%);
 }
 
@@ -353,20 +357,25 @@ tbody tr:hover {
 tbody tr td,
 tbody tr td p,
 tbody tr td img {
-    transition: .2s ease-in-out;
+    overflow-x: hidden;
+    transition: .3s ease-in-out;
 }
 
 tbody tr.hide td,
-tbody tr.hide td p {
+tbody tr.hide td p,
+tbody tr.hide td .statusSpan,
+tbody tr.hide td .select {
+    overflow-x: hidden;
+    opacity: 0;
     padding: 0;
     font: 0 / 0 sans-serif;
-    transition: .2s ease-in-out .5s;
+    transition: .2s ease-in-out .3s;
 }
 
 tbody tr.hide td img {
     width: 0;
     height: 0;
-    transition: .2s ease-in-out .5s;
+    transition: .2s ease-in-out .3s;
 }
 
 @media (max-width: 1000px) {
@@ -463,22 +472,19 @@ thead th.active,tbody td.active {
     margin: 20px;
 }
 .center { display: flex; justify-content: center; }
+
 .return {
     transition: all .3s;
     border: 1px solid white;
-    border-style: inset;
-    cursor: pointer;
     padding: 5px 20px;
     border-radius: 15px;
     background-color: var(--sec-color);
     font-weight: 700;
-    color: white;
 }
 .return:hover {
     background-color: white;
     border: 1px solid black;
-    /* color: var(--main-color); */
-    color: black;
+    color: var(--main-color);
     transition: all .3s;
 }
 
@@ -735,6 +741,14 @@ form .button input:hover {
         width: 100%;
     }
     .table__body {
+        overflow-x: hidden;
+
+        max-height: calc(85% - 1rem);
+        margin: 0 .8em 4em .8em;
+    }
+    .ref__table__body {
+        overflow-x: hidden;
+
         max-height: calc(85% - 1rem);
         margin: 0 .8em 4em .8em;
     }

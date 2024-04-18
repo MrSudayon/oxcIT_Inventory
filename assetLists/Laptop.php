@@ -2,10 +2,7 @@
 include '../inc/auth.php';
 include '../inc/listsHead.php'; 
 include '../inc/header.php'; 
-?>
-<body>
 
-<?php
     $sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive' AND assettype='Laptop'";
     $results = mysqli_query($db->conn, $sqlSelectAll);
 
@@ -65,7 +62,7 @@ include '../inc/header.php';
 ?>       
 
 <div class="content">
-    <main class="table" id="customers_table">
+    <main class="table">
         <section class="table__header">
             <a href="../admin/add-assets.php?id=recordLaptop" class="link-btn">New Record</a>
             <div class="input-group">

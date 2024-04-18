@@ -1,83 +1,74 @@
 <?php 
-include '../inc/auth.php'; 
+include '../inc/auth.php';
+include '../inc/listsHead.php'; 
 include '../inc/header.php'; 
-?>
-    
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/status.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="../js/dashboard.js"></script>
-    <script src="../js/addAssets.js"></script>
-    <link rel="icon" href="../assets/logo.jpg">
-    <title>Report</title>
-</head>
-<body>
 
+$sqlSelectAll = "SELECT *
+                FROM assets_tbl 
+                WHERE status!='Archive'";
+$results = mysqli_query($db->conn, $sqlSelectAll);
 
-<?php
-    $sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assettype='Desktop' OR assettype='Laptop')";
-    $results = mysqli_query($db->conn, $sqlSelectAll);
+$results_per_page = 15;
 
-    $results_per_page = 15;
-
-    if (!isset ($_GET['page']) ) {  
-        $page = 1;  
-    } else {  
-        $page = $_GET['page'];  
-    }  
-    
-    $rowCount = $results->num_rows;
-    $number_of_page = ceil ($rowCount / $results_per_page);  
-    $page_first_result = ($page-1) * $results_per_page;  
-
-    $sql =  
-            "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
-            a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
-            e.id, e.name, e.division, e.location 
-            FROM assets_tbl AS a 
-            LEFT JOIN employee_tbl AS e 
-            ON e.id = a.empId 
-            WHERE a.status!='Archive' 
-            LIMIT ". $page_first_result . ',' . $results_per_page;
+if (!isset ($_GET['page']) ) {  
+    $page = 1;  
+} elseif ($_GET['page'] === 'all') {  
+    $sql =  "SELECT * 
+            FROM assets_tbl 
+            WHERE status!='Archive'";
     $res = mysqli_query($db->conn, $sql);
     $rowCountPage = $res->num_rows;
+} else {
+    $page = $_GET['page'];  
+}
 
-    $rows = [];
-    while ($row = mysqli_fetch_assoc($res)) {
-        $rows[] = $row;
+$rowCount = $results->num_rows;
+$number_of_page = ceil ($rowCount / $results_per_page);  
+$page_first_result = ($page-1) * $results_per_page;  
+
+if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
+    $sql =  "SELECT * 
+            FROM assets_tbl 
+            WHERE status!='Archive' 
+            LIMIT ". $page_first_result . ',' . $results_per_page;
+
+    $res = mysqli_query($db->conn, $sql);
+    $rowCountPage = $res->num_rows;
+}
+
+$res = mysqli_query($db->conn, $sql);
+$rowCountPage = $res->num_rows;
+
+$rows = [];
+while ($row = mysqli_fetch_assoc($res)) {
+    $rows[] = $row;
+}
+
+// Sort the result array by assettag
+usort($rows, function($a, $b) {
+    preg_match('/\d+$/', $a['assettag'], $aMatches);
+    preg_match('/\d+$/', $b['assettag'], $bMatches);
+    $aNum = intval($aMatches[0] ?? 0);
+    $bNum = intval($bMatches[0] ?? 0);
+
+    if ($aNum == $bNum) {
+        return strcmp($a['assettag'], $b['assettag']);
     }
-    
-    // Sort the result array by assettag
-    usort($rows, function($a, $b) {
-        preg_match('/\d+$/', $a['assettag'], $aMatches);
-        preg_match('/\d+$/', $b['assettag'], $bMatches);
-        $aNum = intval($aMatches[0] ?? 0);
-        $bNum = intval($bMatches[0] ?? 0);
-
-        if ($aNum == $bNum) {
-            return strcmp($a['assettag'], $b['assettag']);
-        }
-        return ($aNum < $bNum) ? -1 : 1;
-    });  
+    return ($aNum < $bNum) ? -1 : 1;
+});  
 ?>       
+        <form method="get">
 
-       
-<div class="content">
-    <main class="table" id="customers_table">
-    <form action="" method="get">
+    <main class="table">
         <section class="table__header">
-        <button type="submit" formaction="report.php" class="link-btn" name="turnover" >Report</button>
+            <button type="submit" formaction="report.php" class="link-btn" name="turnover">Report</button>
             <div class="input-group">
-                <input type="search" placeholder="Search Data...">
+                <input type="search" id="searchInput" placeholder="Search Data..." oninput="searchTable()">
                 <img src="../assets/icons/search.png" alt="">
             </div>
+            <p> <b style="color: yellow; font-size: 20px; margin-top: 10px;"><?php echo $rowCountPage; ?></b> result/s.</p>
         </section>
+
         <section class="table__body">
         
 
@@ -95,33 +86,25 @@ include '../inc/header.php';
                     <?php
                         foreach ($rows as $row) {
                             $status = $row['status'];
-                            $aId = $row['aId'];
-                            $assetType = $row['assettype'];
-
+                            $aId = $row['id'];
+                            $assettype = $row['assettype'];
+                                
                             $cpu = $row['cpu'];
                             $ram = $row['memory'];
                             $storage = $row['storage'];
                             $os = $row['os'];
+                            $dimes = $row['dimes'];
+                            $plan = $row['plan'];
+                            $mobile = $row['mobile'];
+
+                            $specifications = $operation->reportSpecificationCondition([$row['id']]);
                     ?>            
                     <tr>
-                        <td><input type="checkbox" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
-                        <td><a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></td></a>
+                        <td><input type="checkbox" class="select" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
+                        <td><a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></a></td>
                         <td><?php echo $row['model']; ?></td>
-                        <td>
-                            <?php 
-                            if($cpu == '' && $ram == '' && $storage == '' && $os == '') {
-                                echo "<i style='color:#FF6646;'>No details found.";
-                            } else {
-                                echo $cpu .
-                                "<br>". $ram.
-                                "<br>". $storage . 
-                                "<br>". $os;
-                            }
-                                
-                            ?>
-                        </td>
+                        <td><?php echo $specifications; ?></td>
                         <td><?php echo "<span class='statusSpan'>". $status ."</span>" ?></td>
-
                     </tr>
                     <?php
                         }
@@ -129,12 +112,35 @@ include '../inc/header.php';
                 </tbody>
             </table>
         </section>
-        </form>
+        <?php 
+            if($rowCountPage != $rowCount) {
+                echo '<div class="pagination">';
+                if ($page > 1) {
+                    echo '<a href="allRecord.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
+                }
+                
+                $max_page_range = 7; // Maximum number of pages to show in pagination
+                $start_page = max(1, $page - floor($max_page_range / 3));
+                $end_page = min($number_of_page, $start_page + $max_page_range - 1);
+                
+                for($i = $start_page; $i <= $end_page; $i++) {
+                    $active_class = ($i == $page) ? 'activePage' : ''; // Add active class to current page
+                    echo '<a href="allRecord.php?page=' . $i . '" class="next ' . $active_class . '">' . $i . '</a>';                  
+                }  
+                
+                if ($page < $number_of_page) {
+                    echo '<a href="allRecord.php?page=' . ($page + 1) . '" class="next">Next</a>';
+                    echo '<a href="allRecord.php?page=all" class="next">All</a>';
+                }
+                echo '</div>';
+
+            }
+        ?>
+
     </main>
+    </form>
 
 <script src="../js/sort.js"></script>
-
-</div>
 
 </body>
 </html>

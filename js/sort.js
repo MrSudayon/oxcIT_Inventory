@@ -68,7 +68,7 @@ function searchTable() {
             search_data = search.value.toLowerCase();
 
         row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
-        row.style.setProperty('--delay', i / 25 + 's');
+        row.style.setProperty('--delay', i / 20 + 's');
     })
 
     document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
@@ -97,15 +97,58 @@ table_headings.forEach((head, i) => {
 })
 
 
-function sortTable(column, sort_asc) {
-    [...table_rows].sort((a, b) => {
-        let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase(),
-            second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
+// function sortTable(column, sort_asc) {
+//     [...table_rows].sort((a, b) => {
+//         let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase(),
+//             second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
 
-        return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
-    })
-        .map(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
+//         return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
+//     })
+//         .map(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
+// }
+
+// function searchTable() {
+//     let visibleRows = Array.from(table_rows).filter(row => {
+//         let containsCheckbox = row.querySelector('input[type="checkbox"]');
+//         return !containsCheckbox || !containsCheckbox.checked;
+//     });
+
+//     visibleRows.forEach((row, i) => {
+//         let table_data = row.textContent.toLowerCase(),
+//             search_data = search.value.toLowerCase();
+
+//         row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
+//         row.style.setProperty('--delay', (i * 0.1) + 's');
+//     });
+
+//     document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
+//         visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
+//     });
+// }
+
+function searchTable() {
+    let searchValue = document.getElementById('searchInput').value.toLowerCase();
+    let visibleRows = Array.from(table_rows).filter(row => {
+        let containsCheckbox = row.querySelector('input[type="checkbox"]');
+        return (!containsCheckbox || !containsCheckbox.checked) && row.textContent.toLowerCase().indexOf(searchValue) >= 0;
+    });
+
+    visibleRows.forEach((row, i) => {
+        row.style.setProperty('--delay', (i * 0.1) + 's');
+        row.classList.remove('hide');
+    });
+
+    document.querySelectorAll('tbody tr').forEach(row => {
+        if (!visibleRows.includes(row)) {
+            row.classList.add('hide');
+        }
+    });
+
+    rowCountPage = visibleRows.length;
+    document.querySelector('.result-count').textContent = rowCountPage;
 }
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
     var spans = document.getElementsByClassName("statusSpan");

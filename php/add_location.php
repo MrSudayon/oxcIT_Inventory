@@ -1,17 +1,15 @@
 <?php 
 include '../inc/auth.php'; 
 
-$addItems = new AddItems();
-
 if(isset($_POST['submit'])) {
 
-    $result = $register->addLocation($_POST['name']);
+    $result = $addItems->addLocation($_POST['name']);
     $locName = $_POST['name'];
     
     if($result == 1) {
         echo "<script> alert('Registration Successful'); </script>";
         $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                VALUES ('', '$username', 'Added empployee: $locName', NOW())");
+                VALUES ('', '$username', 'Added a location: $locName', NOW())");
     }
     elseif($result == 10) {
         echo "<script> alert('This Division already exists'); </script>";

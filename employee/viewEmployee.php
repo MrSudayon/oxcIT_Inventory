@@ -25,12 +25,7 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
         die();
     }
 
-        // "SELECT DISTINCT a.id AS aId, a.empId, a.assettype, a.assettag, a.status, 
-        // a.cpu, a.memory, a.storage, a.os, a.dimes, a.plan, a.mobile, 
-        // r.name, r.accountabilityRef, r.turnoverRef, r.referenceStatus 
-        // FROM assets_tbl AS a 
-        // LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
-        // WHERE a.empId='$eid' AND r.referenceStatus!=0"; 
+
     $sql =
         "SELECT DISTINCT a.id AS aId, a.empId, a.assettype, a.assettag, a.status, 
         a.cpu, a.memory, a.storage, a.os, a.dimes, a.plan, a.mobile, 
@@ -55,7 +50,8 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
             </div>
 
             <div class="input-group">
-                <input type="search" placeholder="Search Data...">
+                <!-- <input type="search" placeholder="Search Data..."> -->
+                <input type="search" id="searchInput" placeholder="Search Data..." oninput="searchTable()">
                 <img src="../assets/icons/search.png" alt="">
             </div>
         </section>
@@ -66,7 +62,7 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
                 <p><?php echo $dept . " - " . $location; ?></p>
             </div>
             <div class="rowCount">
-                <p><h1 style='color:#2E4583; font-size: 2em;'>~<strong><?php echo $rowCount; ?></strong></h1>Accountabilities</p>
+                <p><h1 style='color:#2E4583; font-size: 2em;' class="result-count">~<strong><?php echo $rowCount; ?></strong></h1>Accountabilities</p>
             </div>
         </section>
 
@@ -105,7 +101,7 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
                             $specification = $operation->specificationCondition($aId);
                     ?>
                         <tr>
-                            <td><input type="checkbox" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
+                            <td><input type="checkbox" class="select" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
                             <td>
                                 <strong><?php echo $assettag; ?></strong><br>~<br>
                                 <?php echo $specification; ?>

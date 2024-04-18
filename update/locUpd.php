@@ -1,34 +1,8 @@
-<?php include '../inc/auth.php'; ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../assets/logo.jpg">
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Update</title>
-</head>
-<style>
-.return {
-    transition: all .3s;
-    border: 1px solid white;
-    padding: 5px 20px;
-    border-radius: 15px;
-    background-color: var(--sec-color);
-    font-weight: 700;
-}
-.return:hover {
-    background-color: white;
-    border: 1px solid black;
-    color: var(--main-color);
-    transition: all .3s;
-}
-
-</style>
-<body>
-<?php include '../inc/header.php'; ?>
+<?php 
+include '../inc/auth.php';
+include '../inc/formHead.php'; 
+include '../inc/header.php'; 
+?>
 
 <div class="container">
     <div class="add-form">

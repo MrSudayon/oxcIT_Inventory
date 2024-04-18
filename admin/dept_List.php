@@ -36,11 +36,10 @@ include '../inc/header.php';
     }
     
 ?>       
-
 <div class="content">
     <main class="table" id="customers_table">
         <section class="table__header">
-            <a href="../php/add_location.php" class="link-btn">New Record</a>
+            <a href="../php/add_division.php" class="link-btn">New Record</a>
             <div class="input-group">
                 <input type="search" placeholder="Search Data...">
                 <img src="../assets/icons/search.png" alt="">
@@ -67,9 +66,9 @@ include '../inc/header.php';
                         
                         $eid = $row['id'];
                 ?>     
-                        <td><a href="../update/locUpd.php?empID=<?php echo $eid; ?>"><strong><?php echo $row['name']; ?></strong></a></td>
+                        <td><a href="../update/deptUpd.php?deptID=<?php echo $eid; ?>"><strong><?php echo $row['name']; ?></strong></a></td>
                         <td>
-                            <a href="../update/remove.php?assetID=<?php echo $eid; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
+                            <a href="../update/remove.php?deptID=<?php echo $eid; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
                         </td>   
                     </tr>
                     <?php } ?>

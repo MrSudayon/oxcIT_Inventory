@@ -1,39 +1,37 @@
 <?php 
 include '../inc/auth.php'; 
 include '../inc/listsHead.php'; 
-include '../inc/header.php';
-    
-    
-    $results = $operation->getEmp();
-    $results_per_page = 15;
+include '../inc/header.php';    
 
-    if (!isset ($_GET['page']) ) {  
-        $page = 1;  
-    } elseif ($_GET['page'] === 'all') {  
-        $sql = "SELECT * FROM employee_tbl ORDER BY empStatus DESC";
-        $res = mysqli_query($db->conn, $sql);
-        $rowCountPage = $res->num_rows;
-    } else {
-        $page = $_GET['page'];  
-    }
-    
-    $rowCount = $results->num_rows;
-    $number_of_page = ceil ($rowCount / $results_per_page);  
-    $page_first_result = ($page-1) * $results_per_page;  
+$results = $operation->getEmp();
+$results_per_page = 15;
 
-    if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
-        $sql = "SELECT * FROM employee_tbl ORDER BY empStatus DESC 
-                LIMIT $page_first_result, $results_per_page";
+if (!isset ($_GET['page']) ) {  
+    $page = 1;  
+} elseif ($_GET['page'] === 'all') {  
+    $sql = "SELECT * FROM employee_tbl ORDER BY empStatus DESC";
+    $res = mysqli_query($db->conn, $sql);
+    $rowCountPage = $res->num_rows;
+} else {
+    $page = $_GET['page'];  
+}
 
-        $res = mysqli_query($db->conn, $sql);
-        $rowCountPage = $res->num_rows;
-    }
+$rowCount = $results->num_rows;
+$number_of_page = ceil ($rowCount / $results_per_page);  
+$page_first_result = ($page-1) * $results_per_page;  
 
-    $rows = [];
-    while ($row = mysqli_fetch_assoc($res)) {
-        $rows[] = $row;
-    }
-    
+if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
+    $sql = "SELECT * FROM employee_tbl ORDER BY empStatus DESC 
+            LIMIT $page_first_result, $results_per_page";
+
+    $res = mysqli_query($db->conn, $sql);
+    $rowCountPage = $res->num_rows;
+}
+
+$rows = [];
+while ($row = mysqli_fetch_assoc($res)) {
+    $rows[] = $row;
+}
 ?>       
 
 <div class="content">
@@ -72,7 +70,7 @@ include '../inc/header.php';
                         <td><?php echo $row['location']; ?></td>
                         <td><?php echo $row['division']; ?></td>
                         <td>
-                            <a href="../update/remove.php?assetID=<?php echo $eid; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
+                            <a href="../update/remove.php?empID=<?php echo $eid; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
                         </td>   
                     </tr>
                     <?php } ?>
