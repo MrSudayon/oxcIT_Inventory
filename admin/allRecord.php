@@ -66,7 +66,7 @@ usort($rows, function($a, $b) {
                 <input type="search" id="searchInput" placeholder="Search Data..." oninput="searchTable()">
                 <img src="../assets/icons/search.png" alt="">
             </div>
-            <p> <b style="color: yellow; font-size: 20px; margin-top: 10px;"><?php echo $rowCountPage; ?></b> result/s.</p>
+            <p> <b style="color: yellow; font-size: 20px; margin-top: 10px;" class="result-count"><?php echo $rowCountPage; ?></b> result/s.</p>
         </section>
 
         <section class="table__body">

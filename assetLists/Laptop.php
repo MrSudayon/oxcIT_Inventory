@@ -66,10 +66,10 @@ include '../inc/header.php';
         <section class="table__header">
             <a href="../admin/add-assets.php?id=recordLaptop" class="link-btn">New Record</a>
             <div class="input-group">
-                <input type="search" placeholder="Search Data...">
+                <input type="search" id="searchInput" placeholder="Search Data..." oninput="searchTable()">
                 <img src="../assets/icons/search.png" alt="">
             </div>
-            <p> <b style="color: yellow; font-size: 20px; margin-top: 10px;"><?php echo $rowCountPage; ?></b> result/s.</p>
+            <p> <b style="color: yellow; font-size: 20px; margin-top: 10px;" class="result-count"><?php echo $rowCountPage; ?></b> result/s.</p>
         </section>
         <section class="table__body">
             <table id="myTable2">

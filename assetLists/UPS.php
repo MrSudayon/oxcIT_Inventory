@@ -19,7 +19,7 @@ include '../inc/header.php';
                     e2.id AS lastUsedId, e2.name AS lastUsedName, e2.division AS lastUsedDivision, e2.location AS lastUsedLocation 
                 FROM assets_tbl AS a 
                 LEFT JOIN employee_tbl AS e1 ON e1.id = a.empId 
-                LEFT JOIN employee_tbl AS e2 ON e2.id = a.lastused
+                LEFT JOIN employee_tbl AS e2 ON e2.id = a.lastused 
                 WHERE a.status!='Archive' AND (assettype='UPS' OR assettype='AVR')";
         $res = mysqli_query($db->conn, $sql);
         $rowCountPage = $res->num_rows;
@@ -69,10 +69,10 @@ include '../inc/header.php';
         <section class="table__header">
             <a href="../admin/add-assets.php?id=recordUps" class="link-btn">New Record</a>
             <div class="input-group">
-                <input type="search" placeholder="Search Data...">
+                <input type="search" id="searchInput" placeholder="Search Data..." oninput="searchTable()">
                 <img src="../assets/icons/search.png" alt="">
             </div>
-            <p> <b style="color: yellow; font-size: 20px; margin-top: 10px;"><?php echo $rowCountPage; ?></b> result/s.</p>
+            <p> <b style="color: yellow; font-size: 20px; margin-top: 10px;" class="result-count"><?php echo $rowCountPage; ?></b> result/s.</p>
         </section>
         <section class="table__body">
             <table>
