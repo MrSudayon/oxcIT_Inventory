@@ -1,8 +1,8 @@
 <?php 
 include '../inc/auth.php';
 
-if(isset($_GET['select'])) {
-    $selected = $_GET['select'];
+if(isset($_POST['select'])) {
+    $selected = $_POST['select'];
     
     $escaped_values = array_map(array($db->conn, 'real_escape_string'), array_values($selected));
     

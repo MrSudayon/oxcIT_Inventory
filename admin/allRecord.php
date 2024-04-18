@@ -57,11 +57,10 @@ usort($rows, function($a, $b) {
     return ($aNum < $bNum) ? -1 : 1;
 });  
 ?>       
-        <form method="get">
-
+<form method="post" action="report.php">
     <main class="table">
         <section class="table__header">
-            <button type="submit" formaction="report.php" class="link-btn" name="turnover">Report</button>
+            <button type="submit" class="link-btn" name="turnover">Report</button>
             <div class="input-group">
                 <input type="search" id="searchInput" placeholder="Search Data..." oninput="searchTable()">
                 <img src="../assets/icons/search.png" alt="">
@@ -70,8 +69,6 @@ usort($rows, function($a, $b) {
         </section>
 
         <section class="table__body">
-        
-
             <table>
                 <thead>
                     <tr>
@@ -138,8 +135,7 @@ usort($rows, function($a, $b) {
         ?>
 
     </main>
-    </form>
-
+</form>
 <script src="../js/sort.js"></script>
 
 </body>
