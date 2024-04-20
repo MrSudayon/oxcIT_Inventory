@@ -108,9 +108,9 @@ include '../inc/header.php';
                             if($ram == '' && $storage == '') {
                                 echo "<i style='color:#FF6646;'>No details found.";
                             } else {
-                                echo "Memory: " . $ram.
-                                "<br>Storage: " . $storage .
-                                "<br>" . $plan;
+                                echo "<b>Memory:</b> " . $ram.
+                                "<br><b>Storage:</b> " . $storage .
+                                "<br><b>Type:</b>" . $plan;
                             }
                                 
                             ?>
