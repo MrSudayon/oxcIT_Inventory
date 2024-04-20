@@ -10,7 +10,7 @@ include '../inc/header.php';
     if (!isset ($_GET['page']) ) {  
         $page = 1;  
     } elseif ($_GET['page'] === 'all') {  
-        $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
+        $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.serial, a.status, a.datepurchased, 
                     a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
                     e1.id AS assignedId, e1.name AS empName, e1.division AS empDivision, e1.location AS empLocation, 
                     e2.id AS lastUsedId, e2.name AS lastUsedName, e2.division AS lastUsedDivision, e2.location AS lastUsedLocation 
@@ -29,7 +29,7 @@ include '../inc/header.php';
     $page_first_result = ($page-1) * $results_per_page;  
 
     if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
-        $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
+        $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.serial, a.status, a.datepurchased, 
                     a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
                     e1.id AS assignedId, e1.name AS empName, e1.division AS empDivision, e1.location AS empLocation, 
                     e2.id AS lastUsedId, e2.name AS lastUsedName, e2.division AS lastUsedDivision, e2.location AS lastUsedLocation 
@@ -61,10 +61,13 @@ include '../inc/header.php';
     });  
 ?>       
 
+<form method="post" action="../admin/report.php">
 <div class="content">
     <main class="table">
         <section class="table__header">
-            <a href="../admin/add-assets.php?id=recordLaptop" class="link-btn">New Record</a>
+                <button type="submit" class="link-btn" name="turnover">Report</button>
+                <a href="../admin/add-assets.php?id=recordLaptop" class="link-btn">New Record</a>
+            
             <div class="input-group">
                 <input type="search" id="searchInput" placeholder="Search Data..." oninput="searchTable()">
                 <img src="../assets/icons/search.png" alt="">
@@ -75,6 +78,7 @@ include '../inc/header.php';
             <table id="myTable2">
                 <thead>
                     <tr>
+                        <th width="1%"><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
                         <th> Asset Tag <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Model <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Specification <span class="icon-arrow">&UpArrow;</span></th>
@@ -97,6 +101,7 @@ include '../inc/header.php';
                             $os = $row['os'];
                     ?>            
                     <tr>
+                        <td><input type="checkbox" class="select" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
                         <td><a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></td></a>
                         <td><?php echo $row['model']; ?></td>
                         <td>
@@ -112,6 +117,7 @@ include '../inc/header.php';
                                 
                             ?>
                         </td>
+                        <td hidden><?php echo $row['serial']; ?></td>
                         <td hidden><?php echo $row['empName']; ?></td>
                         <td hidden><?php echo $row['lastUsedName']; ?></td>
                         <td><?php echo "<span class='statusSpan'>". $status ."</span>" ?></td>
@@ -155,6 +161,6 @@ include '../inc/header.php';
     <script src="../js/sort.js"></script>
 
 </div>
-
+</form>
 </body>
 </html>

@@ -62,14 +62,37 @@ const search = document.querySelector('.input-group input'),
 // 1. Searching for specific data of HTML table
 search.addEventListener('input', searchTable);
 
-function searchTable() {
-    table_rows.forEach((row, i) => {
-        let table_data = row.textContent.toLowerCase(),
-            search_data = search.value.toLowerCase();
+// function searchTable() {
+//     table_rows.forEach((row, i) => {
+//         let table_data = row.textContent.toLowerCase(),
+//             search_data = search.value.toLowerCase();
 
-        row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
-        row.style.setProperty('--delay', i / 20 + 's');
-    })
+//         row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
+//         row.style.setProperty('--delay', i / 20 + 's');
+//     })
+
+//     document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
+//         visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
+//     });
+// }
+function searchTable() {
+    let searchValue = search.value.toLowerCase();
+    let visibleRows = Array.from(table_rows).filter(row => {
+        let containsCheckbox = row.querySelector('input[type="checkbox"]');
+        return (!containsCheckbox || !containsCheckbox.checked) && row.textContent.toLowerCase().includes(searchValue);
+    });
+
+    visibleRows.forEach((row, i) => {
+        let table_data = row.textContent.toLowerCase();
+        row.classList.remove('hide');
+        row.style.setProperty('--delay', (i * 0.1) + 's');
+    });
+
+    table_rows.forEach(row => {
+        if (!visibleRows.includes(row)) {
+            row.classList.add('hide');
+        }
+    });
 
     document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
         visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';

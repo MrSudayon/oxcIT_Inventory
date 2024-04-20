@@ -13,7 +13,7 @@ include '../inc/header.php';
     if (!isset ($_GET['page']) ) {  
         $page = 1;  
     } elseif ($_GET['page'] === 'all') {  
-        $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
+        $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.serial, a.status, a.datepurchased, 
                     a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
                     e1.id AS assignedId, e1.name AS empName, e1.division AS empDivision, e1.location AS empLocation, 
                     e2.id AS lastUsedId, e2.name AS lastUsedName, e2.division AS lastUsedDivision, e2.location AS lastUsedLocation 
@@ -32,7 +32,7 @@ include '../inc/header.php';
     $page_first_result = ($page-1) * $results_per_page;  
 
     if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
-        $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, 
+        $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.serial, a.status, a.datepurchased, 
                     a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
                     e1.id AS assignedId, e1.name AS empName, e1.division AS empDivision, e1.location AS empLocation, 
                     e2.id AS lastUsedId, e2.name AS lastUsedName, e2.division AS lastUsedDivision, e2.location AS lastUsedLocation 
@@ -98,6 +98,7 @@ include '../inc/header.php';
                             $dimes = $row['dimes'];
                     ?>            
                     <tr>
+                        <td hidden><?php echo $row['serial']; ?></td>
                         <td><a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></td></a>
                         <td><?php echo $row['model']; ?></td>
                         <td>

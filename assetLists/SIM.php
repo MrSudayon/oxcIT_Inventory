@@ -10,7 +10,7 @@ $results_per_page = 15;
 if (!isset ($_GET['page']) ) {  
     $page = 1;  
 } elseif ($_GET['page'] === 'all') {  
-    $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, a.cost, 
+    $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.serial, a.status, a.datepurchased, a.cost, 
                 a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
                 e1.id AS assignedId, e1.name AS empName, e1.division AS empDivision, e1.location AS empLocation, 
                 e2.id AS lastUsedId, e2.name AS lastUsedName, e2.division AS lastUsedDivision, e2.location AS lastUsedLocation 
@@ -29,7 +29,7 @@ $number_of_page = ceil ($rowCount / $results_per_page);
 $page_first_result = ($page-1) * $results_per_page;  
 
 if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
-    $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.status, a.datepurchased, a.cost,  
+    $sql = "SELECT a.id AS aId, a.assettype AS assettype, a.assettag AS assettag, a.model, a.serial, a.status, a.datepurchased, a.cost,  
                 a.cpu, a.memory, a.storage, a.os, a.plan, a.dimes, a.mobile, 
                 e1.id AS assignedId, e1.name AS empName, e1.division AS empDivision, e1.location AS empLocation, 
                 e2.id AS lastUsedId, e2.name AS lastUsedName, e2.division AS lastUsedDivision, e2.location AS lastUsedLocation 
@@ -64,6 +64,7 @@ usort($rows, function($a, $b) {
 <div class="content">
     <main class="table" id="customers_table">
         <section class="table__header">
+            <button type="submit" class="link-btn" name="turnover">Report</button>
             <a href="../admin/add-assets.php?id=recordSim" class="link-btn">New Record</a>
             <div class="input-group">
                 <input type="search" id="searchInput" placeholder="Search Data..." oninput="searchTable()">
@@ -95,6 +96,8 @@ usort($rows, function($a, $b) {
                             $cost = $row['cost'];
                     ?>            
                     <tr>
+                        <td hidden><?php echo $row['serial']; ?></td>
+                        <td hidden><?php echo $row['mobile']; ?></td>
                         <td><a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></td></a>
                         <td>
                             <?php 

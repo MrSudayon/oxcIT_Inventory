@@ -139,9 +139,14 @@ include '../inc/header.php';
                                     <option value="<?=$result['plan']?>"><?=$result['plan']?></option>
                                     <option value="Postpaid">Postpaid</option>
                                 <?php
-                                    } else { 
+                                    } elseif($plan == 'Postpaid') { 
                                 ?> 
                                     <option value="<?=$result['plan']?>"><?=$result['plan']?></option>
+                                    <option value="Purchase">Purchase</option>
+                                <?php
+                                    } else {
+                                ?>
+                                    <option value="Postpaid">Postpaid</option>
                                     <option value="Purchase">Purchase</option>
                                 <?php
                                     }
