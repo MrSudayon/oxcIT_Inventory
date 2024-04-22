@@ -3,7 +3,7 @@ session_start();
 
 include 'functions.php';
 include 'assetsController.php';
-include 'fetch_data.php';
+// include 'fetch_data.php';
 
 class Connection {
     public $db_host = "localhost";
@@ -153,6 +153,43 @@ class Select extends Connection {
     public function selectUserById($id) {
         $result = mysqli_query($this->conn, "SELECT * FROM users_tbl WHERE id = $id");
         return mysqli_fetch_assoc($result);
+    }
+
+    public function getAssetCount() {
+        $result = mysqli_query($this->conn, "SELECT COUNT(*) AS count FROM assets_tbl");
+        $row = mysqli_fetch_assoc($result);
+        $count = $row['count'];
+        return $count;
+    }
+    public function getDeployedAssetCount() {
+        $result = mysqli_query($this->conn, "SELECT COUNT(*) AS count FROM assets_tbl WHERE status = 'Deployed'");
+        $row = mysqli_fetch_assoc($result);
+        $count = $row['count'];
+        return $count;
+    }
+    public function getAvailableAssetCount() {
+        $result = mysqli_query($this->conn, "SELECT COUNT(*) AS count FROM assets_tbl WHERE status = 'To be deploy'");
+        $row = mysqli_fetch_assoc($result);
+        $count = $row['count'];
+        return $count;
+    }
+    public function getDefectAssetCount() {
+        $result = mysqli_query($this->conn, "SELECT COUNT(*) AS count FROM assets_tbl WHERE status = 'Defective'");
+        $row = mysqli_fetch_assoc($result);
+        $count = $row['count'];
+        return $count;
+    }
+    public function getRepairAssetCount() {
+        $result = mysqli_query($this->conn, "SELECT COUNT(*) AS count FROM assets_tbl WHERE status = 'For repair'");
+        $row = mysqli_fetch_assoc($result);
+        $count = $row['count'];
+        return $count;
+    }
+    public function getForSellAssetCount() {
+        $result = mysqli_query($this->conn, "SELECT COUNT(*) AS count FROM assets_tbl WHERE status = 'Sell'");
+        $row = mysqli_fetch_assoc($result);
+        $count = $row['count'];
+        return $count;
     }
 }
 

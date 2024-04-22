@@ -65,8 +65,10 @@ include '../inc/header.php';
 <div class="content">
     <main class="table">
         <section class="table__header">
+            <div class="buttons">
                 <button type="submit" class="link-btn" name="turnover">Report</button>
                 <a href="../admin/add-assets.php?id=recordLaptop" class="link-btn">New Record</a>
+            </div>
             
             <div class="input-group">
                 <input type="search" id="searchInput" placeholder="Search Data..." oninput="searchTable()">

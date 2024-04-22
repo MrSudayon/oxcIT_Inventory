@@ -31,7 +31,7 @@ if(isset($_GET['assetID'])) {
     } elseif($assettype == 'UPS') {
         $url = "../assetLists/UPS.php";
     } else {
-        $url = "../admin/configuration.php"; // Change name to 'All Assets'
+        $url = "../admin/dashboard.php"; // Change name to 'All Assets'
     }
 
     header("Location: \"$url\"");
