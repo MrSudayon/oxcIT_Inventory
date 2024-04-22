@@ -278,6 +278,7 @@ class Operations {
 
     function referencesData() {
         global $db;
+        global $res;
 
         if(isset($_POST['search'])) {
             $search = $_POST['search'];

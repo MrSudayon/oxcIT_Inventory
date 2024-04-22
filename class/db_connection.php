@@ -3,6 +3,7 @@ session_start();
 
 include 'functions.php';
 include 'assetsController.php';
+include 'fetch_data.php';
 
 class Connection {
     public $db_host = "localhost";
