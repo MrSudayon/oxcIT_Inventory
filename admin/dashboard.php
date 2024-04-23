@@ -16,9 +16,9 @@
     
     <title>Dashboard</title>
 </head>
-<?php include '../inc/header.php'; ?>
 
 <div class="grid-container">
+<?php include '../inc/header.php'; ?>
 <div class="dim-background"></div>
 
       <!-- Main -->

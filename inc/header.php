@@ -1,6 +1,6 @@
 <header>
-    <div class="logo">
-        <a href="../admin/dashboard.php"><img src="../assets/logo.png" width="150px"></img></a>
+    <div class="logo" style="margin-top: 10px; ">
+        <a href="../admin/dashboard.php"><img src="../assets/logo.png" width="180px"></img></a>
     </div>
     <div class="dropdown">
         <button class="dropbtn">Menu</button>
