@@ -3,7 +3,7 @@
         <a href="../admin/dashboard.php"><img src="../assets/logo.png" width="180px"></img></a>
     </div>
     <div class="dropdown">
-        <button class="dropbtn">Menu</button>
+        <button class="dropbtn"><img src="../assets/icons/setting.png" width="50px" alt="M"></button>
         <div class="dropdown-content">
             <a href="../admin/allRecord.php">Report</a>
             <a href="../php/history.php">History</a>

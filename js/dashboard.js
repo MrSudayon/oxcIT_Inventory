@@ -161,7 +161,7 @@ fetch('../class/fetch_data.php')
 
     const barChartOptions = {
       series: [{
-        name: 'Products',
+        name: 'Assets',
         data: counts
       }],
       chart: {

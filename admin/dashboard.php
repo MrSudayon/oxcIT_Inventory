@@ -119,8 +119,8 @@
 <div class="menu" onclick="toggleDim()">
     <div class="menu__wrapper"><i class="fa-solid fa-plus"></i></div>
     <ul class="menu__items">
-        <li class="menu__item">
-        <a href="../assetLists/Laptop.php"><i class="fa-solid fa-laptop"></i></a>
+        <li class="menu__item" alt="laptop">
+        <a href="../assetLists/Laptop.php" alt="laptop"><i class="fa-solid fa-laptop"></i></a>
         </li>
         <li class="menu__item">
         <a href="../assetLists/Desktop.php"><i class="fa-solid fa-computer"></i></a>
