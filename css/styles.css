@@ -64,20 +64,15 @@ main.table {
     position: absolute;
     top: 0;
     min-height: 100dvh;
-    /* margin-top: 100px; */
+
     width: 100vw;
     height: calc(90dvh - 1rem);
     padding: 1em;
-    /* max-height: calc(90dvh - 1rem); */
-
-    /* background: rgba(252, 255, 244, 0.333); */
-    /* background: none; */
 
     background: linear-gradient(45deg, var(--ter-color), var(--bg-color));
 
     backdrop-filter: blur(7px);
     box-shadow: 0 .4rem .8rem #0005;
-    /* border-radius: .8rem; */
 
     overflow: hidden;
 }
@@ -421,43 +416,20 @@ thead th.active,tbody td.active {
 
 
 .dropbtn {
-    /* background-color: var(--sec-color); */
-    /* background: linear-gradient(95deg, var(--ter-color), antiquewhite); */
     background-image: url(../assets/icons/setting.png); /* 16px x 16px */
     background-color: transparent; /* make the button transparent */
     background-repeat: no-repeat;
     color: black;
-    /* padding: 8px 30px; */
-    /* width: 150px; */
     border-radius: 15px;
-    /* font-size: 16px;
-    font-weight: 600; */
     border: none;
     cursor: pointer;
-  }
-/* .dropbtn {
-    background: linear-gradient(95deg, var(--ter-color), antiquewhite);
-    color: black;
-    padding: 8px 30px;
-    width: 150px;
-    border-radius: 15px;
-    font-size: 16px;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-} */
+}
+
 .dropdown {
     position: relative;
     display: inline-block;
 }
-/* .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-} */
+
 .dropdown-content {
     left: -20px;
     width: 100px;
@@ -476,16 +448,6 @@ thead th.active,tbody td.active {
 }
 .dropdown-content a:hover {background-color: #ccc;}
 .dropdown:hover .dropdown-content {display: block;}
-/* .dropdown:hover .dropbtn { color: white;border: 1px solid white; background: linear-gradient(-95deg, var(--ter-color), var(--bg-color));} */
-
-/* Login Main */
-/* main {
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    background-color:#17171c;
-} */
-
 
 
 .container {

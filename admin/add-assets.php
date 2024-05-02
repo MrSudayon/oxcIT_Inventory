@@ -90,22 +90,37 @@ if(isset($_POST['save'])) {
                         <div class="input-box" style="width: 100%;">
                             <span class="details">Asset Type</span>       
                                 <?php
-                                    $assettype = $operation->getAssets($id);
+                                $assettype = $operation->getAssets($id);
+
+                                if($id == 'recordUps') {
+                                ?>
+                                    <select name="asset-type">
+                                    <?php
+                                        foreach($assettype as $assets) {
+                                            $assetType = $assets['assetType'];
+                                    ?>
+                                        <option value="<?=$assets['assetType']?>"><?=$assets['assetType']?></option>
+                                    <?php
+                                        }
+                                    ?>
+                                    </select>
+                                <?php
+                                } else {
                                     foreach($assettype as $assets) {
                                         $assetType = $assets['assetType'];
                                 ?>
-                                    <!-- <input type="text" name="" style="background-color: #ccc; width: 100%;" value="?=$assets['assetType']?>"> -->
                                     <input type="text" name="asset-type" style="background-color: #ccc; text-align: center; font-weight: 600; cursor: default;" readonly value="<?=$assets['assetType']?>">
                                 <?php
                                     }
+                                }
                                 ?>
                         </div>   
+
                         <div class="input-box" hidden>
                             <span class="details" style="margin-bottom: 10px;">Hidden Tag</span>
                             <div class="asset-tag" id="tag" style="background-color: #ccc;"></div>
-                            <input type="text" name="asset-tag" id="asset-tag" hidden>
+                            <input type="text" name="asset-tag" id="asset-tag">
                         </div>
-                             
 
                     <?php 
                     switch($id) {

@@ -357,7 +357,7 @@ header {
 
 @media screen and (max-width: 1920px) {
   .grid-container {
-    grid-template-rows: .3fr 3fr;
+    grid-template-rows: .45fr 3fr;
   }
   .menu-icon {
     display: inline;
@@ -371,7 +371,7 @@ header {
 
 @media screen and (max-width: 1366px) {
   .grid-container {
-    grid-template-rows: .2fr 3fr;
+    grid-template-rows: .3fr 3fr;
   } 
   header {
     height: 80px;

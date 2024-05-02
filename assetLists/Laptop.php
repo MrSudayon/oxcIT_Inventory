@@ -80,7 +80,7 @@ include '../inc/header.php';
             <table id="myTable2">
                 <thead>
                     <tr>
-                        <th width="1%"><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
+                        <!-- <th width="1%"><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th> -->
                         <th> Asset Tag <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Model <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Specification <span class="icon-arrow">&UpArrow;</span></th>
@@ -103,7 +103,7 @@ include '../inc/header.php';
                             $os = $row['os'];
                     ?>            
                     <tr>
-                        <td><input type="checkbox" class="select" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
+                        <!-- <td><input type="checkbox" class="select" id="select" name="select[]" value="?php echo $aId; ?>"></td> -->
                         <td><a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></td></a>
                         <td><?php echo $row['model']; ?></td>
                         <td>

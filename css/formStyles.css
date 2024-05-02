@@ -49,14 +49,11 @@ header {
 }
 
 .dropbtn {
-    /* background-color: var(--sec-color); */
-    background: linear-gradient(95deg, var(--ter-color), antiquewhite);
+    background-image: url(../assets/icons/setting.png); /* 16px x 16px */
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;
     color: black;
-    padding: 8px 30px;
-    width: 150px;
     border-radius: 15px;
-    font-size: 16px;
-    font-weight: 600;
     border: none;
     cursor: pointer;
 }
@@ -67,26 +64,23 @@ header {
 }
 
 .dropdown-content {
+    left: -20px;
+    width: 100px;
+    text-align: center;
     display: none;
     position: absolute;
     background-color: #f1f1f1;
-    min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-}
-
+  }
 .dropdown-content a {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
 }
-
 .dropdown-content a:hover {background-color: #ccc;}
-
 .dropdown:hover .dropdown-content {display: block;}
-
-.dropdown:hover .dropbtn { color: white;border: 1px solid white; background: linear-gradient(-95deg, var(--ter-color), var(--bg-color));}
 
 /* Login Main */
 main {

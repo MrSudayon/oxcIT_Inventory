@@ -6,88 +6,7 @@ if(isset($_SESSION['id'])) {
     $sess_name = $session['username'];
 }
 class Operations {
-    // function recordAsset($type, $tag, $mdl, $srl, $supplier, $empId, $lastused, $status, $dtprchs, $cost, $repair_cost, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os, $action) {
-    //     //     global $db;
-    //     //     global $sess_name;
 
-    //     //     $type         = mysqli_real_escape_string($db->conn, $type);
-    //     //     $mdl          = mysqli_real_escape_string($db->conn, $mdl);
-    //     //     $srl          = mysqli_real_escape_string($db->conn, $srl);
-    //     //     $supplier     = mysqli_real_escape_string($db->conn, $supplier);
-    //     //     $empId        = mysqli_real_escape_string($db->conn, $empId);
-    //     //     $lastused     = mysqli_real_escape_string($db->conn, $lastused);
-    //     //     $status       = mysqli_real_escape_string($db->conn, $status);
-    //     //     $dtprchs      = mysqli_real_escape_string($db->conn, $dtprchs);
-    //     //     $cost         = !empty($cost) ? mysqli_real_escape_string($db->conn, $cost) : '';
-    //     //     $repair_cost  = !empty($repair_cost) ? mysqli_real_escape_string($db->conn, $repair_cost) : '';
-    //     //     $remarks      = mysqli_real_escape_string($db->conn, $remarks);
-    //     //     $datedeployed = mysqli_real_escape_string($db->conn, $datedeployed);
-    //     //     $cpu          = mysqli_real_escape_string($db->conn, $cpu);
-    //     //     $ram          = mysqli_real_escape_string($db->conn, $ram);
-    //     //     $storage      = mysqli_real_escape_string($db->conn, $storage);
-    //     //     $dimes        = mysqli_real_escape_string($db->conn, $dimes);
-    //     //     $mobile       = mysqli_real_escape_string($db->conn, $mobile);
-    //     //     $plan         = mysqli_real_escape_string($db->conn, $plan);
-    //     //     $os           = mysqli_real_escape_string($db->conn, $os);
-    //     //     $action       = mysqli_real_escape_string($db->conn, $action);
-    //     //     // $cpu          = isset($_POST['cpu']) ? mysqli_real_escape_string($db->conn, $_POST['cpu']) : '';
-    //     //     // $storage      = isset($_POST['storage']) ? mysqli_real_escape_string($db->conn, $_POST['storage']) : '';
-    //     //     // $dimes        = isset($_POST['dimes']) ? mysqli_real_escape_string($db->conn, $_POST['dimes']) : '';
-    //     //     // $mobile       = isset($_POST['mobile']) ? mysqli_real_escape_string($db->conn, $_POST['mobile']) : '';
-    //     //     // $plan         = isset($_POST['plan']) ? mysqli_real_escape_string($db->conn, $_POST['plan']) : '';
-    //     //     // $os           = isset($_POST['os']) ? mysqli_real_escape_string($db->conn, $_POST['os']) : '';
-    //     //     // $specification = $cpu . ", " . $ram . ", " . $storage . ", " . $os . ", " . $others;    
-    //     //     if(isset($empId) && $empId != '') {
-    //     //         $sql = "SELECT * FROM employee_tbl WHERE id='$empId' AND empStatus=1";
-    //     //         $result = mysqli_query($db->conn, $sql);
-    //     //         if($result) {
-    //     //             while($row = mysqli_fetch_array($result)) {
-    //     //                 $empName = $row['name'];
-    //     //             }
-    //     //         }
-    //     //     }
-    //     //                                                                                                                  //7
-    //     //     $query = $db->conn->prepare("INSERT INTO assets_tbl (assettype, assettag, model, serial, supplier, empId, lastused, status, datepurchased, cost, repair_cost, remarks, datedeployed, cpu, memory, storage, dimes, mobile, plan, os) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    //     //                         $query->bind_param("sssssiissiisssssssss", $type, $tag, $mdl, $srl, $supplier, $empId, $lastused, $status, $dtprchs, $cost, $repair_cost, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os);
-    //     //     $result = $query->execute();
-
-    //     //     if ($result) {
-    //     //         $actionMessage = '';
-    //     //         switch ($action) {
-    //     //             case 'recordLaptop':
-    //     //                 $actionMessage = "Added Laptop record: $tag";
-    //     //                 break;
-    //     //             case 'recordDesktop':
-    //     //                 $actionMessage = "Added Desktop record: $tag";
-    //     //                 break;
-    //     //             case 'recordMonitor':
-    //     //                 $actionMessage = "Added Monitor record: $tag";
-    //     //                 break;
-    //     //             case 'recordPrinter':
-    //     //                 $actionMessage = "Added Printer record: $tag";
-    //     //                 break;
-    //     //             case 'recordUPS':
-    //     //                 $actionMessage = "Added UPS record: $tag";
-    //     //                 break;
-    //     //             case 'recordMobile':
-    //     //                 $actionMessage = "Added Phone record: $tag";
-    //     //                 break;
-    //     //             case 'recordSim':
-    //     //                 $actionMessage = "Added SIM record: $tag";
-    //     //                 break;
-    //     //             default:
-    //     //                 $actionMessage = "Added asset record: $tag";
-    //     //                 return 8;
-    //     //         }
-            
-    //     //         mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date) VALUES('', '$sess_name', '$actionMessage', NOW())");
-
-    //     //         return array_search($action, ['recordLaptop', 'recordDesktop', 'recordMonitor', 'recordPrinter', 'recordUPS', 'recordMobile', 'recordSim']) + 1;
-    //     //     } else {
-    //     //         return 100; // Store Failed
-    //     //     }
-        
-    // }
     function recordAssetData($type, $tag, $mdl, $srl, $supplier, $empId, $lastused, $status, $dtprchs, $cost, $repair_cost, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os, $action) {
         global $db;
         global $sess_name;
@@ -162,7 +81,7 @@ class Operations {
                 case 'recordPrinter':
                     $actionMessage = "Added Printer record: $tag";
                     break;
-                case 'recordUPS':
+                case 'recordUps':
                     $actionMessage = "Added UPS record: $tag";
                     break;
                 case 'recordMobile':
@@ -212,7 +131,7 @@ class Operations {
                 $sql .= " assetType='SIM'";
                 break;
             case 'recordUps':
-                $sql .= " assetType='UPS'";
+                $sql .= " assetType='UPS' OR assetType='AVR'";
                 break;
             default:
                 $sql .= " assetType='Laptop'";
