@@ -7,6 +7,50 @@ if(isset($_SESSION['id'])) {
 }
 class Operations {
 
+    public function checkAssetCount($assettype) {
+        global $db;
+      
+        // Get the selected asset type
+        $selectedAssetType = mysqli_real_escape_string($db->conn, $assettype);
+    
+        // Check if the asset tag already exists in the database
+        $sql = "SELECT assettag FROM assets_tbl WHERE assettype = '$selectedAssetType' AND status != 'Archive'";
+        $result = $db->conn->query($sql);
+    
+        if ($result->num_rows > 0) {
+            // Asset tag exists, find the highest existing asset tag number and increment it
+            $highestNumber = 0;
+            while($row = $result->fetch_assoc()) {
+                $parts = explode('-', $row['assettag']);
+                $number = intval(end($parts));
+                if ($number > $highestNumber) {
+                    $highestNumber = $number;
+                }
+            }
+            
+            $nextAssetTag = $selectedAssetType . '-' . ($highestNumber + 1);
+        } else {
+            // Asset tag doesn't exist, use the asset tag as is
+            $nextAssetTag = $selectedAssetType . '-1';
+        }
+
+
+        function removeVowelsAndToUpper($str) {
+            // Remove vowels
+            $strWithoutVowels = str_replace(['a', 'e', 'i', 'o', 'u', 'E'], '', $str);
+            
+            // Convert to uppercase
+            $strToUpper = strtoupper($strWithoutVowels);
+            
+            return $strToUpper;
+        }
+        
+        // Assign the next asset tag to the submitted form data
+        $finalTag = removeVowelsAndToUpper($nextAssetTag);
+        $_POST['asset-tag'] = $finalTag;
+
+    }
+    
     function recordAssetData($type, $tag, $mdl, $srl, $supplier, $empId, $lastused, $status, $dtprchs, $cost, $repair_cost, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os, $action) {
         global $db;
         global $sess_name;
@@ -149,50 +193,6 @@ class Operations {
         $res = $db->conn->query($sql);
 
         return $res;
-    }
-
-    public function checkAssetCount($assettype) {
-        global $db;
-      
-        // Get the selected asset type
-        $selectedAssetType = mysqli_real_escape_string($db->conn, $assettype);
-    
-        // Check if the asset tag already exists in the database
-        $sql = "SELECT assettag FROM assets_tbl WHERE assettype = '$selectedAssetType' AND status != 'Archive'";
-        $result = $db->conn->query($sql);
-    
-        if ($result->num_rows > 0) {
-            // Asset tag exists, find the highest existing asset tag number and increment it
-            $highestNumber = 0;
-            while($row = $result->fetch_assoc()) {
-                $parts = explode('-', $row['assettag']);
-                $number = intval(end($parts));
-                if ($number > $highestNumber) {
-                    $highestNumber = $number;
-                }
-            }
-            
-            $nextAssetTag = $selectedAssetType . '-' . ($highestNumber + 1);
-        } else {
-            // Asset tag doesn't exist, use the asset tag as is
-            $nextAssetTag = $selectedAssetType . '-1';
-        }
-
-
-        function removeVowelsAndToUpper($str) {
-            // Remove vowels
-            $strWithoutVowels = str_replace(['a', 'e', 'i', 'o', 'u', 'E'], '', $str);
-            
-            // Convert to uppercase
-            $strToUpper = strtoupper($strWithoutVowels);
-            
-            return $strToUpper;
-        }
-        
-        // Assign the next asset tag to the submitted form data
-        $finalTag = removeVowelsAndToUpper($nextAssetTag);
-        $_POST['asset-tag'] = $finalTag;
-
     }
 
     function referencesData() {

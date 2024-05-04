@@ -61,12 +61,12 @@ include '../inc/header.php';
     });  
 ?>       
 
-<form method="post" action="../admin/report.php">
+<!-- <form method="post" action="../admin/report.php"> -->
 <div class="content">
     <main class="table">
         <section class="table__header">
             <div class="buttons">
-                <button type="submit" class="link-btn" name="turnover">Report</button>
+                <!-- <button type="submit" class="link-btn" name="turnover">Report</button> -->
                 <a href="../admin/add-assets.php?id=recordLaptop" class="link-btn">New Record</a>
             </div>
             
@@ -163,6 +163,6 @@ include '../inc/header.php';
     <script src="../js/sort.js"></script>
 
 </div>
-</form>
+<!-- </form> -->
 </body>
 </html>
