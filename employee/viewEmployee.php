@@ -116,7 +116,7 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
                                 <?php
                                 }
                                 ?>
-                                <a href="../update/remove.php?assetID=<?php echo $aId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
+                                <a href="../update/remove.php?unassignId=<?php echo $aId; ?>&empId=<?php echo $eid; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
                             </td>   
                         </tr>
                     <?php } ?>

@@ -6,7 +6,7 @@ if(isset($_GET['assetID'])) {
 
     $name = $user['username'];
     
-    $query = mysqli_query($db->conn, "UPDATE assets_tbl SET status='Archive' WHERE id='$id'");
+    $query = mysqli_query($db->conn, "UPDATE assets_tbl SET status='Archive' WHERE id='$id' AND empId!='0'");
     
     $tag = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $id");
     while($row = $tag->fetch_assoc()) {
@@ -37,6 +37,25 @@ if(isset($_GET['assetID'])) {
     header("Location: \"$url\"");
 }
 
+if(isset($_GET['unassignId']) && isset($_GET['empId'])) {
+    $id = $_GET['unassignId'];
+    $empId = $_GET['empId'];
+    $name = $user['username'];
+    
+    $query = mysqli_query($db->conn, "UPDATE assets_tbl SET status='To be deploy', empId='0' WHERE id='$id'");
+    
+    $tag = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $id");
+    while($row = $tag->fetch_assoc()) {
+        $assettag = $row['assettag'];
+        $assettype = $row['assettype'];
+    }
+    $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                            VALUES ('', '$name', 'Unassigned item: $assettag from emp: $empId Record', NOW())");
+    
+   
+    header("Location: ../admin/employeeLists.php");
+}
+
 // Accountability Ref Deletion
 if(isset($_GET['Acct_id'])) {
     $id = $_GET['Acct_id'];
@@ -63,7 +82,7 @@ if(isset($_GET['Acct_id'])) {
     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                             VALUES ('', '$name', 'Deleted turnover reference code for Asset Tag: $assetTag', NOW())");
 
-    header("Location: ../admin/references.php");
+    header("Location: ../admin/reference.php");
 } 
 
 // Reference_id Ref Deletion
@@ -85,13 +104,13 @@ if(isset($_GET['Turnover_id'])) {
     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                             VALUES ('', '$name', 'Deleted turnover reference code for Asset Tag: $assetTag', NOW())");
 
-    header("Location: ../admin/references.php");
+    header("Location: ../admin/reference.php");
 }
 
 if(isset($_GET['empID'])) {
     $id = $_GET['empID'];
 
-    $query = mysqli_query($db->conn, "UPDATE employee_tbl SET status=0 WHERE id='$id'");
+    $query = mysqli_query($db->conn, "UPDATE employee_tbl SET empStatus=0 WHERE id='$id'");
 
     $sql_All = mysqli_query($db->conn, "SELECT * FROM employee_tbl WHERE id = $id");
     while($row = $sql_All->fetch_assoc()) {

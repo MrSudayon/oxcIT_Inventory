@@ -103,7 +103,6 @@ function changetextbox() {
         repair.style.display = "none";
         datedeployed.style.display = "none";
         assignto.style.display = "none";
-
     }
 }
 

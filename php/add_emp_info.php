@@ -1,11 +1,9 @@
 <?php 
 include '../inc/auth.php'; 
 
-$addItems = new AddItems();
-
 if(isset($_POST['submit'])) {
 
-    $result = $register->addEmployee($_POST['name'], $_POST['division'], $_POST['location']);
+    $result = $addItems->addEmployee($_POST['name'], $_POST['division'], $_POST['location']);
     $empName = $_POST['name'];
 
     if($result == 1) { 
@@ -80,13 +78,7 @@ if(isset($_POST['submit'])) {
                         ?>
                         </select>
                     </div>
-                    <div class="input-box">
-                        <span class="details" style="margin-bottom: 10px;">Status</span>
-                        <select name="status">
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
-                        </select>
-                    </div>
+                   
                 </div>
                 <div class="button">
                     <input type="submit" name="submit" value="Save">

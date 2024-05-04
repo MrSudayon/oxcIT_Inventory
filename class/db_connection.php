@@ -28,7 +28,7 @@ class AddItems extends Connection {
         if (mysqli_num_rows($duplicate) > 0) {
             return 10; // Duplicate Record
         } else {
-            $query = "INSERT INTO employee_tbl (id, name, division, location, status)
+            $query = "INSERT INTO employee_tbl (id, name, division, location, empStatus)
                                 VALUES ('','$name', '$division', '$location', 1)";
 
             $result = mysqli_query($this->conn, $query);
