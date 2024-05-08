@@ -6,7 +6,7 @@ if(isset($_SESSION['id'])) {
     $sess_name = $session['username'];
 }
 class Operations {
-
+    
     public function checkAssetCount($assettype) {
         global $db;
       
@@ -71,7 +71,6 @@ class Operations {
         $cpu = mysqli_real_escape_string($db->conn, $cpu);
         $ram = mysqli_real_escape_string($db->conn, $ram);
         $storage = mysqli_real_escape_string($db->conn, $storage);
-        // $dimes = mysqli_real_escape_string($db->conn, $dimes);
         $mobile = mysqli_real_escape_string($db->conn, $mobile);
         $plan = mysqli_real_escape_string($db->conn, $plan);
         $os = mysqli_real_escape_string($db->conn, $os);
@@ -93,19 +92,9 @@ class Operations {
             
                 if ($results->num_rows == 0) {
                     // Insert successful, prepare and execute the insert query for reference_tbl
-                    $referenceQuery = $db->conn->prepare("INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 1)");
+                    $referenceQuery = $db->conn->prepare("INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 0)");
                     $referenceQuery->bind_param("is", $assetId, $empId);
                     $referenceResult = $referenceQuery->execute();
-            
-                    // if ($referenceResult) {
-                    //     // Both inserts successful, log the action and return success
-                        
-    
-                    // } else {
-                    //     // Insert into reference_tbl failed, rollback assets_tbl insert
-                    //     mysqli_query($db->conn, "DELETE FROM assets_tbl WHERE id='$assetId'");
-                    //     return 100; // Store Failed
-                    // }
                 } else {
                     echo 'Reference already exists';
                 }
@@ -138,7 +127,6 @@ class Operations {
                     $actionMessage = "Added asset record: $tag";
                     return 8;
             }
-        
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date) VALUES('', '$sess_name', '$actionMessage', NOW())");
 
             return array_search($action, ['recordLaptop', 'recordDesktop', 'recordMonitor', 'recordPrinter', 'recordUps', 'recordMobile', 'recordSim']) + 1;
@@ -315,20 +303,53 @@ class Operations {
     }
 
     // Getting reference table values
-    function getReferenceTable() {
+    function getAccReferenceTable() {
         global $db;
         // $sql = mysqli_query($db->conn, "SELECT * FROM reference_tbl ORDER BY name ASC, accountabilityStatus ASC, turnoverStatus");
-        $sqlSelect = 
-                        "SELECT a.id AS aId, a.empId, a.status AS status, a.assettype, a.assettag AS tag, a.model, a.remarks, 
+        $sqlSelect = "SELECT a.id AS aId, a.empId, a.status AS status, a.assettype, a.assettag AS tag, a.model, a.remarks, 
+                    e.id, e.name AS ename, e.division, e.location, 
+                    r.id AS rid, r.assetId AS assetId, r.name AS rname, GROUP_CONCAT(DISTINCT r.accountabilityRef ORDER BY r.accountabilityRef) AS accountabilityRef, 
+                    r.accountabilityStatus AS accountabilityStatus, r.accountabilityDate AS accountabilityDate, r.accountabilityFile AS accountabilityFile, r.referenceStatus  
+                    FROM assets_tbl AS a 
+                    LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+                    LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+                    WHERE referenceStatus='1' AND status='Deployed' AND accountabilityRef!=''
+                    GROUP BY rname, accountabilityRef 
+                    ORDER BY referenceStatus DESC";
+                        
+                        // Working 5-8-24
+                        // "SELECT a.id AS aId, a.empId, a.status AS status, a.assettype, a.assettag AS tag, a.model, a.remarks, 
+                        // e.id, e.name AS ename, e.division, e.location, 
+                        // r.id AS rid, r.assetId AS assetId, r.name AS rname, GROUP_CONCAT(DISTINCT r.turnoverRef) AS turnoverRef, GROUP_CONCAT(DISTINCT r.accountabilityRef ORDER BY r.accountabilityRef) AS accountabilityRef, 
+                        // r.turnoverStatus AS turnoverStatus, r.accountabilityStatus AS accountabilityStatus, 
+                        // r.turnoverDate AS turnoverDate, r.accountabilityDate AS accountabilityDate, 
+                        // r.turnoverFile AS turnoverFile, r.accountabilityFile AS accountabilityFile, r.referenceStatus 
+                        // FROM assets_tbl AS a 
+                        // LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+                        // LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+                        // WHERE referenceStatus='1' AND status='Deployed' AND accountabilityRef!=''
+                        // GROUP BY rname, accountabilityRef 
+                        // ORDER BY referenceStatus DESC";
+
+        $result = mysqli_query($db->conn, $sqlSelect);
+
+        return $result;  
+    }
+
+    function getTrnReferenceTable() {
+        global $db;
+        // $sql = mysqli_query($db->conn, "SELECT * FROM reference_tbl ORDER BY name ASC, accountabilityStatus ASC, turnoverStatus");
+        $sqlSelect = "SELECT a.id AS aId, a.empId, a.status AS status, a.assettype, a.assettag AS tag, a.model, a.remarks, 
                         e.id, e.name AS ename, e.division, e.location, 
-                        r.id AS rid, r.assetId AS assetId, r.name AS rname, r.turnoverRef AS turnoverRef, r.accountabilityRef AS accountabilityRef, 
-                        r.turnoverStatus AS turnoverStatus, r.accountabilityStatus AS accountabilityStatus, 
-                        r.turnoverDate AS turnoverDate, r.accountabilityDate AS accountabilityDate, 
-                        r.turnoverFile AS turnoverFile, r.accountabilityFile AS accountabilityFile, r.referenceStatus 
+                        r.id AS rid, r.assetId AS assetId, r.name AS rname, GROUP_CONCAT(DISTINCT r.turnoverRef ORDER BY r.turnoverRef) AS turnoverRef, 
+                        r.turnoverStatus AS turnoverStatus, r.turnoverDate AS turnoverDate, r.turnoverFile AS turnoverFile, r.referenceStatus 
                         FROM assets_tbl AS a 
                         LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
                         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                        WHERE status!='Archive' ORDER BY referenceStatus DESC";
+                        WHERE referenceStatus='1' AND status='Deployed' AND turnoverRef!=''
+                        GROUP BY rname, turnoverRef 
+                        ORDER BY referenceStatus DESC";
+
         $result = mysqli_query($db->conn, $sqlSelect);
 
         return $result;  
@@ -674,10 +695,13 @@ class Operations {
        
     }
 
-    function ifEmptyReference($acctRef, $turnoverRef, $acctFile, $turnoverFile) {
+    function ifEmptyAccReference($acctRef, $acctFile) {
         if(empty($acctRef)) { $acctRef = 'N/A'; return $acctRef; }
-        if(empty($turnoverRef)) { $turnoverRef = 'N/A'; return $turnoverRef; }
         if(empty($acctFile)) { $acctFile = 'N/A'; return $acctFile;  }
+    }
+
+    function ifEmptyTrnReference($turnoverRef, $turnoverFile) {
+        if(empty($turnoverRef)) { $turnoverRef = 'N/A'; return $turnoverRef; }
         if(empty($turnoverFile)) { $turnoverFile = 'N/A'; return $turnoverFile; }
     }
 

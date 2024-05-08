@@ -25,16 +25,21 @@ if(isset($_GET['id'])) {
 
     ?>
 
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="../assets/logo.jpg">
-        <link rel="stylesheet" href="../css/accountability.css">
-        <title>Accountability Form</title>
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/logo.jpg">
+    <link rel="stylesheet" href="../css/accountability.css">
+    <title>Accountability Form</title>
+</head>
+<style>
+    .content {
+        padding: 2em 3em;
+    }
+</style>
+<body>
     <div class="content">
         <div class="logo">
             <a href="employeeLists.php"><img src="../assets/logo.png" width="150px"></img></a>
@@ -104,17 +109,17 @@ if(isset($_GET['id'])) {
                 <h3>Asset Return:</h3>
                 <p>
                 &nbsp;&nbsp; &nbsp;&nbsp;I understand that I am required to return the asset on the specified date or upon termination of my employment. Failure to return the asset in good condition may result in disciplinary action and/or financial responsibility for repair or replacement costs.</p>
-                <br>[For Asset Administrator Use Only]<br><br>
+                <br><br><h4>Employee Signature: _________________</h4>
+                    <h4>Department: <b><?php echo $dept; ?></b></h4>
+                    <h4>Date: ___________</h4><br><br>
+
+                    [For Asset Administrator Use Only]<br><br>
                     <p>Deployed by: ____________<br>
                     Signature: ______________</p>
-                <br><br>
-                
-                    <h4>Employee Signature: _________________</h4>
-                    <h4>Department: <b><?php echo $dept; ?></b></h4>
-                    <h4>Date: ___________</h4><br>
+                <br>
             </div>
             
-        </div>
+    </div>
         
     <?php
 } else {

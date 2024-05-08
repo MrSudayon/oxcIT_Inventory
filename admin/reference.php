@@ -1,7 +1,7 @@
 <?php 
 include '../inc/auth.php'; 
-$referenceTbl = $operation->getReferenceTable();
-$referenceTbl1 = $operation->getReferenceTable();
+$accReferenceTbl = $operation->getAccReferenceTable();
+$trnReferenceTbl = $operation->getTrnReferenceTable();
 include '../inc/listsHead.php'; 
 include '../inc/header.php'; 
 ?>
@@ -33,8 +33,8 @@ include '../inc/header.php';
                 </thead>
                 <tbody>
                     <?php
-                    $prevRef = '';
-                    while ($row = mysqli_fetch_assoc($referenceTbl)) {
+                    $prevAccRef = '';
+                    while ($row = mysqli_fetch_assoc($accReferenceTbl)) {
                         $rid = $row['rid'];
                         $assetId = $row['assetId'];
                         $assettag = $row['tag'];
@@ -42,10 +42,10 @@ include '../inc/header.php';
                         $acctStatus = $row['accountabilityStatus'];
                         $acctDate = $row['accountabilityDate'];
                         $acctFile = $row['accountabilityFile'];
-                        $turnoverRef = $row['turnoverRef'];
-                        $turnoverStatus = $row['turnoverStatus'];
-                        $turnoverDate = $row['turnoverDate'];
-                        $turnoverFile = $row['turnoverFile'];
+                        // $turnoverRef = $row['turnoverRef'];
+                        // $turnoverStatus = $row['turnoverStatus'];
+                        // $turnoverDate = $row['turnoverDate'];
+                        // $turnoverFile = $row['turnoverFile'];
                         $referenceStatus = $row['referenceStatus'];
                         $empId = $row['rname'];
 
@@ -69,7 +69,7 @@ include '../inc/header.php';
                                     $acctStatus = 'None';
                             }
 
-                            $operation->ifEmptyReference($acctRef, $turnoverRef, $acctFile, $turnoverFile);
+                            $operation->ifEmptyAccReference($acctRef, $acctFile);
 
                             if($referenceStatus == 0) {
                                 echo "<tr style='background-color: #fecfcc;'>";
@@ -77,7 +77,7 @@ include '../inc/header.php';
                                 echo "<tr>";
                             }
 
-                            if ($acctRef != $prevRef) {
+                            if ($acctRef != $prevAccRef) {
                                
                                 echo "<tr>";
                                 echo "<td>$empName</td>";
@@ -86,11 +86,7 @@ include '../inc/header.php';
                                 echo "<td>$acctStatus</td>";
                                 echo "<td>$acctDate</td>";
                                 echo "<td>";
-                                // if ($acctStatus == 'Signed') {
-                                //     echo "<span class='disable-btn'><a href='../update/remove.php?Acct_id=$rid' onclick='return checkDelete()'><img src='../assets/icons/remove.png' width='24px'></a></span>";
-                                // } else {
-                                //     echo "<a href='../update/remove.php?Acct_id=$rid' onclick='return checkDelete()'><img src='../assets/icons/remove.png' width='24px'></a>";
-                                // }
+
                                 if ($acctStatus == 'Signed') {
                                     echo "<span class='disable-btn'><a href='../update/referenceUpd.php?id=$rid'><img src='../assets/icons/update.png' width='24px'></a>&nbsp;
                                         <a href='../update/remove.php?Acct_id=$rid' onclick='return checkDelete()'><img src='../assets/icons/remove.png' width='24px'></a></span>";
@@ -100,7 +96,7 @@ include '../inc/header.php';
                                 }
                                 echo "</td>";
                             } 
-                            $prevRef = $acctRef;
+                            $prevAccRef = $acctRef;
                         }
                     }
                     ?>
@@ -130,8 +126,8 @@ include '../inc/header.php';
                 </thead>
                 <tbody>
                     <?php
-                    $prevRef = '';
-                    while ($row = mysqli_fetch_assoc($referenceTbl1)) {
+                    $prevTrnRef = '';
+                    while ($row = mysqli_fetch_assoc($trnReferenceTbl)) {
                         $rid = $row['rid'];
                         $assetId = $row['assetId'];
                         $assettag = $row['tag'];
@@ -166,7 +162,7 @@ include '../inc/header.php';
                                     $turnoverStatus = 'None';
                             }
 
-                            $operation->ifEmptyReference($acctRef, $turnoverRef, $acctFile, $turnoverFile);
+                            $operation->ifEmptyTrnReference($acctRef, $turnoverRef, $acctFile, $turnoverFile);
 
                             if($referenceStatus == 0) {
                                 echo "<tr style='background-color: #fecfcc;'>";
@@ -174,8 +170,8 @@ include '../inc/header.php';
                                 echo "<tr>";
                             }
 
-                            if ($turnoverRef != $prevRef) {
-                                if ($prevRef != '') {
+                            if ($turnoverRef != $prevTrnRef) {
+                                if ($prevTrnRef != '') {
                                     echo "</tr>";
                                 }
                                 echo "<tr>";
@@ -195,7 +191,7 @@ include '../inc/header.php';
                                 }
                                 echo "</td>";
                             } 
-                            $prevRef = $turnoverRef;
+                            $prevTrnRef = $turnoverRef;
                         }
                     }
                     ?>

@@ -41,12 +41,17 @@ if(isset($_GET['generateAcc'])) {
         }
 
         // Check if any of the selected assets already have an accountability code
-        $existingCodeQuery = mysqli_prepare($db->conn, "SELECT accountabilityRef FROM reference_tbl WHERE assetId IN (?) AND name='$empId' AND accountabilityRef != '' AND referenceStatus='1'");
+        // $existingCodeQuery = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE assetId IN (?) AND name='$empId' AND accountabilityRef != '' AND referenceStatus='1'");
+        // $selectedImploded = implode(",", $selected);
+        // mysqli_stmt_bind_param($existingCodeQuery, "s", $selectedImploded);
+        // mysqli_stmt_execute($existingCodeQuery);
+        // $existingCodeResult = mysqli_stmt_get_result($existingCodeQuery);
+
         $selectedImploded = implode(",", $selected);
-        mysqli_stmt_bind_param($existingCodeQuery, "s", $selectedImploded);
+        $existingCodeQuery = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE accountabilityRef != '' AND assetId IN ($selectedImploded) AND name='$empId' AND referenceStatus='1'");
         mysqli_stmt_execute($existingCodeQuery);
         $existingCodeResult = mysqli_stmt_get_result($existingCodeQuery);
-    
+
         if (mysqli_num_rows($existingCodeResult) > 0) {
             $existingAccountability = true;
         }
@@ -65,28 +70,28 @@ if(isset($_GET['generateAcc'])) {
                 $acc_ref = "ACCT-" . $newCode;
     
                 // If assetId is existed in reference tbl
-                $refSql = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE assetId = ? AND accountabilityRef!=''");
-                mysqli_stmt_bind_param($refSql, "i", $assetID);
-                mysqli_stmt_execute($refSql);
-                $result = mysqli_stmt_get_result($refSql);
+                // $refSql = mysqli_prepare($db->conn, "SELECT * FROM reference_tbl WHERE assetId = ? AND accountabilityRef!=''");
+                // mysqli_stmt_bind_param($refSql, "i", $assetID);
+                // mysqli_stmt_execute($refSql);
+                // $result = mysqli_stmt_get_result($refSql);
                 
-                if (mysqli_num_rows($result) > 0) {
+                // if (mysqli_num_rows($result) > 0) {
                 foreach ($selected as $assetID) {
                     $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl SET accountabilityStatus = 1, accountabilityRef = ?, referenceStatus='1' WHERE assetId = ? AND name=?");
                     mysqli_stmt_bind_param($refQry, "sis", $acc_ref, $assetID, $empId);
                     mysqli_stmt_execute($refQry);
                 }
                     
-                } else {
+                // } else {
 
-                    foreach ($selected as $assetID) {
-                        // Insert new accountability reference for each asset
-                        $refQry = mysqli_prepare($db->conn, "INSERT INTO reference_tbl (assetId, name, accountabilityRef, accountabilityStatus, referenceStatus) VALUES (?, ?, ?, 1, 1)");
-                        mysqli_stmt_bind_param($refQry, "iss", $assetID, $empId, $acc_ref);
-                        mysqli_stmt_execute($refQry);
-                    }
+                //     foreach ($selected as $assetID) {
+                //         // Insert new accountability reference for each asset
+                //         $refQry = mysqli_prepare($db->conn, "INSERT INTO reference_tbl (assetId, name, accountabilityRef, accountabilityStatus, referenceStatus) VALUES (?, ?, ?, 1, 1)");
+                //         mysqli_stmt_bind_param($refQry, "iss", $assetID, $empId, $acc_ref);
+                //         mysqli_stmt_execute($refQry);
+                //     }
 
-                }
+                // }
                 // Log history for generated accountability code
                 $history = mysqli_prepare($db->conn, "INSERT INTO history_tbl (name, action, date) VALUES (?, ?, NOW())");
                 $action = "Generated accountability form for asset/s: " . implode(", ", $assetTags);

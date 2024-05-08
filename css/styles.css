@@ -278,7 +278,9 @@ span.disable-acctRef {
     border-radius: 0 0 .6rem .6rem;
 
     overflow-x: hidden;
-    overflow: overlay;
+    overflow-y: scroll;
+
+    /* overflow: overlay; */
 }
 
 
