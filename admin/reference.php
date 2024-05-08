@@ -71,7 +71,7 @@ include '../inc/header.php';
 
                             $operation->ifEmptyAccReference($acctRef, $acctFile);
 
-                            if($referenceStatus == 0) {
+                            if($referenceStatus == 0 || $acctStatus == 'Signed') {
                                 echo "<tr style='background-color: #fecfcc;'>";
                             } else {
                                 echo "<tr>";
@@ -79,7 +79,6 @@ include '../inc/header.php';
 
                             if ($acctRef != $prevAccRef) {
                                
-                                echo "<tr>";
                                 echo "<td>$empName</td>";
                                 echo "<td><a class='link' href='accountability.php?id=$acctRef'>$acctRef</a></td>";
                                 echo "<td width='10%'><a class='link' href='../files/download.php?acctRef_id=$rid' target='_blank'>$acctFile</td>";
@@ -95,6 +94,8 @@ include '../inc/header.php';
                                         <a href='../update/remove.php?Acct_id=$rid' onclick='return checkDelete()'><img src='../assets/icons/remove.png' width='24px'></a>";
                                 }
                                 echo "</td>";
+                                echo "</tr>";
+
                             } 
                             $prevAccRef = $acctRef;
                         }
@@ -164,7 +165,7 @@ include '../inc/header.php';
 
                             $operation->ifEmptyTrnReference($acctRef, $turnoverRef, $acctFile, $turnoverFile);
 
-                            if($referenceStatus == 0) {
+                            if($referenceStatus == 0 || $turnoverStatus == 'Signed') {
                                 echo "<tr style='background-color: #fecfcc;'>";
                             } else {
                                 echo "<tr>";
