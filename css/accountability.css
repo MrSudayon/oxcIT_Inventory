@@ -8,6 +8,8 @@
     box-sizing: border-box;
     scroll-behavior: smooth;
     font-family: "Rubik", sans-serif;
+    font-size: 14px;
+
 }
 :root {
     --bg-color: #1F1F29;
@@ -19,8 +21,12 @@
 h1, h2, h3, p, h4 {
     font-weight: 500;
 }
+h2 {
+    font-size: 20px;
+}
 p {
     font-weight: 400;
+
     margin-top: 5px;
     text-wrap: wrap;
 }
@@ -36,6 +42,7 @@ body {
 
 .logo {
     float: left;
+    position: absolute;
 }
 .empInfo {
     display: flex;
@@ -46,7 +53,7 @@ table {
 }
 .content {
     width: 100%;
-    padding: 10px 0;
+    padding: 2em 3em;
 }
 .assets-table {
     width: 100%;
@@ -92,10 +99,6 @@ th, td {
     align-items: center;
     justify-content: center;
     margin: 20px;
-}
-button {
-    cursor: pointer;
-    font-size: 18px;
 }
 
 @media (max-width: 584px) {

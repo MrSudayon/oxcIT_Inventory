@@ -21,8 +21,6 @@ if(isset($_GET['id'])) {
 
         $empId = $row['empId'];
     }
-
-
     ?>
 
 <!DOCTYPE html>
@@ -34,19 +32,14 @@ if(isset($_GET['id'])) {
     <link rel="stylesheet" href="../css/accountability.css">
     <title>Accountability Form</title>
 </head>
-<style>
-    .content {
-        padding: 2em 3em;
-    }
-</style>
 <body>
     <div class="content">
         <div class="logo">
             <a href="employeeLists.php"><img src="../assets/logo.png" width="150px"></img></a>
         </div>
-        <br><br><br>
+        <br>
         <center>
-        <h2>Accountability Form</h2><br>
+        <h2>Accountability Form</h2>
         </center>
         <div class="reference-code" align="right">
             <?php echo "<b>Ref#: " . $acc_ref . "</b>"; ?>
@@ -94,9 +87,9 @@ if(isset($_GET['id'])) {
                 ?>
             </table>
             <div class="info"><br>
-                <h3>Responsibilities</h3>
+                <h3>&nbsp;Responsibilities:</h3>
                 <p>
-                &nbsp;&nbsp; &nbsp;&nbsp;I, <b><?php echo $empName; ?></b>, acknowledge that the above-mentioned asset has been issued to me for the purpose of performing my job responsibilities. I understand and agree to the following responsibilities:
+                &nbsp;&nbsp;&nbsp;&nbsp;I, <b><?php echo $empName; ?></b>, acknowledge that the above-mentioned asset has been issued to me for the purpose of performing my job responsibilities. I understand and agree to the following responsibilities:
                 <br><br></p>
                 <p style="font-weight: 600;">
                 1. I am responsible for the proper use and care of the assigned asset.
