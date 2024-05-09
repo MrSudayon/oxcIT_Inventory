@@ -1,9 +1,10 @@
 <?php 
 include '../inc/auth.php'; 
-$accReferenceTbl = $operation->getAccReferenceTable();
-$trnReferenceTbl = $operation->getTrnReferenceTable();
 include '../inc/listsHead.php'; 
 include '../inc/header.php'; 
+
+$accReferenceTbl = $operation->getAccReferenceTable();
+$trnReferenceTbl = $operation->getTrnReferenceTable();
 ?>
 <main class="table">
 
@@ -34,6 +35,7 @@ include '../inc/header.php';
                 <tbody>
                     <?php
                     $prevAccRef = '';
+
                     while ($row = mysqli_fetch_assoc($accReferenceTbl)) {
                         $rid = $row['rid'];
                         $assetId = $row['assetId'];
@@ -42,10 +44,7 @@ include '../inc/header.php';
                         $acctStatus = $row['accountabilityStatus'];
                         $acctDate = $row['accountabilityDate'];
                         $acctFile = $row['accountabilityFile'];
-                        // $turnoverRef = $row['turnoverRef'];
-                        // $turnoverStatus = $row['turnoverStatus'];
-                        // $turnoverDate = $row['turnoverDate'];
-                        // $turnoverFile = $row['turnoverFile'];
+
                         $referenceStatus = $row['referenceStatus'];
                         $empId = $row['rname'];
 
@@ -132,10 +131,6 @@ include '../inc/header.php';
                         $rid = $row['rid'];
                         $assetId = $row['assetId'];
                         $assettag = $row['tag'];
-                        $acctRef = $row['accountabilityRef'];
-                        $acctStatus = $row['accountabilityStatus'];
-                        $acctDate = $row['accountabilityDate'];
-                        $acctFile = $row['accountabilityFile'];
                         $turnoverRef = $row['turnoverRef'];
                         $turnoverStatus = $row['turnoverStatus'];
                         $turnoverDate = $row['turnoverDate'];
@@ -163,7 +158,7 @@ include '../inc/header.php';
                                     $turnoverStatus = 'None';
                             }
 
-                            $operation->ifEmptyTrnReference($acctRef, $turnoverRef, $acctFile, $turnoverFile);
+                            $operation->ifEmptyTrnReference($turnoverRef, $turnoverFile);
 
                             if($referenceStatus == 0 || $turnoverStatus == 'Signed') {
                                 echo "<tr style='background-color: #fecfcc;'>";
