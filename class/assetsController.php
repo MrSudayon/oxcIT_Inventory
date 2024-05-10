@@ -90,33 +90,47 @@ class assetsController {
             $assettag = $tagRow['assettag'];
         
             // Check if reference exists
-            $refQuery = "SELECT * FROM reference_tbl WHERE assetId=? AND referenceStatus='2'"; // If turnoverStatus is signed. Insert new record and keep the old record
+            $refQuery = "SELECT * FROM reference_tbl WHERE assetId=?";
             $refStmt = $db->conn->prepare($refQuery);
             $refStmt->bind_param("i", $assetID);
             $refStmt->execute();
             $refResult = $refStmt->get_result();
         
-            if ($refResult->num_rows > 0) {
-                // Insert reference if it does not exist
+            if ($refResult->num_rows == 0) {
+                // Insert new reference
                 $referenceQuery = "INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 0)";
                 $referenceStmt = $db->conn->prepare($referenceQuery);
                 $referenceStmt->bind_param("is", $assetID, $empId);
                 $referenceResult = $referenceStmt->execute();
-
+            
                 if (!$referenceResult) {
                     echo 'Failed to insert reference';
                 }
-                
+
             } else {
-                $qry = "UPDATE reference_tbl SET name=?, referenceStatus='0' WHERE assetId=? LIMIT 1";
+
+                // Update existing reference
+                $qry = "UPDATE reference_tbl SET name=?, referenceStatus='0' WHERE assetId=? AND referenceStatus!='2' LIMIT 1";
                 $stmt = $db->conn->prepare($qry);
                 $stmt->bind_param("si", $empId, $assetID);
                 $result = $stmt->execute();
+
+                if (!$result) {
+                    
+                    // Update existing reference
+                    $qry = "INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 0)";
+                    $stmt = $db->conn->prepare($qry);
+                    $stmt->bind_param("is", $assetID, $empId);
+                    $result = $stmt->execute();
+                    
+                }
+                
             }
 
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                 VALUES('', '$sess_name', 'Updated item: $assettag, ID: $assetID from Assets Record', NOW())");
             return true;
+
         } else {
             return false;
         }
