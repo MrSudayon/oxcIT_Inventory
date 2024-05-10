@@ -87,7 +87,7 @@ class Operations {
             if ($empId!='') {
             
                 $assetId = $db->conn->insert_id;
-                $sql = "SELECT * FROM reference_tbl WHERE assetId='$assetId' AND name='$empId' AND referenceStatus!='0'";
+                $sql = "SELECT * FROM reference_tbl WHERE assetId='$assetId'";
                 $results = $db->conn->query($sql);
             
                 if ($results->num_rows == 0) {

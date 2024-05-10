@@ -21,17 +21,7 @@ class assetsController {
                         LEFT JOIN employee_tbl AS e1 ON e1.id = a.empId 
                         LEFT JOIN employee_tbl AS e2 ON e2.id = a.lastused
                         WHERE a.id = '$assetID' AND a.status != 'Archive'";
-        // $assetQuery = "SELECT a.id AS aId, a.assettype, a.assettag, a.model, a.status as aStatus, 
-        //                 a.serial, a.supplier, a.cost, a.repair_cost, a.datepurchased, a.remarks, 
-        //                 a.datedeployed, a.lastused, 
-        //                 a.cpu, a.memory, a.storage, a.os, a.dimes, a.mobile, a.plan, 
-        //                 e.id, e.name AS ename, e.division, e.location  
-        //                 -- r.assetId, r.turnoverDate AS turnoverDate 
-        //                 FROM assets_tbl AS a 
-        //                 LEFT JOIN employee_tbl AS e ON e.id = a.empId 
-        //                 AND e.id = a.lastused 
-        //                 -- LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
-        //                 WHERE a.id = '$assetID' AND a.status != 'Archive'";
+
         $res = mysqli_query($db->conn, $assetQuery);
 
         if($res->num_rows == 1){
@@ -41,6 +31,7 @@ class assetsController {
             return false;
         }
     }
+
     public function update($input, $id) {
         global $db;
         global $sess_name;
@@ -99,15 +90,15 @@ class assetsController {
             $assettag = $tagRow['assettag'];
         
             // Check if reference exists
-            $refQuery = "SELECT * FROM reference_tbl WHERE assetId=? AND name=? AND referenceStatus='1'";
+            $refQuery = "SELECT * FROM reference_tbl WHERE assetId=? AND referenceStatus='2'"; // If turnoverStatus is signed. Insert new record and keep the old record
             $refStmt = $db->conn->prepare($refQuery);
-            $refStmt->bind_param("is", $assetID, $empId);
+            $refStmt->bind_param("i", $assetID);
             $refStmt->execute();
             $refResult = $refStmt->get_result();
         
-            if ($refResult->num_rows == 0) {
+            if ($refResult->num_rows > 0) {
                 // Insert reference if it does not exist
-                $referenceQuery = "INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 1)";
+                $referenceQuery = "INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 0)";
                 $referenceStmt = $db->conn->prepare($referenceQuery);
                 $referenceStmt->bind_param("is", $assetID, $empId);
                 $referenceResult = $referenceStmt->execute();
@@ -117,7 +108,7 @@ class assetsController {
                 }
                 
             } else {
-                $qry = "UPDATE reference_tbl SET name=?, referenceStatus='1' WHERE assetId=? AND referenceStatus='0' LIMIT 1";
+                $qry = "UPDATE reference_tbl SET name=?, referenceStatus='0' WHERE assetId=? LIMIT 1";
                 $stmt = $db->conn->prepare($qry);
                 $stmt->bind_param("si", $empId, $assetID);
                 $result = $stmt->execute();
