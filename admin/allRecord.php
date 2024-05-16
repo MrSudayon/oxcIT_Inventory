@@ -17,7 +17,7 @@ $results_per_page = 15;
 if (!isset ($_GET['page']) ) {  
     $page = 1;  
 } elseif ($_GET['page'] === 'all') {  
-    $sql =  "SELECT a.*, e.* 
+    $sql =  "SELECT a.*, a.Id AS aId, e.* 
             FROM assets_tbl AS a 
             INNER JOIN employee_tbl AS e ON e.id = a.empId 
             WHERE a.status!='Archive'";
@@ -35,7 +35,7 @@ $number_of_page = ceil ($rowCount / $results_per_page);
 $page_first_result = ($page-1) * $results_per_page;  
 
 if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
-    $sql =  "SELECT a.*, e.* 
+    $sql =  "SELECT a.*, a.Id AS aId, e.* 
             FROM assets_tbl AS a 
             INNER JOIN employee_tbl AS e ON e.id = a.empId 
             WHERE a.status!='Archive' 
@@ -93,7 +93,7 @@ usort($rows, function($a, $b) {
                     <?php
                         foreach ($rows as $row) {
                             $status = $row['status'];
-                            $aId = $row['id'];
+                            $aId = $row['aId'];
                             $assettype = $row['assettype'];
                                 
                             $cpu = $row['cpu'];

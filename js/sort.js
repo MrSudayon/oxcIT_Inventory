@@ -62,7 +62,25 @@ const search = document.querySelector('.input-group input'),
 // 1. Searching for specific data of HTML table
 search.addEventListener('input', searchTable);
 
+// 2. Sorting | Ordering data of HTML table
 
+table_headings.forEach((head, i) => {
+    let sort_asc = true;
+    head.onclick = () => {
+        table_headings.forEach(head => head.classList.remove('active'));
+        head.classList.add('active');
+
+        document.querySelectorAll('td').forEach(td => td.classList.remove('active'));
+        table_rows.forEach(row => {
+            row.querySelectorAll('td')[i].classList.add('active');
+        })
+
+        head.classList.toggle('asc', sort_asc);
+        sort_asc = head.classList.contains('asc') ? false : true;
+
+        sortTable(i, sort_asc);
+    }
+})
 
 function toggle(source) {
     let checkboxes = document.querySelectorAll('tbody tr:not(.hide) .select');
@@ -91,73 +109,20 @@ function searchTable() {
     document.querySelector('.result-count').textContent = rowCountPage;
 }
 
-// function searchTable() {
-//     let searchValue = search.value.toLowerCase();
-//     let visibleRows = Array.from(table_rows).filter(row => {
-//         let containsCheckbox = row.querySelector('input[type="checkbox"]');
-//         return (!containsCheckbox || !containsCheckbox.checked) && row.textContent.toLowerCase().includes(searchValue);
-//     });
-
-//     visibleRows.forEach((row, i) => {
-//         let table_data = row.textContent.toLowerCase();
-//         row.classList.remove('hide');
-//         row.style.setProperty('--delay', (i * 0.1) + 's');
-//     });
-
-//     table_rows.forEach(row => {
-//         if (!visibleRows.includes(row)) {
-//             row.classList.add('hide');
-//         }
-//     });
-
-//     document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
-//         visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
-//     });
-// }
-
-// 2. Sorting | Ordering data of HTML table
-
-table_headings.forEach((head, i) => {
-    let sort_asc = true;
-    head.onclick = () => {
-        table_headings.forEach(head => head.classList.remove('active'));
-        head.classList.add('active');
-
-        document.querySelectorAll('td').forEach(td => td.classList.remove('active'));
-        table_rows.forEach(row => {
-            row.querySelectorAll('td')[i].classList.add('active');
-        })
-
-        head.classList.toggle('asc', sort_asc);
-        sort_asc = head.classList.contains('asc') ? false : true;
-
-        sortTable(i, sort_asc);
+// Reference Tabs
+function openCity(evt, reference) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
     }
-})
-
-//  222222
-// function searchTable() {
-//     let searchValue = document.getElementById('searchInput').value.toLowerCase();
-//     let visibleRows = Array.from(table_rows).filter(row => {
-//         let containsCheckbox = row.querySelector('input[type="checkbox"]');
-//         return (!containsCheckbox || !containsCheckbox.checked) && row.textContent.toLowerCase().indexOf(searchValue) >= 0;
-//     });
-
-//     visibleRows.forEach((row, i) => {
-//         row.style.setProperty('--delay', (i * 0.1) + 's');
-//         row.classList.remove('hide');
-//     });
-
-//     document.querySelectorAll('tbody tr').forEach(row => {
-//         if (!visibleRows.includes(row)) {
-//             row.classList.add('hide');
-//         }
-//     });
-
-//     rowCountPage = visibleRows.length;
-//     document.querySelector('.result-count').textContent = rowCountPage;
-// }
-
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(reference).style.display = "block";
+    evt.currentTarget.className += " active";
+}
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -183,38 +148,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Search functionality
     document.getElementById('searchInput').addEventListener('input', searchTable);
 });
-// document.addEventListener('DOMContentLoaded', function() {
-//     var spans = document.getElementsByClassName("statusSpan");
-//     for (var i = 0; i < spans.length; i++) {
-//         var span = spans[i];
-//         if (span.innerHTML === 'Deployed') { span.classList.add("status", "deployed"); } 
-//         else if (span.innerHTML === 'To be deploy') { span.classList.add("status", "tobedeploy"); } 
-//         else if (span.innerHTML === 'Outdated') { span.classList.add("status", "outdated"); } 
-//         else if (span.innerHTML === 'For repair') { span.classList.add("status", "repair"); } 
-//         else if (span.innerHTML === 'Sell' || span.innerHTML === 'Defective') { span.classList.add("status", "replace"); } 
-//         else if (span.innerHTML === '1') { span.innerText = 'Active'; span.classList.add("status", "tobedeploy"); }
-//         else if (span.innerHTML === '0') { span.innerText = 'Inactive'; span.classList.add("status", "missing"); }
-//         else { span.classList.add("status", "missing"); }
-//     }
-// });
-
-// Reference Tabs
-function openCity(evt, reference) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(reference).style.display = "block";
-    evt.currentTarget.className += " active";
-}
-
-
-
 
 
 
