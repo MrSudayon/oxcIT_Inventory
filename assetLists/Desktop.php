@@ -78,6 +78,7 @@ include '../inc/header.php';
             <table>
                 <thead>
                     <tr>
+                        <th hidden> Serial </th>
                         <th> Asset Tag <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Model <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Specification <span class="icon-arrow">&UpArrow;</span></th>

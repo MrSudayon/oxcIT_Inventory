@@ -71,54 +71,37 @@ usort($rows, function($a, $b) {
         <section class="table__header">
             <button type="submit" class="link-btn" name="turnover">Report</button>
             <div class="input-group">
-                <input type="search" id="searchInput" placeholder="Search Data..." oninput="searchTable()">
+                <input type="search" id="searchInput" placeholder="Search Data...">
                 <img src="../assets/icons/search.png" alt="">
             </div>
-            <p> <b style="color: yellow; font-size: 20px; margin-top: 10px;" class="result-count"><?php echo $rowCountPage; ?></b> result/s.</p>
+            <p><b style="color: yellow; font-size: 20px; margin-top: 10px;" class="result-count"><?php echo $rowCountPage; ?></b> result/s.</p>
         </section>
-
         <section class="table__body">
-            <table>
+            <table id="myTable2">
                 <thead>
                     <tr>
                         <th width="1%"><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
-                        <th> Asset Tag <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Locations <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Model <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Specification <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Status <span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Asset Tag <span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Location <span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Model <span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Specification <span class="icon-arrow">&UpArrow;</span></th>
+                        <th>Status <span class="icon-arrow">&UpArrow;</span></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                        foreach ($rows as $row) {
-                            $status = $row['status'];
-                            $aId = $row['aId'];
-                            $assettype = $row['assettype'];
-                                
-                            $cpu = $row['cpu'];
-                            $ram = $row['memory'];
-                            $storage = $row['storage'];
-                            $os = $row['os'];
-                            $dimes = $row['dimes'];
-                            $plan = $row['plan'];
-                            $mobile = $row['mobile'];
-
-                            // $mobile = $row['mobile'];
-
-                            $specifications = $operation->reportSpecificationCondition([$row['id']]);
-                    ?>            
+                    <?php 
+                        foreach ($rows as $row): 
+                            $specifications = $operation->reportSpecificationCondition([$row['aId']]);
+                    ?>
                     <tr>
-                        <td><input type="checkbox" class="select" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
-                        <td><a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></a></td>
+                        <td><input type="checkbox" class="select" id="select" name="select[]" value="<?php echo $row['aId']; ?>"></td>
+                        <td><a href="../update/assetUpd.php?id=<?php echo $row['aId']; ?>"><strong><?php echo $row['assettag']; ?></strong></a></td>
                         <td><?php echo $row['location']; ?></td>
                         <td><?php echo $row['model']; ?></td>
                         <td><?php echo $specifications; ?></td>
-                        <td><?php echo "<span class='statusSpan'>". $status ."</span>" ?></td>
+                        <td><?php echo "<span class='statusSpan'>". $row['status'] ."</span>"; ?></td>
                     </tr>
-                    <?php
-                        }
-                    ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </section>
