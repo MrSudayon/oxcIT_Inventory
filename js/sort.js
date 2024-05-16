@@ -62,42 +62,58 @@ const search = document.querySelector('.input-group input'),
 // 1. Searching for specific data of HTML table
 search.addEventListener('input', searchTable);
 
-// function searchTable() {
-//     table_rows.forEach((row, i) => {
-//         let table_data = row.textContent.toLowerCase(),
-//             search_data = search.value.toLowerCase();
 
-//         row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
-//         row.style.setProperty('--delay', i / 20 + 's');
-//     })
 
-//     document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
-//         visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
-//     });
-// }
+function toggle(source) {
+    let checkboxes = document.querySelectorAll('tbody tr:not(.hide) .select');
+    checkboxes.forEach(checkbox => checkbox.checked = source.checked);
+}
+
 function searchTable() {
-    let searchValue = search.value.toLowerCase();
-    let visibleRows = Array.from(table_rows).filter(row => {
+    let searchValue = document.getElementById('searchInput').value.toLowerCase();
+    let visibleRows = Array.from(document.querySelectorAll('tbody tr')).filter(row => {
         let containsCheckbox = row.querySelector('input[type="checkbox"]');
         return (!containsCheckbox || !containsCheckbox.checked) && row.textContent.toLowerCase().includes(searchValue);
     });
 
     visibleRows.forEach((row, i) => {
-        let table_data = row.textContent.toLowerCase();
-        row.classList.remove('hide');
         row.style.setProperty('--delay', (i * 0.1) + 's');
+        row.classList.remove('hide');
     });
 
-    table_rows.forEach(row => {
+    document.querySelectorAll('tbody tr').forEach(row => {
         if (!visibleRows.includes(row)) {
             row.classList.add('hide');
         }
     });
 
-    document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
-        visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
-    });
+    let rowCountPage = visibleRows.length;
+    document.querySelector('.result-count').textContent = rowCountPage;
 }
+
+// function searchTable() {
+//     let searchValue = search.value.toLowerCase();
+//     let visibleRows = Array.from(table_rows).filter(row => {
+//         let containsCheckbox = row.querySelector('input[type="checkbox"]');
+//         return (!containsCheckbox || !containsCheckbox.checked) && row.textContent.toLowerCase().includes(searchValue);
+//     });
+
+//     visibleRows.forEach((row, i) => {
+//         let table_data = row.textContent.toLowerCase();
+//         row.classList.remove('hide');
+//         row.style.setProperty('--delay', (i * 0.1) + 's');
+//     });
+
+//     table_rows.forEach(row => {
+//         if (!visibleRows.includes(row)) {
+//             row.classList.add('hide');
+//         }
+//     });
+
+//     document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
+//         visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
+//     });
+// }
 
 // 2. Sorting | Ordering data of HTML table
 
@@ -119,61 +135,33 @@ table_headings.forEach((head, i) => {
     }
 })
 
-
-// function sortTable(column, sort_asc) {
-//     [...table_rows].sort((a, b) => {
-//         let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase(),
-//             second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
-
-//         return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
-//     })
-//         .map(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
-// }
-
+//  222222
 // function searchTable() {
+//     let searchValue = document.getElementById('searchInput').value.toLowerCase();
 //     let visibleRows = Array.from(table_rows).filter(row => {
 //         let containsCheckbox = row.querySelector('input[type="checkbox"]');
-//         return !containsCheckbox || !containsCheckbox.checked;
+//         return (!containsCheckbox || !containsCheckbox.checked) && row.textContent.toLowerCase().indexOf(searchValue) >= 0;
 //     });
 
 //     visibleRows.forEach((row, i) => {
-//         let table_data = row.textContent.toLowerCase(),
-//             search_data = search.value.toLowerCase();
-
-//         row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
 //         row.style.setProperty('--delay', (i * 0.1) + 's');
+//         row.classList.remove('hide');
 //     });
 
-//     document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
-//         visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
+//     document.querySelectorAll('tbody tr').forEach(row => {
+//         if (!visibleRows.includes(row)) {
+//             row.classList.add('hide');
+//         }
 //     });
+
+//     rowCountPage = visibleRows.length;
+//     document.querySelector('.result-count').textContent = rowCountPage;
 // }
-
-function searchTable() {
-    let searchValue = document.getElementById('searchInput').value.toLowerCase();
-    let visibleRows = Array.from(table_rows).filter(row => {
-        let containsCheckbox = row.querySelector('input[type="checkbox"]');
-        return (!containsCheckbox || !containsCheckbox.checked) && row.textContent.toLowerCase().indexOf(searchValue) >= 0;
-    });
-
-    visibleRows.forEach((row, i) => {
-        row.style.setProperty('--delay', (i * 0.1) + 's');
-        row.classList.remove('hide');
-    });
-
-    document.querySelectorAll('tbody tr').forEach(row => {
-        if (!visibleRows.includes(row)) {
-            row.classList.add('hide');
-        }
-    });
-
-    rowCountPage = visibleRows.length;
-    document.querySelector('.result-count').textContent = rowCountPage;
-}
 
 
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Apply classes to status spans
     var spans = document.getElementsByClassName("statusSpan");
     for (var i = 0; i < spans.length; i++) {
         var span = spans[i];
@@ -186,7 +174,29 @@ document.addEventListener('DOMContentLoaded', function() {
         else if (span.innerHTML === '0') { span.innerText = 'Inactive'; span.classList.add("status", "missing"); }
         else { span.classList.add("status", "missing"); }
     }
+
+    // Attach toggle function to selectAll checkbox
+    document.getElementById('selectAll').addEventListener('click', function(event) {
+        toggle(event.target);
+    });
+
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('input', searchTable);
 });
+// document.addEventListener('DOMContentLoaded', function() {
+//     var spans = document.getElementsByClassName("statusSpan");
+//     for (var i = 0; i < spans.length; i++) {
+//         var span = spans[i];
+//         if (span.innerHTML === 'Deployed') { span.classList.add("status", "deployed"); } 
+//         else if (span.innerHTML === 'To be deploy') { span.classList.add("status", "tobedeploy"); } 
+//         else if (span.innerHTML === 'Outdated') { span.classList.add("status", "outdated"); } 
+//         else if (span.innerHTML === 'For repair') { span.classList.add("status", "repair"); } 
+//         else if (span.innerHTML === 'Sell' || span.innerHTML === 'Defective') { span.classList.add("status", "replace"); } 
+//         else if (span.innerHTML === '1') { span.innerText = 'Active'; span.classList.add("status", "tobedeploy"); }
+//         else if (span.innerHTML === '0') { span.innerText = 'Inactive'; span.classList.add("status", "missing"); }
+//         else { span.classList.add("status", "missing"); }
+//     }
+// });
 
 // Reference Tabs
 function openCity(evt, reference) {

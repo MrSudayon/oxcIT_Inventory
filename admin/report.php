@@ -51,7 +51,7 @@ if(isset($_POST['select'])) {
             
             <tr>
                 <th>Assigned to</th>
-                <th>Asset Type</th>
+                <th>Asset Tag</th>
                 <th>Specification</th>
                 <th>Serial no.</th>
                 <th>Remarks</th>
@@ -66,7 +66,7 @@ if(isset($_POST['select'])) {
                         FROM assets_tbl AS a 
                         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
                         LEFT JOIN employee_tbl AS e1 ON a.lastused = e1.id 
-                        WHERE a.id='$userID' AND a.status!='Archive'";
+                        WHERE a.id='$userID' AND a.status!='Archive' ORDER BY assettag ASC";
                 $res = mysqli_query($db->conn, $sql);
                 // foreach ($selected as $userID) { 
                 //     $sql = "SELECT * FROM assets_tbl WHERE id='$userID' AND status !='Archive'";
@@ -74,6 +74,7 @@ if(isset($_POST['select'])) {
                 
                 while($row = mysqli_fetch_assoc($res)) {
                     $assettype = $row['assettype'];
+                    $assettag = $row['assettag'];
 
                     $cpu = $row['cpu'];
                     $ram = $row['memory'];
@@ -105,7 +106,7 @@ if(isset($_POST['select'])) {
             ?>
             <tr>
                 <td><?php echo $row['ename']; ?></td>
-                <td><?php echo $assettype; ?></td>
+                <td><?php echo $assettag; ?></td>
                 <td><?php echo $specs; ?></td>
                 <td><?php echo $row['serial']; ?></td>
                 <td><?php echo $row['remarks']; ?></td>    

@@ -3,9 +3,13 @@ include '../inc/auth.php';
 include '../inc/listsHead.php'; 
 include '../inc/header.php'; 
 
-$sqlSelectAll = "SELECT *
-                FROM assets_tbl 
-                WHERE status!='Archive'";
+$sqlSelectAll = "SELECT a.*, e.* 
+                FROM assets_tbl AS a 
+                INNER JOIN employee_tbl AS e ON e.id = a.empId 
+                WHERE a.status!='Archive'";
+                // "SELECT *
+                // FROM assets_tbl 
+                // WHERE status!='Archive'";
 $results = mysqli_query($db->conn, $sqlSelectAll);
 
 $results_per_page = 15;
@@ -13,9 +17,13 @@ $results_per_page = 15;
 if (!isset ($_GET['page']) ) {  
     $page = 1;  
 } elseif ($_GET['page'] === 'all') {  
-    $sql =  "SELECT * 
-            FROM assets_tbl 
-            WHERE status!='Archive'";
+    $sql =  "SELECT a.*, e.* 
+            FROM assets_tbl AS a 
+            INNER JOIN employee_tbl AS e ON e.id = a.empId 
+            WHERE a.status!='Archive'";
+    // $sql =  "SELECT * 
+    //         FROM assets_tbl 
+    //         WHERE status!='Archive'";
     $res = mysqli_query($db->conn, $sql);
     $rowCountPage = $res->num_rows;
 } else {
@@ -27,9 +35,10 @@ $number_of_page = ceil ($rowCount / $results_per_page);
 $page_first_result = ($page-1) * $results_per_page;  
 
 if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
-    $sql =  "SELECT * 
-            FROM assets_tbl 
-            WHERE status!='Archive' 
+    $sql =  "SELECT a.*, e.* 
+            FROM assets_tbl AS a 
+            INNER JOIN employee_tbl AS e ON e.id = a.empId 
+            WHERE a.status!='Archive' 
             LIMIT ". $page_first_result . ',' . $results_per_page;
 
     $res = mysqli_query($db->conn, $sql);
@@ -74,6 +83,7 @@ usort($rows, function($a, $b) {
                     <tr>
                         <th width="1%"><input type="checkbox" onClick="toggle(this)" id="selectAll" name="selectAll"></th>
                         <th> Asset Tag <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Locations <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Model <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Specification <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Status <span class="icon-arrow">&UpArrow;</span></th>
@@ -94,11 +104,14 @@ usort($rows, function($a, $b) {
                             $plan = $row['plan'];
                             $mobile = $row['mobile'];
 
+                            // $mobile = $row['mobile'];
+
                             $specifications = $operation->reportSpecificationCondition([$row['id']]);
                     ?>            
                     <tr>
                         <td><input type="checkbox" class="select" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
                         <td><a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></a></td>
+                        <td><?php echo $row['location']; ?></td>
                         <td><?php echo $row['model']; ?></td>
                         <td><?php echo $specifications; ?></td>
                         <td><?php echo "<span class='statusSpan'>". $status ."</span>" ?></td>
