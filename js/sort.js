@@ -77,22 +77,7 @@ function toggle(source) {
 }
 
 function searchTable() {
-    // let searchValue = document.getElementById('searchInput').value.toLowerCase();
-    // let visibleRows = Array.from(document.querySelectorAll('tbody tr')).filter(row => {
-    //     let containsCheckbox = row.querySelector('input[type="checkbox"]');
-    //     return (!containsCheckbox || !containsCheckbox.checked) && row.textContent.toLowerCase().includes(searchValue);
-    // });
 
-    // visibleRows.forEach((row, i) => {
-    //     row.style.setProperty('--delay', (i * 0.1) + 's');
-    //     row.classList.remove('hide');
-    // });
-
-    // document.querySelectorAll('tbody tr').forEach(row => {
-    //     if (!visibleRows.includes(row)) {
-    //         row.classList.add('hide');
-    //     }
-    // });
     let searchValue = document.getElementById('searchInput').value.toLowerCase();
     let tableRows = document.querySelectorAll('tbody tr');
     let visibleRows = [];
