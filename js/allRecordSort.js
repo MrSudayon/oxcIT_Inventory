@@ -22,11 +22,25 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('searchInput').addEventListener('input', searchTable);
 });
 
+function toggle(source) {
+    let checkboxes = document.querySelectorAll('tbody tr:not(.hide) .select');
+    checkboxes.forEach(checkbox => checkbox.checked = source.checked);
+}
+
 function searchTable() {
+
     let searchValue = document.getElementById('searchInput').value.toLowerCase();
-    let visibleRows = Array.from(document.querySelectorAll('tbody tr')).filter(row => {
+    let tableRows = document.querySelectorAll('tbody tr');
+    let visibleRows = [];
+
+    tableRows.forEach(row => {
         let containsCheckbox = row.querySelector('input[type="checkbox"]');
-        return (!containsCheckbox || !containsCheckbox.checked) && row.textContent.toLowerCase().includes(searchValue);
+        if ((!containsCheckbox || !containsCheckbox.checked) && row.textContent.toLowerCase().includes(searchValue)) {
+            row.style.display = '';
+            visibleRows.push(row);
+        } else {
+            row.style.display = 'none';
+        }
     });
 
     visibleRows.forEach((row, i) => {
@@ -70,3 +84,93 @@ document.querySelectorAll('thead th').forEach((head, i) => {
         sortTable(i, sort_asc);
     }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // 6. Converting HTML table to EXCEL File
+
+// const excel_btn = document.querySelector('#toEXCEL');
+
+// const toExcel = function (table) {
+//     // Code For SIMPLE TABLE
+//     // const t_rows = table.querySelectorAll('tr');
+//     // return [...t_rows].map(row => {
+//     //     const cells = row.querySelectorAll('th, td');
+//     //     return [...cells].map(cell => cell.textContent.trim()).join('\t');
+//     // }).join('\n');
+
+//     const t_heads = table.querySelectorAll('th'),
+//         tbody_rows = table.querySelectorAll('tbody tr');
+
+//     const headings = [...t_heads].map(head => {
+//         let actual_head = head.textContent.trim().split(' ');
+//         return actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase();
+//     }).join('\t') + '\t' + 'image name';
+
+//     const table_data = [...tbody_rows].map(row => {
+//         const cells = row.querySelectorAll('td'),
+//             img = decodeURIComponent(row.querySelector('img').src),
+//             data_without_img = [...cells].map(cell => cell.textContent.trim()).join('\t');
+
+//         return data_without_img + '\t' + img;
+//     }).join('\n');
+
+//     return headings + '\n' + table_data;
+// }
+
+// excel_btn.onclick = () => {
+//     const excel = toExcel(customers_table);
+//     downloadFile(excel, 'excel');
+// }
+
+// const downloadFile = function (data, fileType, fileName = '') {
+//     const a = document.createElement('a');
+//     a.download = fileName;
+//     const mime_types = {
+//         'json': 'application/json',
+//         'csv': 'text/csv',
+//         'excel': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+//     }
+//     a.href = `
+//         data:${mime_types[fileType]};charset=utf-8,${encodeURIComponent(data)}
+//     `;
+//     document.body.appendChild(a);
+//     a.click();
+//     a.remove();
+// }

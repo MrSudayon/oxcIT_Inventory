@@ -132,7 +132,7 @@ usort($rows, function($a, $b) {
 
     </main>
 </form>
-<script src="../js/sort.js"></script>
+<script src="../js/allRecordSort.js"></script>
 
 </body>
 </html>
