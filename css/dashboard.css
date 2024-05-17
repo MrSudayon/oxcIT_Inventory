@@ -207,45 +207,6 @@ header {
   transform: translate(6em, -3em);
 }
 
-/* .menu__wrapper.active ~ .menu__items .menu__item:nth-child(1){ 
-    transform: translate(-10em, -3em);
-}
-.menu__wrapper.active ~ .menu__items .menu__item:nth-child(2){ 
-    transform: translate(-6em, -8em);
-}
-
-.menu__wrapper.active ~ .menu__items .menu__item:nth-child(3){ 
-    transform: translate(.1em, -10em);
-}
-
-.menu__wrapper.active ~ .menu__items .menu__item:nth-child(4){ 
-    transform: translate(6em, -8em);
-}
-
-.menu__wrapper.active ~ .menu__items .menu__item:nth-child(5){ 
-    transform: translate(10em, -3em);
-}
-
-.menu__wrapper.active ~ .menu__items .menu__item:nth-child(6){ 
-    transform: translate(10em, 3em);
-}
-
-.menu__wrapper.active ~ .menu__items .menu__item:nth-child(7){
-    transform: translate(6em, 8em);
-}
-
-.menu__wrapper.active ~ .menu__items .menu__item:nth-child(8){ 
-    transform: translate(.1em, 10em);
-}
-
-.menu__wrapper.active ~ .menu__items .menu__item:nth-child(9){ 
-    transform: translate(-6em, 8em);
-}
-
-.menu__wrapper.active ~ .menu__items .menu__item:nth-child(10){ 
-    transform: translate(-10em, 3em);
-} */
-
 .material-icons-outlined {
   vertical-align: middle;
   line-height: 1px;
@@ -357,7 +318,7 @@ header {
 
 @media screen and (max-width: 1920px) {
   .grid-container {
-    grid-template-rows: .45fr 3fr;
+    grid-template-rows: .35fr 3fr;
   }
   .menu-icon {
     display: inline;

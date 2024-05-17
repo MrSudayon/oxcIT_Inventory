@@ -75,7 +75,7 @@
 
             <div class="card">
             <div class="card-inner">
-                <h3>Repair</h3>
+                <h3>REPAIR</h3>
                 <span class="material-icons-outlined">build_circle</span>
             </div>
             <h1><?php 
