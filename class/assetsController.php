@@ -362,16 +362,28 @@ class assetsController {
     public function editReference($id) {
         global $db;
 
-        $refId = mysqli_real_escape_string($db->conn, $id);
-        $sql = "SELECT a.id, 
-                r.assetId, r.id AS refId, r.name, 
+        // $refId = mysqli_real_escape_string($db->conn, $id);
+        $refNo = mysqli_real_escape_string($db->conn, $id);
+        $sql = "SELECT DISTINCT 
+                r.name, 
                 r.accountabilityRef, r.accountabilityStatus, r.accountabilityFile AS accountabilityFile, r.accountabilityDate,
                 r.turnoverRef, r.turnoverStatus, r.turnoverFile AS turnoverFile, r.turnoverDate, 
                 e.id, e.name AS empName 
                 FROM assets_tbl AS a 
                 LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
                 LEFT JOIN employee_tbl AS e ON e.id = a.empId 
-                WHERE r.id='$refId'";
+                WHERE r.accountabilityRef='$refNo' OR r.turnoverRef='$refNo'";
+        
+        // "SELECT DISTINCT a.id, 
+        //         r.assetId, r.id AS refId, r.name, 
+        //         r.accountabilityRef, r.accountabilityStatus, r.accountabilityFile AS accountabilityFile, r.accountabilityDate,
+        //         r.turnoverRef, r.turnoverStatus, r.turnoverFile AS turnoverFile, r.turnoverDate, 
+        //         e.id, e.name AS empName 
+        //         FROM assets_tbl AS a 
+        //         LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+        //         LEFT JOIN employee_tbl AS e ON e.id = a.empId 
+
+                // WHERE r.id='$refId'";
         $res = mysqli_query($db->conn, $sql);
         if($res->num_rows == 1){
             $data = $res->fetch_assoc();
@@ -380,11 +392,12 @@ class assetsController {
             return false;
         }
     }
-    public function updateReference($input, $id, $action) {
+    public function updateReference($input, $id, $eId, $action) {
         global $db;
         global $sess_name;
 
-        $refId = mysqli_real_escape_string($db->conn, $id);
+        $refNo = mysqli_real_escape_string($db->conn, $id);
+        $eName = mysqli_real_escape_string($db->conn, $eId);
 
         if($action == 'AccountabilityRef') {
 
@@ -394,12 +407,12 @@ class assetsController {
 
             $sql = "UPDATE reference_tbl 
                     SET accountabilityStatus = '$acctStatus', accountabilityDate = '$acctDate', accountabilityFile = '$acctFile' 
-                    WHERE id='$refId'";
+                    WHERE name='$eName' AND (accountabilityRef='$refNo' OR turnoverRef='$refNo')";
             $result = $db->conn->query($sql);
 
             if($result) {
                 mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                VALUES('', '$sess_name', 'Updated reference id: $refId' , NOW())");
+                VALUES('', '$sess_name', 'Updated reference no: $refNo' , NOW())");
 
                 return true;
             } else {

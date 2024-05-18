@@ -276,6 +276,7 @@ if(isset($_POST['updateLocation'])) {
 
 if(isset($_POST['update-acctRef'])) {
     $id = mysqli_real_escape_string($db->conn,$_POST['id']);
+    $eId = mysqli_real_escape_string($db->conn,$_POST['eId']);
 
     $accFileName = mysqli_real_escape_string($db->conn,$_POST['accountabilityFile']);
 
@@ -320,7 +321,7 @@ if(isset($_POST['update-acctRef'])) {
 
     $action = mysqli_real_escape_string($db->conn,$_POST['action']);
    
-    $result = $assetController->updateReference($input, $id, $action);
+    $result = $assetController->updateReference($input, $id, $eId, $action);
 
     if($result) {
         echo "<script>
