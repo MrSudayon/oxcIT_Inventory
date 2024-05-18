@@ -32,7 +32,7 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
         r.assetId, r.name AS rName, r.accountabilityRef, r.turnoverRef, r.turnoverStatus, r.referenceStatus 
         FROM assets_tbl AS a 
         LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
-        WHERE a.empId='$eid' AND r.name='$eid' AND a.status = 'Deployed' AND referenceStatus!='0'"; 
+        WHERE a.empId='$eid' AND r.name='$eid' AND a.status = 'Deployed'"; 
         
     $results = mysqli_query($db->conn, $sql);
     $rowCount = $results->num_rows;
