@@ -60,7 +60,7 @@ header {
     z-index: 10;
 }
 
-main.table {   
+.table {   
     position: absolute;
     top: 0;
     min-height: 100dvh;
@@ -219,11 +219,15 @@ span.disable-acctRef {
 /* Style the tab content */
 .tabcontent {
     overflow: auto;
-    display: none;
+    height: calc(80dvh - 1rem);
+    display: block;
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-radius: 0 0 .6rem .6rem;
     border-top: none;
+}
+.hidden {
+    display: none;
 }
 
 .ref__table__header {
@@ -303,15 +307,6 @@ table {
     color: white;
     width: 100%;
 }
-/* 
-td img {
-    width: 36px;
-    height: 36px;
-    margin-right: .5rem;
-    border-radius: 50%;
-
-    vertical-align: middle;
-} */
 
 table, th, td {
     border-collapse: collapse;
@@ -745,4 +740,3 @@ form .button input:hover {
         overflow-y: scroll;
     }
 }
-

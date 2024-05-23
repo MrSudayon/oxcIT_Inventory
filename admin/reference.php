@@ -105,7 +105,7 @@ $trnReferenceTbl = $operation->getTrnReferenceTable();
         </section>
     </div>
 
-    <div id="Turnover" class="tabcontent">
+    <div id="Turnover" class="tabcontent hidden">
         <section class="ref__table__header">
             <div class="input-group">
                 <input type="search" placeholder="Search Data...">
