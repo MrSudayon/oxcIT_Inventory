@@ -79,7 +79,7 @@ include '../inc/header.php';
                 <thead>
                     <tr>
                         <th hidden> Serial </th>
-                        <th> Asset Tag <span class="icon-arrow">&UpArrow;</span></th>
+                        <th data-column="assettag"> Asset Tag <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Model <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Specification <span class="icon-arrow">&UpArrow;</span></th>
                         <th hidden> Assigned </th>
@@ -102,7 +102,7 @@ include '../inc/header.php';
                     ?>            
                     <tr>
                         <td hidden><?php echo $row['serial']; ?></td>
-                        <td><a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></td></a>
+                        <td data-column="assettag"><a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></td></a>
                         <td><?php echo $row['model']; ?></td>
                         <td>
                             <?php 
@@ -156,9 +156,9 @@ include '../inc/header.php';
             }
         ?>
     </main>
-    <script src="../js/sort.js"></script>
 
 </div>
+<script src="../js/sort.js"></script>
 
 </body>
 </html>

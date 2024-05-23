@@ -400,9 +400,7 @@ if(isset($_GET['generateTrn'])) {
                 ?>
             </table>
             
-<?php
-}
-?>
+
 <div class="info"><br>
             <h3>Responsibilities</h3>
             <p>
@@ -432,6 +430,9 @@ if(isset($_GET['generateTrn'])) {
     </div>
     
 <script src="../js/print.js"></script>
+<?php
+}
+?>
 </body>
 </html>
 

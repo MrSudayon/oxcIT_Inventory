@@ -44,15 +44,31 @@ function searchTable() {
     document.querySelector('.result-count').textContent = rowCountPage;
 }
 
-// Sorting table
+function sortRows(a, b) {
+    const aMatches = a.querySelector('td[data-column="assettag"]').textContent.match(/\d+$/);
+    const bMatches = b.querySelector('td[data-column="assettag"]').textContent.match(/\d+$/);
+    const aNum = aMatches ? parseInt(aMatches[0], 10) : 0;
+    const bNum = bMatches ? parseInt(bMatches[0], 10) : 0;
+
+    if (aNum === bNum) {
+        return a.querySelector('td[data-column="assettag"]').textContent.localeCompare(b.querySelector('td[data-column="assettag"]').textContent);
+    }
+    return aNum - bNum;
+}
+
 function sortTable(column, sort_asc) {
     let table_rows = Array.from(document.querySelectorAll('tbody tr'));
-    let sorted_rows = table_rows.sort((a, b) => {
-        let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase();
-        let second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
+    let sorted_rows;
 
-        return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
-    });
+    if (column === 'assettag') {
+        sorted_rows = table_rows.sort((a, b) => sort_asc ? sortRows(a, b) : sortRows(b, a));
+    } else {
+        sorted_rows = table_rows.sort((a, b) => {
+            let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase();
+            let second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
+            return sort_asc ? (first_row < second_row ? -1 : 1) : (first_row < second_row ? 1 : -1);
+        });
+    }
 
     let tbody = document.querySelector('tbody');
     sorted_rows.forEach(row => {

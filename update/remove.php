@@ -37,12 +37,16 @@ if(isset($_GET['assetID'])) {
     header("Location: \"$url\"");
 }
 
-if(isset($_GET['unassignId']) && isset($_GET['empId'])) {
+// if(isset($_GET['unassignId']) && isset($_GET['empId'])) {
+if(isset($_GET['unassignId']) && isset($_GET['empId']) && isset($_GET['voidRemark'])) {
+
     $id = $_GET['unassignId'];
     $empId = $_GET['empId'];
+    $voidRemarks = $_GET['voidRemark'];
+
     $name = $user['username'];
     
-    $query = mysqli_query($db->conn, "UPDATE assets_tbl SET status='To be deploy', empId='0' WHERE id='$id'");
+    $query = mysqli_query($db->conn, "UPDATE assets_tbl SET status='To be deploy', remarks='$voidRemarks' empId='0' WHERE id='$id'");
     
     $tag = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $id");
     while($row = $tag->fetch_assoc()) {
@@ -50,7 +54,7 @@ if(isset($_GET['unassignId']) && isset($_GET['empId'])) {
         $assettype = $row['assettype'];
     }
     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                            VALUES ('', '$name', 'Unassigned item: $assettag from emp: $empId Record', NOW())");
+                            VALUES ('', '$name', 'Unassigned item: $assettag from emp: $empId Record. Remarks: '$voidRemarks', NOW())");
     
    
     header("Location: ../admin/employeeLists.php");
