@@ -281,6 +281,10 @@ header {
   background-color: #42adff;
 }
 
+.card:nth-child(7) {
+  background-color: #ff745b;
+}
+
 .card-inner {
     display: flex;
     align-items: center;

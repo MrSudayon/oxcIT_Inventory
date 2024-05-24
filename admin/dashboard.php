@@ -94,7 +94,19 @@
                 echo $sell; 
             ?></h1>
             </div>
+
+            <div class="card">
+            <div class="card-inner">
+                <h3>USER WITHOUT ACC..</h3>
+                <span class="material-icons-outlined">pending_actions</span>
+            </div>
+            <h1><?php 
+                $noacc = $select->getUserNoAccountability(); 
+                echo $noacc; 
+            ?></h1>
+            </div>
         </div>
+
 
         <div class="charts">
 

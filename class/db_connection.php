@@ -191,6 +191,16 @@ class Select extends Connection {
         $count = $row['count'];
         return $count;
     }
+    public function getUserNoAccountability() {
+        $result = mysqli_query($this->conn, "SELECT COUNT(DISTINCT name) AS count 
+                                            FROM reference_tbl 
+                                            WHERE name != '' 
+                                            AND accountabilityStatus = '0' 
+                                            AND referenceStatus = '1'");
+        $row = mysqli_fetch_assoc($result);
+        $count = $row['count'];
+        return $count;
+    }
 }
 
 class get_All_User extends Connection {
