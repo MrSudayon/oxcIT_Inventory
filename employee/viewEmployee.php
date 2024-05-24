@@ -213,7 +213,7 @@ textarea {
                             <tr>
                                 <td><input type="checkbox" class="select" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
                                 <td>
-                                    <strong><?php echo $assettag; ?></strong><br>~<br>
+                                    <a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></a><br>~<br>
                                     <?php echo $specification; ?>
                                 </td>
                                 <td><?php echo $accountabilityRef; ?></td>
