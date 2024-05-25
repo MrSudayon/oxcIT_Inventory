@@ -302,6 +302,20 @@ class Operations {
         $db->conn->close();
     }
 
+
+
+    function getThyNames($empId) {
+        global $db;
+
+        $qrySelect = "SELECT * FROM employee_tbl WHERE id='$empId'";
+        $result = mysqli_query($db->conn, $qrySelect);
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $empName = $row['name'];
+        }
+
+        return $empName;
+    }
     // Getting reference table values
     function getAccReferenceTable() {
         global $db;
@@ -315,7 +329,7 @@ class Operations {
                     LEFT JOIN employee_tbl AS e ON a.empId = e.id 
                     WHERE referenceStatus='1' AND status='Deployed' AND accountabilityRef!=''
                     GROUP BY rname, accountabilityRef 
-                    ORDER BY referenceStatus DESC";
+                    ORDER BY accountabilityStatus, ename ASC";
                         
                         // Working 5-8-24
                         // "SELECT a.id AS aId, a.empId, a.status AS status, a.assettype, a.assettag AS tag, a.model, a.remarks, 

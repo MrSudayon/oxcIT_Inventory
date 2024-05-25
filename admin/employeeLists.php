@@ -68,7 +68,7 @@ usort($rows, function($a, $b) {
                         <th> Division <span class="icon-arrow">&UpArrow;</span></th>
                         <!-- <th>  <span class="icon-arrow">&UpArrow;</span></th> -->
                         <th> Status <span class="icon-arrow">&UpArrow;</span></th>
-                        <th width='10%' style="pointer-events: none;"> Action </th>
+                        <!-- <th width='10%' style="pointer-events: none;"> Action </th> -->
                     </tr>
                 </thead>
                 <tbody>          
@@ -82,9 +82,9 @@ usort($rows, function($a, $b) {
                         <td><?php echo $row['location']; ?></td>
                         <td><?php echo $row['division']; ?></td>
                         <td><?php echo "<span class='statusSpan'>".$status."</span>" ?></td>
-                        <td>
-                            <a href="../update/remove.php?assetID=<?php echo $eid; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
-                        </td>   
+                        <!-- <td>
+                            <a href="../update/remove.php?empID=?php echo $eid; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
+                        </td>    -->
                     </tr>
                     <?php } ?>
                 </tbody>

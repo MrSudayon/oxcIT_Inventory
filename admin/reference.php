@@ -197,6 +197,7 @@ $trnReferenceTbl = $operation->getTrnReferenceTable();
     </div>
 
 </main>
+<script src="../js/sort.js"></script>
 <script>
 function openCity(evt, cityName) {
   var i, tabcontent, tablinks;
@@ -212,7 +213,6 @@ function openCity(evt, cityName) {
   evt.currentTarget.className += " active";
 }
 </script>
-<script src="../js/sort.js"></script>
-   
+
 </body>
 </html> 

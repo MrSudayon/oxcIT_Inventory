@@ -1,6 +1,7 @@
 <?php
 include '../inc/auth.php';
 
+
 if(isset($_GET['assetID'])) {
     $id = $_GET['assetID'];
 
@@ -46,15 +47,33 @@ if(isset($_GET['unassignId']) && isset($_GET['empId']) && isset($_GET['voidRemar
 
     $name = $user['username'];
     
-    $query = mysqli_query($db->conn, "UPDATE assets_tbl SET status='To be deploy', remarks='$voidRemarks' empId='0' WHERE id='$id'");
+    // First update query
+    $query = "UPDATE assets_tbl SET status='To be deploy', remarks='$voidRemarks', empId='0' WHERE id='$id'";
+    $result = mysqli_query($db->conn, $query);
+
+    if ($result) {
+        // Second update query
+        $query1 = "UPDATE reference_tbl SET name='', accountabilityRef='', accountabilityStatus='0' WHERE assetId='$id'";
+        $result1 = mysqli_query($db->conn, $query1);
+
+        if ($result1) {
+            echo "Both updates were successful.";
+        } else {
+            echo "Error updating reference_table: " . mysqli_error($db->conn);
+        }
+    } else {
+        echo "Error updating assets_tbl: " . mysqli_error($db->conn);
+    }
     
     $tag = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $id");
     while($row = $tag->fetch_assoc()) {
         $assettag = $row['assettag'];
         $assettype = $row['assettype'];
     }
+
+    $empName = $operation->getThyNames($empId);
     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                            VALUES ('', '$name', 'Unassigned item: $assettag from emp: $empId Record. Remarks: '$voidRemarks', NOW())");
+                            VALUES ('', '$name', 'Unassigned item: $assettag from: $empName. Remarks: $voidRemarks', NOW())");
     
    
     header("Location: ../admin/employeeLists.php");
