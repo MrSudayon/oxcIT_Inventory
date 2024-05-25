@@ -125,11 +125,6 @@ header {
 .menu__item {
     position: absolute;
 
-    width: 4em;
-    height: 4em;
-    background-color: #fff;
-    border-radius: 50%;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -138,7 +133,18 @@ header {
 
     transition: transform .5s ease;
 }
+.menu__item .items {
+  position: absolute;
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 2em;
+    height: 2em;
+    background-color: #fff;
+    border-radius: 50%;
+}
 .menu__item a {
     color: var(--color);
     font-size: 2rem;

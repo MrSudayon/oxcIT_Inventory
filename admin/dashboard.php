@@ -131,35 +131,35 @@
 <div class="menu" onclick="toggleDim()">
     <div class="menu__wrapper"><i class="fa-solid fa-plus"></i></div>
     <ul class="menu__items">
-        <li class="menu__item" alt="laptop">
-        <a href="../assetLists/Laptop.php" alt="laptop"><i class="fa-solid fa-laptop"></i></a>
+        <li class="menu__item">
+        <a class="items" href="../assetLists/Laptop.php"><i class="fa-solid fa-laptop"></i></a>
         </li>
         <li class="menu__item">
-        <a href="../assetLists/Desktop.php"><i class="fa-solid fa-computer"></i></a>
+        <a class="items" href="../assetLists/Desktop.php"><i class="fa-solid fa-computer"></i></a>
         </li>
         <li class="menu__item">
-        <a href="../assetLists/Monitor.php"><i class="fa-solid fa-tv"></i></a>
+        <a class="items" href="../assetLists/Monitor.php"><i class="fa-solid fa-tv"></i></a>
         </li>
         <li class="menu__item">
-        <a href="../assetLists/Printer.php"><i class="fa-solid fa-print"></i></a>
+        <a class="items" href="../assetLists/Printer.php"><i class="fa-solid fa-print"></i></a>
         </li>
         <li class="menu__item">
-        <a href="../assetLists/UPS.php"><i class="fa-solid fa-bolt"></i></a>
+        <a class="items" href="../assetLists/UPS.php"><i class="fa-solid fa-bolt"></i></a>
         </li>
         <li class="menu__item">
-        <a href="../assetLists/Mobile.php"><i class="fa-solid fa-mobile-screen-button"></i></a>
+        <a class="items" href="../assetLists/Mobile.php"><i class="fa-solid fa-mobile-screen-button"></i></a>
         </li>
         <li class="menu__item">
-        <a href="../assetLists/SIM.php"><i class="fa-solid fa-sim-card"></i></a>
+        <a class="items" href="../assetLists/SIM.php"><i class="fa-solid fa-sim-card"></i></a>
         </li>
         <li class="menu__item">
-        <a href="../admin/employeeLists.php"><i class="fa-solid fa-address-book"></i></a>
+        <a class="items" href="../admin/employeeLists.php"><i class="fa-solid fa-address-book"></i></a>
         </li>
         <li class="menu__item">
-        <a href="../admin/adminConfig.php"><i class="fa-solid fa-gears"></i></a>
+        <a class="items" href="../admin/adminConfig.php"><i class="fa-solid fa-gears"></i></a>
         </li>
         <li class="menu__item">
-        <a href="../admin/reference.php"><i class="fa-solid fa-asterisk"></i></a>
+        <a class="items" href="../admin/reference.php"><i class="fa-solid fa-asterisk"></i></a>
         <!-- <a href="../admin/references.php"><i class="fa-solid fa-asterisk"></i></a> -->
         </li>
     </ul>
