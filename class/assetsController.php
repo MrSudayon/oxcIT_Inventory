@@ -98,7 +98,7 @@ class assetsController {
         
             if ($refResult->num_rows == 0) {
                 // Insert new reference
-                $referenceQuery = "INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 0)";
+                $referenceQuery = "INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 1)";
                 $referenceStmt = $db->conn->prepare($referenceQuery);
                 $referenceStmt->bind_param("is", $assetID, $empId);
                 $referenceResult = $referenceStmt->execute();
@@ -109,7 +109,7 @@ class assetsController {
 
             } else {
 
-                $refQuery = "SELECT * FROM reference_tbl WHERE assetId=? AND referenceStatus!='2'";
+                $refQuery = "SELECT * FROM reference_tbl WHERE assetId=? AND referenceStatus='1'";
                 $refStmt = $db->conn->prepare($refQuery);
                 $refStmt->bind_param("i", $assetID);
                 $refStmt->execute();
@@ -117,7 +117,7 @@ class assetsController {
 
                 if($refResult->num_rows == 0) {
 
-                    $qry = "INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 0)";
+                    $qry = "INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 1)";
                     $stmt = $db->conn->prepare($qry);
                     $stmt->bind_param("is", $assetID, $empId);
                     $result = $stmt->execute();
