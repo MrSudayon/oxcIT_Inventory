@@ -116,7 +116,7 @@ class assetsController {
                 $refResult = $refStmt->get_result();
 
                 if($refResult->num_rows == 0) {
-                    
+
                     $qry = "INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 0)";
                     $stmt = $db->conn->prepare($qry);
                     $stmt->bind_param("is", $assetID, $empId);
@@ -129,9 +129,7 @@ class assetsController {
                     $stmt = $db->conn->prepare($qry);
                     $stmt->bind_param("si", $empId, $assetID);
                     $result = $stmt->execute();
-               
-                    echo "Success ";
-                    die();
+        
                 }
                 
             }

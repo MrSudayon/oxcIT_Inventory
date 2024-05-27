@@ -31,9 +31,9 @@ include '../inc/header.php';
                             <option value="<?=$result['division']?>"><?=$result['division']?></option>
                             <?php
                                 
-                                $emp = $operation->getEmpDiv();
+                                $empD = $operation->getEmpDiv();
 
-                                foreach($emp as $empDiv) {
+                                foreach($empD as $empDiv) {
                             ?>
                                 <option value="<?=$empDiv['name']?>"><?php echo $empDiv['name']; ?></option>
                             <?php
@@ -46,7 +46,9 @@ include '../inc/header.php';
                         <select name="location">
                             <option value="<?=$result['location']?>"><?=$result['location']?></option>
                             <?php
-                                foreach($emp as $empLoc) {
+                                $empL = $operation->getEmpLoc();
+
+                                foreach($empL as $empLoc) {
                             ?>
                                 <option value="<?=$empLoc['name']?>"><?php echo $empLoc['name']; ?></option>
                             <?php
