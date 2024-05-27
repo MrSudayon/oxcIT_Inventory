@@ -243,7 +243,7 @@ class assetsController {
         $status = $input['status'];
         
         // validation of Turnover reference code
-        $qry = "UPDATE employee_tbl SET name='$empname', division='$division', location='$location', status='$status' WHERE id='$empID' LIMIT 1";
+        $qry = "UPDATE employee_tbl SET name='$empname', division='$division', location='$location', empStatus='$status' WHERE id='$empID' LIMIT 1";
         $result = $db->conn->query($qry);
 
         if($result) {

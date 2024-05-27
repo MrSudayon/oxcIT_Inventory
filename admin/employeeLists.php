@@ -3,7 +3,7 @@ include '../inc/auth.php';
 include '../inc/listsHead.php'; 
 include '../inc/header.php'; 
 
-$sqlSelectAll = "SELECT * FROM employee_tbl WHERE empStatus=1";
+$sqlSelectAll = "SELECT * FROM employee_tbl WHERE empStatus=1 ORDER BY name ASC, empStatus DESC";
 $results = mysqli_query($db->conn, $sqlSelectAll);
 
 $results_per_page = 15;
@@ -11,7 +11,7 @@ $results_per_page = 15;
 if (!isset ($_GET['page']) ) {  
     $page = 1;  
 } elseif ($_GET['page'] === 'all') {  
-    $sql = "SELECT * FROM employee_tbl WHERE empStatus=1";
+    $sql = "SELECT * FROM employee_tbl WHERE empStatus=1 ORDER BY name ASC, empStatus DESC";
     $res = mysqli_query($db->conn, $sql);
     $rowCountPage = $res->num_rows;
 } else {
@@ -23,7 +23,7 @@ $number_of_page = ceil ($rowCount / $results_per_page);
 $page_first_result = ($page-1) * $results_per_page;  
 
 if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
-    $sql = "SELECT * FROM employee_tbl WHERE empStatus=1 
+    $sql = "SELECT * FROM employee_tbl WHERE empStatus=1 ORDER BY name ASC, empStatus DESC 
             LIMIT $page_first_result, $results_per_page";
 
     $res = mysqli_query($db->conn, $sql);
