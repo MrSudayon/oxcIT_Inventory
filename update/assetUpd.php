@@ -246,17 +246,17 @@ include '../inc/header.php';
                             <span class="details" style="margin-bottom: 10px;">Assigned To</span>
                             <select name="assigned" id="assigned" class="assigned" style="background-color: #ccc; font-weight: 600;">
                                 <option value="<?=$result['assignedId']?>"><?=$result['empName']?></option>
-                                <option value=''>None</option>
-                                <?php
+                                <!-- <option value=''>None</option>
+                                ?php
                                     $user = $getAllUser->selectAllEmp();
                                     foreach($user as $row) {
                                 ?>
-                                <option value="<?php echo $row['id']; ?>">
-                                    <?php echo $row['name']; ?>
+                                <option value="?php echo $row['id']; ?>">
+                                    ?php echo $row['name']; ?>
                                 </option>
-                                <?php
+                                ?php
                                     }
-                                ?>
+                                ?> -->
                             </select>
                         </div>              
 

@@ -210,6 +210,33 @@ if(isset($_GET['generateAcc'])) {
                 }
                 ?>
             </table>
+
+        <div class="info"><br>
+            <h3>&nbsp;Responsibilities:</h3>
+            <p>
+            &nbsp;&nbsp;&nbsp;&nbsp;I, <b><?php echo $empName; ?></b>, acknowledge that the above-mentioned asset has been issued to me for the purpose of performing my job responsibilities. I understand and agree to the following responsibilities:
+            <br><br></p>
+            <p style="font-weight: 600;">
+            1. I am responsible for the proper use and care of the assigned asset.
+            <br>2. I will report any damage, loss, or malfunction of the asset to my supervisor immediately.
+            <br>3. I will not loan, transfer, or dispose of the asset without prior authorization from the appropriate authority.
+            <br>4. I will return the asset in good condition upon termination of my employment or upon request by the company.
+            </p>
+        
+            <br><br>
+            <h3>Asset Return:</h3>
+            <p>
+            &nbsp;&nbsp; &nbsp;&nbsp;I understand that I am required to return the asset on the specified date or upon termination of my employment. Failure to return the asset in good condition may result in disciplinary action and/or financial responsibility for repair or replacement costs.</p>
+            <br><br><h4>Employee Signature: _________________</h4>
+                <h4>Department: <b><?php echo $dept; ?></b></h4>
+                <h4>Date: ___________</h4><br><br>
+
+                [For Asset Administrator Use Only]<br><br>
+                <p>Deployed by: ____________<br>
+                Signature: ______________</p>
+            <br>
+        </div>
+    </div>
             
 <?php
 }
@@ -325,114 +352,109 @@ if(isset($_GET['generateTrn'])) {
         <div class="reference-code" align="right">
             <?php echo "<b>Ref#: " . $trn_ref . "</b>"; ?>
         </div>
-            <table class="assets-table">
-                <tr>
-                    <th>Asset Tag</th>
-                    <th>Model</th>
-                    <th>Specification</th>
-                    <th>Serial no.</th>
-                    <th>Date Deployed</th>
-                    <th>Remarks</th>
-                </tr>
-                <?php
-                if(isset($selected)) {
+        <table class="assets-table">
+            <tr>
+                <th>Asset Tag</th>
+                <th>Model</th>
+                <th>Specification</th>
+                <th>Serial no.</th>
+                <th>Date Deployed</th>
+                <th>Remarks</th>
+            </tr>
+            <?php
+            if(isset($selected)) {
+
+                foreach ($selected as $assetID) {
+                    $sql = "SELECT * FROM assets_tbl WHERE id='$assetID' AND status !='Archive'";
+                    $res = mysqli_query($db->conn, $sql);
     
-                    foreach ($selected as $assetID) {
-                        $sql = "SELECT * FROM assets_tbl WHERE id='$assetID' AND status !='Archive'";
-                        $res = mysqli_query($db->conn, $sql);
-        
-                        while($row = mysqli_fetch_assoc($res)) {
-                            $aId = $row['id'];
-                            $assettag = $row['assettag'];
-                            $model = $row['model'];
-    
-                            $serial = $row['serial'];
-                            $datedeployed = $row['datedeployed'];
-                            $remarks = $row['remarks'];
-        
-                            $specification = $operation->specificationCondition($aId);
-                    ?>
-                    <tr>
-                        <td><?php echo $assettag; ?></td>
-                        <td><?php echo $model; ?></td>
-                        <td><?php echo $specification; ?></td> 
-                        <td><?php echo $serial; ?></td>
-                        <td><?php echo $datedeployed; ?></td>
-                        <td><?php echo $remarks; ?></td>    
-                    </tr>
-                    <?php
-                        }
-                    } 
-                        
-                }
-                if(isset($selectedReferenceCode)) {
-                    // Function for getting all same reference codes
-                    $getAll = $operation->getAllSameCodes($selectedReferenceCode);
-    
-                    while($row = mysqli_fetch_assoc($getAll)) {
-                        $aId[] = $row['aId'];
-                        $assettype = $row['assettype'];
-    
+                    while($row = mysqli_fetch_assoc($res)) {
+                        $aId = $row['id'];
+                        $assettag = $row['assettag'];
+                        $model = $row['model'];
+
                         $serial = $row['serial'];
                         $datedeployed = $row['datedeployed'];
                         $remarks = $row['remarks'];
     
                         $specification = $operation->specificationCondition($aId);
-                    ?>
-                    <tr>
-                        <td><?php echo $assettype; ?></td>
-                        <td><?php echo $specification; ?></td> 
-                        <td><?php echo $serial; ?></td>
-                        <td><?php echo $datedeployed; ?></td>
-                        <td><?php echo $remarks; ?></td>    
-                    </tr>
-                    <?php
-                    }
-                    
-                }
-    
-                $result = $operation->getSpecificEmp($empId);
-    
-                while($row = mysqli_fetch_assoc($result)) {
-                    $empName = $row['name'];
-                    $dept = $row['division'];
-                }
                 ?>
-            </table>
-            
+                <tr>
+                    <td><?php echo $assettag; ?></td>
+                    <td><?php echo $model; ?></td>
+                    <td><?php echo $specification; ?></td> 
+                    <td><?php echo $serial; ?></td>
+                    <td><?php echo $datedeployed; ?></td>
+                    <td><?php echo $remarks; ?></td>    
+                </tr>
+                <?php
+                    }
+                } 
+                    
+            }
+            if(isset($selectedReferenceCode)) {
+                // Function for getting all same reference codes
+                $getAll = $operation->getAllSameCodes($selectedReferenceCode);
 
-<div class="info"><br>
-            <h3>Responsibilities</h3>
+                while($row = mysqli_fetch_assoc($getAll)) {
+                    $aId[] = $row['aId'];
+                    $assettype = $row['assettype'];
+
+                    $serial = $row['serial'];
+                    $datedeployed = $row['datedeployed'];
+                    $remarks = $row['remarks'];
+
+                    $specification = $operation->specificationCondition($aId);
+                ?>
+                <tr>
+                    <td><?php echo $assettype; ?></td>
+                    <td><?php echo $specification; ?></td> 
+                    <td><?php echo $serial; ?></td>
+                    <td><?php echo $datedeployed; ?></td>
+                    <td><?php echo $remarks; ?></td>    
+                </tr>
+                <?php
+                }
+                
+            }
+
+            $result = $operation->getSpecificEmp($empId);
+
+            while($row = mysqli_fetch_assoc($result)) {
+                $empName = $row['name'];
+                $dept = $row['division'];
+            }
+            ?>
+        </table>
+
+        <div class="info"><br>
+            <h4>&nbsp;Reason:</h4><br>
+            <h3>Acknowledgment:</h3>
             <p>
-            &nbsp;&nbsp; &nbsp;&nbsp;I, <b><?php echo $empName; ?></b>, acknowledge that the above-mentioned asset has been issued to me for the purpose of performing my job responsibilities. I understand and agree to the following responsibilities:
-            <br><br></p>
-            <p style="font-weight: 600;">
-            1. I am responsible for the proper use and care of the assigned asset.
-            <br>2. I will report any damage, loss, or malfunction of the asset to my supervisor immediately.
-            <br>3. I will not loan, transfer, or dispose of the asset without prior authorization from the appropriate authority.
-            <br>4. I will return the asset in good condition upon termination of my employment or upon request by the company.
+            &nbsp;&nbsp;I, <b><?php echo $empName; ?></b>, acknowledge that I have returned the above-mentioned equipment in the condition stated above. I understand that any damage or missing items may result in charges or disciplinary action.
+            <br><br>
+            <h3>Asset Administrator:</h3>
+            <p>
+            &nbsp;&nbsp;I, the undersigned, approve the transfer of the equipment as documented in this form.<br>
+            <br>Asset Administrator: [Signature] __________________    [Date] __________</p>
+            <br><br>
+            [For Asset Administrator Use Only]<br><br>
+            <h3>Asset Status:</h3>
+            <p>
+            ☐ Accepted in Good Condition<br>
+            ☐ Accepted with Noted Issues (please specify): _______________________
             </p>
-            
-            <br><br>
-            <h3>Asset Return:</h3>
-            <p>
-            &nbsp;&nbsp; &nbsp;&nbsp;I understand that I am required to return the asset on the specified date or upon termination of my employment. Failure to return the asset in good condition may result in disciplinary action and/or financial responsibility for repair or replacement costs.</p>
-            <br>[For Asset Administrator Use Only]<br><br>
-                <p>Deployed by: ____________<br>
-                Signature: ______________</p>
-            <br><br>
-            
-                <h4>Employee Signature: _________________</h4>
-                <h4>Department: <b><?php echo $dept; ?></b></h4>
-                <h4>Date: ___________</h4><br>
         </div>
-        
     </div>
-    
-<script src="../js/print.js"></script>
 <?php
 }
 ?>
+    
+<script src="../js/print.js"></script>
+
+
+
+
 </body>
 </html>
 
