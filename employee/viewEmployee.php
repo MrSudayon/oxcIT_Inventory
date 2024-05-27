@@ -29,7 +29,7 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
     $sql =
         "SELECT DISTINCT a.id AS aId, a.empId, a.assettype, a.assettag, a.status, 
         a.cpu, a.memory, a.storage, a.os, a.dimes, a.plan, a.mobile, 
-        r.assetId, r.name AS rName, r.accountabilityRef, r.turnoverRef, r.turnoverStatus, r.referenceStatus 
+        r.assetId, r.name AS rName, r.accountabilityRef, r.accountabilityStatus, r.turnoverRef, r.turnoverStatus, r.referenceStatus 
         FROM assets_tbl AS a 
         LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
         WHERE a.empId='$eid' AND r.name='$eid' AND a.status = 'Deployed'"; 
@@ -40,112 +40,110 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
 ?>       
 
 <style>
-.voidAsset {
-    cursor: pointer;
-    opacity: 0.9;
-}
-
-.confirmButtons {
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
-}
-
-.confirmButtons:hover {
-    opacity:1;
-}
-
-/* Float cancel and delete buttons and add an equal width */
-.cancelbtn, .deletebtn {
-    float: left;
-    width: 50%;
-}
-
-/* Add a color to the cancel button */
-.cancelbtn {
-    background-color: #ccc;
-    color: black;
-}
-
-/* Add a color to the delete button */
-.deletebtn {
-    background-color: #f44336;
-}
-
-/* Add padding and center-align text to the container */
-.deleteConfirm {
-    padding: 16px;
-    text-align: center;
-
-    color: black;
-}
-
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    align-items: center;
-    justify-items: center;
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    background-color: transparent;
-    padding-top: 15dvh;
-}
-
-    /* Modal Content/Box */
-.modal-content {
-    justify-content: center;
-    width: 60%;
-    background-color: #f1f1f1;
-    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-    border: 1px solid black;
-}
-textarea {
-    padding: 10px;
-}
-
-/* Style the horizontal ruler */
-
- 
-/* The Modal Close Button (x) */
-.close {
-    position: absolute;
-    right: 35px;
-    top: 15px;
-    font-size: 40px;
-    font-weight: bold;
-    color: black;
-    z-index: 999;
-}
-
-.close:hover,
-.close:focus {
-    color: #f44336;
-    cursor: pointer;
-}
-
-/* Clear floats */
-.clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-
-/* Change styles for cancel button and delete button on extra small screens */
-@media screen and (max-width: 300px) {
-    .cancelbtn, .deletebtn {
-        width: 100%;
+    .voidAsset {
+        cursor: pointer;
+        opacity: 0.9;
     }
-}
+
+    .confirmButtons {
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.9;
+    }
+
+    .confirmButtons:hover {
+        opacity:1;
+    }
+
+    /* Float cancel and delete buttons and add an equal width */
+    .cancelbtn, .deletebtn {
+        float: left;
+        width: 50%;
+    }
+
+    /* Add a color to the cancel button */
+    .cancelbtn {
+        background-color: #ccc;
+        color: black;
+    }
+
+    /* Add a color to the delete button */
+    .deletebtn {
+        background-color: #f44336;
+    }
+
+    /* Add padding and center-align text to the container */
+    .deleteConfirm {
+        padding: 16px;
+        text-align: center;
+
+        color: black;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        align-items: center;
+        justify-items: center;
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        background-color: transparent;
+        padding-top: 15dvh;
+    }
+
+        /* Modal Content/Box */
+    .modal-content {
+        justify-content: center;
+        width: 60%;
+        background-color: #f1f1f1;
+        margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+        border: 1px solid black;
+    }
+    textarea {
+        padding: 10px;
+    }
+
+    /* Style the horizontal ruler */
+
+    
+    /* The Modal Close Button (x) */
+    .close {
+        position: absolute;
+        right: 35px;
+        top: 15px;
+        font-size: 40px;
+        font-weight: bold;
+        color: black;
+        z-index: 999;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #f44336;
+        cursor: pointer;
+    }
+
+    /* Clear floats */
+    .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    /* Change styles for cancel button and delete button on extra small screens */
+    @media screen and (max-width: 300px) {
+        .cancelbtn, .deletebtn {
+            width: 100%;
+        }
+    }
 </style>
-
-
 
 <div class="content">
 
@@ -204,6 +202,7 @@ textarea {
                                 $mobile = $row['mobile'];
                                 
                                 $accountabilityRef = $row['accountabilityRef'];
+                                $accountabilityStatus = $row['accountabilityStatus'];
                                 $turnoverRef = $row['turnoverRef'];
                                 $turnoverStatus = $row['turnoverStatus'];
                                 $referenceStatus = $row['referenceStatus'];
@@ -220,16 +219,18 @@ textarea {
                                 <td><?php echo $turnoverRef; ?></td>
                                 <td>
                                     <?php
-                                    if($turnoverStatus == '2' && $referenceStatus != '0') {
+                                    if($turnoverStatus == '2' || $accountabilityStatus == '2') {
                                     ?>
                                         <!-- <a href="../update/turnoverUpd.php?id=?php echo $aId; ?>"><img src="../assets/icons/turnover.png" width="32px"></a>&nbsp; -->
-                                        <a class="voidAsset"  href="/" onclick="return false;"><img src="../assets/icons/remove.png" width="32px"></a>
+                                        <a class="voidAsset"  href="/" onclick="return false;"><img src="../assets/icons/remove.png" style="filter: grayscale(1); cursor: default;" width="32px"></a>
+                                    <?php
+                                    } elseif ($accountabilityStatus!='2') {
+                                    ?>
+                                        <!-- <a href="../update/remove.php?unassignId=?php echo $aId; ?>&empId=?php echo $eid; ?>" onclick="return checkDelete()"></a> -->
+                                        <a class="voidAsset" data-asset-id="<?= $aId ?>" data-emp-id="<?= $eid ?>" onclick="showModal(this)"><img src="../assets/icons/remove.png" width="32px"></a>
                                     <?php
                                     }
                                     ?>
-                                    <!-- <a href="../update/remove.php?unassignId=?php echo $aId; ?>&empId=?php echo $eid; ?>" onclick="return checkDelete()"></a> -->
-
-                                    <a class="voidAsset" data-asset-id="<?= $aId ?>" data-emp-id="<?= $eid ?>" onclick="showModal(this)"><img src="../assets/icons/remove.png" width="32px"></a>
 
                                     
 
@@ -278,17 +279,6 @@ function showModal(element) {
     // Show the modal
     document.getElementById('id01').style.display = 'block';
 }
-
-// Get the modal
-// var modal = document.getElementById('id01');
-
-// // When the user clicks anywhere outside of the modal, close it
-// window.onclick = function(event) {
-// if (event.target == modal) {
-//     modal.style.display = "none";
-// }
-// }
-
 
 document.addEventListener('DOMContentLoaded', function() {
     var spans = document.getElementsByClassName("statusSpan");
