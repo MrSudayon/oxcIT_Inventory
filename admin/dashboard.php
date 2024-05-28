@@ -16,6 +16,17 @@
     
     <title>Dashboard</title>
 </head>
+<style>
+
+.main-cards a {
+    transition: .2s ease-out;
+}
+.main-cards a:hover {
+    color: white;
+    transition: .2s ease-in;
+}
+
+</style>    
 
 <div class="grid-container">
 <?php include '../inc/header.php'; ?>
@@ -29,82 +40,97 @@
 
         <div class="main-cards">
 
-            <div class="card">
-            <div class="card-inner">
-                <h3>ASSETS</h3>
-                <span class="material-icons-outlined">inventory_2</span>
-            </div>
-            <h1><?php 
-                $allAsset = $select->getAssetCount(); 
-                echo $allAsset; 
-            ?></h1>
-            </div>
+            <a href="#">        
+                <div class="card">
+                <div class="card-inner">
+                    <h3>ASSETS</h3>
+                    <span class="material-icons-outlined">inventory_2</span>
+                </div>
+                <h1><?php 
+                    $allAsset = $select->getAssetCount(); 
+                    echo $allAsset; 
+                ?></h1>
+                </div>
+            </a>
 
-            <div class="card">
-            <div class="card-inner">
-                <h3>DEPLOYED</h3>
-                <span class="material-icons-outlined">assignment_ind</span>
-            </div>
-            <h1><?php 
-                $deployed = $select->getDeployedAssetCount(); 
-                echo $deployed; 
-            ?></h1>
-            </div>
+            <a href="#">
+                <div class="card">
+                <div class="card-inner">
+                    <h3>DEPLOYED</h3>
+                    <span class="material-icons-outlined">assignment_ind</span>
+                </div>
+                <h1><?php 
+                    $deployed = $select->getDeployedAssetCount(); 
+                    echo $deployed; 
+                ?></h1>
+                </div>
+            </a>
 
-            <div class="card">
-            <div class="card-inner">
-                <h3>AVAILABLE</h3>
-                <span class="material-icons-outlined">event_available</span>
-            </div>
-            <h1><?php 
-                $available = $select->getAvailableAssetCount(); 
-                echo $available; 
-            ?></h1>
-            </div>
+            <a href="#">
+                <div class="card">
+                <div class="card-inner">
+                    <h3>AVAILABLE</h3>
+                    <span class="material-icons-outlined">event_available</span>
+                </div>
+                <h1><?php 
+                    $available = $select->getAvailableAssetCount(); 
+                    echo $available; 
+                ?></h1>
+                </div>
+            </a>
 
-            <div class="card">
-            <div class="card-inner">
-                <h3>DEFECTIVE</h3>
-                <span class="material-icons-outlined">error</span>
-            </div>
-            <h1><?php 
-                $defect = $select->getDefectAssetCount(); 
-                echo $defect; 
-            ?></h1>
-            </div>
+            <a href="#">
+                <div class="card">
+                <div class="card-inner">
+                    <h3>DEFECTIVE</h3>
+                    <span class="material-icons-outlined">error</span>
+                </div>
+                <h1><?php 
+                    $defect = $select->getDefectAssetCount(); 
+                    echo $defect; 
+                ?></h1>
+                </div>
+            </a>
 
-            <div class="card">
-            <div class="card-inner">
-                <h3>REPAIR</h3>
-                <span class="material-icons-outlined">build_circle</span>
-            </div>
-            <h1><?php 
-                $repair = $select->getRepairAssetCount(); 
-                echo $repair; 
-            ?></h1>
-            </div>
+            <a href="#">
+                <div class="card">
+                <div class="card-inner">
+                    <h3>REPAIR</h3>
+                    <span class="material-icons-outlined">build_circle</span>
+                </div>
+                <h1><?php 
+                    $repair = $select->getRepairAssetCount(); 
+                    echo $repair; 
+                ?></h1>
+                </div>
+            </a>
+                
+            <a href="#">            
+                <div class="card">
+                <div class="card-inner">
+                    <h3>SELL</h3>
+                    <span class="material-icons-outlined">sell</span>
+                </div>
+                <h1><?php 
+                    $sell = $select->getForSellAssetCount(); 
+                    echo $sell; 
+                ?></h1>
+                </div>
+            </a>
 
-            <div class="card">
-            <div class="card-inner">
-                <h3>SELL</h3>
-                <span class="material-icons-outlined">sell</span>
-            </div>
-            <h1><?php 
-                $sell = $select->getForSellAssetCount(); 
-                echo $sell; 
-            ?></h1>
-            </div>
-
-            <div class="card">
-            <div class="card-inner">
-                <h3>USER WITHOUT ACC..</h3>
-                <span class="material-icons-outlined">pending_actions</span>
-            </div>
-            <h1><?php 
-                $noacc = $select->getUserNoAccountability(); 
-                echo $noacc; 
-            ?></h1>
-            </div>
+            <a href="#">           
+                <div class="card">
+                <div class="card-inner">
+                    <h3>USER WITHOUT ACC..</h3>
+                    <span class="material-icons-outlined">pending_actions</span>
+                </div>
+                <h1><?php 
+                    $noacc = $select->getUserNoAccountability(); 
+                    echo $noacc; 
+                ?></h1>
+                </div>
+            </a>                
+            
         </div>
 
 

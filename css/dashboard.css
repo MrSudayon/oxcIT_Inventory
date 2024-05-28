@@ -263,32 +263,32 @@ header {
   border-radius: 5px;
 }
 
-.card:first-child {
+.main-cards a:first-child {
     background-color: #2962ff;
 }
 
-.card:nth-child(2) {
-  background-color: #cae500;
+.main-cards a:nth-child(2) {
+    background-color: #cae500;
 }
 
-.card:nth-child(3) {
+.main-cards a:nth-child(3) {
     background-color: #2e7d32;
 }
 
-.card:nth-child(4) {
+.main-cards a:nth-child(4) {
     background-color: #d50000;
 }
 
-.card:nth-child(5) {
-  background-color: #ff6d00;
+.main-cards a:nth-child(5) {
+    background-color: #ff6d00;
 }
 
-.card:nth-child(6) {
-  background-color: #42adff;
+.main-cards a:nth-child(6) {
+    background-color: #42adff;
 }
 
-.card:nth-child(7) {
-  background-color: #ff745b;
+.main-cards a:nth-child(7) {
+    background-color: #ff745b;
 }
 
 .card-inner {

@@ -215,7 +215,7 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
                                     <a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></a><br>~<br>
                                     <?php echo $specification; ?>
                                 </td>
-                                <td><?php echo $accountabilityRef; ?></td>
+                                <td><a href="../admin/accountability.php?id=<?php echo $accountabilityRef; ?>"><?php echo $accountabilityRef; ?></a></td>
                                 <td><?php echo $turnoverRef; ?></td>
                                 <td>
                                     <?php
