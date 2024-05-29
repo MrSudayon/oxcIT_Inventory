@@ -80,8 +80,6 @@ if(isset($_GET['unassignId']) && isset($_GET['empId']) && isset($_GET['voidRemar
 }
 
 // Accountability Ref Deletion
-// if(isset($_GET['Acct_id'])) {
-//     $id = $_GET['Acct_id'];
 
 if(isset($_GET['name']) || isset($_GET['acctRef'])) {
     // $refId = mysqli_real_escape_string($db->conn, $_GET['Acct_id']); // refId from reference tbl
