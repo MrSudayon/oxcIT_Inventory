@@ -417,7 +417,7 @@ class assetsController {
 
             $sql = "UPDATE reference_tbl 
                     SET accountabilityStatus = '$acctStatus', accountabilityDate = '$acctDate', accountabilityFile = '$acctFile' 
-                    WHERE name='$eName' AND (accountabilityRef='$refNo' OR turnoverRef='$refNo')";
+                    WHERE name='$eName' AND accountabilityRef='$refNo'";
             $result = $db->conn->query($sql);
 
             if($result) {
@@ -437,12 +437,12 @@ class assetsController {
 
             $sql = "UPDATE reference_tbl 
                     SET turnoverStatus = '$trnStatus', turnoverDate = '$trnDate', turnoverFile = '$trnFile' 
-                    WHERE id='$refId'";
+                    WHERE name='$eName' AND turnoverRef='$refNo'";
             $result = $db->conn->query($sql);
 
             if($result) {
                 mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                VALUES('', '$sess_name', 'Updated reference id: $refId' , NOW())");
+                VALUES('', '$sess_name', 'Updated reference no: $refNo' , NOW())");
 
                 return true;
             } else {
