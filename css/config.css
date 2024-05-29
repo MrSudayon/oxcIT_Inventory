@@ -35,7 +35,7 @@ body {
     overflow: hidden;
 }
 
-header {
+/* header {
     position: relative;
     background-color: white;
     height: 100px;
@@ -44,10 +44,56 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+} */
+
+header {
+    position: absolute;
+    background-color: white;
+    height: 100px;
+    width: 100%;
+    padding: 0 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
 }
 
 .dropbtn {
-    /* background-color: var(--sec-color); */
+    background-image: url(../assets/icons/setting.png); /* 16px x 16px */
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;
+    color: black;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    left: -20px;
+    width: 100px;
+    text-align: center;
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown-content a:hover {background-color: #ccc;}
+.dropdown:hover .dropdown-content {display: block;}
+
+/* 
+.dropbtn {
     background: linear-gradient(95deg, var(--ter-color), antiquewhite);
     color: black;
     padding: 8px 30px;
@@ -84,17 +130,31 @@ header {
 
 .dropdown:hover .dropdown-content {display: block;}
 
-.dropdown:hover .dropbtn { color: white;border: 1px solid white; background: linear-gradient(-95deg, var(--ter-color), var(--bg-color));}
+.dropdown:hover .dropbtn { color: white;border: 1px solid white; background: linear-gradient(-95deg, var(--ter-color), var(--bg-color));} */
 
-.content {
+/* .content {
     height: 100dvh;
     background: linear-gradient(-95deg, var(--ter-color), var(--bg-color)); 
     margin-top: -50px;
+    
+} */
+
+
+.content {
+    position: absolute;
+    min-height: 100dvh;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+    background: linear-gradient(-95deg, var(--ter-color), var(--bg-color));
+    padding: 10px 40px;
+    border: 1px solid black;
+
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
+ 
 /*
 .config-buttons {
     margin-top: 150px;
