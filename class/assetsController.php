@@ -90,26 +90,27 @@ class assetsController {
             $assettag = $tagRow['assettag'];
         
             // Check if reference exists
-            $refQuery = "SELECT * FROM reference_tbl WHERE assetId=?";
-            $refStmt = $db->conn->prepare($refQuery);
-            $refStmt->bind_param("i", $assetID);
-            $refStmt->execute();
-            $refResult = $refStmt->get_result();
+            // $refQuery = "SELECT * FROM reference_tbl WHERE assetId=?";
+            // $refStmt = $db->conn->prepare($refQuery);
+            // $refStmt->bind_param("i", $assetID);
+            // $refStmt->execute();
+            // $refResult = $refStmt->get_result();
         
-            if ($refResult->num_rows == 0) {
-                // Insert new reference
-                $referenceQuery = "INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 1)";
-                $referenceStmt = $db->conn->prepare($referenceQuery);
-                $referenceStmt->bind_param("is", $assetID, $empId);
-                $referenceResult = $referenceStmt->execute();
+            // if ($refResult->num_rows == 0) {
+            //     // Insert new reference
+            //     $referenceQuery = "INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 1)";
+            //     $referenceStmt = $db->conn->prepare($referenceQuery);
+            //     $referenceStmt->bind_param("is", $assetID, $empId);
+            //     $referenceResult = $referenceStmt->execute();
             
-                if (!$referenceResult) {
-                    echo 'Failed to insert reference';
-                }
+            //     if (!$referenceResult) {
+            //         echo 'Failed to insert reference';
+            //     }
 
-            } else {
+            // } else {
 
-                $refQuery = "SELECT * FROM reference_tbl WHERE assetId=? AND referenceStatus='1'";
+                $refQuery = "SELECT * FROM reference_tbl WHERE assetId=? AND referenceStatus='0'";
+                // referenceStatus confusion 0 to 1 Upon deletion/updating of assets
                 $refStmt = $db->conn->prepare($refQuery);
                 $refStmt->bind_param("i", $assetID);
                 $refStmt->execute();
@@ -132,10 +133,12 @@ class assetsController {
         
                 }
                 
-            }
+            // }
 
+            $operation = new Operations();
+            $empName = $operation->getThyNames($empId);
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                VALUES('', '$sess_name', 'Updated item: $assettag, ID: $assetID from Assets Record', NOW())");
+                VALUES('', '$sess_name', 'Assigned: $assettag to $empName', NOW())");
             return true;
 
         } else {

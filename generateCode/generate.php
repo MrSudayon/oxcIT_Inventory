@@ -115,23 +115,23 @@ if(isset($_GET['generateAcc'])) {
     }
     ?>
     
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="../assets/logo.jpg">
-        <link rel="stylesheet" href="../css/accountability.css">
-        <title>Accountability Form</title>
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/logo.jpg">
+    <link rel="stylesheet" href="../css/accountability.css">
+    <title>Accountability Form</title>
+</head>
+<body>
     <div class="content">
         <div class="logo">
             <a href="../admin/employeeLists.php"><img src="../assets/logo.png" width="150px"></img></a>
         </div>
-        <br><br><br>
+        <br>
         <center>
-        <h2>Accountability Form</h2><br>
+        <h2>Accountability Form</h2>
         </center>
         <div class="reference-code" align="right">
             <?php echo "<b>Ref#: " . $acc_ref . "</b>"; ?>
@@ -236,7 +236,7 @@ if(isset($_GET['generateAcc'])) {
                 Signature: ______________</p>
             <br>
         </div>
-    </div>
+    </div> 
             
 <?php
 }
@@ -331,7 +331,7 @@ if(isset($_GET['generateTrn'])) {
     }
     ?>
     
-    <!DOCTYPE html>
+    <!-- <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -340,14 +340,15 @@ if(isset($_GET['generateTrn'])) {
         <link rel="stylesheet" href="../css/accountability.css">
         <title>Turnover Form</title>
     </head>
-    <body>
+    <body> -->
+
     <div class="content">
         <div class="logo">
             <a href="../admin/employeeLists.php"><img src="../assets/logo.png" width="150px"></img></a>
         </div>
-        <br><br><br>
+        <br>
         <center>
-        <h2>Turnover Form</h2><br>
+            <h2>Turnover Form</h2>
         </center>
         <div class="reference-code" align="right">
             <?php echo "<b>Ref#: " . $trn_ref . "</b>"; ?>

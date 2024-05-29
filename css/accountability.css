@@ -61,8 +61,9 @@ table {
     border-collapse: collapse;
 }
 th {
-    background-color: rgb(94, 94, 94);
-    color: white;
+    background-color: rgb(178, 178, 178);
+    color: rgb(0, 0, 0);
+    font-weight: 600;
 }
 th, td {
     padding: 5px 10px;

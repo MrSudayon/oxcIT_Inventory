@@ -80,30 +80,57 @@ if(isset($_GET['unassignId']) && isset($_GET['empId']) && isset($_GET['voidRemar
 }
 
 // Accountability Ref Deletion
-if(isset($_GET['Acct_id'])) {
-    $id = $_GET['Acct_id'];
+// if(isset($_GET['Acct_id'])) {
+//     $id = $_GET['Acct_id'];
 
-    $query = "SELECT a.id, a.assettag, r.assetId, r.turnoverRef, r.accountabilityRef 
+if(isset($_GET['name']) || isset($_GET['acctRef'])) {
+    // $refId = mysqli_real_escape_string($db->conn, $_GET['Acct_id']); // refId from reference tbl
+    $refNo = mysqli_real_escape_string($db->conn, $_GET['acctRef']); // refId from reference tbl
+    $empName = mysqli_real_escape_string($db->conn, $_GET['name']);
+
+    $query = "SELECT a.id, a.assettag, r.assetId, r.name, r.turnoverRef, r.accountabilityRef 
               FROM assets_tbl AS a 
               LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
-              WHERE r.id='$id'";
+              WHERE r.accountabilityRef='$refNo' AND r.name='$empName'";
     $result =  mysqli_query($db->conn, $query);
     
     while($row = mysqli_fetch_assoc($result)) {
         $accountabilityRef = $row['accountabilityRef'];
         $turnoverRef = $row['turnoverRef'];
-        $assetTag = $row['assettag'];
+        $assetTags[] = $row['assettag'];
     }
 
-    $query = mysqli_query($db->conn, "UPDATE reference_tbl 
-                                    SET accountabilityRef='',
-                                        accountabilityFile='',
-                                        accountabilityStatus=0,
-                                        accountabilityDate='' 
-                                    WHERE id = '$id'");
+    // $updateQuery = mysqli_query($db->conn, "UPDATE reference_tbl 
+    //                                 SET accountabilityRef='',
+    //                                     accountabilityFile='',
+    //                                     accountabilityStatus=0,
+    //                                     accountabilityDate='',
+    //                                     referenceStatus=0 
+    //                                 WHERE id = '$id'");
 
-    $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                            VALUES ('', '$name', 'Deleted turnover reference code for Asset Tag: $assetTag', NOW())");
+    $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl 
+                                        SET accountabilityRef='',
+                                            accountabilityFile='',
+                                            accountabilityStatus=0,
+                                            accountabilityDate='',
+                                        WHERE accountabilityRef=?
+                                        AND name=?");
+        mysqli_stmt_bind_param($refQry, "ss", $refNo, $empName);
+        mysqli_stmt_execute($refQry);
+    // $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+    //                         VALUES ('', '$name', 'Deleted Accountability reference for asset tags: $assetTags[]', NOW())");
+
+    if($refQry) {
+        $history = mysqli_prepare($db->conn, "INSERT INTO history_tbl (name, action, date) VALUES (?, ?, NOW())");
+        $name = $user['username'];
+        $action = "Deleted Accountability reference for assets: " . implode(", ", $assetTags);
+            mysqli_stmt_bind_param($history, "ss", $name, $action);
+            mysqli_stmt_execute($history);
+    } else {
+        echo "failed updating";
+        die(); 
+    }
+    
 
     header("Location: ../admin/reference.php");
 } 

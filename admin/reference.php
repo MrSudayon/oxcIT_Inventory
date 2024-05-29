@@ -90,7 +90,7 @@ $trnReferenceTbl = $operation->getTrnReferenceTable();
                                         <a href='../update/remove.php?Acct_id=$rid' onclick='return checkDelete()'><img src='../assets/icons/remove.png' width='24px'></a></span>";
                                 } else {
                                     echo "<a href='../update/referenceUpd.php?acctRef=$acctRef&name=$empId'><img src='../assets/icons/update.png' width='24px'></a>&nbsp;
-                                        <a href='../update/remove.php?acctRef=$acctRef' onclick='return checkDelete()'><img src='../assets/icons/remove.png' width='24px'></a>";
+                                        <a href='../update/remove.php?acctRef=$acctRef&name=$empId' onclick='return checkDelete()'><img src='../assets/icons/remove.png' width='24px'></a>";
                                 }
                                 echo "</td>";
                                 echo "</tr>";
