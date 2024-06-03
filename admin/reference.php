@@ -56,32 +56,16 @@ $trnReferenceTbl = $operation->getTrnReferenceTable();
                         }
 
                         if ($acctRef != '') {
-                            
-                            switch($acctStatus) {
-                                case 1:
-                                    $acctStatus = 'On Process';
-                                    break;
-                                case 2:
-                                    $acctStatus = 'Signed';
-                                    break;
-                                default:
-                                    $acctStatus = 'None';
-                            }
+                            echo "<tr>";
 
                             $operation->ifEmptyAccReference($acctRef, $acctFile);
-
-                            if($referenceStatus == 0 || $acctStatus == 'Signed') {
-                                echo "<tr style='background-color: #fecfcc;'>";
-                            } else {
-                                echo "<tr>";
-                            }
 
                             if ($acctRef != $prevAccRef) {
                                
                                 echo "<td>$empName</td>";
                                 echo "<td><a class='link' href='accountability.php?id=$acctRef'>$acctRef</a></td>";
                                 echo "<td width='10%'><a class='link' href='../files/download.php?acctRef_id=$rid' target='_blank'>$acctFile</td>";
-                                echo "<td>$acctStatus</td>";
+                                echo "<td><span class='documentStatus'>$acctStatus</span></td>";
                                 echo "<td>$acctDate</td>";
                                 echo "<td>";
 
@@ -147,17 +131,6 @@ $trnReferenceTbl = $operation->getTrnReferenceTable();
 
                         if ($turnoverRef != '') {
                             
-                            switch($turnoverStatus) {
-                                case 1:
-                                    $turnoverStatus = 'On Process';
-                                    break;
-                                case 2:
-                                    $turnoverStatus = 'Signed';
-                                    break;
-                                default:
-                                    $turnoverStatus = 'None';
-                            }
-
                             $operation->ifEmptyTrnReference($turnoverRef, $turnoverFile);
 
                             if($referenceStatus == 0 || $turnoverStatus == 'Signed') {
@@ -174,7 +147,7 @@ $trnReferenceTbl = $operation->getTrnReferenceTable();
                                 echo "<td>$empName</td>";
                                 echo "<td><a class='link' href='turnover.php?id=$turnoverRef'>$turnoverRef</a></td>";
                                 echo "<td width='10%;'><a class='link' href='../files/download.php?trnRef_id=$rid' target='_blank'>$turnoverFile</td>";
-                                echo "<td>$turnoverStatus</td>";
+                                echo "<td><span class='documentStatus'>$turnoverStatus</span></td>";
                                 echo "<td>$turnoverDate</td>";
                                 echo "<td>";
                                 if ($turnoverStatus == 'Signed') {
