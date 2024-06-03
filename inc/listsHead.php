@@ -7,6 +7,7 @@
     <link rel="icon" href="../assets/logo.jpg">
     <link rel="stylesheet" href="../css/status.css">
     <link rel="stylesheet" href="../css/styles.css">
+
     <script src="../js/dashboard.js"></script>
     <script src="../js/addAssets.js"></script>
     <title>IT Inventory</title>
