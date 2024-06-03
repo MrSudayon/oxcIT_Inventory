@@ -93,7 +93,7 @@ class Operations {
                 if ($results->num_rows == 0) {
                     // Insert successful, prepare and execute the insert query for reference_tbl
                     $referenceQuery = $db->conn->prepare("INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 0)");
-                    $referenceQuery->bind_param("is", $assetId, $empId);
+                    $referenceQuery->bind_param("ii", $assetId, $empId);
                     $referenceResult = $referenceQuery->execute();
                 } else {
                     echo 'Reference already exists';
