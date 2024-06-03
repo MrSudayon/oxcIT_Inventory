@@ -164,8 +164,10 @@ if(isset($_GET['empID'])) {
     while($row = $sql_All->fetch_assoc()) {
         $empName = $row['name'];
     }
+    
+    $name = $user['username'];
     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                            VALUES ('', '$name', 'Removed employee: $Asset_id', NOW())");
+                            VALUES ('', '$name', 'Removed employee: $empName', NOW())");
 
     header("Location: ../admin/emp_List.php");
 }
