@@ -31,3 +31,24 @@
     background-color: #d893a3;
     color: #6d0019;
 }
+
+
+/* Refernce */
+.docu {
+    padding: .4rem .5rem ;
+    border-radius: 2rem;
+    text-align: center;
+}
+
+.docu.signed {
+    background-color: #b9ff84;
+    color: #029000;
+}
+.docu.processing {
+    background-color: #8fbeff;
+    color: #0050a6;
+}
+.docu.turnedover {
+    background-color: #ff7681;
+    color: #6f0009;
+}

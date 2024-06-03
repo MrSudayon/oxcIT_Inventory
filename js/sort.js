@@ -13,6 +13,15 @@ document.addEventListener('DOMContentLoaded', function() {
         else { span.classList.add("status", "missing"); }
     }
 
+    var docuSpans = document.getElementsByClassName("documentStatus");
+    for (var i = 0; i < docuSpans.length; i++) {
+        var docuSpan = docuSpans[i];
+        if (docuSpan.innerHTML === '3') { docuSpan.innerText = 'Turned over'; docuSpan.classList.add("docu", "turnedover"); } 
+        else if (docuSpan.innerHTML === '2') { docuSpan.innerText = 'Signed'; docuSpan.classList.add("docu", "signed"); } 
+        else if (docuSpan.innerHTML === '1') { docuSpan.innerText = 'On Process'; docuSpan.classList.add("docu", "processing"); }
+        else { docuSpan.innerText = '0'; docuSpan.innerText = 'N/A'; docuSpan.classList.add("docu", "missing"); }
+    }
+
     // Attach toggle function to selectAll checkbox
     document.getElementById('selectAll').addEventListener('click', function(event) {
         toggle(event.target);
