@@ -314,7 +314,7 @@ class Operations {
             $empName = $row['name'];
         }
 
-        return $empName;
+        return;
     }
     // Getting reference table values
     function getAccReferenceTable() {

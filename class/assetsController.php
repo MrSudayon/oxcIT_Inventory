@@ -42,6 +42,11 @@ class assetsController {
         $serial = $input['serial'];
         $supplier = $input['supplier'];
         $status = $input['status'];
+
+        if($status != 'Deployed') {
+            $empId = '0';
+        }
+
         $cost = $input['cost'];
         $repair = $input['repair-cost'];
 
@@ -136,7 +141,10 @@ class assetsController {
             // }
 
             $operation = new Operations();
-            $empName = $operation->getThyNames($empId);
+            if($empId!='0' || $empId!='') {
+                $empName = $operation->getThyNames($empId);
+            }
+
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                 VALUES('', '$sess_name', 'Assigned: $assettag to $empName', NOW())");
             return true;
@@ -490,4 +498,3 @@ class assetsController {
 }
 
 ?>
-

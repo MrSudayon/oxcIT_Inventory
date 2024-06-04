@@ -7,7 +7,7 @@ if(isset($_GET['assetID'])) {
 
     $name = $user['username'];
     
-    $query = mysqli_query($db->conn, "UPDATE assets_tbl SET status='Archive' WHERE id='$id' AND empId!='0'");
+    $query = mysqli_query($db->conn, "UPDATE assets_tbl SET status='Archive' WHERE id='$id'");
     
     $tag = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $id");
     while($row = $tag->fetch_assoc()) {
@@ -35,7 +35,8 @@ if(isset($_GET['assetID'])) {
         $url = "../admin/dashboard.php"; // Change name to 'All Assets'
     }
 
-    header("Location: \"$url\"");
+    header("Location: $url");
+    exit();
 }
 
 // if(isset($_GET['unassignId']) && isset($_GET['empId'])) {
