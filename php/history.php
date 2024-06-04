@@ -94,6 +94,7 @@ include '../inc/header.php'; ?>
                 
                 if ($page < $number_of_page) {
                     echo '<a href="history.php?page=' . ($page + 1) . '" class="next">Next</a>';
+                    echo '<a href="history.php?page=all" class="next">All</a>';
                 }
             }
         ?>
