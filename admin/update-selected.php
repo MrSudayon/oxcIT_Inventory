@@ -50,6 +50,50 @@ if(isset($_POST['update-asset'])) {
 }
 
 
+if(isset($_POST['update-assetRef'])) {
+    $id = mysqli_real_escape_string($db->conn,$_POST['assetID']);
+
+    $input = [
+        'model'        => mysqli_real_escape_string($db->conn,$_POST['model']),
+        'serial'       => isset($_POST['serial']) ? mysqli_real_escape_string($db->conn,$_POST['serial']) : '',
+        'supplier'     => isset($_POST['supplier']) ? mysqli_real_escape_string($db->conn,$_POST['supplier']) : '',
+        'datepurchase' => isset($_POST['dateprchs']) ? mysqli_real_escape_string($db->conn,$_POST['dateprchs']) : '',
+        'status'       => isset($_POST['status']) ? mysqli_real_escape_string($db->conn,$_POST['status']) : '',
+        'cost'         => isset($_POST['cost']) ? mysqli_real_escape_string($db->conn, str_replace(',', '', $_POST['cost'])) : '',
+        'repair-cost'  => isset($_POST['repair']) ? mysqli_real_escape_string($db->conn, str_replace(',', '', $_POST['repair'])) : '',
+        'remarks'      => isset($_POST['remarks']) ? mysqli_real_escape_string($db->conn,$_POST['remarks']) : '',
+
+        'cpu'          => isset($_POST['processor']) ? mysqli_real_escape_string($db->conn,$_POST['processor']) : '',
+        'ram'          => isset($_POST['memory']) ? mysqli_real_escape_string($db->conn,$_POST['memory']) : '',
+        'storage'      => isset($_POST['storage']) ? mysqli_real_escape_string($db->conn,$_POST['storage']) : '',
+        'os'           => isset($_POST['os']) ? mysqli_real_escape_string($db->conn,$_POST['os']) : '',
+
+        'dimes'        => isset($_POST['dimes']) ? mysqli_real_escape_string($db->conn,$_POST['dimes']) : '',
+        'plan'         => isset($_POST['plan']) ? mysqli_real_escape_string($db->conn,$_POST['plan']) : '',
+        'mobile'       => isset($_POST['mobile']) ? mysqli_real_escape_string($db->conn,$_POST['mobile']) : '',
+
+        'datedeployed' => isset($_POST['datedeployed']) ? mysqli_real_escape_string($db->conn,$_POST['datedeployed']) : '',
+
+        'assigned'     => isset($_POST['assigned']) ? mysqli_real_escape_string($db->conn,$_POST['assigned']) : '',
+        'lastused'     => mysqli_real_escape_string($db->conn,$_POST['lastused'])
+    ];   
+    $result = $assetController->updateData($input, $id);
+
+    if($result) {
+        echo "<script>
+        alert('✅Update Successful');
+        window.history.back();
+        </script>";
+        die();
+    } else {
+        echo "<script>
+        alert('⚠️Update Error');
+        window.history.back();
+        </script>";
+        die();
+    }
+}
+
 // Turnover Item
 if(isset($_POST['turnover-asset'])) {
     $id = mysqli_real_escape_string($db->conn,$_POST['assetID']);

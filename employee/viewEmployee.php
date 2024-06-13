@@ -212,7 +212,7 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
                             <tr>
                                 <td><input type="checkbox" class="select" id="select" name="select[]" value="<?php echo $aId; ?>"></td>
                                 <td>
-                                    <a href="../update/assetUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></a><br>~<br>
+                                    <a href="../update/assetRefUpd.php?id=<?php echo $aId; ?>"><strong><?php echo $row['assettag']; ?></strong></a><br>~<br>
                                     <?php echo $specification; ?>
                                 </td>
                                 <td><a href="../admin/accountability.php?id=<?php echo $accountabilityRef; ?>"><?php echo $accountabilityRef; ?></a></td>

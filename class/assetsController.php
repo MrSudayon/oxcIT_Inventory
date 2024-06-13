@@ -32,6 +32,51 @@ class assetsController {
         }
     }
 
+    public function updateData($input, $id) {
+        global $db;
+        global $sess_name;
+
+        $assetID = mysqli_real_escape_string($db->conn, $id);
+
+        $model = $input['model'];
+        $serial = $input['serial'];
+        $supplier = $input['supplier'];
+        $status = $input['status'];
+
+        if($status != 'Deployed') {
+            $empId = '0';
+        }
+
+        $cost = $input['cost'];
+        $repair = $input['repair-cost'];
+
+        $cpu = $input['cpu'];
+        $ram = $input['ram'];
+        $storage = $input['storage'];
+        $os = $input['os'];
+
+        // SIM, Mobile
+        $dimes = $input['dimes'];
+
+        $mobile = $input['mobile'];
+        $plan = $input['plan'];
+
+        $dateprchs = $input['datepurchase'];
+        $remarks = $input['remarks'];
+
+        $datedeployed = $input['datedeployed'];
+
+        $empId = $input['assigned'];
+        $lastused = $input['lastused'];
+
+        $qry = "UPDATE assets_tbl SET model=?, serial=?, supplier=?, empId=?, status=?, datepurchased=?, cost=?, repair_cost=?, remarks=?, datedeployed=?, cpu=?, memory=?, storage=?, dimes=?, mobile=?, plan=?, os=? WHERE id=? AND status!='Archive' LIMIT 1";
+        $stmt = $db->conn->prepare($qry);
+        $stmt->bind_param("sssssssssssssssssi", $model, $serial, $supplier, $empId, $status, $dateprchs, $cost, $repair, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os, $assetID);
+        $result = $stmt->execute();
+
+        return true;
+    }
+
     public function update($input, $id) {
         global $db;
         global $sess_name;
@@ -95,24 +140,24 @@ class assetsController {
             $assettag = $tagRow['assettag'];
         
             // Check if reference exists
-            // $refQuery = "SELECT * FROM reference_tbl WHERE assetId=?";
-            // $refStmt = $db->conn->prepare($refQuery);
-            // $refStmt->bind_param("i", $assetID);
-            // $refStmt->execute();
-            // $refResult = $refStmt->get_result();
+            $refQuery = "SELECT * FROM reference_tbl WHERE assetId=?";
+            $refStmt = $db->conn->prepare($refQuery);
+            $refStmt->bind_param("i", $assetID);
+            $refStmt->execute();
+            $refResult = $refStmt->get_result();
         
-            // if ($refResult->num_rows == 0) {
-            //     // Insert new reference
-            //     $referenceQuery = "INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 1)";
-            //     $referenceStmt = $db->conn->prepare($referenceQuery);
-            //     $referenceStmt->bind_param("is", $assetID, $empId);
-            //     $referenceResult = $referenceStmt->execute();
+            if ($refResult->num_rows == 0) {
+                // Insert new reference
+                $referenceQuery = "INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 1)";
+                $referenceStmt = $db->conn->prepare($referenceQuery);
+                $referenceStmt->bind_param("is", $assetID, $empId);
+                $referenceResult = $referenceStmt->execute();
             
-            //     if (!$referenceResult) {
-            //         echo 'Failed to insert reference';
-            //     }
+                if (!$referenceResult) {
+                    echo 'Failed to insert reference';
+                }
 
-            // } else {
+            } else {
 
                 $refQuery = "SELECT * FROM reference_tbl WHERE assetId=? AND referenceStatus='0'";
                 // referenceStatus confusion 0 to 1 Upon deletion/updating of assets
@@ -123,7 +168,7 @@ class assetsController {
 
                 if($refResult->num_rows == 0) {
 
-                    $qry = "INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 1)";
+                    $qry = "INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 3)";
                     $stmt = $db->conn->prepare($qry);
                     $stmt->bind_param("is", $assetID, $empId);
                     $result = $stmt->execute();
@@ -138,7 +183,7 @@ class assetsController {
         
                 }
                 
-            // }
+            }
 
             $operation = new Operations();
             if($empId!='0' || $empId!='') {
