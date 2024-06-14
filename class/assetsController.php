@@ -74,6 +74,9 @@ class assetsController {
         $stmt->bind_param("sssssssssssssssssi", $model, $serial, $supplier, $empId, $status, $dateprchs, $cost, $repair, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os, $assetID);
         $result = $stmt->execute();
 
+        mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                    VALUES('', '$sess_name', 'Updated record: $assettag', NOW())");
+
         return true;
     }
 
@@ -188,10 +191,15 @@ class assetsController {
             $operation = new Operations();
             if($empId!='0' || $empId!='') {
                 $empName = $operation->getThyNames($empId);
+
+                mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                    VALUES('', '$sess_name', 'Assigned: $assettag to $empName', NOW())");
+            } else {
+                mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                    VALUES('', '$sess_name', 'Updated record: $assettag', NOW())");
             }
 
-            mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                VALUES('', '$sess_name', 'Assigned: $assettag to $empName', NOW())");
+            
             return true;
 
         } else {

@@ -237,6 +237,7 @@ if(isset($_GET['generateAcc'])) {
             <br>
         </div>
     </div> 
+</body>
             
 <?php
 }
@@ -331,10 +332,16 @@ if(isset($_GET['generateTrn'])) {
     }
     ?>
     
-    <!-- <!DOCTYPE html>
-    <html lang="en">
-  
-    <body> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/logo.jpg">
+    <link rel="stylesheet" href="../css/accountability.css">
+    <title>Turnover Form</title>
+</head>
+<body>
 
     <div class="content">
         <div class="logo">
@@ -422,11 +429,28 @@ if(isset($_GET['generateTrn'])) {
             ?>
         </table>
 
-        <div class="info"><br>
-            <h4>&nbsp;Reason:</h4><br>
+        <div class="info"><br><br>
             <h3>Acknowledgment:</h3>
             <p>
             &nbsp;&nbsp;I, <b><?php echo $empName; ?></b>, acknowledge that I have returned the above-mentioned equipment in the condition stated above. I understand that any damage or missing items may result in charges or disciplinary action.
+            <br><br>
+            <p>
+            &nbsp;&nbsp;I, the undersigned, approve the transfer of the equipment as documented in this form.<br><br>
+            Signature: __________________    <br>Date: __________</p>
+            <br><br>
+            [For Asset Administrator Use Only]<br><br>
+            <h3>Asset Status:</h3>
+            <p>
+            ☐ Accepted in Good Condition<br>
+            ☐ Accepted with Noted Issues (please specify): _______________________
+            </p>
+        </div>
+
+        <!-- <div class="info"><br>
+            <h4>&nbsp;Reason:</h4><br>
+            <h3>Acknowledgment:</h3>
+            <p>
+            &nbsp;&nbsp;I, <b>?php echo $empName; ?></b>, acknowledge that I have returned the above-mentioned equipment in the condition stated above. I understand that any damage or missing items may result in charges or disciplinary action.
             <br><br>
             <h3>Asset Administrator:</h3>
             <p>
@@ -439,8 +463,10 @@ if(isset($_GET['generateTrn'])) {
             ☐ Accepted in Good Condition<br>
             ☐ Accepted with Noted Issues (please specify): _______________________
             </p>
-        </div>
+        </div> -->
     </div>
+</body>
+
 <?php
 }
 ?>
@@ -450,6 +476,5 @@ if(isset($_GET['generateTrn'])) {
 
 
 
-</body>
 </html>
 
