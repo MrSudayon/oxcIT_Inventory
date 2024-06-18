@@ -384,6 +384,7 @@ if(isset($_POST['update-acctRef'])) {
 
 if(isset($_POST['update-trnRef'])) {
     $id = mysqli_real_escape_string($db->conn,$_POST['id']);
+    $eId = mysqli_real_escape_string($db->conn,$_POST['eId']);
 
     $trnFileName = mysqli_real_escape_string($db->conn,$_POST['turnoverFile']);
 
@@ -428,7 +429,8 @@ if(isset($_POST['update-trnRef'])) {
 
     $action = mysqli_real_escape_string($db->conn,$_POST['action']);
     
-    $result = $assetController->updateReference($input, $id, $action);
+    $result = $assetController->updateReference($input, $id, $eId, $action);
+    // $result = $assetController->updateReference($input, $id, $action);
 
     if($result) {
         echo "<script>

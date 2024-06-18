@@ -19,10 +19,13 @@
             <div class="title">Reference Details</div>
             <?php
             // if(isset($_GET['Acct_id']) || isset($_GET['acctRef'])) {
-            if(isset($_GET['name']) || isset($_GET['acctRef'])) {
+            if(isset($_GET['acctRef'])) {
                 // $refId = mysqli_real_escape_string($db->conn, $_GET['Acct_id']); // refId from reference tbl
                 $refNo = mysqli_real_escape_string($db->conn, $_GET['acctRef']); // refId from reference tbl
-                $empName = mysqli_real_escape_string($db->conn, $_GET['name']);
+                if(isset($_GET['name'])) { 
+                    $empName = mysqli_real_escape_string($db->conn, $_GET['name']);
+                }
+
                 $result = $assetController->editReference($refNo);
 
                 if($result) {
@@ -98,12 +101,12 @@
                 </form>
             <?php 
                 } 
-            }
-            
-            elseif(isset($_GET['Turnover_id']))
-            {
-                $refId = mysqli_real_escape_string($db->conn, $_GET['Turnover_id']); // refId from reference tbl
-                $empName = mysqli_real_escape_string($db->conn, $_GET['name']);
+            } elseif(isset($_GET['turnoverRef'])) {
+                
+                $refId = mysqli_real_escape_string($db->conn, $_GET['turnoverRef']); // refId from reference tbl
+                if(isset($_GET['name'])) { 
+                    $empName = mysqli_real_escape_string($db->conn, $_GET['name']);
+                }
                 $result = $assetController->editReference($refId);
 
                 if($result) {
@@ -114,8 +117,14 @@
             ?>
                 <form action="../admin/update-selected.php" method="POST" enctype="multipart/form-data">
                     <div class="asset-details">
-                        <input type="hidden" name="id" value="<?=$result['refId']?>">
-                        
+                        <!-- <input type="hidden" name="id" value="?=$result['refId']?>"> -->
+                        <input type="hidden" name="id" value="<?=$result['turnoverRef']?>">
+                        <input type="hidden" name="eId" value="<?=$empName?>">
+
+                        <div class="input-box" style="width: 100%;">
+                            <span class="details">Assigned to: </span>
+                            <input type="text" name="name" value="<?=$result['empName']?>" style="background-color: #ccc; font-weight: 600; text-align: center;" readonly>
+                        </div>
                         <div class="input-box">
                             <span class="details">Turnover Code</span>
                             <input type="text" value="<?=$result['turnoverRef'] ?>"  style="background-color: #ccc;" readonly>

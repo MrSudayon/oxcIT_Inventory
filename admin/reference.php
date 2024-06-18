@@ -155,8 +155,8 @@ $trnReferenceTbl = $operation->getTrnReferenceTable();
                                         <a href='../update/remove.php?Turnover_id=$rid;' onclick='return checkDelete()'><img src='../assets/icons/remove.png' width='24px'></a></span>";
                                     
                                 } else {
-                                    echo "<a href='../update/referenceUpd.php?Turnover_id=$rid&name=$empName'><img src='../assets/icons/update.png' width='24px'></a>&nbsp;
-                                        <a href='../update/remove.php?Turnover_id=$rid;' onclick='return checkDelete()'><img src='../assets/icons/remove.png' width='24px'></a>";
+                                    echo "<a href='../update/referenceUpd.php?turnoverRef=$turnoverRef&name=$empId'><img src='../assets/icons/update.png' width='24px'></a>&nbsp;
+                                        <a href='../update/remove.php?turnoverRef=$turnoverRef&name=$empId' onclick='return checkDelete()'><img src='../assets/icons/remove.png' width='24px'></a>";
                                 }
                                 echo "</td>";
                             } 
