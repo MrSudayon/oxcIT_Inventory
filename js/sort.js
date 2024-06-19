@@ -53,6 +53,50 @@ function searchTable() {
     document.querySelector('.result-count').textContent = rowCountPage;
 }
 
+function searchAccTable() {
+    let searchValue = document.getElementById('searchInput').value.toLowerCase();
+    let visibleRows = Array.from(document.querySelectorAll('tbody tr')).filter(row => {
+        let containsCheckbox = row.querySelector('input[type="checkbox"]');
+        return (!containsCheckbox || !containsCheckbox.checked) && row.textContent.toLowerCase().includes(searchValue);
+    });
+
+    visibleRows.forEach((row, i) => {
+        row.style.setProperty('--delay', (i * 0.1) + 's');
+        row.classList.remove('hide');
+    });
+
+    document.querySelectorAll('tbody tr').forEach(row => {
+        if (!visibleRows.includes(row)) {
+            row.classList.add('hide');
+        }
+    });
+
+    let accCountPage = visibleRows.length;
+    document.querySelector('.result-count').textContent = accCountPage;
+}
+
+function searchTrnTable() {
+    let searchValue = document.getElementById('searchInput').value.toLowerCase();
+    let visibleRows = Array.from(document.querySelectorAll('tbody tr')).filter(row => {
+        let containsCheckbox = row.querySelector('input[type="checkbox"]');
+        return (!containsCheckbox || !containsCheckbox.checked) && row.textContent.toLowerCase().includes(searchValue);
+    });
+
+    visibleRows.forEach((row, i) => {
+        row.style.setProperty('--delay', (i * 0.1) + 's');
+        row.classList.remove('hide');
+    });
+
+    document.querySelectorAll('tbody tr').forEach(row => {
+        if (!visibleRows.includes(row)) {
+            row.classList.add('hide');
+        }
+    });
+
+    let rowCountPage = visibleRows.length;
+    document.querySelector('.result-count').textContent = rowCountPage;
+}
+
 function sortRows(a, b) {
     const aMatches = a.querySelector('td[data-column="assettag"]').textContent.match(/\d+$/);
     const bMatches = b.querySelector('td[data-column="assettag"]').textContent.match(/\d+$/);
