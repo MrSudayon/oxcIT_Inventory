@@ -3,8 +3,50 @@ include '../inc/auth.php';
 include '../inc/listsHead.php'; 
 include '../inc/header.php'; 
 
-$accReferenceTbl = $operation->getAccReferenceTable();
-$trnReferenceTbl = $operation->getTrnReferenceTable();
+    $accReferenceTbl = $operation->getAccReferenceTable();
+    $trnReferenceTbl = $operation->getTrnReferenceTable();
+
+
+    $results = mysqli_query($db->conn, $accReferenceTbl);
+
+    $results_per_page = 20;
+    // if (!isset ($_GET['page']) ) {  
+    //     $page = 1;  
+    // } elseif ($_GET['page'] === 'all') {  
+    //     $sql = "SELECT a.id AS aId, a.empId, a.status AS status, a.assettype, a.assettag AS tag, a.model, a.remarks, 
+    //                 e.id, e.name AS ename, e.division, e.location, 
+    //                 r.id AS rid, r.assetId AS assetId, r.name AS rname, GROUP_CONCAT(DISTINCT r.accountabilityRef ORDER BY r.accountabilityRef) AS accountabilityRef, 
+    //                 r.accountabilityStatus AS accountabilityStatus, r.accountabilityDate AS accountabilityDate, r.accountabilityFile AS accountabilityFile, r.referenceStatus  
+    //                 FROM assets_tbl AS a 
+    //                 LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+    //                 LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+    //                 WHERE referenceStatus='1' AND status='Deployed' AND accountabilityRef!=''
+    //                 GROUP BY rname, accountabilityRef 
+    //                 ORDER BY accountabilityStatus, ename ASC";
+    //     $res = mysqli_query($db->conn, $sql);
+    //     $rowCountPage = $res->num_rows;
+    // } else {
+    //     $page = $_GET['page'];  
+    // }
+    
+    $rowCount = $results->num_rows;
+    $number_of_page = ceil ($rowCount / $results_per_page);  
+    $page_first_result = ($page-1) * $results_per_page;  
+
+        $sql = "SELECT a.id AS aId, a.empId, a.status AS status, a.assettype, a.assettag AS tag, a.model, a.remarks, 
+                    e.id, e.name AS ename, e.division, e.location, 
+                    r.id AS rid, r.assetId AS assetId, r.name AS rname, GROUP_CONCAT(DISTINCT r.accountabilityRef ORDER BY r.accountabilityRef) AS accountabilityRef, 
+                    r.accountabilityStatus AS accountabilityStatus, r.accountabilityDate AS accountabilityDate, r.accountabilityFile AS accountabilityFile, r.referenceStatus  
+                    FROM assets_tbl AS a 
+                    LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+                    LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+                    WHERE referenceStatus='1' AND status='Deployed' AND accountabilityRef!=''
+                    GROUP BY rname, accountabilityRef 
+                    ORDER BY accountabilityStatus, ename ASC 
+                LIMIT $page_first_result, $results_per_page";
+        $res = mysqli_query($db->conn, $sql);
+        $accCountPage = $res->num_rows;
+    
 ?>
 <main class="table">
 
@@ -16,9 +58,12 @@ $trnReferenceTbl = $operation->getTrnReferenceTable();
     <div id="Accountability" class="tabcontent">
         <section class="ref__table__header">
             <div class="input-group">
-                <input type="search" placeholder="Search Data...">
+                <input type="searchAcc" id="searchInput" placeholder="Search Data..." oninput="searchAccTable()">
                 <img src="../assets/icons/search.png" alt="">
             </div>
+
+            <p> <b style="color: yellow; font-size: 20px; margin-top: 10px;" class="result-count"><?php echo $accCountPage; ?></b> result/s.</p>
+
         </section>
         <section class="ref__table__body">
             <table>
@@ -92,7 +137,7 @@ $trnReferenceTbl = $operation->getTrnReferenceTable();
     <div id="Turnover" class="tabcontent hidden">
         <section class="ref__table__header">
             <div class="input-group">
-                <input type="search" placeholder="Search Data...">
+                <input type="search" id="searchInput" placeholder="Search Data..." oninput="searchTrnTable()">
                 <img src="../assets/icons/search.png" alt="">
             </div>
         </section>
