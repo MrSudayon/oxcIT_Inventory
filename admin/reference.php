@@ -28,6 +28,8 @@ include '../inc/header.php';
     // } else {
     //     $page = $_GET['page'];  
     // }
+
+    // Row COUNTSSSSS
     
     $rowCount = $results->num_rows;
     $number_of_page = ceil ($rowCount / $results_per_page);  
