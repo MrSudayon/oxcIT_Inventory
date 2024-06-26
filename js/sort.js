@@ -54,10 +54,10 @@ function searchTable() {
 }
 
 function searchAccTable() {
-    let searchValue = document.getElementById('searchInput').value.toLowerCase();
-    let visibleRows = Array.from(document.querySelectorAll('tbody tr')).filter(row => {
+    let searchValue = document.getElementById('searchAccInput').value.toLowerCase();
+    let visibleRows = Array.from(document.querySelectorAll('tbody tr.acc')).filter(row => {
         let containsCheckbox = row.querySelector('input[type="checkbox"]');
-        return (!containsCheckbox || !containsCheckbox.checked) && row.textContent.toLowerCase().includes(searchValue);
+        return row.textContent.toLowerCase().includes(searchValue);
     });
 
     visibleRows.forEach((row, i) => {
@@ -65,19 +65,19 @@ function searchAccTable() {
         row.classList.remove('hide');
     });
 
-    document.querySelectorAll('tbody tr').forEach(row => {
+    document.querySelectorAll('tbody tr.acc').forEach(row => {
         if (!visibleRows.includes(row)) {
             row.classList.add('hide');
         }
     });
 
     let accCountPage = visibleRows.length;
-    document.querySelector('.result-count').textContent = accCountPage;
+    document.querySelector('.acc-result-count').textContent = accCountPage;
 }
 
 function searchTrnTable() {
-    let searchValue = document.getElementById('searchInput').value.toLowerCase();
-    let visibleRows = Array.from(document.querySelectorAll('tbody tr')).filter(row => {
+    let searchValue = document.getElementById('searchTrnInput').value.toLowerCase();
+    let visibleRows = Array.from(document.querySelectorAll('tbody tr.trn')).filter(row => {
         let containsCheckbox = row.querySelector('input[type="checkbox"]');
         return (!containsCheckbox || !containsCheckbox.checked) && row.textContent.toLowerCase().includes(searchValue);
     });
@@ -87,14 +87,14 @@ function searchTrnTable() {
         row.classList.remove('hide');
     });
 
-    document.querySelectorAll('tbody tr').forEach(row => {
+    document.querySelectorAll('tbody tr.trn').forEach(row => {
         if (!visibleRows.includes(row)) {
             row.classList.add('hide');
         }
     });
 
-    let rowCountPage = visibleRows.length;
-    document.querySelector('.result-count').textContent = rowCountPage;
+    let trnCountPage = visibleRows.length;
+    document.querySelector('.trn-result-count').textContent = trnCountPage;
 }
 
 function sortRows(a, b) {

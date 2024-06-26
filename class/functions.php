@@ -92,7 +92,7 @@ class Operations {
             
                 if ($results->num_rows == 0) {
                     // Insert successful, prepare and execute the insert query for reference_tbl
-                    $referenceQuery = $db->conn->prepare("INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 0)");
+                    $referenceQuery = $db->conn->prepare("INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 1)");
                     $referenceQuery->bind_param("ii", $assetId, $empId);
                     $referenceResult = $referenceQuery->execute();
                 } else {
@@ -319,7 +319,6 @@ class Operations {
     // Getting reference table values
     function getAccReferenceTable() {
         global $db;
-        // $sql = mysqli_query($db->conn, "SELECT * FROM reference_tbl ORDER BY name ASC, accountabilityStatus ASC, turnoverStatus");
         $sqlSelect = "SELECT a.id AS aId, a.empId, a.status AS status, a.assettype, a.assettag AS tag, a.model, a.remarks, 
                     e.id, e.name AS ename, e.division, e.location, 
                     r.id AS rid, r.assetId AS assetId, r.name AS rname, GROUP_CONCAT(DISTINCT r.accountabilityRef ORDER BY r.accountabilityRef) AS accountabilityRef, 
@@ -330,21 +329,7 @@ class Operations {
                     WHERE referenceStatus='1' AND status='Deployed' AND accountabilityRef!=''
                     GROUP BY rname, accountabilityRef 
                     ORDER BY accountabilityStatus, ename ASC";
-                        
-                        // Working 5-8-24
-                        // "SELECT a.id AS aId, a.empId, a.status AS status, a.assettype, a.assettag AS tag, a.model, a.remarks, 
-                        // e.id, e.name AS ename, e.division, e.location, 
-                        // r.id AS rid, r.assetId AS assetId, r.name AS rname, GROUP_CONCAT(DISTINCT r.turnoverRef) AS turnoverRef, GROUP_CONCAT(DISTINCT r.accountabilityRef ORDER BY r.accountabilityRef) AS accountabilityRef, 
-                        // r.turnoverStatus AS turnoverStatus, r.accountabilityStatus AS accountabilityStatus, 
-                        // r.turnoverDate AS turnoverDate, r.accountabilityDate AS accountabilityDate, 
-                        // r.turnoverFile AS turnoverFile, r.accountabilityFile AS accountabilityFile, r.referenceStatus 
-                        // FROM assets_tbl AS a 
-                        // LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
-                        // LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                        // WHERE referenceStatus='1' AND status='Deployed' AND accountabilityRef!=''
-                        // GROUP BY rname, accountabilityRef 
-                        // ORDER BY referenceStatus DESC";
-
+                    
         $result = mysqli_query($db->conn, $sqlSelect);
 
         return $result;  

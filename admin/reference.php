@@ -6,10 +6,19 @@ include '../inc/header.php';
     $accReferenceTbl = $operation->getAccReferenceTable();
     $trnReferenceTbl = $operation->getTrnReferenceTable();
 
+    // $sql = "SELECT a.id AS aId, a.empId, a.status AS status, a.assettype, a.assettag AS tag, a.model, a.remarks, 
+    //         e.id, e.name AS ename, e.division, e.location, 
+    //         r.id AS rid, r.assetId AS assetId, r.name AS rname, GROUP_CONCAT(DISTINCT r.accountabilityRef ORDER BY r.accountabilityRef) AS accountabilityRef, 
+    //         r.accountabilityStatus AS accountabilityStatus, r.accountabilityDate AS accountabilityDate, r.accountabilityFile AS accountabilityFile, r.referenceStatus  
+    //         FROM assets_tbl AS a 
+    //         LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+    //         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+    //         WHERE referenceStatus='1' AND status='Deployed' AND accountabilityRef!=''
+    //         GROUP BY rname, accountabilityRef 
+    //         ORDER BY accountabilityStatus, ename ASC";
+    // $results = mysqli_query($db->conn, $sql);
 
-    $results = mysqli_query($db->conn, $accReferenceTbl);
-
-    $results_per_page = 20;
+    // $results_per_page = 20;
     // if (!isset ($_GET['page']) ) {  
     //     $page = 1;  
     // } elseif ($_GET['page'] === 'all') {  
@@ -20,35 +29,35 @@ include '../inc/header.php';
     //                 FROM assets_tbl AS a 
     //                 LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
     //                 LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-    //                 WHERE referenceStatus='1' AND status='Deployed' AND accountabilityRef!=''
+    //                 WHERE referenceStatus='1' AND status='Deployed' AND accountabilityRef!='' 
     //                 GROUP BY rname, accountabilityRef 
     //                 ORDER BY accountabilityStatus, ename ASC";
     //     $res = mysqli_query($db->conn, $sql);
-    //     $rowCountPage = $res->num_rows;
+    //     // $accCountPage = $res->num_rows;
     // } else {
-    //     $page = $_GET['page'];  
+    //     $page = $_GET['page']; 
     // }
 
-    // Row COUNTSSSSS
+    // // Row COUNTSSSSS 
     
-    $rowCount = $results->num_rows;
-    $number_of_page = ceil ($rowCount / $results_per_page);  
-    $page_first_result = ($page-1) * $results_per_page;  
+    // $rowCount = $results->num_rows;
+    // $number_of_page = ceil ($rowCount / $results_per_page); 
+    // $page_first_result = ($page-1) * $results_per_page; 
 
-        $sql = "SELECT a.id AS aId, a.empId, a.status AS status, a.assettype, a.assettag AS tag, a.model, a.remarks, 
-                    e.id, e.name AS ename, e.division, e.location, 
-                    r.id AS rid, r.assetId AS assetId, r.name AS rname, GROUP_CONCAT(DISTINCT r.accountabilityRef ORDER BY r.accountabilityRef) AS accountabilityRef, 
-                    r.accountabilityStatus AS accountabilityStatus, r.accountabilityDate AS accountabilityDate, r.accountabilityFile AS accountabilityFile, r.referenceStatus  
-                    FROM assets_tbl AS a 
-                    LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
-                    LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                    WHERE referenceStatus='1' AND status='Deployed' AND accountabilityRef!=''
-                    GROUP BY rname, accountabilityRef 
-                    ORDER BY accountabilityStatus, ename ASC 
-                LIMIT $page_first_result, $results_per_page";
-        $res = mysqli_query($db->conn, $sql);
-        $accCountPage = $res->num_rows;
-    
+    $sql = "SELECT a.id AS aId, a.empId, a.status AS status, a.assettype, a.assettag AS tag, a.model, a.remarks, 
+            e.id, e.name AS ename, e.division, e.location, 
+            r.id AS rid, r.assetId AS assetId, r.name AS rname, GROUP_CONCAT(DISTINCT r.accountabilityRef ORDER BY r.accountabilityRef) AS accountabilityRef, 
+            r.accountabilityStatus AS accountabilityStatus, r.accountabilityDate AS accountabilityDate, r.accountabilityFile AS accountabilityFile, r.referenceStatus 
+            FROM assets_tbl AS a 
+            LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+            LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+            WHERE referenceStatus='1' AND status='Deployed' AND accountabilityRef!='' 
+            GROUP BY rname, accountabilityRef 
+            ORDER BY accountabilityStatus, ename ASC";
+            // LIMIT $page_first_result, $results_per_page";
+
+    $res = mysqli_query($db->conn, $sql);
+    $accCountPage = $res->num_rows;
 ?>
 <main class="table">
 
@@ -60,11 +69,11 @@ include '../inc/header.php';
     <div id="Accountability" class="tabcontent">
         <section class="ref__table__header">
             <div class="input-group">
-                <input type="searchAcc" id="searchInput" placeholder="Search Data..." oninput="searchAccTable()">
+                <input type="searchAcc" id="searchAccInput" placeholder="Search Data..." oninput="searchAccTable()">
                 <img src="../assets/icons/search.png" alt="">
             </div>
 
-            <p> <b style="color: yellow; font-size: 20px; margin-top: 10px;" class="result-count"><?php echo $accCountPage; ?></b> result/s.</p>
+            <p> <b style="color: yellow; font-size: 20px; margin-top: 10px;" class="acc-result-count"><?php echo $accCountPage; ?></b> result/s.</p>
 
         </section>
         <section class="ref__table__body">
@@ -103,7 +112,7 @@ include '../inc/header.php';
                         }
 
                         if ($acctRef != '') {
-                            echo "<tr>";
+                            echo "<tr class='acc'>";
 
                             $operation->ifEmptyAccReference($acctRef, $acctFile);
 
@@ -136,12 +145,32 @@ include '../inc/header.php';
         </section>
     </div>
 
+
+    <?php
+        $sql1 = "SELECT a.id AS aId, a.empId, a.status AS status, a.assettype, a.assettag AS tag, a.model, a.remarks, 
+                e.id, e.name AS ename, e.division, e.location, 
+                r.id AS rid, r.assetId AS assetId, r.name AS rname, GROUP_CONCAT(DISTINCT r.turnoverRef ORDER BY r.turnoverRef) AS turnoverRef, 
+                r.turnoverStatus AS turnoverStatus, r.turnoverDate AS turnoverDate, r.turnoverFile AS turnoverFile, r.referenceStatus 
+                FROM assets_tbl AS a 
+                LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+                LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+                WHERE referenceStatus='1' AND status='Deployed' AND turnoverRef!='' 
+                GROUP BY rname, turnoverRef 
+                ORDER BY turnoverStatus, ename ASC";
+
+        $res1 = mysqli_query($db->conn, $sql1);
+        $trnCountPage = $res1->num_rows;
+    ?>
+
     <div id="Turnover" class="tabcontent hidden">
         <section class="ref__table__header">
             <div class="input-group">
-                <input type="search" id="searchInput" placeholder="Search Data..." oninput="searchTrnTable()">
+                <input type="search" id="searchTrnInput" placeholder="Search Data..." oninput="searchTrnTable()">
                 <img src="../assets/icons/search.png" alt="">
             </div>
+
+            <p> <b style="color: yellow; font-size: 20px; margin-top: 10px;" class="trn-result-count"><?php echo $trnCountPage; ?></b> result/s.</p>
+
         </section>
         <section class="ref__table__body">
             <table>
@@ -177,20 +206,14 @@ include '../inc/header.php';
                         }
 
                         if ($turnoverRef != '') {
+                            echo "<tr class='trn'>";
                             
-                            $operation->ifEmptyTrnReference($turnoverRef, $turnoverFile);
-
-                            if($referenceStatus == 0 || $turnoverStatus == 'Signed') {
-                                echo "<tr style='background-color: #fecfcc;'>";
-                            } else {
-                                echo "<tr>";
-                            }
+                            $operation->ifEmptyTrnReference($turnoverRef, $turnoverFile);                            
 
                             if ($turnoverRef != $prevTrnRef) {
-                                if ($prevTrnRef != '') {
-                                    echo "</tr>";
-                                }
-                                echo "<tr>";
+                                // if ($prevTrnRef != '') {
+                                //     echo "</tr>";
+                                // }
                                 echo "<td>$empName</td>";
                                 echo "<td><a class='link' href='turnover.php?id=$turnoverRef'>$turnoverRef</a></td>";
                                 echo "<td width='10%;'><a class='link' href='../files/download.php?trnRef_id=$rid' target='_blank'>$turnoverFile</td>";
@@ -206,6 +229,7 @@ include '../inc/header.php';
                                         <a href='../update/remove.php?turnoverRef=$turnoverRef&name=$empId' onclick='return checkDelete()'><img src='../assets/icons/remove.png' width='24px'></a>";
                                 }
                                 echo "</td>";
+                                echo "</tr>";
                             } 
                             $prevTrnRef = $turnoverRef;
                         }
