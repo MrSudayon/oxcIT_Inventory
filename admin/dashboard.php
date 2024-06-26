@@ -83,7 +83,7 @@
                 <div class="card">
                 <div class="card-inner">
                     <h3>DEFECTIVE</h3>
-                    <span class="material-icons-outlined">error</span>
+                    <span class="material-icons-outlined">disabled_by_default</span>
                 </div>
                 <h1><?php 
                     $defect = $select->getDefectAssetCount(); 
@@ -114,6 +114,19 @@
                 <h1><?php 
                     $sell = $select->getForSellAssetCount(); 
                     echo $sell; 
+                ?></h1>
+                </div>
+            </a>
+
+            <a href="#">            
+                <div class="card">
+                <div class="card-inner">
+                    <h3>MISSING</h3>
+                    <span class="material-icons-outlined">visibility_off</span>
+                </div>
+                <h1><?php 
+                    $missing = $select->getForMissingAssetCount(); 
+                    echo $missing; 
                 ?></h1>
                 </div>
             </a>

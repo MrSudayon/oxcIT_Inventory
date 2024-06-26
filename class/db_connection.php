@@ -201,6 +201,12 @@ class Select extends Connection {
         $count = $row['count'];
         return $count;
     }
+    public function getForMissingAssetCount() {
+        $result = mysqli_query($this->conn, "SELECT COUNT(*) AS count FROM assets_tbl WHERE status = 'Missing'");
+        $row = mysqli_fetch_assoc($result);
+        $count = $row['count'];
+        return $count;
+    }
 }
 
 class get_All_User extends Connection {

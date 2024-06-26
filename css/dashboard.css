@@ -288,6 +288,10 @@ header {
 }
 
 .main-cards a:nth-child(7) {
+  background-color: #c02929;
+}
+
+.main-cards a:nth-child(8) {
     background-color: #ff745b;
 }
 
