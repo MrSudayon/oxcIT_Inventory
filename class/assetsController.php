@@ -192,8 +192,14 @@ class assetsController {
             if($empId!='0' || $empId!='') {
                 $empName = $operation->getThyNames($empId);
 
-                mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                    VALUES('', '$sess_name', 'Assigned: $assettag to $empName', NOW())");
+                if($status != 'Deployed') {
+                    mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                        VALUES('', '$sess_name', 'Removed the accountability for $assettag', NOW())");
+                } else {
+                    mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+                        VALUES('', '$sess_name', 'Assigned: $assettag to $empName', NOW())");
+                }
+                
             } else {
                 mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                     VALUES('', '$sess_name', 'Updated record: $assettag', NOW())");

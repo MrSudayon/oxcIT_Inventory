@@ -3,12 +3,14 @@ include '../inc/auth.php';
     
 if (isset($_GET['acctRef_id'])) {
     $id = $_GET['acctRef_id'];
+    $name = $user['username'];
     
     // fetch file to download from database
     $sql = "SELECT * FROM reference_tbl WHERE id = '$id'";
     $result = mysqli_query($db->conn, $sql);
 
     $file = mysqli_fetch_assoc($result);
+    $refId = $file['accountabilityRef'];
     $filepath = './accountability/'.$file['accountabilityFile'];
 
     if (file_exists($filepath)) {
@@ -39,6 +41,7 @@ if (isset($_GET['acctRef_id'])) {
 
 if (isset($_GET['trnRef_id'])) {
     $id = $_GET['trnRef_id'];
+    $name = $user['username'];
     
     // fetch file to download from database
     $sql = "SELECT * FROM reference_tbl WHERE id='$id'";
