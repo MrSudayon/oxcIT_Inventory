@@ -322,11 +322,11 @@ class Operations {
         $sqlSelect = "SELECT a.id AS aId, a.empId, a.status AS status, a.assettype, a.assettag AS tag, a.model, a.remarks, 
                     e.id, e.name AS ename, e.division, e.location, 
                     r.id AS rid, r.assetId AS assetId, r.name AS rname, GROUP_CONCAT(DISTINCT r.accountabilityRef ORDER BY r.accountabilityRef) AS accountabilityRef, 
-                    r.accountabilityStatus AS accountabilityStatus, r.accountabilityDate AS accountabilityDate, r.accountabilityFile AS accountabilityFile, r.referenceStatus  
+                    r.accountabilityStatus AS accountabilityStatus, r.accountabilityDate AS accountabilityDate, r.accountabilityFile AS accountabilityFile, r.referenceStatus 
                     FROM assets_tbl AS a 
                     LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
                     LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                    WHERE referenceStatus='1' AND status='Deployed' AND accountabilityRef!=''
+                    WHERE referenceStatus='1' AND status='Deployed' AND accountabilityRef!='' 
                     GROUP BY rname, accountabilityRef 
                     ORDER BY accountabilityStatus, ename ASC";
                     
