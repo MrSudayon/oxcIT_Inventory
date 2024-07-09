@@ -357,7 +357,8 @@ if(isset($_POST['update-acctRef'])) {
     }
 
     $input = [
-        'name' => mysqli_real_escape_string($db->conn,$_POST['name']),
+        // 'name' => mysqli_real_escape_string($db->conn,$_POST['name']),
+        'assetId' => mysqli_real_escape_string($db->conn,$_POST['assetId']), 
         'acctStatus' => mysqli_real_escape_string($db->conn,$_POST['acctStatus']),
         'acctDate' => mysqli_real_escape_string($db->conn,$_POST['acctDate']),
         'acctFile' => mysqli_real_escape_string($db->conn,$accFileName),
