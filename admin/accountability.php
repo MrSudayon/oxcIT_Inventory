@@ -19,7 +19,7 @@ if(isset($_GET['id'])) {
         $assetTags[] = $row['assettag'];
         $acc_ref = $row['accountabilityRef'];
 
-        $empId = $row['empId'];
+        $empId = $row['rname'];
     }
     ?>
 

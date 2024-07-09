@@ -51,7 +51,7 @@ include '../inc/header.php';
             FROM assets_tbl AS a 
             LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
             LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-            WHERE referenceStatus='1' AND status='Deployed' AND accountabilityRef!='' 
+            WHERE (referenceStatus='1' OR referenceStatus='2') AND status='Deployed' AND accountabilityRef!='' 
             GROUP BY rname, accountabilityRef 
             ORDER BY accountabilityStatus, ename ASC";
             // LIMIT $page_first_result, $results_per_page";
@@ -154,7 +154,7 @@ include '../inc/header.php';
                 FROM assets_tbl AS a 
                 LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
                 LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                WHERE referenceStatus='1' AND status='Deployed' AND turnoverRef!='' 
+                WHERE (referenceStatus='1' OR referenceStatus='2') AND status='Deployed' AND turnoverRef!='' 
                 GROUP BY rname, turnoverRef 
                 ORDER BY turnoverStatus, ename ASC";
 

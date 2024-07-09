@@ -18,7 +18,7 @@ if(isset($_GET['id'])) {
         $assetTags[] = $row['assettag'];
         $trn_ref = $row['turnoverRef'];
 
-        $empId = $row['empId'];
+        $empId = $row['rname'];
     }
     ?>
 

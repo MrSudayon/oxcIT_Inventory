@@ -422,6 +422,7 @@ if(isset($_POST['update-trnRef'])) {
     }
 
     $input = [
+        'assetId' => mysqli_real_escape_string($db->conn,$_POST['assetId']), 
         'trnStatus' => mysqli_real_escape_string($db->conn,$_POST['trnStatus']),
         'trnDate' => mysqli_real_escape_string($db->conn,$_POST['trnDate']),
         'trnFile' => mysqli_real_escape_string($db->conn,$trnFileName),

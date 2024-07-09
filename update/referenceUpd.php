@@ -29,7 +29,7 @@
                 $result = $assetController->editReference($refNo);
 
                 if($result) {
-                    
+                    $assetId = $result['rAssetId'];
                     // $trnStatus = $result['turnoverStatus'];
                     // $trnoFile = $result['turnoverFile'];
                     $accStatus = $result['accountabilityStatus'];
@@ -39,6 +39,7 @@
                     <div class="asset-details">
                         <input type="hidden" name="id" value="<?=$result['accountabilityRef']?>">
                         <input type="hidden" name="eId" value="<?=$empName?>">
+                        <input type="hidden" name="assetId" value="<?=$assetId?>">
                         <!-- <input type="hidden" name="id" value=" ?=$result['refId']?>"> -->
 
                         <div class="input-box" style="width: 100%;">
@@ -100,7 +101,9 @@
                     </div>
                 </form>
             <?php 
-                } 
+                } else {
+                    echo "No data found";
+                }
             } elseif(isset($_GET['turnoverRef'])) {
                 
                 $refId = mysqli_real_escape_string($db->conn, $_GET['turnoverRef']); // refId from reference tbl
@@ -110,7 +113,7 @@
                 $result = $assetController->editReference($refId);
 
                 if($result) {
-                    
+                    $assetId = $result['rAssetId'];
                     $trnStatus = $result['turnoverStatus'];
                     $trnoFile = $result['turnoverFile'];
 
@@ -120,6 +123,7 @@
                         <!-- <input type="hidden" name="id" value="?=$result['refId']?>"> -->
                         <input type="hidden" name="id" value="<?=$result['turnoverRef']?>">
                         <input type="hidden" name="eId" value="<?=$empName?>">
+                        <input type="hidden" name="assetId" value="<?=$assetId?>">
 
                         <div class="input-box" style="width: 100%;">
                             <span class="details">Assigned to: </span>
@@ -180,7 +184,9 @@
                     </div>
                 </form>
             <?php 
-                } 
+                } else {
+                    echo "No data found";
+                }
             }
             ?>
                     

@@ -442,7 +442,7 @@ class assetsController {
         // $refId = mysqli_real_escape_string($db->conn, $id);
         $refNo = mysqli_real_escape_string($db->conn, $id);
         $sql = "SELECT DISTINCT 
-                r.name, 
+                r.name, r.assetId AS rAssetId, 
                 r.accountabilityRef, r.accountabilityStatus, r.accountabilityFile AS accountabilityFile, r.accountabilityDate,
                 r.turnoverRef, r.turnoverStatus, r.turnoverFile AS turnoverFile, r.turnoverDate, 
                 e.id, e.name AS empName 
@@ -451,18 +451,8 @@ class assetsController {
                 LEFT JOIN employee_tbl AS e ON e.id = a.empId 
                 WHERE r.accountabilityRef='$refNo' OR r.turnoverRef='$refNo'";
         
-        // "SELECT DISTINCT a.id, 
-        //         r.assetId, r.id AS refId, r.name, 
-        //         r.accountabilityRef, r.accountabilityStatus, r.accountabilityFile AS accountabilityFile, r.accountabilityDate,
-        //         r.turnoverRef, r.turnoverStatus, r.turnoverFile AS turnoverFile, r.turnoverDate, 
-        //         e.id, e.name AS empName 
-        //         FROM assets_tbl AS a 
-        //         LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
-        //         LEFT JOIN employee_tbl AS e ON e.id = a.empId 
-
-                // WHERE r.id='$refId'";
         $res = mysqli_query($db->conn, $sql);
-        if($res->num_rows == 1){
+        if($res->num_rows >= 1){
             $data = $res->fetch_assoc();
             return $data;
         } else {
@@ -477,7 +467,7 @@ class assetsController {
         $eName = mysqli_real_escape_string($db->conn, $eId);
 
         if($action == 'AccountabilityRef') {
-
+            $assetID = $input['assetId'];
             $acctStatus = $input['acctStatus'];
             $acctDate = $input['acctDate'];
             $acctFile = $input['acctFile'];
@@ -498,16 +488,23 @@ class assetsController {
         }
         elseif($action == 'TurnoverRef') {
 
+            $assetID = $input['assetId'];
             $trnStatus = $input['trnStatus'];
             $trnDate = $input['trnDate'];
             $trnFile = $input['trnFile'];
 
             $sql = "UPDATE reference_tbl 
-                    SET turnoverStatus = '$trnStatus', turnoverDate = '$trnDate', turnoverFile = '$trnFile' 
+                    SET turnoverStatus = '$trnStatus', turnoverDate = '$trnDate', turnoverFile = '$trnFile', referenceStatus = '2' 
                     WHERE name='$eName' AND turnoverRef='$refNo'";
+                
             $result = $db->conn->query($sql);
 
             if($result) {
+
+                mysqli_query($db->conn, "UPDATE assets_tbl
+                                        SET empId='0', lastused='$eName' 
+                                        WHERE id = '$assetID'");
+
                 mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                 VALUES('', '$sess_name', 'Updated reference no: $refNo' , NOW())");
 
