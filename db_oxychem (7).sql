@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 01, 2024 at 02:23 AM
+-- Generation Time: Jul 13, 2024 at 03:32 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -120,13 +120,13 @@ INSERT INTO `assets_tbl` (`id`, `assettype`, `assettag`, `model`, `serial`, `sup
 (60, 'Laptop', 'LPTP-60', 'Asus Zenbook UX435E', 'M7N0CX09743328B', 'ASUS ROG Megamall', 31, '31', 'Deployed', '0000-00-00', '', '2022-05-25', 59999, 0, '', '2022-05-25', 'Intel core i5 1135G7 2.42Ghz', '8 GB ', '512 SSD', '', '', '', 'Windows 10 Pro'),
 (61, 'Laptop', 'LPTP-61', 'Lenovo Ideapad 5 14ALC05', 'MP27L54W', 'GigaHertz Megamall', 32, '32', 'Deployed', '0000-00-00', '', '2022-07-28', 38999, 0, '', '2022-08-04', 'AMD Ryzen 5 5500U 2.10Ghz', '16 GB', '512 SSD', '', '', '', 'Windows 10 Pro'),
 (62, 'Laptop', 'LPTP-62', 'Lenovo Ideapad 5 14ALC05', 'MP27L5ZW', 'GigaHertz Megamall', 33, '33', 'Deployed', '0000-00-00', '', '2022-07-28', 38999, 0, '', '2022-08-04', 'AMD Ryzen 5 5500U 2.10Ghz', '16 GB', '512 SSD', '', '', '', 'Windows 10 Pro'),
-(63, 'Laptop', 'LPTP-63', 'Asus X415F-BV114W', 'MCN0CX30Z08651G', 'ASUS ROG Megamall', 34, '34', 'Deployed', '0000-00-00', '', '2022-08-19', 27999, 0, '', '2022-08-26', 'Intel core i3 10110U 2.10Ghz', '8 GB', '256 SSD', '', '', '', 'Windows 10 Pro'),
+(63, 'Laptop', 'LPTP-63', 'Asus X415F-BV114W', 'MCN0CX30Z08651G', 'ASUS ROG Megamall', 222, '34', 'Deployed', '0000-00-00', '', '2022-08-19', 27999, 0, '', '2024-07-09', 'Intel core i3 10110U 2.10Ghz', '8 GB', '256 SSD', '', '', '', 'Windows 10 Pro'),
 (64, 'Laptop', 'LPTP-64', 'Asus X415F-BV114W', 'MCN0CX00Y31201B', 'ASUS ROG Megamall', 35, '35', 'Deployed', '0000-00-00', '', '2022-08-19', 27999, 0, '', '2022-08-26', 'Intel core i3 10110U 2.10Ghz', '8 GB', '256 SSD', '', '', '', 'Windows 10 Pro'),
 (65, 'Laptop', 'LPTP-65', 'Asus X415F-BV114W', 'N1N0CX00Y331012', 'ASUS ROG Megamall', 111, '36', 'Deployed', '0000-00-00', '', '2022-08-19', 27999, 0, '', '2022-08-26', 'Intel core i3 10110U 2.10Ghz', '8 GB', '256 SSD', '', '', '', 'Windows 10 Pro'),
 (66, 'Laptop', 'LPTP-66', 'Asus X415F-BV114W', 'N1N0CX00Y373015', 'ASUS ROG Megamall', 37, '37', 'Deployed', '0000-00-00', '', '2022-08-19', 27999, 0, '', '2022-08-26', 'Intel core i3 10110U 2.10Ghz', '8 GB', '256 SSD', '', '', '', 'Windows 10 Pro'),
 (67, 'Laptop', 'LPTP-67', 'IdeaPad 3 14ALC6', 'N1N0CX00Y373015', 'ASUS ROG Megamall', 38, '38', 'Deployed', '0000-00-00', '', '2022-09-02', 48875, 0, '', '2022-09-09', 'AMD  Ryzen 7 5700U 1.8Ghz', '20 GB', '512 SSD', '', '', '', 'Windows 10 Pro'),
 (68, 'Laptop', 'LPTP-68', 'Lenovo Ideapad 3 15ITL05', 'PF3NSHAD', 'ASUS ROG Megamall', 39, '39', 'Deployed', '0000-00-00', '', '2022-11-11', 31999, 0, '', '0000-00-00', 'Intel core i3 1115G4 3Ghz', '8 GB ', '512 SSD', '', '', '', 'Windows 11 Pro'),
-(69, 'Laptop', 'LPTP-69', 'ASUS TUF FX506L', 'N9NRCX10L820399', 'ASUS ROG Megamall', 40, '40', 'Deployed', '0000-00-00', '', '2023-03-03', 45999, 0, '', '2023-03-10', 'Intel Core i5 10300H 2.Ghz', '8 GB', '512 SSD', '', '', '', 'Windows 11'),
+(69, 'Laptop', 'LPTP-69', 'ASUS TUF FX506L', 'N9NRCX10L820399', 'ASUS ROG Megamall', 40, '40', 'Deployed', '0000-00-00', '', '2023-03-03', 45999, 0, 'Re assign', '2023-03-10', 'Intel Core i5 10300H 2.Ghz', '8 GB', '512 SSD', '', '', '', 'Windows 11'),
 (70, 'Laptop', 'LPTP-70', 'Asus Vivobook X1402ZA', 'N6N0LP01U378233', 'ASUS ROG Megamall', 41, '41', 'Deployed', '0000-00-00', '', '2023-03-03', 42999, 0, '', '2023-03-10', 'Intel Core i5 1240P 1.70Ghz', '8 GB ', '512 SSD', '', '', '', 'Windows 11'),
 (71, 'Laptop', 'LPTP-71', 'Asus TUF FA506IC', 'N8NRCX04B07332A', 'Asus ROG MOA', 42, '42', 'Deployed', '0000-00-00', '', '2023-03-10', 59999, 0, '', '2023-03-17', 'AMD Ryzen 7 4800H 2.90Ghz', '8 GB ', '512 SSD', '', '', '', 'Windows 11'),
 (72, 'Laptop', 'LPTP-72', 'Asus X1400E', 'N7N0CV152874299', 'ASUS ROG Megamall', 100, '', 'Deployed', '0000-00-00', '', '2023-04-28', 34999, 0, '', '2023-05-05', 'Intel core i3 1115', '8 GB', '512 SSD', '', '', '', 'Windows 11'),
@@ -136,7 +136,7 @@ INSERT INTO `assets_tbl` (`id`, `assettype`, `assettag`, `model`, `serial`, `sup
 (76, 'Laptop', 'LPTP-76', 'Asus Vivobook X1405Z', 'R7N0CV10N252285', 'ASUS ROG Megamall', 10, '10', 'Deployed', '0000-00-00', '', '2023-09-27', 29999, 0, '', '2023-10-04', 'Intel core i3 1215U 1.20Ghz', '16 GB', '512 SSD', '', '', '', 'Windows 11'),
 (77, 'Laptop', 'LPTP-77', 'HP 15s eq2158AU', '5CD208CM28', 'Silicon Valley', 17, '17', 'Deployed', '0000-00-00', '', '2023-11-30', 28000, 0, '', '2023-12-07', 'AMD Ryzen 5-5500U 2.10Ghz', '8 GB', '512 SSD', '', '', '', 'Windows 11'),
 (78, 'Laptop', 'LPTP-78', 'HP 15s eq2158AU', '5CD2094J27', 'Silicon Valley', 9, '9', 'Deployed', '0000-00-00', '', '2023-11-30', 28000, 0, '', '2023-12-07', 'AMD Ryzen 5-5500U 2.10Ghz', '8 GB ', '512 SSD', '', '', '', 'Windows 11'),
-(79, 'Laptop', 'LPTP-79', 'HP 15s eq2158AU', '5CD206GPFR', 'Silicon Valley', 5, '5', 'Deployed', '0000-00-00', '', '2023-11-30', 28000, 0, '', '2023-12-07', 'AMD Ryzen 5-5500U 2.10Ghz', '8 GB', '512 SSD', '', '', '', 'Windows 11'),
+(79, 'Laptop', 'LPTP-79', 'HP 15s eq2158AU', '5CD206GPFR', 'Silicon Valley', 221, '5', 'Deployed', '0000-00-00', '', '2023-11-30', 28000, 0, '', '2024-07-09', 'AMD Ryzen 5-5500U 2.10Ghz', '8 GB', '512 SSD', '', '', '', 'Windows 11'),
 (80, 'Laptop', 'LPTP-80', 'HP 15s fq4033TU', '5CD1526VC0', 'Silicon Valley', 25, '25', 'Deployed', '0000-00-00', '', '2023-11-30', 30000, 0, '', '2023-12-07', 'Intel core i5 1135G7 2.42Ghz', '8 GB ', '512 SSD', '', '', '', 'Windows 11'),
 (81, 'Laptop', 'LPTP-81', 'Asus Flip UP3404', 'RBN0LP01344945A', 'ASUS ROG Megamall', 24, '24', 'Deployed', '0000-00-00', '', '2024-01-17', 89995, 0, '', '2024-01-24', 'Intel core i7-1360P 2.20Ghz', '16 GB', '512 SSD', '', '', '', 'Windows 11'),
 (82, 'Laptop', 'LPTP-82', 'Asus Vivobook X1402ZA', 'NBN0LP01U601469', 'ASUS ROG Megamall', 36, '36', 'Deployed', '0000-00-00', '', '2024-01-17', 42999, 0, '', '2024-01-24', 'Intel core i5 1235U 1.30Ghz', '16 GB', '512 SSD', '', '', '', 'Windows 11'),
@@ -450,7 +450,7 @@ INSERT INTO `assets_tbl` (`id`, `assettype`, `assettag`, `model`, `serial`, `sup
 (389, 'Mobile', 'MBL-57', 'OPPO A5s', 'IJYSSGVC65JRIVLJ', '', 186, '186', 'Deployed', '0000-00-00', '', '2019-01-01', 0, 0, '', '0000-00-00', '', '3 GB', '32 GB', '', '', 'Postpaid', ''),
 (390, 'Printer', 'PRNTR-4', 'Epson L220', 'VGWK027322', '', 0, '12', 'Defective', '0000-00-00', '', '2019-01-01', 0, 0, 'Printer Head', '0000-00-00', '', '', '', '', '', '', ''),
 (391, 'Mobile', 'MBL-58', 'OPPO A5s', 'SGNBDU799TLFS06T', '', 187, '187', 'Deployed', '0000-00-00', '', '2019-01-01', 0, 0, '', '0000-00-00', '', '3 GB', '32 GB', '', '', 'Postpaid', ''),
-(392, 'Mobile', 'MBL-59', 'OPPO A5s', '6T0JKVRCMF0V0VMN', '', 188, '188', 'Deployed', '0000-00-00', '', '2019-01-01', 0, 0, '', '0000-00-00', '', '3 GB', '32 GB', '', '', 'Postpaid', ''),
+(392, 'Mobile', 'MBL-59', 'OPPO A5s', '6T0JKVRCMF0V0VMN', '', 220, '188', 'Deployed', '0000-00-00', '', '2019-01-01', 0, 0, 'Resigned transfer accountability to Marti Tibar', '2024-07-04', '', '3 GB', '32 GB', '', '', 'Postpaid', ''),
 (393, 'Printer', 'PRNTR-5', 'Epson L120', 'TP3K295172', '', 0, '130', 'Defective', '0000-00-00', '', '2019-01-01', 0, 0, '', '0000-00-00', '', '', '', '', '', '', ''),
 (394, 'Mobile', 'MBL-60', 'Oppo A74', 'ceed2eb7', '', 41, '41', 'Deployed', '0000-00-00', '', '2019-01-01', 0, 0, '', '0000-00-00', '', '4 GB', '128 GB', '', '', 'Postpaid', ''),
 (395, 'Printer', 'PRNTR-6', 'HP Deskjet 5820', 'CN69N4G58B', '', 0, '36', 'Defective', '0000-00-00', '', '2019-01-01', 0, 0, 'Printer Head', '0000-00-00', '', '', '', '', '', '', ''),
@@ -516,7 +516,7 @@ INSERT INTO `assets_tbl` (`id`, `assettype`, `assettag`, `model`, `serial`, `sup
 (458, 'Mobile', 'MBL-104', 'Samsung A04e', '', '', 57, '', 'Deployed', '0000-00-00', '', '2023-10-02', 0, 0, '', '0000-00-00', '', '3 GB', '32 GB', '', '', 'Postpaid', ''),
 (459, 'Mobile', 'MBL-105', 'Samsung A04e', '', '', 50, '', 'Deployed', '0000-00-00', '', '2023-10-02', 0, 0, '', '0000-00-00', '', '3 GB', '32 GB', '', '', 'Postpaid', ''),
 (460, 'Printer', 'PRNTR-23', 'Epson L3110', 'X5DY000934', '', 91, '', 'Deployed', '0000-00-00', '', '2019-01-01', 0, 0, '', '0000-00-00', '', '', '', '3 in 1 inkjet', '', '', ''),
-(461, 'Mobile', 'MBL-106', 'Samsung A04e', '', '', 5, '', 'Deployed', '0000-00-00', '', '2023-10-02', 0, 0, '', '0000-00-00', '', '3 GB', '32 GB', '', '', 'Postpaid', ''),
+(461, 'Mobile', 'MBL-106', 'Samsung A04e', '', '', 221, '5', 'Deployed', '0000-00-00', '', '2023-10-02', 0, 0, '', '2024-07-09', '', '3 GB', '32 GB', '', '', 'Postpaid', ''),
 (462, 'Printer', 'PRNTR-24', 'Brother', 'E73186B4F256728', '', 0, '91', 'Defective', '0000-00-00', '', '2019-01-01', 0, 0, 'Motherboard', '0000-00-00', '', '', '', '', '', '', ''),
 (463, 'Mobile', 'MBL-107', 'Samsung A04e', '', '', 93, '', 'Deployed', '0000-00-00', '', '2023-09-01', 0, 0, '', '2023-09-23', '', '3 GB', '32 GB', '', '', 'Postpaid', ''),
 (464, 'Mobile', 'MBL-108', 'Samsung A04e', '', '', 200, '', 'Deployed', '0000-00-00', '', '2023-10-02', 0, 0, '', '0000-00-00', '', '3 GB', '32 GB', '', '', 'Postpaid', ''),
@@ -576,9 +576,9 @@ INSERT INTO `assets_tbl` (`id`, `assettype`, `assettag`, `model`, `serial`, `sup
 (519, 'Laptop', 'LPTP-86', 'HP 14-K038TU', 'CND3350JZG', '', 0, '0', 'To be deploy', '0000-00-00', '', '2019-01-01', 0, 0, '', '0000-00-00', 'Intel core i5 4200U 1.60Ghz ', '4 GB', '480 SSD', '', '', '', 'Windows 10 Pro'),
 (520, 'Laptop', 'LPTP-87', 'Acer Aspire V5-431', 'NXM18SP003070309C660', '', 0, '0', 'Sell', '0000-00-00', '', '2019-01-01', 0, 0, '', '0000-00-00', 'Intel Celeron 1007U 1.50 Ghz', '2 GB', '500 GB', '', '', '', 'Windows 7'),
 (521, 'Desktop', 'DSKTP-126', 'Clone', 'NA', 'ZMM Computer Software Trading', 216, '0', 'Deployed', '0000-00-00', '', '2024-04-25', 24500, 0, '', '2024-05-14', 'Ryzen 5 5600G', '8 GB', '512 SSD', '', '', '', 'Windows 11 Pro'),
-(522, 'Desktop', 'DSKTP-127', 'Clone', 'NA', 'ZMM Computer Software Trading', 200, '0', 'Deployed', '0000-00-00', '', '2024-04-25', 24500, 0, '', '2024-05-14', 'Ryzen 5 5600G', '8 GB ', '512 SSD', '', '', '', 'Windows 11'),
-(523, 'Monitor', 'MNTR-126', 'YGT TN215FHD', 'YGTTN215FHDHY24030805', 'ZMM Computer Software Trading', 216, '0', 'Deployed', '0000-00-00', '', '2024-04-25', 0, 0, 'Bundle to DSKTP-126', '2024-05-14', '', '', '', '21.5 LED', '', '', '');
+(522, 'Desktop', 'DSKTP-127', 'Clone', 'NA', 'ZMM Computer Software Trading', 200, '0', 'Deployed', '0000-00-00', '', '2024-04-25', 24500, 0, '', '2024-05-14', 'Ryzen 5 5600G', '8 GB ', '512 SSD', '', '', '', 'Windows 11');
 INSERT INTO `assets_tbl` (`id`, `assettype`, `assettag`, `model`, `serial`, `supplier`, `empId`, `lastused`, `status`, `turnoverdate`, `reason`, `datepurchased`, `cost`, `repair_cost`, `remarks`, `datedeployed`, `cpu`, `memory`, `storage`, `dimes`, `mobile`, `plan`, `os`) VALUES
+(523, 'Monitor', 'MNTR-126', 'YGT TN215FHD', 'YGTTN215FHDHY24030805', 'ZMM Computer Software Trading', 216, '0', 'Deployed', '0000-00-00', '', '2024-04-25', 0, 0, 'Bundle to DSKTP-126', '2024-05-14', '', '', '', '21.5 LED', '', '', ''),
 (524, 'Monitor', 'MNTR-127', 'YGT TN215FHD', 'YGTTN215FHDHY23101028', 'ZMM Computer Software Trading', 200, '0', 'Deployed', '0000-00-00', '', '2024-04-25', 0, 0, 'Bundle to DSKTP-127', '0000-00-00', '', '', '', '21.5 LED', '', '', ''),
 (525, 'AVR', 'AVR-2', 'Secure', 'NA', 'ZMM Computer Software Trading', 0, '0', 'To be deploy', '0000-00-00', '', '2024-04-25', 0, 0, 'Bundle to DSKTP-126', '0000-00-00', '', '', '', '', '', '', ''),
 (526, 'AVR', 'AVR-3', 'Secure', 'NA', 'ZMM Computer Software Trading', 0, '0', 'To be deploy', '0000-00-00', '', '2024-04-25', 0, 0, 'Bundle to DSKTP-127', '0000-00-00', '', '', '', '', '', '', ''),
@@ -602,7 +602,9 @@ INSERT INTO `assets_tbl` (`id`, `assettype`, `assettag`, `model`, `serial`, `sup
 (544, 'Monitor', 'MNTR-129', 'YGT TN215FHD', 'YGTTN215FHDHY24061655', 'ZMM Computer Software Trading', 71, '0', 'Deployed', '0000-00-00', '', '2024-06-13', 0, 0, 'Bundle to DSKTP-131', '2024-06-25', '', '', '', '24 LED', '', '', ''),
 (545, 'Monitor', 'MNTR-130', 'YGT TN215FHD', 'YGTTN215FHDHY24061654', 'ZMM Computer Software Trading', 50, '0', 'Deployed', '0000-00-00', '', '2024-06-13', 0, 0, 'Bundle to DSKTP-132', '2024-06-25', '', '', '', '24 LED', '', '', ''),
 (546, 'Desktop', 'DSKTP-131', 'Clone', 'NA', 'ZMM Computer Software Trading', 71, '0', 'Deployed', '0000-00-00', '', '2024-06-13', 24500, 0, 'Bundle to MNTR-129', '2024-06-25', 'AMD Ryzen 5 5600G', '8 GB ', '512 SSD', '', '', '', 'Windows 11'),
-(547, 'Desktop', 'DSKTP-132', 'Clone', 'NA', 'ZMM Computer Software Trading', 50, '0', 'Deployed', '0000-00-00', '', '2024-06-13', 24500, 0, 'Bundled to MNTR-130', '2024-06-25', 'AMD Ryzen 5 5600G', '8 GB', '512 SSD', '', '', '', 'Windows 11');
+(547, 'Desktop', 'DSKTP-132', 'Clone', 'NA', 'ZMM Computer Software Trading', 50, '0', 'Deployed', '0000-00-00', '', '2024-06-13', 24500, 0, 'Bundled to MNTR-130', '2024-06-25', 'AMD Ryzen 5 5600G', '8 GB', '512 SSD', '', '', '', 'Windows 11'),
+(548, 'Mobile', 'MBL-126', 'Samsung A35', 'R5CX400XNLJ', 'Globe Telecomm', 40, '0', 'Deployed', '0000-00-00', '', '2024-07-08', 0, 0, '', '2024-07-08', '', '8 GB ', '128 GB', '', '', 'Postpaid', ''),
+(549, 'Mobile', 'MBL-127', 'Redmi A2+', '49040/63RP02182', '', 223, '0', 'Deployed', '0000-00-00', '', '2024-07-11', 0, 0, '', '2024-07-11', '', '3 GB', '64 GB', '', '', 'Postpaid', '');
 
 -- --------------------------------------------------------
 
@@ -916,7 +918,11 @@ INSERT INTO `employee_tbl` (`id`, `name`, `division`, `location`, `empStatus`) V
 (216, 'Jun Mark Lee', 'Operations', 'Laguna', 1),
 (217, 'Noel Rapales', 'Outlet', 'Unknown', 1),
 (218, 'Joey Añogar', 'Outlet', 'Dasmariñas', 1),
-(219, 'Ronald Flordeliz', 'Outlet', 'Dasmariñas', 1);
+(219, 'Ronald Flordeliz', 'Outlet', 'Dasmariñas', 1),
+(220, 'Marti Tibar', 'Outlet', 'Kamuning', 1),
+(221, 'Chriza Durante', 'Operations', 'Laguna', 1),
+(222, 'Millard Emmanuel Balatucan', 'Operations', 'Laguna', 1),
+(223, 'Leny Rogacion', 'Outlet', 'Tagaytay', 1);
 
 -- --------------------------------------------------------
 
@@ -1965,7 +1971,47 @@ INSERT INTO `history_tbl` (`id`, `name`, `action`, `date`) VALUES
 (1026, 'Andong', 'Updated reference no: ACCT-REWXE-2024', '2024-06-26 13:18:14'),
 (1027, '', 'Downloaded accountability file reference id: ', '2024-06-26 13:18:18'),
 (1028, '', 'Downloaded accountability file reference id: ', '2024-06-28 08:51:34'),
-(1029, '', 'Downloaded accountability file reference id: ', '2024-06-28 08:56:28');
+(1029, '', 'Downloaded accountability file reference id: ', '2024-06-28 08:56:28'),
+(1030, 'Andong', 'Added empployee: Marti Tibar', '2024-07-01 16:31:43'),
+(1031, 'Andong', 'Assigned: MBL-59 to Bryn Shem Marquez', '2024-07-01 16:32:01'),
+(1032, 'Andong', 'Downloaded accountability file reference id: ACCT-M05M6-2024', '2024-07-03 16:59:27'),
+(1033, 'Andong', 'Unassigned item: MBL-59 from: Bryn Shem Marquez. Remarks: Resigned transfer accountability to Marti Tibar\r\n', '2024-07-04 13:18:34'),
+(1034, 'Andong', 'Assigned: MBL-59 to Marti Tibar', '2024-07-04 13:19:01'),
+(1035, 'Ezekiel', 'Added Phone record: MBL-126', '2024-07-08 14:15:02'),
+(1036, 'Ezekiel', 'Unassigned item: LPTP-69 from: Mark Martin. Remarks: Re assign', '2024-07-08 14:15:42'),
+(1037, 'Ezekiel', 'Assigned: LPTP-69 to Mark Martin', '2024-07-08 14:16:10'),
+(1038, 'Ezekiel', 'Generated accountability form for asset/s: LPTP-69, MBL-126', '2024-07-08 14:16:25'),
+(1039, 'Andong', 'Updated reference no: TRNO-YER5Q-2024', '2024-07-08 16:28:26'),
+(1040, 'Andong', 'Updated reference no: TRNO-YD8WK-2024', '2024-07-08 16:29:09'),
+(1041, 'Andong', 'Downloaded turnover file reference id: ', '2024-07-08 16:29:13'),
+(1042, 'Andong', 'Updated reference no: TRNO-YER5Q-2024', '2024-07-08 16:31:59'),
+(1043, 'Andong', 'Added empployee: Chriza Durante', '2024-07-09 08:17:06'),
+(1044, 'Andong', 'Removed the accountability for LPTP-79', '2024-07-09 08:17:33'),
+(1045, 'Andong', 'Assigned: LPTP-79 to Chriza Durante', '2024-07-09 08:18:04'),
+(1046, 'Andong', 'Removed the accountability for MBL-106', '2024-07-09 08:18:45'),
+(1047, 'Andong', 'Assigned: MBL-106 to Chriza Durante', '2024-07-09 08:19:10'),
+(1048, 'Ezekiel', 'Added empployee: Millard Emmanuel Balatucan', '2024-07-09 08:20:15'),
+(1049, 'Andong', 'Removed the accountability for LPTP-63', '2024-07-09 08:21:05'),
+(1050, 'Andong', 'Assigned: LPTP-63 to Millard Emmanuel Balatucan', '2024-07-09 08:21:45'),
+(1051, 'Andong', 'Generated accountability form for asset/s: MBL-106, MBL-106, MBL-106, LPTP-79, LPTP-79, LPTP-79', '2024-07-09 08:22:09'),
+(1052, 'Andong', 'Generated accountability form for asset/s: LPTP-63, LPTP-63, LPTP-63', '2024-07-09 08:22:36'),
+(1053, 'Andong', 'Generated accountability form for asset/s: MBL-124', '2024-07-09 15:31:57'),
+(1054, 'Andong', 'Updated reference no: ACCT-019PQ-2024', '2024-07-09 15:44:10'),
+(1055, 'Andong', 'Updated reference no: ACCT-019PQ-2024', '2024-07-09 15:45:12'),
+(1056, 'Andong', 'Updated reference no: ACCT-019PQ-2024', '2024-07-09 15:45:27'),
+(1057, 'Andong', 'Updated reference no: ACCT-VCK18-2024', '2024-07-09 15:49:18'),
+(1058, 'Andong', 'Downloaded accountability file reference id: ACCT-VCK18-2024', '2024-07-09 15:50:49'),
+(1059, 'Andong', 'Updated reference no: ACCT-V77NJ-2024', '2024-07-09 15:51:23'),
+(1060, 'Andong', 'Updated reference no: ACCT-V77NJ-2024', '2024-07-09 15:51:33'),
+(1061, 'Andong', 'Downloaded accountability file reference id: ACCT-V77NJ-2024', '2024-07-09 15:51:49'),
+(1062, 'Andong', 'Updated reference no: ACCT-E1LA1-2024', '2024-07-09 15:52:15'),
+(1063, 'Andong', 'Updated reference no: ACCT-6MQ4H-2024', '2024-07-09 15:52:41'),
+(1064, 'Andong', 'Updated reference no: ACCT-ONH86-2024', '2024-07-09 15:53:07'),
+(1065, 'Andong', 'Downloaded accountability file reference id: ACCT-ONH86-2024', '2024-07-09 15:53:43'),
+(1066, 'Andong', 'Downloaded accountability file reference id: ACCT-8KO9T-2024', '2024-07-09 15:53:49'),
+(1067, 'Andong', 'Added empployee: Leny Rogacion', '2024-07-11 09:08:24'),
+(1068, 'Andong', 'Added Phone record: MBL-127', '2024-07-11 09:12:29'),
+(1069, 'Andong', 'Generated accountability form for asset/s: MBL-127', '2024-07-11 09:14:10');
 
 -- --------------------------------------------------------
 
@@ -2095,13 +2141,13 @@ INSERT INTO `reference_tbl` (`id`, `assetId`, `name`, `accountabilityRef`, `acco
 (61, 60, '31', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (62, 61, '32', 'ACCT-TS0B3-2024', 1, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (63, 62, '33', 'ACCT-JJLY-2024', 2, 0x4d2e204d6f6e74696c6c612e706466, '2024-04-08', '', 0, '', '0000-00-00', '', 1),
-(64, 63, '34', 'ACCT-REWXE-2024', 2, 0x432e50204665726e616e64657a20284f4c44292e706466, '2024-05-20', 'TRNO-YD8WK-2024', 1, '', '0000-00-00', '', 1),
+(64, 63, '34', 'ACCT-REWXE-2024', 2, 0x432e50204665726e616e64657a20284f4c44292e706466, '2024-05-20', 'TRNO-YD8WK-2024', 2, 0x432e204665726e616e64657a2e706466, '2024-06-14', '', 1),
 (65, 64, '35', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (66, 65, '111', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (67, 66, '37', 'ACCT-KWDI8-2024', 2, 0x482e204d617266612e706466, '2024-05-20', '', 0, '', '0000-00-00', '', 1),
 (68, 67, '38', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (69, 68, '39', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
-(70, 69, '40', 'ACCT-TXL9W-2024', 1, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
+(70, 69, '40', 'ACCT-V77NJ-2024', 2, 0x4d2e204d617274696e2e706466, '2024-07-08', '', 0, '', '0000-00-00', '', 1),
 (71, 70, '41', 'ACCT-5MGI8-2024', 2, 0x4d2e20546f676f6e6f6e2e706466, '2024-06-18', '', 0, '', '0000-00-00', '', 1),
 (72, 71, '42', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (73, 72, '100', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
@@ -2111,7 +2157,7 @@ INSERT INTO `reference_tbl` (`id`, `assetId`, `name`, `accountabilityRef`, `acco
 (77, 76, '10', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (78, 77, '17', 'ACCT-ROMO7-2024', 1, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (79, 78, '9', 'ACCT-V51CH-2024', 2, 0x532e2050696f7175696e746f2e706466, '2024-05-20', '', 0, '', '0000-00-00', '', 1),
-(80, 79, '5', 'ACCT-BZVEJ-2024', 1, '', '0000-00-00', 'TRNO-YER5Q-2024', 1, '', '0000-00-00', '', 1),
+(80, 79, '5', 'ACCT-BZVEJ-2024', 2, '', '0000-00-00', 'TRNO-YER5Q-2024', 2, 0x48472e204d65726361646f2e706466, '2024-05-18', '', 1),
 (81, 80, '25', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (82, 81, '24', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (83, 82, '36', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
@@ -2380,7 +2426,7 @@ INSERT INTO `reference_tbl` (`id`, `assetId`, `name`, `accountabilityRef`, `acco
 (360, 433, '207', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (361, 434, '', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (362, 436, '', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
-(363, 438, '71', 'ACCT-ONH86-2024', 1, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
+(363, 438, '71', 'ACCT-ONH86-2024', 2, 0x562e20437561636f2e706466, '2024-06-25', '', 0, '', '0000-00-00', '', 1),
 (364, 440, '', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (365, 457, '76', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (366, 460, '91', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
@@ -2479,7 +2525,7 @@ INSERT INTO `reference_tbl` (`id`, `assetId`, `name`, `accountabilityRef`, `acco
 (461, 388, '185', 'ACCT-STU5U-2024', 2, 0x4a2e204c757a616e6f2e706466, '2024-05-13', '', 0, '', '0000-00-00', '', 1),
 (462, 389, '186', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (463, 391, '187', 'ACCT-NA2PU-2024', 2, 0x4e2e2041626162616e2e706466, '2024-06-06', '', 0, '', '0000-00-00', '', 1),
-(464, 392, '188', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
+(464, 392, '220', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (465, 394, '41', 'ACCT-5MGI8-2024', 2, 0x4d2e20546f676f6e6f6e2e706466, '2024-06-18', '', 0, '', '0000-00-00', '', 1),
 (466, 396, '17', 'ACCT-ROMO7-2024', 1, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (467, 397, '26', 'ACCT-OY8QG-2024', 2, 0x412e2042696e617568616e2e706466, '2024-06-18', '', 0, '', '0000-00-00', '', 1),
@@ -2524,8 +2570,8 @@ INSERT INTO `reference_tbl` (`id`, `assetId`, `name`, `accountabilityRef`, `acco
 (508, 455, '31', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (509, 456, '30', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (510, 458, '57', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
-(511, 459, '50', 'ACCT-E1LA1-2024', 1, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
-(512, 461, '5', 'ACCT-BZVEJ-2024', 2, 0x48616e7a204761627269656c204d65726361646f202d204e6f74207369676e65642e706466, '2024-05-17', 'TRNO-YER5Q-2024', 1, '', '0000-00-00', '', 1),
+(511, 459, '50', 'ACCT-E1LA1-2024', 2, 0x522e20436162616c746572612e706466, '2024-06-25', '', 0, '', '0000-00-00', '', 1),
+(512, 461, '5', 'ACCT-BZVEJ-2024', 2, 0x48616e7a204761627269656c204d65726361646f202d204e6f74207369676e65642e706466, '2024-05-17', 'TRNO-YER5Q-2024', 2, 0x48472e204d65726361646f2e706466, '2024-05-18', '', 1),
 (513, 463, '93', 'ACCT-LST4P-2024', 2, 0x4d2e4120436163616e696e64696e2e706466, '2024-05-20', '', 0, '', '0000-00-00', '', 1),
 (514, 464, '200', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (515, 465, '175', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
@@ -2581,12 +2627,21 @@ INSERT INTO `reference_tbl` (`id`, `assetId`, `name`, `accountabilityRef`, `acco
 (573, 9, '', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (574, 387, '', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
 (575, 363, '', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
-(576, 542, '218', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 0),
+(576, 542, '218', 'ACCT-019PQ-2024', 2, 0x4a2e20416e696f6761722e706466, '2024-06-20', '', 0, '', '0000-00-00', '', 1),
 (577, 543, '219', 'ACCT-4ABGA-2024', 2, 0x522e20466c6f7264656c697a2e706466, '2024-06-24', '', 0, '', '0000-00-00', '', 1),
-(579, 545, '50', 'ACCT-E1LA1-2024', 1, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
-(580, 544, '71', 'ACCT-ONH86-2024', 1, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
-(581, 546, '71', 'ACCT-ONH86-2024', 1, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
-(582, 547, '50', 'ACCT-E1LA1-2024', 1, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1);
+(579, 545, '50', 'ACCT-E1LA1-2024', 2, 0x522e20436162616c746572612e706466, '2024-06-25', '', 0, '', '0000-00-00', '', 1),
+(580, 544, '71', 'ACCT-ONH86-2024', 2, 0x562e20437561636f2e706466, '2024-06-25', '', 0, '', '0000-00-00', '', 1),
+(581, 546, '71', 'ACCT-ONH86-2024', 2, 0x562e20437561636f2e706466, '2024-06-25', '', 0, '', '0000-00-00', '', 1),
+(582, 547, '50', 'ACCT-E1LA1-2024', 2, 0x522e20436162616c746572612e706466, '2024-06-25', '', 0, '', '0000-00-00', '', 1),
+(588, 392, '188', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 0),
+(589, 548, '40', 'ACCT-V77NJ-2024', 2, 0x4d2e204d617274696e2e706466, '2024-07-08', '', 0, '', '0000-00-00', '', 1),
+(590, 79, '5', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
+(591, 79, '221', 'ACCT-VCK18-2024', 2, 0x432e20447572616e74652e706466, '2024-07-09', '', 0, '', '0000-00-00', '', 1),
+(592, 461, '5', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
+(593, 461, '221', 'ACCT-VCK18-2024', 2, 0x432e20447572616e74652e706466, '2024-07-09', '', 0, '', '0000-00-00', '', 1),
+(594, 63, '34', '', 0, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1),
+(595, 63, '222', 'ACCT-6MQ4H-2024', 2, 0x4d2e2042616c61747563616e2e706466, '2024-07-09', '', 0, '', '0000-00-00', '', 1),
+(596, 549, '223', 'ACCT-CVNRP-2024', 1, '', '0000-00-00', '', 0, '', '0000-00-00', '', 1);
 
 -- --------------------------------------------------------
 
@@ -2715,7 +2770,7 @@ ALTER TABLE `users_tbl`
 -- AUTO_INCREMENT for table `assets_tbl`
 --
 ALTER TABLE `assets_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=548;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=550;
 
 --
 -- AUTO_INCREMENT for table `category_tbl`
@@ -2739,13 +2794,13 @@ ALTER TABLE `dept_tbl`
 -- AUTO_INCREMENT for table `employee_tbl`
 --
 ALTER TABLE `employee_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=220;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=224;
 
 --
 -- AUTO_INCREMENT for table `history_tbl`
 --
 ALTER TABLE `history_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1030;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1070;
 
 --
 -- AUTO_INCREMENT for table `loc_tbl`
@@ -2757,7 +2812,7 @@ ALTER TABLE `loc_tbl`
 -- AUTO_INCREMENT for table `reference_tbl`
 --
 ALTER TABLE `reference_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=588;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=597;
 
 --
 -- AUTO_INCREMENT for table `specs_tbl`

@@ -199,7 +199,6 @@
         </li>
         <li class="menu__item">
         <a class="items" href="../admin/reference.php"><i class="fa-solid fa-asterisk"></i></a>
-        <!-- <a href="../admin/references.php"><i class="fa-solid fa-asterisk"></i></a> -->
         </li>
         <li class="menu__item">
         <a class="items" href="../assetLists/Router.php"><i class="fa-solid fa-layer-group"></i></a>
