@@ -64,8 +64,8 @@ class Operations {
         $lastused = mysqli_real_escape_string($db->conn, $lastused);
         $status = mysqli_real_escape_string($db->conn, $status);
         $dtprchs = mysqli_real_escape_string($db->conn, $dtprchs);
-        $cost = !empty($cost) ? mysqli_real_escape_string($db->conn, $cost) : '';
-        $repair_cost = !empty($repair_cost) ? mysqli_real_escape_string($db->conn, $repair_cost) : '';
+        $cost = !empty($cost) ? mysqli_real_escape_string($db->conn, $cost) : '0';
+        $repair_cost = !empty($repair_cost) ? mysqli_real_escape_string($db->conn, $repair_cost) : '0';
         $remarks = mysqli_real_escape_string($db->conn, $remarks);
         $datedeployed = mysqli_real_escape_string($db->conn, $datedeployed);
         $cpu = mysqli_real_escape_string($db->conn, $cpu);

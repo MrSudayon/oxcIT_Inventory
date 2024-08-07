@@ -9,7 +9,7 @@ class Connection {
     public $db_host = "localhost";
     public $db_user = "root";
     public $db_pass = "";
-    public $db_name = "db_oxychem";
+    public $db_name = "test_oxychem";
     public $conn;
 
     public function __construct() {
