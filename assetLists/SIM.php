@@ -64,7 +64,10 @@ usort($rows, function($a, $b) {
 <div class="content">
     <main class="table" id="customers_table">
         <section class="table__header">
+<<<<<<< HEAD
             <!-- <button type="submit" class="link-btn" name="turnover">Report</button> -->
+=======
+>>>>>>> 444fd3ed823f9ec00199f5baa1f2e505598fc63d
             <a href="../admin/add-assets.php?id=recordSim" class="link-btn">New Record</a>
             <div class="input-group">
                 <input type="search" id="searchInput" placeholder="Search Data..." oninput="searchTable()">
