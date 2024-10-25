@@ -9,7 +9,7 @@ class Connection {
     public $db_host = "localhost";
     public $db_user = "root";
     public $db_pass = "";
-    public $db_name = "db_oxychem";
+    public $db_name = "db_oxyche";
     public $conn;
 
     public function __construct() {
@@ -133,9 +133,11 @@ class Login extends Connection {
                 
                 if($role == 'admin') {
                     return 1; // Login as admin
+                } elseif ($role == 'utilities') {
+                    return 2; // Login as utilities
                 } else {
-                    return 2; // Login as user
-                }  
+                    return 3;
+                }
             } else {
                 return 10; // Wrong password
             }

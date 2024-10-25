@@ -355,9 +355,17 @@ if(isset($_POST['update-acctRef'])) {
             $message = 'Upload failed as the file type is not acceptable. The allowed file types are:' . implode(',', $allowedfileExtensions);
         }
     }
+    $assets = $_POST['assetId'];
+    if(is_array($assets)) {
+        foreach($assets as $ids) {
+            $assetIds[] = $ids;
+       }
+    } else {
+        $assetIds = $assets;
+    }
 
     $input = [
-        'name' => mysqli_real_escape_string($db->conn,$_POST['name']),
+        'assetIds' => $assetIds,
         'acctStatus' => mysqli_real_escape_string($db->conn,$_POST['acctStatus']),
         'acctDate' => mysqli_real_escape_string($db->conn,$_POST['acctDate']),
         'acctFile' => mysqli_real_escape_string($db->conn,$accFileName),
@@ -420,18 +428,28 @@ if(isset($_POST['update-trnRef'])) {
         }
 
     }
+    // $assetIds = is_array($_POST['assetId']) ? implode(',', $_POST['assetId']) : $_POST['assetId'];
+    
+    $assets = $_POST['assetId'];
+    if(is_array($assets)) {
+        foreach($assets as $ids) {
+            $assetIds[] = $ids;
+       }
+    } else {
+        $assetIds = $assets;
+    }
 
     $input = [
-        'assetId' => mysqli_real_escape_string($db->conn,$_POST['assetId']), 
+        // 'assetId' => is_array($assetId) ? $assetId : explode(',', $assetId), // Convert to array if needed
+        'assetIds' => $assetIds,
+        // 'assetId' => $_POST['assetId'],
         'trnStatus' => mysqli_real_escape_string($db->conn,$_POST['trnStatus']),
         'trnDate' => mysqli_real_escape_string($db->conn,$_POST['trnDate']),
         'trnFile' => mysqli_real_escape_string($db->conn,$trnFileName),
     ];
 
     $action = mysqli_real_escape_string($db->conn,$_POST['action']);
-    
     $result = $assetController->updateReference($input, $id, $eId, $action);
-    // $result = $assetController->updateReference($input, $id, $action);
 
     if($result) {
         echo "<script>

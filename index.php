@@ -10,11 +10,11 @@ if(!empty($_SESSION['id'])) {
     $id = $user['id'];
     $username = $user['username'];
     $role = $user['role'];
-
+    // echo $role;
     if($role == 'admin') {
         header("Location: ./admin/dashboard.php");
-        // $db->conn->close();
     }
+
 } else {
     header("Location: ./php/login.php");
 }

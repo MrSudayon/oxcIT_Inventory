@@ -11,32 +11,45 @@ $select = new Select();
 
 if(isset($_POST['submit'])) {
     $result = $login->login($_POST['username'], $_POST['password']);
-    global $db;    
-    if($result == 1) {
+    global $db;   
+     
+    if($result == 1) { // Admin **Andong, Kiel, Tim
         $_SESSION['login'] = true;
         $_SESSION['id'] = $login->idUser();
 
         $user_sess = $select->selectUserById($_SESSION['id']);
         $id = $user_sess['id'];
         $name = $user_sess['username'];
-      
         ?>
             <script>
                 alert('Login Successful');
                 window.location.replace('../index.php');
             </script>
         <?php
-        
         $db->conn->close();
 
-    } elseif($result == 2) {
+    // } elseif($result == 2) { // Utilities **HYA
+    //     $_SESSION['login'] = true;
+    //     $_SESSION['id'] = $login->idUser();
+
+    //     $user_sess = $select->selectUserById($_SESSION['id']);
+    //     $id = $user_sess['id'];
+    //     $name = $user_sess['username'];
+    //         >
+    //             <script>
+    //                 alert('Utilities login successful');
+    //                 window.location.replace('../index.php');
+    //             </script>
+    //         <?php
+    //     $db->conn->close();
+
+    } elseif($result == 2) { 
         $_SESSION['login'] = true;
         $_SESSION['id'] = $login->idUser();
 
         $user_sess = $select->selectUserById($_SESSION['id']);
         $id = $user_sess['id'];
         $name = $user_sess['username'];
-      
             ?>
                 <script>
                     alert('Login Successful');

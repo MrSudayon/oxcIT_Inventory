@@ -17,15 +17,19 @@
     <title>Dashboard</title>
 </head>
 <style>
+    .main-cards a {
+        transition: .2s ease-out;
+    }
+    .main-cards a:hover {
+        color: white;
+        transition: .2s ease-in;
+    }
 
-.main-cards a {
-    transition: .2s ease-out;
-}
-.main-cards a:hover {
-    color: white;
-    transition: .2s ease-in;
-}
-
+    .menu a.disabled {
+        pointer-events: none;
+        cursor: default;
+        background-color: #7a7a7a;
+    }
 </style>    
 
 <div class="grid-container">
@@ -33,6 +37,7 @@
 <div class="dim-background"></div>
 
       <!-- Main -->
+
     <main class="main-container">
         <div class="main-title">
             <h2>DASHBOARD</h2>
@@ -146,9 +151,7 @@
             
         </div>
 
-
         <div class="charts">
-
             <div class="charts-card">
             <h2 class="chart-title">Assets</h2>
             <div id="bar-chart"></div>
@@ -158,17 +161,17 @@
             <h2 class="chart-title">Purchase and Sales Orders</h2>
             <div id="area-chart"></div>
             </div>
-
         </div>
-
-        
 
     </main>
     <!-- End Main -->   
 
 </div>
 <div class="menu" onclick="toggleDim()">
+
     <div class="menu__wrapper"><i class="fa-solid fa-plus"></i></div>
+
+<?php if($role == 'admin') { ?>
     <ul class="menu__items">
         <li class="menu__item">
         <a class="items" href="../assetLists/Laptop.php"><i class="fa-solid fa-laptop"></i></a>
@@ -202,6 +205,41 @@
         <!-- <a href="../admin/references.php"><i class="fa-solid fa-asterisk"></i></a> -->
         </li>
     </ul>
+<?php } else { ?>
+    <ul class="menu__items">
+        <li class="menu__item">
+        <a class="disabled items" href="#"><i class="fa-solid fa-laptop"></i></a>
+        </li>
+        <li class="menu__item">
+        <a class="disabled items" href="#"><i class="fa-solid fa-computer"></i></a>
+        </li>
+        <li class="menu__item">
+        <a class="disabled items" href="#"><i class="fa-solid fa-tv"></i></a>
+        </li>
+        <li class="menu__item">
+        <a class="disabled items" href="#"><i class="fa-solid fa-print"></i></a>
+        </li>
+        <li class="menu__item">
+        <a class="disabled items" href="#"><i class="fa-solid fa-bolt"></i></a>
+        </li>
+        <li class="menu__item">
+        <a class="items" href="../assetLists/Mobile.php"><i class="fa-solid fa-mobile-screen-button"></i></a>
+        </li>
+        <li class="menu__item">
+        <a class="items" href="../assetLists/SIM.php"><i class="fa-solid fa-sim-card"></i></a>
+        </li>
+        <li class="menu__item">
+        <a class="disabled items" href="../admin/employeeLists.php"><i class="fa-solid fa-address-book"></i></a>
+        </li>
+        <li class="menu__item">
+        <a class="disabled items" href="../admin/adminConfig.php"><i class="fa-solid fa-gears"></i></a>
+        </li>
+        <li class="menu__item">
+        <a class="disabled items" href="../admin/reference.php"><i class="fa-solid fa-asterisk"></i></a>
+        <!-- <a href="../admin/references.php"><i class="fa-solid fa-asterisk"></i></a> -->
+        </li>
+    </ul>
+<?php } ?>
 </div>
 
 <!-- Scripts -->

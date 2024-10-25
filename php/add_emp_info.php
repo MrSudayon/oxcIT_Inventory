@@ -9,7 +9,7 @@ if(isset($_POST['submit'])) {
     if($result == 1) { 
         echo "<script> alert('Registration Successful'); </script>";
         $history = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                VALUES ('', '$username', 'Added empployee: $empName', NOW())");
+                VALUES ('', '$username', 'Added employee: $empName', NOW())");
     }
     elseif($result == 10) {
         echo "<script> alert('This Name already exists'); </script>";
