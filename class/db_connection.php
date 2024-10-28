@@ -194,11 +194,15 @@ class Select extends Connection {
         return $count;
     }
     public function getUserNoAccountability() {
-        $result = mysqli_query($this->conn, "SELECT COUNT(DISTINCT name) AS count 
-                                            FROM reference_tbl 
-                                            WHERE name != '' 
-                                            AND accountabilityStatus = '0' 
-                                            AND referenceStatus = '1'");
+        // $result = mysqli_query($this->conn, "SELECT COUNT(DISTINCT name) AS count 
+        //                                     FROM reference_tbl 
+        //                                     WHERE name != '' 
+        //                                     AND accountabilityStatus = '0' 
+        //                                     AND referenceStatus = '1'");
+        $result = mysqli_query($this->conn, "SELECT COUNT(DISTINCT e.id) AS count
+                                            FROM employee_tbl AS e
+                                            WHERE e.empStatus = 1 
+                                            AND e.id NOT IN (SELECT empId FROM assets_tbl WHERE empId != 0)");
         $row = mysqli_fetch_assoc($result);
         $count = $row['count'];
         return $count;

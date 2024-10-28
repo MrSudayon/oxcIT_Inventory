@@ -151,7 +151,8 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
         <main class="table " id="myTable2">
             <section class="table__header">
                 <div class="btn">
-                <a href="../admin/employeeLists.php" class="link-btn">Back</a>
+                <a href="javascript:void(0);" onclick="window.history.back();" class="link-btn">Back</a>
+                <!-- <a href="../admin/employeeLists.php" class="link-btn">Back</a> -->
                 <!-- <button type="submit" formaction="../admin/accountability.php" class="link-btn" onclick="return checkPrompt()">Generate Acc</button> -->
                     <button type="submit" name="generateAcc" class="link-btn" onclick="return checkPrompt()">Generate Accountability</button>
                     <button type="submit" name="generateTrn" class="link-btn" onclick="return checkPrompt()">Generate Turnover</button>
