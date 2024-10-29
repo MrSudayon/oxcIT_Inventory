@@ -230,7 +230,7 @@ class Operations {
     function getEmp() {
         global $db;
 
-        $sql = "SELECT * FROM employee_tbl";
+        $sql = "SELECT * FROM employee_tbl ORDER BY empStatus DESC";
         $result = mysqli_query($db->conn, $sql);
        
         return $result;
