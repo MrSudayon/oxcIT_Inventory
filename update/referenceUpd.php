@@ -39,7 +39,7 @@
                     <div class="asset-details">
                         <input type="hidden" name="id" value="<?=$result['accountabilityRef']?>">
                         <input type="hidden" name="eId" value="<?=$empName?>">
-                        <input type="hidden" name="assetId" value="<?=$assetId?>">
+                        <input type="hidden" name="assetId[]" value="<?=$assetId?>">
                         <!-- <input type="hidden" name="id" value=" ?=$result['refId']?>"> -->
 
                         <div class="input-box" style="width: 100%;">
@@ -113,7 +113,7 @@
                 $result = $assetController->editReference($refId);
 
                 if($result) {
-                    $assetId = $result['rAssetId'];
+                    $assetIds = is_array($result['rAssetId']) ? implode(',', $result['rAssetId']) : $result['rAssetId'];
                     $trnStatus = $result['turnoverStatus'];
                     $trnoFile = $result['turnoverFile'];
 
@@ -121,9 +121,17 @@
                 <form action="../admin/update-selected.php" method="POST" enctype="multipart/form-data">
                     <div class="asset-details">
                         <!-- <input type="hidden" name="id" value="?=$result['refId']?>"> -->
-                        <input type="hidden" name="id" value="<?=$result['turnoverRef']?>">
-                        <input type="hidden" name="eId" value="<?=$empName?>">
-                        <input type="hidden" name="assetId" value="<?=$assetId?>">
+                        <input type="hidden" readonly name="id" value="<?=$result['turnoverRef']?>">
+                        <input type="hidden" readonly name="eId" value="<?=$empName?>">
+                        <?php 
+                            $assetIdArray = explode(',', $assetIds); 
+                            foreach ($assetIdArray as $assetId) {
+                            ?>
+                                <input type="hidden" name="assetId[]" value="<?=$assetId?>">
+                            <?php 
+                            }
+                        ?>
+                        <!-- <input type="text" readonly name="assetId[]" value="?=$assetIdArray?>"> -->
 
                         <div class="input-box" style="width: 100%;">
                             <span class="details">Assigned to: </span>

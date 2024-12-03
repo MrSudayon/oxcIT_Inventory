@@ -4,13 +4,17 @@ include '../inc/listsHead.php';
 include '../inc/header.php'; 
 
 $sqlSelectAll = 
-                "SELECT DISTINCT r.name AS empName
+                "SELECT e.name AS empName, e.empStatus, e.location, e.division, e.id AS eId
                 FROM employee_tbl AS e
-                INNER JOIN reference_tbl AS r ON r.name = e.id  
-                WHERE r.name != '' 
-                AND r.accountabilityStatus = '0' 
-                AND r.referenceStatus = '1'
+                WHERE e.empStatus=1 AND e.id NOT IN (SELECT empId FROM assets_tbl WHERE empId != 0)
                 ORDER BY empName ASC";
+                // "SELECT DISTINCT r.name AS empName
+                // FROM employee_tbl AS e
+                // INNER JOIN reference_tbl AS r ON r.name = e.id  
+                // WHERE r.name != '' 
+                // AND r.accountabilityStatus = '0' 
+                // AND r.referenceStatus = '1'
+                // ORDER BY empName ASC";
 $results = mysqli_query($db->conn, $sqlSelectAll);
 
 $results_per_page = 15;
@@ -18,12 +22,9 @@ $results_per_page = 15;
 if (!isset ($_GET['page']) ) {  
     $page = 1;  
 } elseif ($_GET['page'] === 'all') {  
-    $sql = "SELECT DISTINCT e.name AS empName, e.empStatus, e.location, e.division, e.id AS eId 
+    $sql = "SELECT e.name AS empName, e.empStatus, e.location, e.division, e.id AS eId
             FROM employee_tbl AS e
-            INNER JOIN reference_tbl AS r ON r.name = e.id  
-            WHERE r.name != '' 
-            AND r.accountabilityStatus = '0' 
-            AND r.referenceStatus = '1'
+            WHERE e.empStatus=1 AND e.id NOT IN (SELECT empId FROM assets_tbl WHERE empId != 0)
             ORDER BY empName ASC";
     $res = mysqli_query($db->conn, $sql);
     $rowCountPage = $res->num_rows;
@@ -36,12 +37,9 @@ $number_of_page = ceil ($rowCount / $results_per_page);
 $page_first_result = ($page-1) * $results_per_page;  
 
 if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
-    $sql = "SELECT DISTINCT e.name AS empName, e.empStatus, e.location, e.division, e.id AS eId 
+    $sql = "SELECT e.name AS empName, e.empStatus, e.location, e.division, e.id AS eId
             FROM employee_tbl AS e
-            INNER JOIN reference_tbl AS r ON r.name = e.id  
-            WHERE r.name != '' 
-            AND r.accountabilityStatus = '0' 
-            AND r.referenceStatus = '1'
+            WHERE e.empStatus=1 AND e.id NOT IN (SELECT empId FROM assets_tbl WHERE empId != 0)
             ORDER BY empName ASC 
             LIMIT $page_first_result, $results_per_page";
 

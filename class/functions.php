@@ -313,8 +313,11 @@ class Operations {
         while ($row = mysqli_fetch_assoc($result)) {
             $empName = $row['name'];
         }
-
-        return $empName;
+        
+        if(isset($empName)) {
+            return $empName;
+        }
+        
     }
     // Getting reference table values
     function getAccReferenceTable() {
@@ -326,7 +329,7 @@ class Operations {
                     FROM assets_tbl AS a 
                     LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
                     LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                    WHERE (referenceStatus='1' OR referenceStatus='2') AND status='Deployed' AND accountabilityRef!='' 
+                    WHERE (referenceStatus='1' OR referenceStatus='2') AND accountabilityRef!='' 
                     GROUP BY rname, accountabilityRef 
                     ORDER BY accountabilityStatus, ename ASC";
                     
@@ -345,9 +348,9 @@ class Operations {
                         FROM assets_tbl AS a 
                         LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
                         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                        WHERE (referenceStatus='1' OR referenceStatus='2') AND status='Deployed' AND turnoverRef!=''
+                        WHERE (referenceStatus='1' OR referenceStatus='2') AND turnoverRef!=''
                         GROUP BY rname, turnoverRef 
-                        ORDER BY referenceStatus DESC";
+                        ORDER BY turnoverStatus, ename ASC";
 
         $result = mysqli_query($db->conn, $sqlSelect);
 

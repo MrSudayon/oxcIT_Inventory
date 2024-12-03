@@ -39,21 +39,22 @@ if(isset($_GET['assetID'])) {
     exit();
 }
 
-// if(isset($_GET['unassignId']) && isset($_GET['empId'])) {
 if(isset($_GET['unassignId']) && isset($_GET['empId']) && isset($_GET['voidRemark'])) {
 
     $id = $_GET['unassignId'];
     $empId = $_GET['empId'];
     $voidRemarks = $_GET['voidRemark'];
+    $empName = $operation->getThyNames($empId);
 
     $name = $user['username'];
     
     // First update query
-    $query = "UPDATE assets_tbl SET status='To be deploy', remarks='$voidRemarks', empId='0' WHERE id='$id'";
+    $query = "UPDATE assets_tbl SET status='To be deploy', remarks='$voidRemarks', empId='0', lastused='$empId' WHERE id='$id'";
     $result = mysqli_query($db->conn, $query);
 
     if ($result) {
         // Second update query
+        // Removes emp_Id for situational accountability removal 
         $query1 = "UPDATE reference_tbl SET accountabilityRef='', accountabilityStatus='0', referenceStatus='0' WHERE assetId='$id'";
         $result1 = mysqli_query($db->conn, $query1);
 
@@ -72,7 +73,6 @@ if(isset($_GET['unassignId']) && isset($_GET['empId']) && isset($_GET['voidRemar
         $assettype = $row['assettype'];
     }
 
-    $empName = $operation->getThyNames($empId);
     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                             VALUES ('', '$name', 'Unassigned item: $assettag from: $empName. Remarks: $voidRemarks', NOW())");
     

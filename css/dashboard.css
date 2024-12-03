@@ -202,7 +202,7 @@ header {
 }
 
 .menu__wrapper.active ~ .menu__items .menu__item:nth-child(8){ /* Employee */
-  transform: translate(.1em, -8em);
+  transform: translate(-3em, -8em);
 }
 
 .menu__wrapper.active ~ .menu__items .menu__item:nth-child(9){ /* Admin Config */
@@ -210,6 +210,10 @@ header {
 }
 
 .menu__wrapper.active ~ .menu__items .menu__item:nth-child(10){ /* Reference */
+  transform: translate(3em, -8em);
+}
+
+.menu__wrapper.active ~ .menu__items .menu__item:nth-child(11){ /* Routers */
   transform: translate(6em, -3em);
 }
 

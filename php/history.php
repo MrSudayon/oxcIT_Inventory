@@ -12,6 +12,10 @@ include '../inc/header.php'; ?>
 
             if (!isset ($_GET['page']) ) {  
                 $page = 1;  
+            } elseif ($_GET['page'] === 'all') {  
+                $sql = "SELECT * FROM history_tbl ORDER BY id DESC";
+                $res = mysqli_query($db->conn, $sql);
+                $rowCountPage = $res->num_rows;
             } else {  
                 $page = $_GET['page'];  
             }  
@@ -20,27 +24,26 @@ include '../inc/header.php'; ?>
             $number_of_page = ceil ($rowCount / $results_per_page);  
             $page_first_result = ($page-1) * $results_per_page;  
 
-            if(isset($_POST['search']) && $_POST['search'] != "") {
-                    $search = $_POST['search'];
-                    $page = 1;  
-                
-                    $sql = "SELECT * FROM history_tbl WHERE name LIKE '%$search%' OR action LIKE '%$search%' OR date LIKE '%$search%' ORDER BY id DESC LIMIT " . $results_per_page;
-            } else {
-                    $sql =  "SELECT * FROM history_tbl ORDER BY id DESC LIMIT ". $page_first_result . ',' . $results_per_page;
+            if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
+                $sql = "SELECT * FROM history_tbl ORDER BY id DESC 
+                        LIMIT $page_first_result, $results_per_page";
+                $res = mysqli_query($db->conn, $sql);
+                $rowCountPage = $res->num_rows;
             }
-            $res = mysqli_query($db->conn, $sql);
-            $rowCountPage = $res->num_rows;
+        
+            // if(isset($_POST['search']) && $_POST['search'] != "") {
+            //         $search = $_POST['search'];
+            //         $page = 1;  
+                
+            //         $sql = "SELECT * FROM history_tbl WHERE name LIKE '%$search%' OR action LIKE '%$search%' OR date LIKE '%$search%' ORDER BY id DESC LIMIT " . $results_per_page;
+            // } else {
+            //         $sql =  "SELECT * FROM history_tbl ORDER BY id DESC LIMIT ". $page_first_result . ',' . $results_per_page;
+            // }
+
+            
 
         ?>
-<!-- <div class="title">
-        <h1> History </h1>
-        <div class="search-container">
-        <form action="" method="POST">
-            <input type="text" placeholder="Search.." name="search">
-            <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
-        </div>
-    </div> -->
+
         
     <main class="table" id="customers_table">
         <section class="table__header">
