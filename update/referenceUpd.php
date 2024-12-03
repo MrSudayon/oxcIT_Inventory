@@ -114,6 +114,7 @@
 
                 if($result) {
                     $assetIds = is_array($result['rAssetId']) ? implode(',', $result['rAssetId']) : $result['rAssetId'];
+                    $assetIds = is_array($result['rAssetId']) ? implode(',', $result['rAssetId']) : $result['rAssetId'];
                     $trnStatus = $result['turnoverStatus'];
                     $trnoFile = $result['turnoverFile'];
 

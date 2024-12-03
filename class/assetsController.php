@@ -37,7 +37,7 @@ class assetsController {
         global $sess_name;
 
         $assetID = mysqli_real_escape_string($db->conn, $id);
-        
+                
         $model = $input['model'];
         $serial = $input['serial'];
         $supplier = $input['supplier'];
