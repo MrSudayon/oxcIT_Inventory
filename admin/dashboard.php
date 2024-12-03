@@ -175,8 +175,6 @@
     <div class="menu__wrapper"><i class="fa-solid fa-plus"></i></div>
 
 <?php if($role == 'admin') { ?>
-
-<?php if($role == 'admin') { ?>
     <ul class="menu__items">
         <li class="menu__item">
         <a class="items" href="../assetLists/Laptop.php"><i class="fa-solid fa-laptop"></i></a>
