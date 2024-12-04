@@ -38,7 +38,6 @@
 
       <!-- Main -->
 
-
     <main class="main-container">
         <div class="main-title">
             <h2>DASHBOARD</h2>
@@ -138,7 +137,6 @@
             </a>
 
             <a href="../paths/nonAsset.php">           
-            <a href="../paths/nonAsset.php">           
                 <div class="card">
                 <div class="card-inner">
                     <h3>USER WITHOUT ACC..</h3>
@@ -170,7 +168,6 @@
 
 </div>
 <div class="menu" onclick="toggleDim()">
-
 
     <div class="menu__wrapper"><i class="fa-solid fa-plus"></i></div>
 

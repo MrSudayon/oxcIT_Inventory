@@ -22,7 +22,7 @@ if(isset($_POST['save'])) {
     isset($_POST['mobile']) ? mysqli_real_escape_string($db->conn, $_POST['mobile']) : '', isset($_POST['plan']) ? mysqli_real_escape_string($db->conn, $_POST['plan']) : '',
     isset($_POST['os']) ? mysqli_real_escape_string($db->conn, $_POST['os']) : '', $_POST['action']);
     
-    if ($result >= 1 && $result <= 9) {
+    if ($result >= 1 && $result <= 8) {
         $urls = [
             1 => "../assetLists/Laptop.php",
             2 => "../assetLists/Desktop.php",
@@ -32,7 +32,6 @@ if(isset($_POST['save'])) {
             6 => "../assetLists/Mobile.php",
             7 => "../assetLists/SIM.php",
             8 => "../assetLists/Laptop.php",
-            9 => "../assetLists/Router.php",
         ];
     
         $url = $urls[$result];
@@ -77,8 +76,6 @@ if(isset($_POST['save'])) {
                     $url = "../assetLists/SIM.php";
                 } elseif($id == 'recordUps') {
                     $url = "../assetLists/UPS.php";
-                } elseif($id == 'recordRouter') {
-                    $url = "../assetLists/Router.php";
                 } else {
                     $url = "../admin/dashboard.php"; // Change name to 'All Assets'
                 }
@@ -337,7 +334,6 @@ if(isset($_POST['save'])) {
                         case 'recordUps':
                         case 'recordAVR':
                         case 'recordPrinter':
-                        case 'recordRouter':
                             ?>
                                 <div class="input-box" id="model">
                                     <span class="details">Model</span>
@@ -386,7 +382,7 @@ if(isset($_POST['save'])) {
                             <div class="asset-details">
 
                                 <div class="input-box" id="dimes">
-                                    <?php if($assetType == 'Printer' || $assetType == 'Router') { ?>
+                                    <?php if($assetType == 'Printer') { ?>
                                         <span class="details">Type</span>
                                         <input type="text" name="dimes" placeholder="Type" id="">
                                     <?php } elseif($assetType == 'UPS') { ?>
@@ -484,31 +480,21 @@ if(isset($_POST['save'])) {
                         <div class="input-box" id="assignedto" style="display: none;">
                             <span class="details" style="margin-bottom: 10px;">Assign To</span>
                             <select name="assigned" id="assigned" class="assigned">
-                                <?php if($id != 'recordRouter') { ?>
-                                    <option value='' selected>Please Select</option>
-                                        <?php
-                                            $user = $getAllUser->selectAllEmp();
-                                            foreach($user as $row) {
-                                        ?>
-                                    <option value="<?php echo $row['id']; ?>">
-                                        <?php echo $row['name']; ?>
-                                    </option>
-                                        <?php } ?>
-                                <?php } else { ?>
-                                    <option value='' selected>Please Select Location</option>
-                                        <?php
-                                            $user = $operation->getEmpLoc();
-                                            foreach($user as $loct) {
-                                        ?>
-                                    <option value="<?php echo $loct['id']; ?>">
-                                        <?php echo $loct['name']; ?>
-                                    </option>
-                                        <?php } ?>
-                                <?php } ?>
+                                <option value='' selected>Please Select</option>
+                                <?php
+                                        $user = $getAllUser->selectAllEmp();
+                                        foreach($user as $row) {
+                                ?>
+                                <option value="<?php echo $row['id']; ?>">
+                                    <?php echo $row['name']; ?>
+                                </option>
+                                <?php
+                                    }
+                                    
+                                ?>
                             </select>
-
-                        </div>        
-                       
+                        </div>
+                        <?php if($role == 'admin' || $role == 'Admin') { ?>
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
                             <!-- <input type="text" name="lastused" placeholder="Last used by.." style="background-color: #ccc; font-weight: 600;" value="?=$result['']?>" readonly id=""> -->
@@ -520,10 +506,13 @@ if(isset($_POST['save'])) {
                                 <option value="<?php echo $row['id']; ?>">
                                     <?php echo $row['name']; ?>
                                 </option>
-                                <?php } ?>
+                                <?php
+                                    }
+                                    
+                                ?>
                             </select>
                         </div>
-                       
+                        <?php } ?>
 
                     </div>
 

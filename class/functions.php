@@ -64,8 +64,8 @@ class Operations {
         $lastused = mysqli_real_escape_string($db->conn, $lastused);
         $status = mysqli_real_escape_string($db->conn, $status);
         $dtprchs = mysqli_real_escape_string($db->conn, $dtprchs);
-        $cost = !empty($cost) ? mysqli_real_escape_string($db->conn, $cost) : '0';
-        $repair_cost = !empty($repair_cost) ? mysqli_real_escape_string($db->conn, $repair_cost) : '0';
+        $cost = !empty($cost) ? mysqli_real_escape_string($db->conn, $cost) : '';
+        $repair_cost = !empty($repair_cost) ? mysqli_real_escape_string($db->conn, $repair_cost) : '';
         $remarks = mysqli_real_escape_string($db->conn, $remarks);
         $datedeployed = mysqli_real_escape_string($db->conn, $datedeployed);
         $cpu = mysqli_real_escape_string($db->conn, $cpu);
@@ -123,16 +123,13 @@ class Operations {
                 case 'recordSim':
                     $actionMessage = "Added SIM record: $tag";
                     break;
-                case 'recordRouter':
-                    $actionMessage = "Added Router record: $tag";
-                    break;
                 default:
                     $actionMessage = "Added asset record: $tag";
                     return 8;
             }
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date) VALUES('', '$sess_name', '$actionMessage', NOW())");
 
-            return array_search($action, ['recordLaptop', 'recordDesktop', 'recordMonitor', 'recordPrinter', 'recordUps', 'recordMobile', 'recordSim', 'recordRouter']) + 1;
+            return array_search($action, ['recordLaptop', 'recordDesktop', 'recordMonitor', 'recordPrinter', 'recordUps', 'recordMobile', 'recordSim']) + 1;
         } else {
             return 100; // Store Failed
         }
@@ -155,9 +152,6 @@ class Operations {
                 break;
             case 'recordMonitor':
                 $sql .= " assetType='Monitor'";
-                break;
-            case 'recordRouter':
-                $sql .= " assetType='Router'";
                 break;
             case 'recordPrinter':
                 $sql .= " assetType='Printer'";
@@ -230,7 +224,7 @@ class Operations {
     function getEmp() {
         global $db;
 
-        $sql = "SELECT * FROM employee_tbl ORDER BY empStatus DESC";
+        $sql = "SELECT * FROM employee_tbl";
         $result = mysqli_query($db->conn, $sql);
        
         return $result;
@@ -356,7 +350,7 @@ class Operations {
                         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
                         WHERE (referenceStatus='1' OR referenceStatus='2') AND turnoverRef!=''
                         GROUP BY rname, turnoverRef 
-                        ORDER BY turnoverStatus, ename ASC";
+                        ORDER BY referenceStatus DESC";
 
         $result = mysqli_query($db->conn, $sqlSelect);
 

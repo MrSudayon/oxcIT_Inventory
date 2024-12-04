@@ -77,7 +77,7 @@ if(isset($_POST['update-assetRef'])) {
         'assigned'     => isset($_POST['assigned']) ? mysqli_real_escape_string($db->conn,$_POST['assigned']) : '',
         'lastused'     => mysqli_real_escape_string($db->conn,$_POST['lastused'])
     ];   
-    $result = $assetController->update($input, $id);
+    $result = $assetController->updateData($input, $id);
 
     if($result) {
         echo "<script>

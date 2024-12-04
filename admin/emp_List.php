@@ -9,7 +9,7 @@ $results_per_page = 15;
 if (!isset ($_GET['page']) ) {  
     $page = 1;  
 } elseif ($_GET['page'] === 'all') {  
-    $sql = "SELECT * FROM employee_tbl ORDER BY empStatus DESC, name ASC";
+    $sql = "SELECT * FROM employee_tbl ORDER BY name ASC, empStatus DESC";
     $res = mysqli_query($db->conn, $sql);
     $rowCountPage = $res->num_rows;
 } else {
@@ -21,7 +21,7 @@ $number_of_page = ceil ($rowCount / $results_per_page);
 $page_first_result = ($page-1) * $results_per_page;  
 
 if (!isset($_GET['page']) || $_GET['page'] !== 'all') {
-    $sql = "SELECT * FROM employee_tbl ORDER BY empStatus DESC, name ASC 
+    $sql = "SELECT * FROM employee_tbl ORDER BY name ASC, empStatus DESC
             LIMIT $page_first_result, $results_per_page";
 
     $res = mysqli_query($db->conn, $sql);

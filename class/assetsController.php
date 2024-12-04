@@ -37,7 +37,7 @@ class assetsController {
         global $sess_name;
 
         $assetID = mysqli_real_escape_string($db->conn, $id);
-                
+        
         $model = $input['model'];
         $serial = $input['serial'];
         $supplier = $input['supplier'];
@@ -740,7 +740,7 @@ class assetsController {
                     if (is_array($assetIDs)) {    
                         foreach ($assetIDs as $ids) {
                             // Debugging - print or log to verify each assetId
-                            // echo "Updating asset ID: " . $ids . "<br>";
+                            echo "Updating asset ID: " . $ids . "<br>";
             
                             // Update each asset in assets_tbl
                             $updateAsset = "UPDATE assets_tbl

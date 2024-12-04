@@ -114,7 +114,6 @@
 
                 if($result) {
                     $assetIds = is_array($result['rAssetId']) ? implode(',', $result['rAssetId']) : $result['rAssetId'];
-                    $assetIds = is_array($result['rAssetId']) ? implode(',', $result['rAssetId']) : $result['rAssetId'];
                     $trnStatus = $result['turnoverStatus'];
                     $trnoFile = $result['turnoverFile'];
 
@@ -122,13 +121,13 @@
                 <form action="../admin/update-selected.php" method="POST" enctype="multipart/form-data">
                     <div class="asset-details">
                         <!-- <input type="hidden" name="id" value="?=$result['refId']?>"> -->
-                        <input type="hidden" readonly name="id" value="<?=$result['turnoverRef']?>">
-                        <input type="hidden" readonly name="eId" value="<?=$empName?>">
+                        <input type="text" readonly name="id" value="<?=$result['turnoverRef']?>">
+                        <input type="text" readonly name="eId" value="<?=$empName?>">
                         <?php 
                             $assetIdArray = explode(',', $assetIds); 
                             foreach ($assetIdArray as $assetId) {
                             ?>
-                                <input type="hidden" name="assetId[]" value="<?=$assetId?>">
+                                <input type="text" name="assetId[]" value="<?=$assetId?>">
                             <?php 
                             }
                         ?>
