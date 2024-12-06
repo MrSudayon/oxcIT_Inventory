@@ -659,29 +659,7 @@ class assetsController {
             return false;
         }
     }
-    // public function editReference($id) {
-    //     global $db;
 
-    //     // $refId = mysqli_real_escape_string($db->conn, $id);
-    //     $refNo = mysqli_real_escape_string($db->conn, $id);
-    //     $sql = "SELECT DISTINCT 
-    //             r.name, r.assetId AS rAssetId, 
-    //             r.accountabilityRef, r.accountabilityStatus, r.accountabilityFile AS accountabilityFile, r.accountabilityDate,
-    //             r.turnoverRef, r.turnoverStatus, r.turnoverFile AS turnoverFile, r.turnoverDate, 
-    //             e.id, e.name AS empName 
-    //             FROM assets_tbl AS a 
-    //             LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
-    //             LEFT JOIN employee_tbl AS e ON e.id = a.empId 
-    //             WHERE r.accountabilityRef='$refNo' OR r.turnoverRef='$refNo'";
-
-    //     $res = mysqli_query($db->conn, $sql);
-    //     if($res->num_rows >= 1){
-    //         $data = $res->fetch_assoc();
-    //         return $data;
-    //     } else {
-    //         return false;
-    //     }
-    // }
     public function updateReference($input, $id, $eId, $action) {
         global $db;
         global $sess_name;
@@ -765,67 +743,7 @@ class assetsController {
             } else {
                 return false;
             }
-            
-          
-            // if($result) {
-            //     if (is_array($assetID)) {
-            //         foreach ($assetID as $assetIds) {
-            //             echo $assetIds;
-            //             mysqli_query($db->conn, "UPDATE assets_tbl
-            //             SET empId='0', status='To be deploy', lastused='$eName' 
-            //             WHERE id = '$assetIds'");
-
-            //         }
-            //     } else {
-            //         echo $assetID;
-            //     }
-
-               
-            //     mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-            //     VALUES('', '$sess_name', 'Updated reference no: $refNo' , NOW())");
-
-            //     return true;
-            // } else {
-            //     return false;
-            // } 
         }
-        
-        // if(!empty($acctFile) || $acctFile != '') {
-        //     if($acctStatus != 0) {
-        //         if(!empty($acctDate) || $acctDate != '') {
-        //             $acctStatus = 2;
-        //         } else {
-        //             $acctStatus = 2;
-        //             $acctDate = date("Y/m/d");
-        //         }
-    
-        //         if(!empty($trnFile) || $trnFile != '') {
-        //             if(!empty($trnDate) || $trnDate != '') {
-        //                 $trnStatus = 2;
-        //             } else {
-        //                 $trnStatus = 2;
-        //                 $trnDate = date("Y/m/d");
-        //             }
-        //         } 
-        //     } else {
-        //         echo "required";
-        //     }
-        // } 
-        
-        // $sql = "UPDATE reference_tbl 
-        //         SET accountabilityStatus = '$acctStatus', accountabilityDate = '$acctDate', accountabilityFile = '$acctFile', 
-        //         turnoverStatus = '$trnStatus', turnoverDate = '$trnDate', turnoverFile = '$trnFile' 
-        //         WHERE id='$refId'";
-        // $result = $db->conn->query($sql);
-
-        // if($result) {
-        //     mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-        //     VALUES('', '$sess_name', 'Updated reference id: $refId' , NOW())");
-
-        //     return true;
-        // } else {
-        //     return false;
-        // } 
     }
 }
 

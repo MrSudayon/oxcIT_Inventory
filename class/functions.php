@@ -350,7 +350,7 @@ class Operations {
                         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
                         WHERE (referenceStatus='1' OR referenceStatus='2') AND turnoverRef!=''
                         GROUP BY rname, turnoverRef 
-                        ORDER BY referenceStatus DESC";
+                        ORDER BY turnoverStatus, ename ASC";
 
         $result = mysqli_query($db->conn, $sqlSelect);
 

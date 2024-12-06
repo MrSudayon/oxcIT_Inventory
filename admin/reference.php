@@ -6,44 +6,6 @@ include '../inc/header.php';
     $accReferenceTbl = $operation->getAccReferenceTable();
     $trnReferenceTbl = $operation->getTrnReferenceTable();
 
-    // $sql = "SELECT a.id AS aId, a.empId, a.status AS status, a.assettype, a.assettag AS tag, a.model, a.remarks, 
-    //         e.id, e.name AS ename, e.division, e.location, 
-    //         r.id AS rid, r.assetId AS assetId, r.name AS rname, GROUP_CONCAT(DISTINCT r.accountabilityRef ORDER BY r.accountabilityRef) AS accountabilityRef, 
-    //         r.accountabilityStatus AS accountabilityStatus, r.accountabilityDate AS accountabilityDate, r.accountabilityFile AS accountabilityFile, r.referenceStatus  
-    //         FROM assets_tbl AS a 
-    //         LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
-    //         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-    //         WHERE referenceStatus='1' AND status='Deployed' AND accountabilityRef!=''
-    //         GROUP BY rname, accountabilityRef 
-    //         ORDER BY accountabilityStatus, ename ASC";
-    // $results = mysqli_query($db->conn, $sql);
-
-    // $results_per_page = 20;
-    // if (!isset ($_GET['page']) ) {  
-    //     $page = 1;  
-    // } elseif ($_GET['page'] === 'all') {  
-    //     $sql = "SELECT a.id AS aId, a.empId, a.status AS status, a.assettype, a.assettag AS tag, a.model, a.remarks, 
-    //                 e.id, e.name AS ename, e.division, e.location, 
-    //                 r.id AS rid, r.assetId AS assetId, r.name AS rname, GROUP_CONCAT(DISTINCT r.accountabilityRef ORDER BY r.accountabilityRef) AS accountabilityRef, 
-    //                 r.accountabilityStatus AS accountabilityStatus, r.accountabilityDate AS accountabilityDate, r.accountabilityFile AS accountabilityFile, r.referenceStatus  
-    //                 FROM assets_tbl AS a 
-    //                 LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
-    //                 LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-    //                 WHERE referenceStatus='1' AND status='Deployed' AND accountabilityRef!='' 
-    //                 GROUP BY rname, accountabilityRef 
-    //                 ORDER BY accountabilityStatus, ename ASC";
-    //     $res = mysqli_query($db->conn, $sql);
-    //     // $accCountPage = $res->num_rows;
-    // } else {
-    //     $page = $_GET['page']; 
-    // }
-
-    // // Row COUNTSSSSS 
-    
-    // $rowCount = $results->num_rows;
-    // $number_of_page = ceil ($rowCount / $results_per_page); 
-    // $page_first_result = ($page-1) * $results_per_page; 
-
     $sql = "SELECT a.id AS aId, a.empId, a.status AS status, a.assettype, a.assettag AS tag, a.model, a.remarks, 
             e.id, e.name AS ename, e.division, e.location, 
             r.id AS rid, r.assetId AS assetId, r.name AS rname, GROUP_CONCAT(DISTINCT r.accountabilityRef ORDER BY r.accountabilityRef) AS accountabilityRef, 

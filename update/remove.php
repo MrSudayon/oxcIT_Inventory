@@ -82,8 +82,7 @@ if(isset($_GET['unassignId']) && isset($_GET['empId']) && isset($_GET['voidRemar
 
 // Accountability Ref Deletion
 
-if(isset($_GET['name']) || isset($_GET['acctRef'])) {
-    // $refId = mysqli_real_escape_string($db->conn, $_GET['Acct_id']); // refId from reference tbl
+if(isset($_GET['name']) && isset($_GET['acctRef'])) {
     $refNo = mysqli_real_escape_string($db->conn, $_GET['acctRef']); // refId from reference tbl
     $empName = mysqli_real_escape_string($db->conn, $_GET['name']);
 
@@ -99,19 +98,11 @@ if(isset($_GET['name']) || isset($_GET['acctRef'])) {
         $assetTags[] = $row['assettag'];
     }
 
-    // $updateQuery = mysqli_query($db->conn, "UPDATE reference_tbl 
-    //                                 SET accountabilityRef='',
-    //                                     accountabilityFile='',
-    //                                     accountabilityStatus=0,
-    //                                     accountabilityDate='',
-    //                                     referenceStatus=0 
-    //                                 WHERE id = '$id'");
-
     $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl 
                                         SET accountabilityRef='',
                                             accountabilityFile='',
                                             accountabilityStatus=0,
-                                            accountabilityDate='',
+                                            accountabilityDate='' 
                                         WHERE accountabilityRef=?
                                         AND name=?");
         mysqli_stmt_bind_param($refQry, "ss", $refNo, $empName);
@@ -134,6 +125,50 @@ if(isset($_GET['name']) || isset($_GET['acctRef'])) {
     header("Location: ../admin/reference.php");
 } 
 
+
+// Turnover Ref Deletion
+if(isset($_GET['name']) && isset($_GET['turnoverRef'])) {
+    $refNo = mysqli_real_escape_string($db->conn, $_GET['turnoverRef']); // refId from reference tbl
+    $empName = mysqli_real_escape_string($db->conn, $_GET['name']);
+
+    $query = "SELECT a.id, a.assettag, r.assetId, r.name, r.turnoverRef, r.accountabilityRef 
+              FROM assets_tbl AS a 
+              LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+              WHERE r.turnoverRef='$refNo' AND r.name='$empName'";
+    $result =  mysqli_query($db->conn, $query);
+    
+    while($row = mysqli_fetch_assoc($result)) {
+        $accountabilityRef = $row['accountabilityRef'];
+        $turnoverRef = $row['turnoverRef'];
+        $assetTags[] = $row['assettag'];
+    }
+
+    $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl 
+                                        SET turnoverRef='',
+                                            turnoverFile='',
+                                            turnoverStatus=0,
+                                            turnoverDate='' 
+                                        WHERE turnoverRef=?
+                                        AND name=?");
+        mysqli_stmt_bind_param($refQry, "ss", $refNo, $empName);
+        mysqli_stmt_execute($refQry);
+   
+
+    if($refQry) {
+        $history = mysqli_prepare($db->conn, "INSERT INTO history_tbl (name, action, date) VALUES (?, ?, NOW())");
+        $name = $user['username'];
+        $action = "Deleted turnover reference for assets: " . implode(", ", $assetTags);
+            mysqli_stmt_bind_param($history, "ss", $name, $action);
+            mysqli_stmt_execute($history);
+    } else {
+        echo "failed updating";
+        die(); 
+    }
+    
+
+    header("Location: ../admin/reference.php");
+}
+
 // Reference_id Ref Deletion
 if(isset($_GET['Turnover_id'])) {
     $id = $_GET['Turnover_id'];
@@ -150,10 +185,11 @@ if(isset($_GET['Turnover_id'])) {
     while($row = $sql_All->fetch_assoc()) {
         $assetTag = $row['assettag'];
     }
-    $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                            VALUES ('', '$name', 'Deleted turnover reference code for Asset Tag: $assetTag', NOW())");
+    echo $assetTag;
+    // $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
+    //                         VALUES ('', '$name', 'Deleted turnover reference code for Asset Tag: $assetTag', NOW())");
 
-    header("Location: ../admin/reference.php");
+    // header("Location: ../admin/reference.php");
 }
 
 if(isset($_GET['empID'])) {
