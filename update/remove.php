@@ -49,7 +49,7 @@ if(isset($_GET['unassignId']) && isset($_GET['empId']) && isset($_GET['voidRemar
     $name = $user['username'];
     
     // First update query
-    $query = "UPDATE assets_tbl SET status='To be deploy', remarks='$voidRemarks', empId='0', lastused='$empId' WHERE id='$id'";
+    $query = "UPDATE assets_tbl SET status='To be deploy', datedeployed=NULL, remarks='$voidRemarks', empId='0', lastused='$empId' WHERE id='$id'";
     $result = mysqli_query($db->conn, $query);
 
     if ($result) {
@@ -102,7 +102,7 @@ if(isset($_GET['name']) && isset($_GET['acctRef'])) {
                                         SET accountabilityRef='',
                                             accountabilityFile='',
                                             accountabilityStatus=0,
-                                            accountabilityDate='' 
+                                            accountabilityDate=NULL 
                                         WHERE accountabilityRef=?
                                         AND name=?");
         mysqli_stmt_bind_param($refQry, "ss", $refNo, $empName);
@@ -147,13 +147,12 @@ if(isset($_GET['name']) && isset($_GET['turnoverRef'])) {
                                         SET turnoverRef='',
                                             turnoverFile='',
                                             turnoverStatus=0,
-                                            turnoverDate='' 
+                                            turnoverDate=NULL 
                                         WHERE turnoverRef=?
                                         AND name=?");
         mysqli_stmt_bind_param($refQry, "ss", $refNo, $empName);
         mysqli_stmt_execute($refQry);
    
-
     if($refQry) {
         $history = mysqli_prepare($db->conn, "INSERT INTO history_tbl (name, action, date) VALUES (?, ?, NOW())");
         $name = $user['username'];

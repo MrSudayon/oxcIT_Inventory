@@ -391,11 +391,17 @@ if (isset($_GET['generateTrn'])) {
         <div class="info"><br><br>
             <h3>Acknowledgment:</h3>
             <p>
-                &nbsp;&nbsp;I, <b><?php echo $empName; ?></b>, acknowledge that I have returned the above-mentioned equipment in the condition stated above. I understand that any damage or missing items may result in charges or disciplinary action.
-            </p>
+            &nbsp;&nbsp;I, <b><?php echo $empName; ?></b>, acknowledge that I have returned the above-mentioned equipment in the condition stated above. I understand that any damage or missing items may result in charges or disciplinary action.
+            <br><br>
             <p>
-                &nbsp;&nbsp;I, the undersigned, approve the transfer of the equipment as documented in this form.<br><br>
-                Signature: __________________ <br>Date: __________
+            &nbsp;&nbsp;I, the undersigned, approve the transfer of the equipment as documented in this form.<br><br>
+            Signature: __________________    <br>Date: __________</p>
+            <br><br>
+            [For Asset Administrator Use Only]<br><br>
+            <h3>Asset Status:</h3>
+            <p>
+            ☐ Accepted in Good Condition<br>
+            ☐ Accepted with Noted Issues (please specify): _______________________
             </p>
         </div>
     </div>

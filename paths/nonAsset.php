@@ -83,9 +83,7 @@ usort($rows, function($a, $b) {
                         <th> Name <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Location <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Division <span class="icon-arrow">&UpArrow;</span></th>
-                        <!-- <th>  <span class="icon-arrow">&UpArrow;</span></th> -->
                         <th> Status <span class="icon-arrow">&UpArrow;</span></th>
-                        <!-- <th width='10%' style="pointer-events: none;"> Action </th> -->
                     </tr>
                 </thead>
                 <tbody>          
@@ -112,7 +110,7 @@ usort($rows, function($a, $b) {
             if($rowCountPage != $rowCount) {
                 echo '<div class="pagination">';
                 if ($page > 1) {
-                    echo '<a href="usersAccountable.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
+                    echo '<a href="nonAsset.php?page=' . ($page - 1) . '" class="next prev">Previous</a>';
                 }
                 
                 $max_page_range = 7; // Maximum number of pages to show in pagination
@@ -121,12 +119,12 @@ usort($rows, function($a, $b) {
                 
                 for($i = $start_page; $i <= $end_page; $i++) {
                     $active_class = ($i == $page) ? 'activePage' : ''; // Add active class to current page
-                    echo '<a href="usersAccountable.php?page=' . $i . '" class="next ' . $active_class . '">' . $i . '</a>';                  
+                    echo '<a href="nonAsset.php?page=' . $i . '" class="next ' . $active_class . '">' . $i . '</a>';                  
                 }  
                 
                 if ($page < $number_of_page) {
-                    echo '<a href="usersAccountable.php?page=' . ($page + 1) . '" class="next">Next</a>';
-                    echo '<a href="usersAccountable.php?page=all" class="next">All</a>';
+                    echo '<a href="nonAsset.php?page=' . ($page + 1) . '" class="next">Next</a>';
+                    echo '<a href="nonAsset.php?page=all" class="next">All</a>';
                 }
                 echo '</div>';
 
