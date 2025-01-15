@@ -221,12 +221,10 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
                                     <?php
                                     if($turnoverStatus == '2' || $accountabilityStatus == '2') {
                                     ?>
-                                        <!-- <a href="../update/turnoverUpd.php?id=?php echo $aId; ?>"><img src="../assets/icons/turnover.png" width="32px"></a>&nbsp; -->
                                         <a class="voidAsset"  href="/" onclick="return false;"><img src="../assets/icons/remove.png" style="filter: grayscale(1); cursor: default;" width="32px"></a>
                                     <?php
                                     } elseif ($accountabilityStatus!='2') {
                                     ?>
-                                        <!-- <a href="../update/remove.php?unassignId=?php echo $aId; ?>&empId=?php echo $eid; ?>" onclick="return checkDelete()"></a> -->
                                         <a class="voidAsset" data-asset-id="<?= $aId ?>" data-emp-id="<?= $eid ?>" onclick="showModal(this)"><img src="../assets/icons/remove.png" width="32px"></a>
                                     <?php
                                     }
