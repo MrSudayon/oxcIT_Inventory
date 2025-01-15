@@ -68,7 +68,12 @@ if(isset($_GET['generateAcc'])) {
                 }
 
                 $history = mysqli_prepare($db->conn, "INSERT INTO history_tbl (name, action, date) VALUES (?, ?, NOW())");
-                $action = "Generated accountability form for asset/s: " . implode(", ", $assetTags);
+                if(count($selected) > 1) {
+                    $action = "Generated accountability form for asset/s: " . implode(", ", $assetTags);
+                } else {
+                    $action = "Generated accountability form for asset: " . implode(", ", $assetTags);
+                }
+                // $action = "Generated accountability form for asset/s: " . implode(", ", $assetTags);
                 mysqli_stmt_bind_param($history, "ss", $username, $action);
                 mysqli_stmt_execute($history);
             } else {        
@@ -301,7 +306,12 @@ if (isset($_GET['generateTrn'])) {
                 "INSERT INTO history_tbl (name, action, date) 
                  VALUES (?, ?, NOW())"
             );
-            $action = "Generated turnover form for multiple assets: " . implode(', ', $assetTags);
+            if(count($selected) > 1) {
+                $action = "Generated turnover form for asset/s: " . implode(', ', $assetTags);
+            } else {
+                $action = "Generated turnover form for asset: " . implode(', ', $assetTags);
+            }
+            // $action = "Generated turnover form for asset/s:: " . implode(', ', $assetTags);
             mysqli_stmt_bind_param($historyStmt, 'ss', $username, $action);
             mysqli_stmt_execute($historyStmt);
         } else {
@@ -391,11 +401,17 @@ if (isset($_GET['generateTrn'])) {
         <div class="info"><br><br>
             <h3>Acknowledgment:</h3>
             <p>
-                &nbsp;&nbsp;I, <b><?php echo $empName; ?></b>, acknowledge that I have returned the above-mentioned equipment in the condition stated above. I understand that any damage or missing items may result in charges or disciplinary action.
-            </p>
+            &nbsp;&nbsp;I, <b><?php echo $empName; ?></b>, acknowledge that I have returned the above-mentioned equipment in the condition stated above. I understand that any damage or missing items may result in charges or disciplinary action.
+            <br><br>
             <p>
-                &nbsp;&nbsp;I, the undersigned, approve the transfer of the equipment as documented in this form.<br><br>
-                Signature: __________________ <br>Date: __________
+            &nbsp;&nbsp;I, the undersigned, approve the transfer of the equipment as documented in this form.<br><br>
+            Signature: __________________    <br>Date: __________</p>
+            <br><br>
+            [For Asset Administrator Use Only]<br><br>
+            <h3>Asset Status:</h3>
+            <p>
+            ☐ Accepted in Good Condition<br>
+            ☐ Accepted with Noted Issues (please specify): _______________________
             </p>
         </div>
     </div>
