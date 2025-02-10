@@ -216,7 +216,7 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
                                     <?php echo $specification; ?>
                                 </td>
                                 <td><a href="../admin/accountability.php?id=<?php echo $accountabilityRef; ?>"><?php echo $accountabilityRef; ?></a></td>
-                                <td><?php echo $turnoverRef; ?></td>
+                                <td><a href="../admin/turnover.php?id=<?php echo $turnoverRef; ?>"><?php echo $turnoverRef; ?></a></td>
                                 <td>
                                     <?php
                                     if($turnoverStatus == '2' || $accountabilityStatus == '2') {

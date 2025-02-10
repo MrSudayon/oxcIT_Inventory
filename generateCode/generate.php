@@ -220,70 +220,170 @@ if(isset($_GET['generateAcc'])) {
             
 <?php
 }
-if (isset($_GET['generateTrn'])) {
-    if (isset($_GET['select'])) {
-        $selected = $_GET['select'];
-        $existingTurnover = false; // Flag to check if any selected asset already has an accountability code
-        $assetTags = [];
-        $trn_ref = '';
-        $acc_ref = '';
-        $acc_status = '';
-        $empId = '';
+// if (isset($_GET['generateTrn'])) {
+//     if (isset($_GET['select'])) {
+//         $selected = $_GET['select'];
+//         $existingTurnover = false; // Flag to check if any selected asset already has an accountability code
+//         $assetTags = [];
+//         $trn_ref = '';
+//         $acc_ref = '';
+//         $acc_status = '';
+//         $empId = '';
 
+//         $validAccountability = true; // Assume all are valid
+
+       
+//         foreach ($selected as $assetID) {
+//             $stmt = mysqli_prepare($db->conn, 
+//                 "SELECT DISTINCT 
+//                     a.id AS aId, a.empId AS empId, a.status, a.assettype, a.assettag, a.model, a.serial, a.remarks, a.datedeployed,
+//                     e.id, e.name AS ename, e.division, 
+//                     r.assetId, r.name AS rname, r.turnoverRef, r.accountabilityRef, r.accountabilityStatus 
+//                 FROM assets_tbl AS a 
+//                 LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+//                 LEFT JOIN employee_tbl AS e ON a.empId = e.id 
+//                 WHERE a.id=? AND (a.status != 'Archive' OR a.status = 'Deployed')"
+//             );
+//             mysqli_stmt_bind_param($stmt, 'i', $assetID);
+//             mysqli_stmt_execute($stmt);
+//             $result = mysqli_stmt_get_result($stmt);
+
+//             while ($row = mysqli_fetch_assoc($result)) {
+//                 $assetTags[] = $row['assettag'];
+//                 $trn_ref = $row['turnoverRef'];
+//                 $acc_ref = $row['accountabilityRef'];
+//                 $acc_status = $row['accountabilityStatus'];
+//                 $empId = $row['empId'];
+//             }
+//         }
+        
+//         // $assetTags = array_unique($assetTags);
+//         // echo implode(', ', $assetTags);
+      
+//         if ($acc_ref == '' || $acc_status != '2') {
+//             echo "<script>
+//                 alert('Failed: Make a signed accountability first');
+//                 window.location.replace('../admin/employeeLists.php');
+//                 </script>";
+//             exit;
+//         }
+        
+
+//         // Check for existing turnover codes in selected assets
+//         $placeholders = implode(',', array_fill(0, count($selected), '?'));
+//         $types = str_repeat('i', count($selected));
+//         $existingCodeQuery = mysqli_prepare($db->conn, 
+//             "SELECT * FROM reference_tbl 
+//              WHERE turnoverRef != '' AND assetId IN ($placeholders) AND referenceStatus = '1'"
+//         );
+//         mysqli_stmt_bind_param($existingCodeQuery, $types, ...$selected);
+//         mysqli_stmt_execute($existingCodeQuery);
+//         $existingCodeResult = mysqli_stmt_get_result($existingCodeQuery);
+
+//         if (mysqli_num_rows($existingCodeResult) > 0) {
+//             echo "<script>
+//                 alert('Some selected assets already have turnover codes.');
+//                 window.location.href = '../admin/employeeLists.php';
+//                 </script>";
+//             exit;
+//         }
+
+//         if ($trn_ref == '') {
+//             // Generate new turnover code
+//             $n = 5;
+//             $newCode = getCode($n);
+//             $trn_ref = "TRNO-" . $newCode;
+
+//             // Update all selected assets with the new turnover code
+//             $updateStmt = mysqli_prepare($db->conn, 
+//                 "UPDATE reference_tbl 
+//                  SET turnoverStatus = '1', turnoverRef = ? 
+//                  WHERE assetId = ? AND name = ?"
+//             );
+//             foreach ($selected as $assetID) {
+//                 mysqli_stmt_bind_param($updateStmt, 'sis', $trn_ref, $assetID, $empId);
+//                 mysqli_stmt_execute($updateStmt);
+//             }
+
+//             // Log history
+//             $historyStmt = mysqli_prepare($db->conn, 
+//                 "INSERT INTO history_tbl (name, action, date) 
+//                  VALUES (?, ?, NOW())"
+//             );
+//             if(count($selected) > 1) {
+//                 $action = "Generated turnover form for asset/s: " . implode(', ', $assetTags);
+//             } else {
+//                 $action = "Generated turnover form for asset: " . implode(', ', $assetTags);
+//             }
+//             // $action = "Generated turnover form for asset/s:: " . implode(', ', $assetTags);
+//             mysqli_stmt_bind_param($historyStmt, 'ss', $username, $action);
+//             mysqli_stmt_execute($historyStmt);
+//         } else {
+//             // Log viewing the turnover form
+//             $historyStmt = mysqli_prepare($db->conn, 
+//                 "INSERT INTO history_tbl (name, action, date) 
+//                  VALUES (?, ?, NOW())"
+//             );
+//             $action = "Viewed turnover form for: " . implode(', ', $assetTags);
+//             mysqli_stmt_bind_param($historyStmt, 'ss', $username, $action);
+//             mysqli_stmt_execute($historyStmt);
+//         }
+//     } else {
+//         echo "<script>
+//             alert('Please select an asset');
+//             window.location.replace('../admin/employeeLists.php');
+//             </script>";
+//     }
+
+if (isset($_GET['generateTrn'])) {
+    if (isset($_GET['select']) && is_array($_GET['select'])) {
+        $selected = $_GET['select'];
+        
+        $assetTags = [];
+        $empId = null;
+        $validAccountability = true; // Flag to ensure all assets have signed accountability
+        $existingTurnover = false;
+        $trn_ref = '';
+
+        // Check if all selected assets have signed accountability
         foreach ($selected as $assetID) {
             $stmt = mysqli_prepare($db->conn, 
-                "SELECT DISTINCT 
-                    a.id AS aId, a.empId AS empId, a.status, a.assettype, a.assettag, a.model, a.serial, a.remarks, a.datedeployed,
-                    e.id, e.name AS ename, e.division, 
-                    r.assetId, r.name AS rname, r.turnoverRef, r.accountabilityRef, r.accountabilityStatus 
-                FROM assets_tbl AS a 
-                LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
-                LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                WHERE a.id=? AND (a.status != 'Archive' OR a.status = 'Deployed')"
+                "SELECT a.assettag, a.empId, r.turnoverRef, r.accountabilityRef, r.accountabilityStatus 
+                 FROM assets_tbl AS a 
+                 LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
+                 WHERE a.id = ? AND a.status IN ('Deployed', 'Active')"
             );
             mysqli_stmt_bind_param($stmt, 'i', $assetID);
             mysqli_stmt_execute($stmt);
             $result = mysqli_stmt_get_result($stmt);
 
-            while ($row = mysqli_fetch_assoc($result)) {
+            if ($row = mysqli_fetch_assoc($result)) {
                 $assetTags[] = $row['assettag'];
-                $trn_ref = $row['turnoverRef'];
-                $acc_ref = $row['accountabilityRef'];
-                $acc_status = $row['accountabilityStatus'];
                 $empId = $row['empId'];
+
+                if (empty($row['accountabilityRef']) || $row['accountabilityStatus'] != '2') {
+                    $validAccountability = false;
+                }
+
+                if (!empty($row['turnoverRef'])) {
+                    $existingTurnover = true;
+                    $trn_ref = $row['turnoverRef']; // Get existing turnoverRef
+                }
+            } else {
+                $validAccountability = false;
             }
         }
-        
-        // $assetTags = array_unique($assetTags);
-        // echo implode(', ', $assetTags);
 
-        if (empty($acc_ref) || $acc_ref == '' || $acc_status != '2') {
+        // If any asset lacks signed accountability, stop here
+        if (!$validAccountability) {
             echo "<script>
-                alert('Failed: Make a signed accountability first');
+                alert('Failed: Make sure all selected assets have signed accountability.');
                 window.location.replace('../admin/employeeLists.php');
                 </script>";
             exit;
         }
 
-        // Check for existing turnover codes in selected assets
-        $placeholders = implode(',', array_fill(0, count($selected), '?'));
-        $types = str_repeat('i', count($selected));
-        $existingCodeQuery = mysqli_prepare($db->conn, 
-            "SELECT * FROM reference_tbl 
-             WHERE turnoverRef != '' AND assetId IN ($placeholders) AND referenceStatus = '1'"
-        );
-        mysqli_stmt_bind_param($existingCodeQuery, $types, ...$selected);
-        mysqli_stmt_execute($existingCodeQuery);
-        $existingCodeResult = mysqli_stmt_get_result($existingCodeQuery);
-
-        if (mysqli_num_rows($existingCodeResult) > 0) {
-            echo "<script>
-                alert('Some selected assets already have turnover codes.');
-                window.location.href = '../admin/employeeLists.php';
-                </script>";
-            exit;
-        }
-
+        // Generate turnover reference if none exists
         if ($trn_ref == '') {
             // Generate new turnover code
             $n = 5;
@@ -293,8 +393,8 @@ if (isset($_GET['generateTrn'])) {
             // Update all selected assets with the new turnover code
             $updateStmt = mysqli_prepare($db->conn, 
                 "UPDATE reference_tbl 
-                 SET turnoverStatus = '1', turnoverRef = ? 
-                 WHERE assetId = ? AND name = ?"
+                    SET turnoverStatus = '1', turnoverRef = ? 
+                    WHERE assetId = ? AND name = ?"
             );
             foreach ($selected as $assetID) {
                 mysqli_stmt_bind_param($updateStmt, 'sis', $trn_ref, $assetID, $empId);
@@ -304,7 +404,7 @@ if (isset($_GET['generateTrn'])) {
             // Log history
             $historyStmt = mysqli_prepare($db->conn, 
                 "INSERT INTO history_tbl (name, action, date) 
-                 VALUES (?, ?, NOW())"
+                    VALUES (?, ?, NOW())"
             );
             if(count($selected) > 1) {
                 $action = "Generated turnover form for asset/s: " . implode(', ', $assetTags);
@@ -316,9 +416,9 @@ if (isset($_GET['generateTrn'])) {
             mysqli_stmt_execute($historyStmt);
         } else {
             // Log viewing the turnover form
-            $historyStmt = mysqli_prepare($db->conn, 
+            $historyStmt = mysqli_prepare($db->conn,    
                 "INSERT INTO history_tbl (name, action, date) 
-                 VALUES (?, ?, NOW())"
+                    VALUES (?, ?, NOW())"
             );
             $action = "Viewed turnover form for: " . implode(', ', $assetTags);
             mysqli_stmt_bind_param($historyStmt, 'ss', $username, $action);
@@ -326,9 +426,10 @@ if (isset($_GET['generateTrn'])) {
         }
     } else {
         echo "<script>
-            alert('Please select an asset');
+            alert('Please select at least one asset.');
             window.location.replace('../admin/employeeLists.php');
             </script>";
+        exit;
     }
 ?>
 
@@ -389,7 +490,6 @@ if (isset($_GET['generateTrn'])) {
                     }
                 }
             }
-
             $result = $operation->getSpecificEmp($empId);
             while ($row = $result->fetch_assoc()) {
                 $empName = $row['name'];
