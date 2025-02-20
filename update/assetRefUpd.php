@@ -49,7 +49,7 @@ include '../inc/header.php';
                                 
                                 <div class="input-box" id="serial">
                                     <span class="details">Serial no.</span>
-                                    <input type="text" name="serial" value="<?=$result['serial']?>" placeholder="Serial Number" id="">
+                                    <input type="text" name="serial" style="background-color: #ccc; font-weight: 600;" readonly value="<?=$result['serial']?>" placeholder="Serial Number" id="">
                                 </div>
                             <?php
                         }
@@ -66,18 +66,19 @@ include '../inc/header.php';
                     
                     <div class="input-box">
                         <span class="details">Date Purchased</span>
-                        <input type="date" name="dateprchs" value="<?=$result['datepurchased']?>" id="" required>
+                        <input type="date" name="dateprchs" style="background-color: #ccc; font-weight: 600;" readonly value="<?=$result['datepurchased']?>" id="" required>
                     </div>
                     <div class="input-box">
                         <span class="details" style="margin-bottom: 10px;">Status</span>
-                        <select name="status" id="status" onChange="changetextbox()">
+                        <select name="status" id="status" onChange="changetextbox()" style="background-color: #ccc; font-weight: 600;" readonly>
                             <option value="<?=$result['aStatus']?>"><?=$result['aStatus']?></option>
-                            <option value="For repair">For repair</option>
+                            <!-- Feb 18, 2025 -->
+                            <!-- <option value="For repair">For repair</option>
                             <option value="Deployed">Deployed</option>
                             <option value="To be deploy">To be deploy</option>
                             <option value="Defective">Defective</option>
                             <option value="Sell">Sell</option>
-                            <option value="Missing">Missing</option>
+                            <option value="Missing">Missing</option> -->
                         </select>
                     </div>
                     <div class="input-box" id="repair-cost">
@@ -262,7 +263,7 @@ include '../inc/header.php';
 
                         <div class="input-box" id="datedeployed">
                             <span class="details">Date Deployed</span>
-                            <input type="date" name="datedeployed" placeholder="Date Deployed" value="<?=$result['datedeployed']?>" id="">
+                            <input type="date" name="datedeployed" style="background-color: #ccc; font-weight: 600;" readonly value="<?=$result['datedeployed']?>" id="">
                         </div>
 
                         <div class="input-box">
@@ -296,7 +297,7 @@ include '../inc/header.php';
 
                         <div class="input-box" id="datedeployed" style="display: none;">
                             <span class="details">Date Deployed</span>
-                            <input type="date" name="datedeployed" placeholder="Date Deployed" value="<?=$result['datedeployed']?>" id="">
+                            <input type="date" name="datedeployed" style="background-color: #ccc; font-weight: 600;" readonly value="<?=$result['datedeployed']?>" id="">
                         </div>
 
                         <div class="input-box">

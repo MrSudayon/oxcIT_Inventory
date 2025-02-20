@@ -7,11 +7,11 @@ if(isset($_GET['id'])) {
 
     $sql =  
         "SELECT a.id AS aId, a.empId AS empId, a.status, a.assettype AS assettype, a.assettag, a.model, a.serial, a.remarks, a.datedeployed, 
-            e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.accountabilityRef, r.turnoverRef 
+            e.id, e.name AS ename, e.division, r.assetId, r.name AS rname, r.accountabilityRef, r.turnoverRef, r.referenceStatus 
         FROM assets_tbl AS a 
         LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
         LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-        WHERE r.accountabilityRef = '$selectedReferenceCode'";  
+        WHERE (r.referenceStatus=1 OR r.referenceStatus=2) AND r.accountabilityRef='$selectedReferenceCode'";  
 
     $res = mysqli_query($db->conn, $sql);
 
@@ -79,7 +79,7 @@ if(isset($_GET['id'])) {
                     
 
                 $result = $operation->getSpecificEmp($empId);
-
+                
                 while($row = mysqli_fetch_assoc($result)) {
                     $empName = $row['name'];
                     $dept = $row['division'];

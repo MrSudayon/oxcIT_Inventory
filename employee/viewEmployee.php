@@ -25,14 +25,13 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
         die();
     }
 
-
     $sql =
         "SELECT DISTINCT a.id AS aId, a.empId, a.assettype, a.assettag, a.status, 
         a.cpu, a.memory, a.storage, a.os, a.dimes, a.plan, a.mobile, 
         r.assetId, r.name AS rName, r.accountabilityRef, r.accountabilityStatus, r.turnoverRef, r.turnoverStatus, r.referenceStatus 
         FROM assets_tbl AS a 
         LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
-        WHERE a.empId='$eid' AND r.name='$eid' AND a.status = 'Deployed'"; 
+        WHERE a.empId='$eid' AND r.name='$eid' AND a.status = 'Deployed' AND r.referenceStatus='1'"; 
         
     $results = mysqli_query($db->conn, $sql);
     $rowCount = $results->num_rows;
@@ -167,7 +166,7 @@ if(isset($_GET['id']) && $_GET['id'] != '') {
             <section class="table__userdata">
                 <div class="userData">
                 <strong style="font-size: 1.5em; color: #2E4583;"><?php echo $name; ?></strong><br>
-                    <p><?php echo $dept . " - " . $location; ?></p>
+                    <p><?php echo $dept . " - " . $location ?></p>
                 </div>
                 <div class="rowCount">
                     <p><h1 style='color:#2E4583; font-size: 2em;' class="result-count">~<strong><?php echo $rowCount; ?></strong></h1>Accountabilities</p>

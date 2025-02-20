@@ -14,7 +14,7 @@
 
     <div class="container">
         <div class="add-form">
-            <a href="../admin/reference.php" class="return">Back</a>
+            <a href="javascript:history.back()" class="return">Go back</a>
 
             <div class="title">Reference Details</div>
             <?php
@@ -29,7 +29,7 @@
                 $result = $assetController->editReference($refNo);
 
                 if($result) {
-                    $assetId = $result['rAssetId'];
+                    $assetIds = is_array($result['rAssetId']) ? implode(',', $result['rAssetId']) : $result['rAssetId'];
                     // $trnStatus = $result['turnoverStatus'];
                     // $trnoFile = $result['turnoverFile'];
                     $accStatus = $result['accountabilityStatus'];
@@ -38,13 +38,21 @@
                 <form action="../admin/update-selected.php" method="POST" enctype="multipart/form-data">
                     <div class="asset-details">
                         <input type="hidden" name="id" value="<?=$result['accountabilityRef']?>">
-                        <input type="hidden" name="eId" value="<?=$empName?>">
-                        <input type="hidden" name="assetId[]" value="<?=$assetId?>">
-                        <!-- <input type="hidden" name="id" value=" ?=$result['refId']?>"> -->
+                        <input type="hidden" name="eId" value="<?=$result['name']?>">
+                        <input type="hidden" name="eName" value="<?=$empName?>">
+                        <!-- <input type="text" name="assetId[]" value="?=$assetId?>"> -->
+                        <?php 
+                            $assetIdArray = explode(',', $assetIds); 
+                            foreach ($assetIdArray as $assetId) {
+                            ?>
+                                <input type="text" name="assetId[]" value="<?=$assetId?>">
+                            <?php 
+                            }
+                        ?>
 
                         <div class="input-box" style="width: 100%;">
                             <span class="details">Assigned to: </span>
-                            <input type="text" name="name" value="<?=$result['empName']?>" style="background-color: #ccc; font-weight: 600; text-align: center;" readonly>
+                            <input type="text" name="name" value="<?=$empName?>" style="background-color: #ccc; font-weight: 600; text-align: center;" readonly>
                         </div>
                         <div class="input-box">
                             <span class="details">Accountability Code</span>
@@ -116,13 +124,25 @@
                     $assetIds = is_array($result['rAssetId']) ? implode(',', $result['rAssetId']) : $result['rAssetId'];
                     $trnStatus = $result['turnoverStatus'];
                     $trnoFile = $result['turnoverFile'];
-
+                    
+                    if($trnStatus == 2) {
+                        ?>
+                            <style>
+                                .trnStatus {
+                                    background-color: #ccc;
+                                    pointer-events: none;
+                                }
+                            </style>
+                        <?php
+                    } else {
+                    }
             ?>
                 <form action="../admin/update-selected.php" method="POST" enctype="multipart/form-data">
                     <div class="asset-details">
-                        <!-- <input type="hidden" name="id" value="?=$result['refId']?>"> -->
-                        <input type="text" readonly name="id" value="<?=$result['turnoverRef']?>">
-                        <input type="text" readonly name="eId" value="<?=$empName?>">
+                        <!-- <input type="text" name="id" value="?=$result['refId']?>"> -->
+                        <input type="hidden" readonly name="id" value="<?=$result['turnoverRef']?>">
+                        <input type="hidden" readonly name="eId" value="<?=$result['name']?>">
+                        <input type="hidden" readonly name="eName" value="<?=$empName?>">
                         <?php 
                             $assetIdArray = explode(',', $assetIds); 
                             foreach ($assetIdArray as $assetId) {
@@ -135,7 +155,7 @@
 
                         <div class="input-box" style="width: 100%;">
                             <span class="details">Assigned to: </span>
-                            <input type="text" name="name" value="<?=$result['empName']?>" style="background-color: #ccc; font-weight: 600; text-align: center;" readonly>
+                            <input type="text" name="name" value="<?=$empName?>" style="background-color: #ccc; font-weight: 600; text-align: center;" readonly>
                         </div>
                         <div class="input-box">
                             <span class="details">Turnover Code</span>
@@ -143,7 +163,7 @@
                         </div>
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Status</span>
-                            <select name="trnStatus">
+                            <select name="trnStatus" class="trnStatus">
 
                             <?php
                             switch($trnStatus) {
@@ -177,18 +197,18 @@
                         </div>
                         <div class="input-box">
                             <span class="details" style="margin-bottom: 10px;">Turnover File</span>
-                            <input type="file" name="trnfile" accept="files/*">
+                            <input type="file" class="trnStatus" name="trnfile" accept="files/*">
                         </div>
                         <div class="input-box">
                             <span class="details">Date</span>
-                            <input type="date" name="trnDate" id="trnDate" value="<?=$result['turnoverDate']?>">
+                            <input type="date" name="trnDate" class="trnStatus" id="trnDate" value="<?=$result['turnoverDate']?>">
                         </div>
                     </div>
                     
                     <div class="button">
                         <input type="hidden" name="turnoverFile" id="" value="<?=$trnoFile?>">
                         <input type="hidden" name="action" id="" value="TurnoverRef">
-                        <input type="submit" onclick="passValue()" value="Save" name="update-trnRef"/>
+                        <input class="trnStatus" type="submit" onclick="passValue()" value="Save" name="update-trnRef"/>
                     </div>
                 </form>
             <?php 

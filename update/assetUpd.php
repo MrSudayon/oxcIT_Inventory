@@ -11,6 +11,7 @@ include '../inc/header.php';
         <div class="title">Asset Details</div>
         <?php
         if(isset($_GET['id'])) {
+
             $assetID = mysqli_real_escape_string($db->conn, $_GET['id']);
             $result = $assetController->edit($assetID);
 
@@ -280,6 +281,7 @@ include '../inc/header.php';
                             <span class="details" style="margin-bottom: 10px;">Assigned To</span>
                             <select name="assigned" id="assigned" class="assigned" style="background-color: #ccc; font-weight: 600;">
                                 <option value="<?=$result['assignedId']?>"><?=$result['empName']?></option>
+
                                 <option value=''>None</option>
                                 <?php
                                     $user = $getAllUser->selectAllEmp();

@@ -85,149 +85,6 @@ class assetsController {
         return true;
     }
 
-    // public function update($input, $id) {
-    //     global $db;
-    //     global $sess_name;
-
-    //     $assetID = mysqli_real_escape_string($db->conn, $id);
-
-    //     $model = $input['model'];
-    //     $serial = $input['serial'];
-    //     $supplier = $input['supplier'];
-    //     $status = $input['status'];
-
-    //     if($status != 'Deployed') {
-    //         $empId = '0';
-    //     }
-
-    //     $cost = $input['cost'];
-    //     $repair = $input['repair-cost'];
-
-    //     $cpu = $input['cpu'];
-    //     $ram = $input['ram'];
-    //     $storage = $input['storage'];
-    //     $os = $input['os'];
-
-    //     // SIM, Mobile
-    //     $dimes = $input['dimes'];
-
-    //     $mobile = $input['mobile'];
-    //     $plan = $input['plan'];
-
-    //     $dateprchs = $input['datepurchase'];
-    //     $remarks = $input['remarks'];
-
-    //     $datedeployed = $input['datedeployed'];
-
-    //     $empId = $input['assigned'];
-    //     $lastused = $input['lastused'];
-
-
-    //     // $qry = "UPDATE assets_tbl SET model='$model', serial='$serial', supplier='$supplier', empId='$empId', status='$status', datepurchased='$dateprchs', cost='$cost', repair_cost='$repair', remarks='$remarks', datedeployed='$datedeployed', cpu='$cpu', memory='$ram', storage='$storage', dimes='$dimes', mobile='$mobile', plan='$plan', os='$os' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
-    //     // $result = $db->conn->query($qry);
-
-    //     // $tag = mysqli_query($db->conn, "SELECT * FROM assets_tbl WHERE id = $assetID");
-    //     // while($row = $tag->fetch_assoc()) {
-    //     //     $assettag = $row['assettag'];
-    //     // }
-        
-
-    //     $qry = "UPDATE assets_tbl SET model=?, serial=?, supplier=?, empId=?, status=?, datepurchased=?, cost=?, repair_cost=?, remarks=?, datedeployed=?, cpu=?, memory=?, storage=?, dimes=?, mobile=?, plan=?, os=? WHERE id=? AND status!='Archive' LIMIT 1";
-    //     $stmt = $db->conn->prepare($qry);
-    //     $stmt->bind_param("sssssssssssssssssi", $model, $serial, $supplier, $empId, $status, $dateprchs, $cost, $repair, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os, $assetID);
-    //     $result = $stmt->execute();
-
-    //     if($result) {
-    //         // Get asset tag
-    //         $tagQuery = "SELECT assettag FROM assets_tbl WHERE id = ?";
-    //         $tagStmt = $db->conn->prepare($tagQuery);
-    //         $tagStmt->bind_param("i", $assetID);
-    //         $tagStmt->execute();
-    //         $tagResult = $tagStmt->get_result();
-    //         $tagRow = $tagResult->fetch_assoc();
-    //         $assettag = $tagRow['assettag'];
-            
-
-    //         $refActive = 1;
-    //         $refDone = 2;
-    //         // Check if reference exists
-    //         // $refQuery = "SELECT * FROM reference_tbl WHERE assetId=? OR (assetId=? AND referenceStatus=?)";
-    //         $refQuery = "SELECT * FROM reference_tbl WHERE assetId=? AND referenceStatus=?";
-
-    //         $refStmt = $db->conn->prepare($refQuery);
-    //         $refStmt->bind_param("ii", $assetID, $refActive);
-    //         $refStmt->execute();
-    //         $refResult = $refStmt->get_result();
-        
-    //         if ($refResult->num_rows == 0) {
-    //             // Insert new reference
-    //             $referenceQuery = "INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 1)";
-    //             $referenceStmt = $db->conn->prepare($referenceQuery);
-    //             $referenceStmt->bind_param("is", $assetID, $empId);
-    //             $referenceResult = $referenceStmt->execute();
-            
-    //             // What if reference is completed?
-    //             if (!$referenceResult) {
-    //                 echo 'Failed to insert reference';
-    //             }
-
-    //         } else {
-
-    //             $refQuery = "SELECT * FROM reference_tbl WHERE assetId=? AND referenceStatus=?";
-    //             // referenceStatus confusion 0 to 1 Upon deletion/updating of assets
-    //             $refStmt = $db->conn->prepare($refQuery);
-    //             $refStmt->bind_param("ii", $assetID, $refDone);
-    //             $refStmt->execute();
-    //             $refResult = $refStmt->get_result();
-
-    //             // fix this 9/17
-    //             // issue when employee is resigned, ignore its record and add new reference details
-    //             if($refResult->num_rows == 0) {
-                    
-    //                 $qry = "INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 1)";
-    //                 $stmt = $db->conn->prepare($qry);
-    //                 $stmt->bind_param("is", $assetID, $empId);
-    //                 $result = $stmt->execute();
-
-    //             } else {
-                    
-    //                 // Update existing reference
-    //                 $qry = "UPDATE reference_tbl SET name=?, referenceStatus='1' WHERE assetId=? AND turnoverRef=''";
-    //                 $stmt = $db->conn->prepare($qry);
-    //                 $stmt->bind_param("si", $empId, $assetID);
-    //                 $result = $stmt->execute();
-    //             }
-    //             // } else {
-    //             //     echo "isee";
-    //             // }
-                
-    //         }
-
-    //         $operation = new Operations();
-    //         if($empId!='0' || $empId!='') {
-    //             $empName = $operation->getThyNames($empId);
-
-    //             if($status != 'Deployed') {
-    //                 mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-    //                     VALUES('', '$sess_name', 'Removed the accountability for $assettag', NOW())");
-    //             } else {
-    //                 mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-    //                     VALUES('', '$sess_name', 'Assigned: $assettag to $empName', NOW())");
-    //             }
-                
-    //         } else {
-    //             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-    //                 VALUES('', '$sess_name', 'Updated record: $assettag', NOW())");
-    //         }
-
-            
-    //         return true;
-
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
     public function update($input, $id) {
         global $db;
         global $sess_name;
@@ -264,8 +121,7 @@ class assetsController {
 
         $empId = $input['assigned'];
         $lastused = $input['lastused'];
-
-
+  
         // $qry = "UPDATE assets_tbl SET model='$model', serial='$serial', supplier='$supplier', empId='$empId', status='$status', datepurchased='$dateprchs', cost='$cost', repair_cost='$repair', remarks='$remarks', datedeployed='$datedeployed', cpu='$cpu', memory='$ram', storage='$storage', dimes='$dimes', mobile='$mobile', plan='$plan', os='$os' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
         // $result = $db->conn->query($qry);
 
@@ -274,10 +130,10 @@ class assetsController {
         //     $assettag = $row['assettag'];
         // }
         
-
-        $qry = "UPDATE assets_tbl SET model=?, serial=?, supplier=?, empId=?, status=?, datepurchased=?, cost=?, repair_cost=?, remarks=?, datedeployed=?, cpu=?, memory=?, storage=?, dimes=?, mobile=?, plan=?, os=? WHERE id=? AND status!='Archive' LIMIT 1";
+        $qry = "UPDATE assets_tbl SET model=?, serial=?, supplier=?, empId=?, status=?, datepurchased=?, cost=?, repair_cost=?, remarks=?, datedeployed=?, cpu=?, memory=?, storage=?, dimes=?, mobile=?, plan=?, os=? 
+                WHERE id=? AND status!='Archive' LIMIT 1";
         $stmt = $db->conn->prepare($qry);
-        $stmt->bind_param("sssssssssssssssssi", $model, $serial, $supplier, $empId, $status, $dateprchs, $cost, $repair, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os, $assetID);
+        $stmt->bind_param("sssisssssssssssssi", $model, $serial, $supplier, $empId, $status, $dateprchs, $cost, $repair, $remarks, $datedeployed, $cpu, $ram, $storage, $dimes, $mobile, $plan, $os, $assetID);
         $result = $stmt->execute();
 
         if($result) {
@@ -293,77 +149,124 @@ class assetsController {
             $refArchive = 0;
             $refActive = 1;
             $refDone = 2;
-            // Check if reference exists
-            // $refQuery = "SELECT * FROM reference_tbl WHERE assetId=? OR (assetId=? AND referenceStatus=?)";
-            $refQuery = "SELECT * FROM reference_tbl WHERE assetId=? AND referenceStatus=?";
 
+            $refQuery = "SELECT id FROM reference_tbl WHERE assetId=? AND name=? AND referenceStatus=?";
             $refStmt = $db->conn->prepare($refQuery);
-            $refStmt->bind_param("ii", $assetID, $refDone);
+            $refStmt->bind_param("iii", $assetID, $empId, $refDone);
             $refStmt->execute();
             $refResult = $refStmt->get_result();
-        
+
             if ($refResult->num_rows > 0) {
-
-                // Inserts new reference and keep the reference with status '2'
-                $referenceQuery = "INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 1)";
-                $referenceStmt = $db->conn->prepare($referenceQuery);
-                $referenceStmt->bind_param("is", $assetID, $empId);
-                $referenceResult = $referenceStmt->execute();
+                // A completed reference (referenceStatus = 2) exists
+                // Now check if an active reference (referenceStatus = 1) exists
+                $checkActiveQuery = "SELECT id FROM reference_tbl WHERE assetId=? AND name=? AND referenceStatus=?";
+                $checkActiveStmt = $db->conn->prepare($checkActiveQuery);
+                $checkActiveStmt->bind_param("iii", $assetID, $empId, $refActive);
+                $checkActiveStmt->execute();
+                $checkActiveResult = $checkActiveStmt->get_result();
             
-                // What if reference is completed?
-                if (!$referenceResult) {
-                    echo 'Failed to insert reference';
-                }
-
-            } else {
-                
-                // Proceeds when theres a record with ref status 1 OR 0
-                $refQuery = "SELECT * FROM reference_tbl WHERE assetId=? AND referenceStatus=?"; 
-                // referenceStatus confusion 0 to 1 Upon deletion/updating of assets
-                $refStmt = $db->conn->prepare($refQuery);
-                $refStmt->bind_param("ii", $assetID, $refArchive);
-                $refStmt->execute();
-                $refResult = $refStmt->get_result();
-
-                // fix this 9/17
-                // issue when employee is resigned, ignore its record and add new reference details
-                if($refResult->num_rows > 0) {
-
-                    // Update existing reference with status 0
-                    $qry = "UPDATE reference_tbl SET name=?, referenceStatus='1' WHERE assetId=? AND turnoverRef=''";
-                    $stmt = $db->conn->prepare($qry);
-                    $stmt->bind_param("si", $empId, $assetID);
-                    $result = $stmt->execute();
-
-                } else {
-                    
-                    $refQuery = "SELECT * FROM reference_tbl WHERE assetId=? AND referenceStatus=?"; 
-                    // referenceStatus confusion 0 to 1 Upon deletion/updating of assets
-                    $refStmt = $db->conn->prepare($refQuery);
-                    $refStmt->bind_param("ii", $assetID, $refActive);
-                    $refStmt->execute();
-                    $refResult1 = $refStmt->get_result();
-
-                    if($refResult1->num_rows == 0 ) {
-
-                        $qry = "INSERT INTO reference_tbl (assetId, name, accountabilityRef, turnoverRef, referenceStatus) VALUES (?, ?, '', '', 1)";
-                        $stmt = $db->conn->prepare($qry);
-                        $stmt->bind_param("is", $assetID, $empId);
-                        $result = $stmt->execute();
-
+                if ($checkActiveResult->num_rows == 0) {
+                    // No active reference exists, now check if an archived reference exists
+                    $checkArchivedQuery = "SELECT id FROM reference_tbl WHERE assetId=? AND name=? AND referenceStatus=?";
+                    $checkArchivedStmt = $db->conn->prepare($checkArchivedQuery);
+                    $checkArchivedStmt->bind_param("iii", $assetID, $empId, $refArchive);
+                    $checkArchivedStmt->execute();
+                    $checkArchivedResult = $checkArchivedStmt->get_result();
+            
+                    if ($archivedRow = $checkArchivedResult->fetch_assoc()) {
+                        // ✅ Update existing archived reference to active
+                        $updateQuery = "UPDATE reference_tbl SET referenceStatus=? WHERE id=?";
+                        $stmt = $db->conn->prepare($updateQuery);
+                        $stmt->bind_param("ii", $refActive, $archivedRow['id']);
+                        $stmt->execute();
                     } else {
-
-                        // Update existing reference with status 0 or 1
-                        $qry = "UPDATE reference_tbl SET name=? WHERE assetId=? AND turnoverRef=''";
-                        $stmt = $db->conn->prepare($qry);
-                        $stmt->bind_param("si", $empId, $assetID);
-                        $result = $stmt->execute();
-
+                        // ✅ No archived record exists, insert a new active reference
+                        $insertQuery = "INSERT INTO reference_tbl (assetId, name, referenceStatus) VALUES (?, ?, ?)";
+                        $stmt = $db->conn->prepare($insertQuery);
+                        $stmt->bind_param("iii", $assetID, $empId, $refActive);
+                        $stmt->execute();
                     }
-                  
                 }
-                
+            } else {
+                // No completed reference exists, check for archived references
+                $checkArchivedQuery = "SELECT id FROM reference_tbl WHERE assetId=? AND (name=? OR name='') AND referenceStatus=?";
+                $checkArchivedStmt = $db->conn->prepare($checkArchivedQuery);
+                $checkArchivedStmt->bind_param("iii", $assetID, $empId, $refArchive);
+                $checkArchivedStmt->execute();
+                $checkArchivedResult = $checkArchivedStmt->get_result();
+            
+                if ($archivedRow = $checkArchivedResult->fetch_assoc()) {
+                    // ✅ Update existing archived reference to active
+                    $updateQuery = "UPDATE reference_tbl SET name=?, referenceStatus=? WHERE id=?";
+                    $stmt = $db->conn->prepare($updateQuery);
+                    $stmt->bind_param("iii", $empId, $refActive, $archivedRow['id']);
+                    $stmt->execute();
+                } else {
+                    // ✅ Ensure no active reference exists before inserting
+                    $checkActiveQuery = "SELECT id FROM reference_tbl WHERE assetId=? AND name=? AND referenceStatus=?";
+                    $checkActiveStmt = $db->conn->prepare($checkActiveQuery);
+                    $checkActiveStmt->bind_param("iii", $assetID, $empId, $refActive);
+                    $checkActiveStmt->execute();
+                    $checkActiveResult = $checkActiveStmt->get_result();
+            
+                    if ($checkActiveResult->num_rows == 0) {
+                        // ✅ No active reference exists, insert a new one
+                        $insertQuery = "INSERT INTO reference_tbl (assetId, name, referenceStatus) VALUES (?, ?, ?)";
+                        $stmt = $db->conn->prepare($insertQuery);
+                        $stmt->bind_param("iii", $assetID, $empId, $refActive);
+                        $stmt->execute();
+                    }
+                }
             }
+
+            // if ($refResult->num_rows > 0) {
+            //     // A completed reference exists, now check if an active reference already exists
+            //     $checkActiveQuery = "SELECT id FROM reference_tbl WHERE assetId=? AND name=? AND referenceStatus=?";
+            //     $checkActiveStmt = $db->conn->prepare($checkActiveQuery);
+            //     $checkActiveStmt->bind_param("iii", $assetID, $empId, $refActive);
+            //     $checkActiveStmt->execute();
+            //     $checkActiveResult = $checkActiveStmt->get_result();
+            
+            //     if ($checkActiveResult->num_rows == 0) {
+            //         // No active reference exists, insert a new active reference
+
+            //         // !! Still inserts when there's already existing record but referenceStatus is 0, this should update the existing record instead
+            //         $insertQuery = "INSERT INTO reference_tbl (assetId, name, referenceStatus) VALUES (?, ?, ?)";
+            //         $stmt = $db->conn->prepare($insertQuery);
+            //         $stmt->bind_param("iii", $assetID, $empId, $refActive);
+            //         $stmt->execute();
+            //     }
+            // } else {
+            //     // Check if an archived record exists
+            //     $refQuery = "SELECT id FROM reference_tbl WHERE assetId=? AND (name=? OR name='') AND referenceStatus=?";
+            //     $refStmt = $db->conn->prepare($refQuery);
+            //     $refStmt->bind_param("iii", $assetID, $empId, $refArchive);
+            //     $refStmt->execute();
+            //     $refResult = $refStmt->get_result();
+            
+            //     if ($refRow = $refResult->fetch_assoc()) {
+            //         // Update existing archived record to active
+            //         $updateQuery = "UPDATE reference_tbl SET name=?, referenceStatus=? WHERE id=?";
+            //         $stmt = $db->conn->prepare($updateQuery);
+            //         $stmt->bind_param("iii", $empId, $refActive, $refRow['id']);
+            //         $stmt->execute();
+            //     } else {
+            //         // Ensure an active record doesn't already exist before inserting
+            //         $checkActiveQuery = "SELECT id FROM reference_tbl WHERE assetId=? AND name=? AND referenceStatus=?";
+            //         $checkActiveStmt = $db->conn->prepare($checkActiveQuery);
+            //         $checkActiveStmt->bind_param("iii", $assetID, $empId, $refActive);
+            //         $checkActiveStmt->execute();
+            //         $checkActiveResult = $checkActiveStmt->get_result();
+            
+            //         if ($checkActiveResult->num_rows == 0) {
+            //             // No active reference exists, insert a new one
+            //             $insertQuery = "INSERT INTO reference_tbl (assetId, name, referenceStatus) VALUES (?, ?, ?)";
+            //             $stmt = $db->conn->prepare($insertQuery);
+            //             $stmt->bind_param("iii", $assetID, $empId, $refActive);
+            //             $stmt->execute();
+            //         }
+            //     }
+            // }
 
             $operation = new Operations();
             if($empId!='0' || $empId!='') {
@@ -388,6 +291,8 @@ class assetsController {
         } else {
             return false;
         }
+
+        $db->conn->close();
     }
 
     public function assetTurnover($input, $id) {
@@ -407,11 +312,11 @@ class assetsController {
                 a.datedeployed, a.empId, a.lastused, 
                 a.cpu, a.memory, a.storage, a.os, a.dimes, a.mobile, a.plan, 
                 r.assetId, r.turnoverRef, 
-                e.id, e.name AS empName, e.division, e.location 
+                e.id, e.name AS empName, e.division, e.location , r.referenceStatus 
                 FROM assets_tbl AS a 
                 LEFT JOIN employee_tbl AS e ON e.id = a.empId 
                 LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
-                WHERE a.id = '$assetID' AND a.status != 'Archive'";
+                WHERE a.id = '$assetID' AND a.status != 'Archive' AND r.referenceStatus=1";
         $res = mysqli_query($db->conn,$sql);
         while($row = $res->fetch_assoc()) {
             $assettag = $row['assettag'];
@@ -437,7 +342,7 @@ class assetsController {
             mysqli_begin_transaction($db->conn);
             try {
                 // Update assets_tbl
-                $assetUpdateQuery = "UPDATE assets_tbl SET empId='', datedeployed='', turnoverdate=NOW(), lastused='$lastusedby', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
+                $assetUpdateQuery = "UPDATE assets_tbl SET empId='', datedeployed='0000-00-00', turnoverdate=NOW(), lastused='$lastusedby', status='$newStatus' WHERE id='$assetID' AND status!='Archive' LIMIT 1";
                 mysqli_query($db->conn, $assetUpdateQuery);
 
                 // Update reference_tbl
@@ -679,12 +584,21 @@ class assetsController {
                 $astatus = 'Signed';
             }
 
+            // $sql = "UPDATE reference_tbl 
+            //         SET accountabilityStatus = '$acctStatus', accountabilityDate = '$acctDate', accountabilityFile = '$acctFile' 
+            //         WHERE name='$eName' AND accountabilityRef='$refNo'";
+            // $result = $db->conn->query($sql);
+
             $sql = "UPDATE reference_tbl 
-                    SET accountabilityStatus = '$acctStatus', accountabilityDate = '$acctDate', accountabilityFile = '$acctFile' 
-                    WHERE name='$eName' AND accountabilityRef='$refNo'";
-            $result = $db->conn->query($sql);
+                SET accountabilityStatus = ?, accountabilityDate = ?, accountabilityFile = ? 
+                WHERE name = ? AND accountabilityRef = ?";
+            $stmt = $db->conn->prepare($sql);
+            $stmt->bind_param("issss", $acctStatus, $acctDate, $acctFile, $eName, $refNo);
+            $result = $stmt->execute();
 
             if($result) {
+                
+
                 mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
                 VALUES('', '$sess_name', 'Updated reference no: $refNo, Status: $astatus' , NOW())");
 
@@ -709,11 +623,12 @@ class assetsController {
             if($assetIDs != '' || $assetIDs != null) {
 
                 $sql = "UPDATE reference_tbl 
-                SET turnoverStatus='$trnStatus', turnoverDate='$trnDate', turnoverFile='$trnFile', referenceStatus='2' 
-                WHERE name='$eName' AND turnoverRef='$refNo'";
-    
-                $result = $db->conn->query($sql);
-    
+                        SET turnoverStatus = ?, turnoverDate = ?, turnoverFile = ?, referenceStatus = 2
+                        WHERE name = ? AND turnoverRef = ?";
+                $stmt = $db->conn->prepare($sql);
+                $stmt->bind_param("issis", $trnStatus, $trnDate, $trnFile, $eName, $refNo);
+                $result = $stmt->execute();
+                
                 if($result) {
                     if (is_array($assetIDs)) {    
                         foreach ($assetIDs as $ids) {
@@ -722,7 +637,7 @@ class assetsController {
             
                             // Update each asset in assets_tbl
                             $updateAsset = "UPDATE assets_tbl
-                                            SET empId='0', status='To be deploy', lastused='$eName' 
+                                            SET empId='0', status='To be deploy', lastused='$eName', datedeployed='0000-00-00' 
                                             WHERE id = '$ids'";
                             
                             // Execute the update query for each asset

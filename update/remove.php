@@ -55,7 +55,7 @@ if(isset($_GET['unassignId']) && isset($_GET['empId']) && isset($_GET['voidRemar
     if ($result) {
         // Second update query
         // Removes emp_Id for situational accountability removal 
-        $query1 = "UPDATE reference_tbl SET accountabilityRef='', accountabilityStatus='0', referenceStatus='0' WHERE assetId='$id'";
+        $query1 = "UPDATE reference_tbl SET accountabilityRef='', accountabilityStatus='0', referenceStatus='0' WHERE assetId='$id' AND name='$empId' AND referenceStatus='1'";
         $result1 = mysqli_query($db->conn, $query1);
 
         if ($result1) {

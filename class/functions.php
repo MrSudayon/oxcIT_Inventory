@@ -716,7 +716,8 @@ class Operations {
                 FROM assets_tbl AS a 
                 LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
                 LEFT JOIN employee_tbl AS e ON a.empId = e.id 
-                WHERE r.accountabilityRef = '$id' OR r.turnoverRef = '$id'";
+                -- Fix this query 2-12-25: Display those devices that are deployed/active, as well as to those accountabilities that are complete (e.g Resigned. save record for reference**)
+                WHERE (r.accountabilityRef = '$id' OR r.turnoverRef = '$id') AND (r.referenceStatus=1 OR r.referenceStatus=2)";
                 
         $result = mysqli_query($db->conn, $query);
 

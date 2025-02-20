@@ -34,7 +34,8 @@ if(isset($_GET['id'])) {
 <body>
     <div class="content">
         <div class="logo">
-            <a href="employeeLists.php"><img src="../assets/logo.png" width="150px"></img></a>
+            <!-- <a href="employeeLists.php"><img src="../assets/logo.png" width="150px"></img></a> -->
+            <a href="javascript:history.back()"><img src="../assets/logo.png" width="150px"></img></a>
         </div>
         <br>
         <center>

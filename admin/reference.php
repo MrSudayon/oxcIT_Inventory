@@ -91,8 +91,8 @@ include '../inc/header.php';
                                     echo "<span class='disable-btn'><a href='../update/referenceUpd.php?id=$rid'><img src='../assets/icons/update.png' width='24px'></a>&nbsp;
                                         <a href='../update/remove.php?Acct_id=$rid' onclick='return checkDelete()'><img src='../assets/icons/remove.png' width='24px'></a></span>";
                                 } else {
-                                    echo "<a href='../update/referenceUpd.php?acctRef=$acctRef&name=$empId'><img src='../assets/icons/update.png' width='24px'></a>&nbsp;
-                                        <a href='../update/remove.php?acctRef=$acctRef&name=$empId' onclick='return checkDelete()'><img src='../assets/icons/remove.png' width='24px'></a>";
+                                    echo "<a href='../update/referenceUpd.php?acctRef=$acctRef&name=$empName'><img src='../assets/icons/update.png' width='24px'></a>&nbsp;
+                                        <a href='../update/remove.php?acctRef=$acctRef&name=$empName' onclick='return checkDelete()'><img src='../assets/icons/remove.png' width='24px'></a>";
                                 }
                                 echo "</td>";
                                 echo "</tr>";
@@ -187,8 +187,8 @@ include '../inc/header.php';
                                         <a href='../update/remove.php?Turnover_id=$rid;' onclick='return checkDelete()'><img src='../assets/icons/remove.png' width='24px'></a></span>";
                                     
                                 } else {
-                                    echo "<a href='../update/referenceUpd.php?turnoverRef=$turnoverRef&name=$empId'><img src='../assets/icons/update.png' width='24px'></a>&nbsp;
-                                        <a href='../update/remove.php?turnoverRef=$turnoverRef&name=$empId' onclick='return checkDelete()'><img src='../assets/icons/remove.png' width='24px'></a>";
+                                    echo "<a href='../update/referenceUpd.php?turnoverRef=$turnoverRef&name=$empName'><img src='../assets/icons/update.png' width='24px'></a>&nbsp;
+                                        <a href='../update/remove.php?turnoverRef=$turnoverRef&name=$empName' onclick='return checkDelete()'><img src='../assets/icons/remove.png' width='24px'></a>";
                                 }
                                 echo "</td>";
                                 echo "</tr>";

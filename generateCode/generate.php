@@ -62,7 +62,9 @@ if(isset($_GET['generateAcc'])) {
                 $acc_ref = "ACCT-" . $newCode;
                 
                 foreach ($selected as $assetID) {
-                    $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl SET accountabilityStatus = 1, accountabilityRef = ?, referenceStatus='1' WHERE assetId = ? AND name=?");
+
+                    // where referenceStatus == 2. Avoid updating complete references 
+                    $refQry = mysqli_prepare($db->conn, "UPDATE reference_tbl SET accountabilityStatus = 1, accountabilityRef = ?, referenceStatus='1' WHERE assetId = ? AND name=? AND referenceStatus!='2'");
                     mysqli_stmt_bind_param($refQry, "sis", $acc_ref, $assetID, $empId);
                     mysqli_stmt_execute($refQry);
                 }
@@ -351,7 +353,7 @@ if (isset($_GET['generateTrn'])) {
                 "SELECT a.assettag, a.empId, r.turnoverRef, r.accountabilityRef, r.accountabilityStatus 
                  FROM assets_tbl AS a 
                  LEFT JOIN reference_tbl AS r ON r.assetId = a.id 
-                 WHERE a.id = ? AND a.status IN ('Deployed', 'Active')"
+                 WHERE a.id = ? AND a.status = 'Deployed' AND r.referenceStatus = 1"
             );
             mysqli_stmt_bind_param($stmt, 'i', $assetID);
             mysqli_stmt_execute($stmt);
@@ -381,39 +383,51 @@ if (isset($_GET['generateTrn'])) {
                 window.location.replace('../admin/employeeLists.php');
                 </script>";
             exit;
-        }
+        } else {
+            // Generate turnover reference if none exists
+            if ($trn_ref == '') {
+                // Generate new turnover code
+                $n = 5;
+                $newCode = getCode($n);
+                $trn_ref = "TRNO-" . $newCode;
 
-        // Generate turnover reference if none exists
-        if ($trn_ref == '') {
-            // Generate new turnover code
-            $n = 5;
-            $newCode = getCode($n);
-            $trn_ref = "TRNO-" . $newCode;
+                // Update all selected assets with the new turnover code
+                $updateStmt = mysqli_prepare($db->conn, 
+                    "UPDATE reference_tbl 
+                        SET turnoverStatus = '1', turnoverRef = ? 
+                        WHERE assetId = ? AND name = ?"
+                );
+                foreach ($selected as $assetID) {
+                    mysqli_stmt_bind_param($updateStmt, 'sis', $trn_ref, $assetID, $empId);
+                    mysqli_stmt_execute($updateStmt);
+                }
+                 // Log history
+                 $historyStmt = mysqli_prepare($db->conn, 
+                        "INSERT INTO history_tbl (name, action, date) 
+                            VALUES (?, ?, NOW())");
 
-            // Update all selected assets with the new turnover code
-            $updateStmt = mysqli_prepare($db->conn, 
-                "UPDATE reference_tbl 
-                    SET turnoverStatus = '1', turnoverRef = ? 
-                    WHERE assetId = ? AND name = ?"
-            );
-            foreach ($selected as $assetID) {
-                mysqli_stmt_bind_param($updateStmt, 'sis', $trn_ref, $assetID, $empId);
-                mysqli_stmt_execute($updateStmt);
-            }
+                    if(count($selected) > 1) {
+                        $action = "Generated turnover form for asset/s: " . implode(', ', $assetTags);
+                    } else {
+                        $action = "Generated turnover form for asset: " . implode(', ', $assetTags);
+                    }
+                    // $action = "Generated turnover form for asset/s:: " . implode(', ', $assetTags);
+                    mysqli_stmt_bind_param($historyStmt, 'ss', $username, $action);
+                    mysqli_stmt_execute($historyStmt);
 
-            // Log history
-            $historyStmt = mysqli_prepare($db->conn, 
-                "INSERT INTO history_tbl (name, action, date) 
-                    VALUES (?, ?, NOW())"
-            );
-            if(count($selected) > 1) {
-                $action = "Generated turnover form for asset/s: " . implode(', ', $assetTags);
-            } else {
-                $action = "Generated turnover form for asset: " . implode(', ', $assetTags);
-            }
-            // $action = "Generated turnover form for asset/s:: " . implode(', ', $assetTags);
-            mysqli_stmt_bind_param($historyStmt, 'ss', $username, $action);
-            mysqli_stmt_execute($historyStmt);
+                // Update all selected assets with the new turnover code
+    //             $updateStmt = mysqli_prepare($db->conn, 
+    //                 "UPDATE reference_tbl 
+    //                  SET turnoverStatus = '1', turnoverRef = ? 
+    //                  WHERE assetId = ? AND name = ?"
+    //             );
+    //             foreach ($selected as $assetID) {
+    //                 mysqli_stmt_bind_param($updateStmt, 'sis', $trn_ref, $assetID, $empId);
+    //                 mysqli_stmt_execute($updateStmt);
+    //             }
+
+
+               
         } else {
             // Log viewing the turnover form
             $historyStmt = mysqli_prepare($db->conn,    
@@ -424,9 +438,11 @@ if (isset($_GET['generateTrn'])) {
             mysqli_stmt_bind_param($historyStmt, 'ss', $username, $action);
             mysqli_stmt_execute($historyStmt);
         }
+    }
+
     } else {
         echo "<script>
-            alert('Please select at least one asset.');
+            alert('Please select asset/s.');
             window.location.replace('../admin/employeeLists.php');
             </script>";
         exit;
