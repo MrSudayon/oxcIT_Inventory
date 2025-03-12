@@ -77,7 +77,7 @@ include '../inc/header.php';
                             <option value="Deployed">Deployed</option>
                             <option value="To be deploy">To be deploy</option>
                             <option value="Defective">Defective</option>
-                            <option value="Sell">Sell</option>
+                            <option value="Sold">Sold</option>
                             <option value="Missing">Missing</option>
                         </select>
                     </div>

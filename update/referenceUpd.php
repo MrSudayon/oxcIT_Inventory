@@ -134,8 +134,7 @@
                                 }
                             </style>
                         <?php
-                    } else {
-                    }
+                    } 
             ?>
                 <form action="../admin/update-selected.php" method="POST" enctype="multipart/form-data">
                     <div class="asset-details">
@@ -147,7 +146,7 @@
                             $assetIdArray = explode(',', $assetIds); 
                             foreach ($assetIdArray as $assetId) {
                             ?>
-                                <input type="text" name="assetId[]" value="<?=$assetId?>">
+                                <input type="hidden" name="assetId[]" value="<?=$assetId?>">
                             <?php 
                             }
                         ?>

@@ -15,7 +15,7 @@ if(isset($_GET['assetID'])) {
         $assettype = $row['assettype'];
     }
     $sql = mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date)
-                            VALUES ('', '$name', 'Deleted Tag: $assettag from Assets Record', NOW())");
+                            VALUES ('', '$name', 'Archived asset: $assettag', NOW())");
     
     if($assettype == 'Desktop') { 
         $url = "../assetLists/Desktop.php";

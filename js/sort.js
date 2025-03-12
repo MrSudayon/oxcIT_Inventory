@@ -135,7 +135,54 @@ document.querySelectorAll('thead th').forEach((head, i) => {
         document.querySelectorAll('thead th').forEach(th => th.classList.remove('active'));
         head.classList.add('active');
         sort_asc = !sort_asc;
-        head.classList.toggle('asc', sort_asc);
+        head.classList.toggle('ASC', sort_asc);
         sortTable(i, sort_asc);
     }
 });
+// function sortRows(a, b) {
+//     const aMatches = a.querySelector('td[data-column="assettag"]').textContent.match(/\d+$/);
+//     const bMatches = b.querySelector('td[data-column="assettag"]').textContent.match(/\d+$/);
+//     const aNum = aMatches ? parseInt(aMatches[0], 10) : 0;
+//     const bNum = bMatches ? parseInt(bMatches[0], 10) : 0;
+
+//     if (aNum === bNum) {
+//         return a.querySelector('td[data-column="assettag"]').textContent.localeCompare(b.querySelector('td[data-column="assettag"]').textContent);
+//     }
+//     return aNum - bNum;
+// }
+
+// function sortTable(column, sort_asc) {
+//     let table_rows = Array.from(document.querySelectorAll('tbody tr'));
+//     let sorted_rows;
+
+//     if (column === 'assettag') {
+//         // If sorting by AssetTag, sort numerically
+//         sorted_rows = table_rows.sort((a, b) => sort_asc ? sortRows(a, b) : sortRows(b, a));
+//     } else {
+//         // Sort other columns alphabetically
+//         sorted_rows = table_rows.sort((a, b) => {
+//             let first_row = a.querySelector(`td[data-column="${column}"]`).textContent.trim().toLowerCase();
+//             let second_row = b.querySelector(`td[data-column="${column}"]`).textContent.trim().toLowerCase();
+            
+//             return sort_asc ? first_row.localeCompare(second_row) : second_row.localeCompare(first_row);
+//         });
+//     }
+
+//     let tbody = document.querySelector('tbody');
+//     sorted_rows.forEach(row => tbody.appendChild(row));
+// }
+
+// // Event listener for sorting
+// document.querySelectorAll('thead th').forEach((head) => {
+//     let sort_asc = true;
+//     head.onclick = () => {
+//         document.querySelectorAll('thead th').forEach(th => th.classList.remove('active'));
+//         head.classList.add('active');
+        
+//         sort_asc = !sort_asc;
+//         head.classList.toggle('asc', sort_asc);
+        
+//         let column = head.getAttribute('data-column'); // Use data-column instead of index
+//         sortTable(column, sort_asc);
+//     };
+// });

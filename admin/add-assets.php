@@ -153,11 +153,12 @@ if(isset($_POST['save'])) {
                                     <span class="details" style="margin-bottom: 10px;">Status</span>
                                     <select name="status" id="status" onChange="changetextbox()" required>
                                         <option value='' hidden selected disabled>Please select</option>
-                                        <option value="For repair">For repair</option>
                                         <option value="Deployed">Deployed</option>
                                         <option value="To be deploy">To be deploy</option>
+                                        <option value="For repair">For repair</option>
                                         <option value="Defective">Defective</option>
                                         <option value="Sell">Sell</option>
+                                        <option value="Sold">Sold</option>
                                         <option value="Missing">Missing</option>
                                     </select>
                                 </div>

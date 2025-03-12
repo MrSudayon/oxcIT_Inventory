@@ -20,7 +20,18 @@ include '../inc/header.php';
                 FROM assets_tbl AS a 
                 LEFT JOIN employee_tbl AS e1 ON e1.id = a.empId 
                 LEFT JOIN employee_tbl AS e2 ON e2.id = a.lastused 
-                WHERE a.status!='Archive' AND assettype='Desktop'";
+                WHERE a.status!='Archive' AND assettype='Desktop'
+                ORDER BY 
+                    CASE
+                        WHEN status = 'To be deploy' THEN 1 
+                        WHEN status = 'Deployed' THEN 2 
+                        WHEN status = 'For repair' THEN 3 
+                        WHEN status = 'Defective' THEN 4
+                        WHEN status = 'Sold' THEN 5
+                        ELSE 6
+                    END, status DESC";
+                // WHERE assettype='Desktop' ORDER BY ";
+
         $res = mysqli_query($db->conn, $sql);
         $rowCountPage = $res->num_rows;
     } else {
@@ -50,18 +61,49 @@ include '../inc/header.php';
         $rows[] = $row;
     }
     
-    // Sort the result array by assettag
     usort($rows, function($a, $b) {
+        // Define custom priority order for status
+        $statusOrder = [
+            'To be deploy' => 1,
+            'Deployed' => 2,
+            'For repair' => 3,
+            'Defective' => 4,
+            'Sell' => 5,
+            'Sold' => 6,
+            'Missing' => 7
+        ];
+    
+        // Get priority of each status
+        $aStatusPriority = $statusOrder[$a['status']] ?? 99; // Default low priority
+        $bStatusPriority = $statusOrder[$b['status']] ?? 99;
+
+        // First, sort by status priority (lower number means higher priority)
+        if ($aStatusPriority != $bStatusPriority) {
+            return $aStatusPriority - $bStatusPriority;
+        }
+
+        // Extract numeric part of assettag
         preg_match('/\d+$/', $a['assettag'], $aMatches);
         preg_match('/\d+$/', $b['assettag'], $bMatches);
         $aNum = intval($aMatches[0] ?? 0);
         $bNum = intval($bMatches[0] ?? 0);
 
-        if ($aNum == $bNum) {
-            return strcmp($a['assettag'], $b['assettag']);
-        }
-        return ($aNum < $bNum) ? -1 : 1;
-    });  
+        // If status is the same, sort assettag in ascending order
+        return $aNum <=> $bNum; // Ascending order
+    });
+
+    // // Sort the result array by assettag
+    // usort($rows, function($a, $b) {
+    //     preg_match('/\d+$/', $a['assettag'], $aMatches);
+    //     preg_match('/\d+$/', $b['assettag'], $bMatches);
+    //     $aNum = intval($aMatches[0] ?? 0);
+    //     $bNum = intval($bMatches[0] ?? 0);
+
+    //     if ($aNum == $bNum) {
+    //         return strcmp($a['assettag'], $b['assettag']);
+    //     }
+    //     return ($aNum < $bNum) ? -1 : 1;
+    // });  
 ?>       
 
 <div class="content">
@@ -121,7 +163,14 @@ include '../inc/header.php';
                         <td hidden><?php echo $row['lastUsedName']; ?></td>
                         <td><?php echo "<span class='statusSpan'>". $status ."</span>" ?></td>
                         <td>
-                            <a href="../update/remove.php?assetID=<?php echo $aId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a>
+                            <?php 
+                         
+                            if($status != 'Deployed') {
+                                ?><a href="../update/remove.php?assetID=<?php echo $aId; ?>" onclick="return checkDelete()"><img src="../assets/icons/remove.png" width="32px"></a><?php
+                            } else {
+                                ?><a href="/#" style="filter: grayscale(1); cursor: default;"><img src="../assets/icons/remove.png" width="32px"></a><?php
+                            }
+                            ?>
                         </td>   
                     </tr>
                     <?php
