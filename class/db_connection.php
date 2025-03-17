@@ -215,6 +215,7 @@ class Select extends Connection {
     }
 }
 
+// Select All***
 class get_All_User extends Connection {
     public function selectAllUser() {
         $sql = mysqli_query($this->conn, "SELECT * FROM users_tbl WHERE status=1");
@@ -229,6 +230,13 @@ class get_All_User extends Connection {
             $users[] = $res;
         }
         return $users;
+    }
+    public function selectAllLoc() {
+        $sql = mysqli_query($this->conn, "SELECT * FROM loc_tbl WHERE status=1 ORDER BY name ASC");
+        while($res = mysqli_fetch_assoc($sql)) {
+            $location[] = $res;
+        }
+        return $location;
     }
 }
 

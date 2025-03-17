@@ -50,21 +50,7 @@ include '../inc/header.php';
         $rows[] = $row;
     }
     
-    // Sort the result array by assettag
-    // usort($rows, function($a, $b) {
-    //     preg_match('/\d+$/', $a['assettag'], $aMatches);
-    //     preg_match('/\d+$/', $b['assettag'], $bMatches);
-    //     $aNum = intval($aMatches[0] ?? 0);
-    //     $bNum = intval($bMatches[0] ?? 0);
 
-    //     if ($aNum == $bNum) {
-    //         return strcmp($a['assettag'], $b['assettag']);
-    //     }
-    //     return ($aNum < $bNum) ? -1 : 1;
-    // });  
-    // WHEN status = 'To be deploy' THEN 1 
-    //                     WHEN status = '' THEN 2 
-    //                     WHEN status = 
     usort($rows, function($a, $b) {
         // Define custom priority order for status
         $statusOrder = [
@@ -95,25 +81,6 @@ include '../inc/header.php';
         // If status is the same, sort assettag in ascending order
         return $aNum <=> $bNum; // Ascending order
     });
-
-
-        // // Get priority of each status
-        // $aStatusPriority = $statusOrder[$a['status']] ?? 99; // Default low priority
-        // $bStatusPriority = $statusOrder[$b['status']] ?? 99;
-    
-        // // First, sort by status priority (lower number means higher priority)
-        // if ($aStatusPriority != $bStatusPriority) {
-        //     return $aStatusPriority - $bStatusPriority;
-        // }
-    
-        // // Extract numeric part of assettag
-        // preg_match('/\d+$/', $a['assettag'], $aMatches);
-        // preg_match('/\d+$/', $b['assettag'], $bMatches);
-        // $aNum = intval($aMatches[0] ?? 0);
-        // $bNum = intval($bMatches[0] ?? 0);
-    
-        // // If status is the same, sort assettag in descending order
-        // return $bNum <=> $aNum; // Descending order
 ?>       
 
 <div class="content">
@@ -142,6 +109,7 @@ include '../inc/header.php';
                 <tbody>
                     <?php
                         foreach ($rows as $row) {
+
 
                             $status = $row['status'];
                             $aId = $row['aId'];
@@ -179,7 +147,9 @@ include '../inc/header.php';
         </section>
         <?php 
 
+
             if($rowCountPage != $rowCount) {
+
 
                 echo '<div class="pagination">';
                 if ($page > 1) {

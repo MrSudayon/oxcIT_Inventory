@@ -197,24 +197,28 @@ header {
   transform: translate(7em, -13em);
 }
 
-.menu__wrapper.active ~ .menu__items .menu__item:nth-child(7){ /* SIM */
+.menu__wrapper.active ~ .menu__items .menu__item:nth-child(7){ /* Router */
   transform: translate(11em, -7.5em);
 }
 
 .menu__wrapper.active ~ .menu__items .menu__item:nth-child(8){ /* Employee */
-  transform: translate(-3em, -8em);
+  transform: translate(-4.5em, -6.5em);
 }
 
 .menu__wrapper.active ~ .menu__items .menu__item:nth-child(9){ /* Admin Config */
-  transform: translate(-6em, -3em);
+  transform: translate(-7em, -1.5em);
 }
 
 .menu__wrapper.active ~ .menu__items .menu__item:nth-child(10){ /* Reference */
-  transform: translate(3em, -8em);
+  transform: translate(4.5em, -6.5em);
 }
 
-.menu__wrapper.active ~ .menu__items .menu__item:nth-child(11){ /* Routers */
-  transform: translate(6em, -3em);
+.menu__wrapper.active ~ .menu__items .menu__item:nth-child(11){ /* Components */
+  transform: translate(7em, -1.5em);
+}
+
+.menu__wrapper.active ~ .menu__items .menu__item:nth-child(12){ /* IO Devices */
+  transform: translate(.1em, -9em);
 }
 
 .material-icons-outlined {

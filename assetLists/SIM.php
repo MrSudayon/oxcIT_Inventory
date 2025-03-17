@@ -48,9 +48,9 @@ while ($row = mysqli_fetch_assoc($res)) {
 }
 
 // Sort the result array by assettag
-usort($rows, function($a, $b) {
-    // Define custom priority order for status
-    $statusOrder = [
+    usort($rows, function($a, $b) {
+        // Define custom priority order for status
+        $statusOrder = [
             'To be deploy' => 1,
             'Deployed' => 2,
             'For repair' => 3,
@@ -60,24 +60,24 @@ usort($rows, function($a, $b) {
             'Missing' => 7
         ];
 
-    // Get priority of each status
-    $aStatusPriority = $statusOrder[$a['status']] ?? 99; // Default low priority
-    $bStatusPriority = $statusOrder[$b['status']] ?? 99;
+        // Get priority of each status
+        $aStatusPriority = $statusOrder[$a['status']] ?? 99; // Default low priority
+        $bStatusPriority = $statusOrder[$b['status']] ?? 99;
 
-    // First, sort by status priority (lower number means higher priority)
-    if ($aStatusPriority != $bStatusPriority) {
-        return $aStatusPriority - $bStatusPriority;
-    }
+        // First, sort by status priority (lower number means higher priority)
+        if ($aStatusPriority != $bStatusPriority) {
+            return $aStatusPriority - $bStatusPriority;
+        }
 
-    // Extract numeric part of assettag
-    preg_match('/\d+$/', $a['assettag'], $aMatches);
-    preg_match('/\d+$/', $b['assettag'], $bMatches);
-    $aNum = intval($aMatches[0] ?? 0);
-    $bNum = intval($bMatches[0] ?? 0);
+        // Extract numeric part of assettag
+        preg_match('/\d+$/', $a['assettag'], $aMatches);
+        preg_match('/\d+$/', $b['assettag'], $bMatches);
+        $aNum = intval($aMatches[0] ?? 0);
+        $bNum = intval($bMatches[0] ?? 0);
 
-    // If status is the same, sort assettag in ascending order
-    return $aNum <=> $bNum; // Ascending order
-});
+        // If status is the same, sort assettag in ascending order
+        return $aNum <=> $bNum; // Ascending order
+    });
 ?>       
 
 <div class="content">

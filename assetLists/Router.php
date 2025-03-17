@@ -6,7 +6,7 @@ include '../inc/header.php';
 <body>
 
 <?php
-    $sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive' AND assettype='Router'";
+    $sqlSelectAll = "SELECT * FROM assets_tbl WHERE status!='Archive' AND (assettype='Router' OR assettype='Switch' OR assettype='Projector' OR assettype='DVR' OR assettype='Others')";
     $results = mysqli_query($db->conn, $sqlSelectAll);
 
     $results_per_page = 15;
@@ -20,7 +20,7 @@ include '../inc/header.php';
                 FROM assets_tbl AS a 
                 LEFT JOIN employee_tbl AS e1 ON e1.id = a.empId 
                 LEFT JOIN employee_tbl AS e2 ON e2.id = a.lastused 
-                WHERE a.status!='Archive' AND assettype='Router'";
+                WHERE a.status!='Archive' AND (assettype='Router' OR assettype='Switch' OR assettype='Projector' OR assettype='DVR' OR assettype='Others')";
         $res = mysqli_query($db->conn, $sql);
         $rowCountPage = $res->num_rows;
     } else {
@@ -39,7 +39,7 @@ include '../inc/header.php';
                 FROM assets_tbl AS a 
                 LEFT JOIN employee_tbl AS e1 ON e1.id = a.empId 
                 LEFT JOIN employee_tbl AS e2 ON e2.id = a.lastused 
-                WHERE a.status!='Archive' AND assettype='Router' 
+                WHERE a.status!='Archive' AND (assettype='Router' OR assettype='Switch' OR assettype='Projector' OR assettype='DVR' OR assettype='Others') 
                 LIMIT $page_first_result, $results_per_page";
         $res = mysqli_query($db->conn, $sql);
         $rowCountPage = $res->num_rows;
@@ -86,7 +86,7 @@ include '../inc/header.php';
 <div class="content">
     <main class="table" id="customers_table">
         <section class="table__header">
-            <a href="../admin/add-assets.php?id=recordRouter" class="link-btn">New Record</a>
+            <a href="../admin/add-assets.php?id=recordOthers" class="link-btn">New Record</a>
             <div class="input-group">
                 <input type="search" id="searchInput" placeholder="Search Data..." oninput="searchTable()">
                 <img src="../assets/icons/search.png" alt="">
@@ -127,7 +127,7 @@ include '../inc/header.php';
                             }
                             ?>
                         </td>
-                        <td hidden><?php echo $row['empName']; ?></td>
+                        <td><?php echo $row['empName']; ?></td>
 
                         <td><?php echo "<span class='statusSpan'>". $status ."</span>" ?></td>
 

@@ -80,7 +80,7 @@ include '../inc/header.php';
 
         // If status is the same, sort assettag in ascending order
         return $aNum <=> $bNum; // Ascending order
-    }); 
+    });
 ?>       
 
 <div class="content">

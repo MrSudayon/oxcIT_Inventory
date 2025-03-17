@@ -123,13 +123,16 @@ class Operations {
                 case 'recordSim':
                     $actionMessage = "Added SIM record: $tag";
                     break;
+                case 'recordOthers':
+                    $actionMessage = "Added asset record: $tag";
+                    break;
                 default:
                     $actionMessage = "Added asset record: $tag";
-                    return 8;
+                    return 9;
             }
             mysqli_query($db->conn, "INSERT INTO history_tbl (id, name, action, date) VALUES('', '$sess_name', '$actionMessage', NOW())");
 
-            return array_search($action, ['recordLaptop', 'recordDesktop', 'recordMonitor', 'recordPrinter', 'recordUps', 'recordMobile', 'recordSim']) + 1;
+            return array_search($action, ['recordLaptop', 'recordDesktop', 'recordMonitor', 'recordPrinter', 'recordUps', 'recordMobile', 'recordSim', 'recordOthers']) + 1;
         } else {
             return 100; // Store Failed
         }
@@ -158,6 +161,9 @@ class Operations {
                 break;
             case 'recordMobile':
                 $sql .= " assetType='Mobile'";
+                break;
+            case 'recordOthers':
+                $sql .= " assettype='Router' OR assettype='Switch' OR assettype='Projector' OR assettype='DVR' OR assettype='Others'";
                 break;
             case 'recordSim':
                 $sql .= " assetType='SIM'";

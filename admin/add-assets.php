@@ -31,7 +31,7 @@ if(isset($_POST['save'])) {
             5 => "../assetLists/UPS.php",
             6 => "../assetLists/Mobile.php",
             7 => "../assetLists/SIM.php",
-            8 => "../assetLists/Laptop.php",
+            8 => "../assetLists/Router.php",
         ];
     
         $url = $urls[$result];
@@ -76,6 +76,8 @@ if(isset($_POST['save'])) {
                     $url = "../assetLists/SIM.php";
                 } elseif($id == 'recordUps') {
                     $url = "../assetLists/UPS.php";
+                } elseif($id == 'recordOthers') {
+                    $url = "../assetLists/Router.php";
                 } else {
                     $url = "../admin/dashboard.php"; // Change name to 'All Assets'
                 }
@@ -93,6 +95,19 @@ if(isset($_POST['save'])) {
                                 $assettype = $operation->getAssets($id);
 
                                 if($id == 'recordUps') {
+                                ?>
+                                    <select name="asset-type">
+                                    <?php
+                                        foreach($assettype as $assets) {
+                                            $assetType = $assets['assetType'];
+                                    ?>
+                                        <option value="<?=$assets['assetType']?>"><?=$assets['assetType']?></option>
+                                    <?php
+                                        }
+                                    ?>
+                                    </select>
+                                <?php
+                                } elseif ($id == 'recordOthers') {
                                 ?>
                                     <select name="asset-type">
                                     <?php
@@ -335,6 +350,7 @@ if(isset($_POST['save'])) {
                         case 'recordUps':
                         case 'recordAVR':
                         case 'recordPrinter':
+                        case 'recordOthers':
                             ?>
                                 <div class="input-box" id="model">
                                     <span class="details">Model</span>
@@ -365,7 +381,7 @@ if(isset($_POST['save'])) {
                                         <option value="Deployed">Deployed</option>
                                         <option value="To be deploy">To be deploy</option>
                                         <option value="Defective">Defective</option>
-                                        <option value="Sell">Sell</option>
+                                        <option value="Sold">Sold</option>
                                         <option value="Missing">Missing</option>
                                     </select>
                                 </div>
@@ -389,6 +405,9 @@ if(isset($_POST['save'])) {
                                     <?php } elseif($assetType == 'UPS') { ?>
                                         <span class="details">Volt-Amp</span>
                                         <input type="text" name="dimes" placeholder="Volt-Amphere" id="">
+                                    <?php } elseif($assetType == 'Router' || $assetType == 'Switch' || $assetType == 'Projector' || $assettype='DVR' || $assetType == 'Others') { ?>
+                                        <span class="details">Description</span>
+                                        <input type="text" name="dimes" placeholder="device desc.." id="">
                                     <?php } else { ?>
                                         <span class="details">Dimension</span>
                                         <input type="text" name="dimes" placeholder="Dimension" id="">
@@ -478,42 +497,66 @@ if(isset($_POST['save'])) {
                             <input type="date" name="datedeployed" placeholder="Date Deployed" value="" id="">
                         </div>
 
-                        <div class="input-box" id="assignedto" style="display: none;">
-                            <span class="details" style="margin-bottom: 10px;">Assign To</span>
-                            <select name="assigned" id="assigned" class="assigned">
-                                <option value='' selected>Please Select</option>
-                                <?php
-                                        $user = $getAllUser->selectAllEmp();
-                                        foreach($user as $row) {
-                                ?>
-                                <option value="<?php echo $row['id']; ?>">
-                                    <?php echo $row['name']; ?>
-                                </option>
-                                <?php
-                                    }
-                                    
-                                ?>
-                            </select>
-                        </div>
-                        <?php if($role == 'admin' || $role == 'Admin') { ?>
-                        <div class="input-box">
-                            <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
-                            <!-- <input type="text" name="lastused" placeholder="Last used by.." style="background-color: #ccc; font-weight: 600;" value="?=$result['']?>" readonly id=""> -->
-                            <select name="lastused" id="lastused" class="assigned">
-                                <option value='' selected>Please Select</option>
-                                <?php
-                                        foreach($user as $row) {
-                                ?>
-                                <option value="<?php echo $row['id']; ?>">
-                                    <?php echo $row['name']; ?>
-                                </option>
-                                <?php
-                                    }
-                                    
-                                ?>
-                            </select>
-                        </div>
-                        <?php } ?>
+                        <?php if($id == 'recordOthers') { ?>
+
+                            <div class="input-box" id="assignedto" style="display: none;">
+                                <span class="details" style="margin-bottom: 10px;">Assign on</span>
+                                <select name="assigned" id="assigned" class="assigned">
+                                    <option value='' selected>Please Select</option>
+                                    <?php
+                                            $locations = $getAllUser->selectAllLoc();
+                                            foreach($locations as $row) {
+                                    ?>
+                                    <option value="<?php echo $row['id']; ?>">
+                                        <?php echo $row['name']; ?>
+                                    </option>
+                                    <?php
+                                        }
+                                        
+                                    ?>
+                                </select>
+                            </div>
+
+                        <?php } else { ?>
+
+                            <div class="input-box" id="assignedto" style="display: none;">
+                                <span class="details" style="margin-bottom: 10px;">Assign To</span>
+                                <select name="assigned" id="assigned" class="assigned">
+                                    <option value='' selected>Please Select</option>
+                                    <?php
+                                            $user = $getAllUser->selectAllEmp();
+                                            foreach($user as $row) {
+                                    ?>
+                                    <option value="<?php echo $row['id']; ?>">
+                                        <?php echo $row['name']; ?>
+                                    </option>
+                                    <?php
+                                        }
+                                        
+                                    ?>
+                                </select>
+                            </div>
+
+                            <?php if($role == 'admin' || $role == 'Admin') { ?>
+                            <div class="input-box">
+                                <span class="details" style="margin-bottom: 10px;">Last Used by:</span>
+                                <!-- <input type="text" name="lastused" placeholder="Last used by.." style="background-color: #ccc; font-weight: 600;" value="?=$result['']?>" readonly id=""> -->
+                                <select name="lastused" id="lastused" class="assigned">
+                                    <option value='' selected>Please Select</option>
+                                    <?php
+                                            foreach($user as $row) {
+                                    ?>
+                                    <option value="<?php echo $row['id']; ?>">
+                                        <?php echo $row['name']; ?>
+                                    </option>
+                                    <?php
+                                        }
+                                        
+                                    ?>
+                                </select>
+                            </div>
+                            <?php } 
+                        } ?>
 
                     </div>
 

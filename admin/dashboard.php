@@ -192,7 +192,7 @@
         <a class="items" href="../assetLists/Mobile.php"><i class="fa-solid fa-mobile-screen-button"></i></a>
         </li>
         <li class="menu__item">
-        <a class="items" href="../assetLists/SIM.php"><i class="fa-solid fa-sim-card"></i></a>
+        <a class="items" href="../assetLists/Router.php"><i class="fa-solid fa-network-wired"></i></a>
         </li>
         <li class="menu__item">
         <a class="items" href="../admin/employeeLists.php"><i class="fa-solid fa-address-book"></i></a>
@@ -203,8 +203,13 @@
         <li class="menu__item">
         <a class="items" href="../admin/reference.php"><i class="fa-solid fa-asterisk"></i></a>
         </li>
+        <!-- Components e.g. CPU, RAM, HDD, OS -->
         <li class="menu__item">
-        <a class="disabled items" href="../assetLists/Router.php"><i class="fa-solid fa-layer-group"></i></a>
+        <a class="disabled items" href="../assetLists/#.php"><i class="fa-solid fa-layer-group"></i></a>
+        </li>
+        <!-- IO Devices e.g. Mouse, KB, Mic, Camera -->
+        <li class="menu__item">
+        <a class="items" href="../assetLists/IODevice.php"><i class="fa-solid fa-keyboard"></i></a>
         </li>
     </ul>
 <?php } else { ?>
